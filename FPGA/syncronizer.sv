@@ -1,22 +1,24 @@
 `timescale 1ns / 100ps
 
 module Synchronizer #(
-		      parameter int WIDTH = 1,
-		      parameter int STAGES = 2,
-		      parameter [WIDTH-1:0] INIT = 0
-		      )(
-			input  logic clk,
-			input  logic [WIDTH-1:0] dIn,
-			output logic [WIDTH-1:0] dOut
-			);
-  // Use a flat vector for the pipeline to avoid "memory" warnings
-  logic [WIDTH*STAGES-1:0] pipe = {STAGES{INIT}};
+  parameter int WIDTH = 1,
+  parameter int STAGES = 2,
+  parameter [WIDTH-1:0] INIT = 0
+)(
+  input  logic clk,
+  input  logic [WIDTH-1:0] dIn,
+  output logic [WIDTH-1:0] dOut
+);
+  // Unpacked array for registers
+  logic [WIDTH-1:0] sregs [0:STAGES-1];
 
   always_ff @(posedge clk) begin
-    // Shift in new data at the bottom, move everything up
-    pipe <= {pipe[WIDTH*(STAGES-1)-1:0], dIn};
+    sregs[0] <= dIn;
+    for (int i = 1; i < STAGES; i = i + 1) begin
+      sregs[i] <= sregs[i-1];
+    end
   end
 
-  // Output is the "top" of the pipe
-  assign dOut = pipe[WIDTH*STAGES-1 : WIDTH*(STAGES-1)];
+  assign dOut = sregs[STAGES-1];
+
 endmodule

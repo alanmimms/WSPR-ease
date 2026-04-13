@@ -15,7 +15,7 @@ VERILATOR_FLAGS += -CFLAGS "-std=c++17 -I$(SW_DIR)"
 VERILATOR_FLAGS += -LDFLAGS "-lm"
 
 # Source files
-RTL_SOURCES := top.sv WSPRExciter.sv SPIRegisters.sv freqCounter.sv syncronizer.sv edgeDetector.sv
+RTL_SOURCES := top.sv exciter.sv SPIRegisters.sv freqCounter.sv syncronizer.sv edgeDetector.sv
 RTL_SIM_SOURCES += $(SIM_DIR)/sbIO.sv $(SIM_DIR)/sbPLL40Core.sv $(SIM_DIR)/sbPLL40Pad.sv $(SIM_DIR)/sbRAM404K.sv $(SIM_DIR)/sbGB.sv
 GENERATED_SOURCES := regs.sv regs.hpp regs.md
 
@@ -40,16 +40,16 @@ $(TARGET):	$(RTL_SOURCES) $(GENERATED_SOURCES)
 	@echo "--- Building FPGA Bitstream ---"
 	@mkdir -p build
 	@echo "  YOSYS (Synthesis)..."
-	@yosys -q -p "read_verilog -sv $(RTL_SOURCES); synth_ice40 -top $(TOP) -json $(PROJECT).json"
+	yosys -q -p "read_verilog -sv $(RTL_SOURCES); synth_ice40 -top $(TOP) -json $(PROJECT).json"
 	@echo "  NEXTPNR (Place & Route)..."
-	@nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
+	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
 		--pre-pack timing.py --placer heap --seed 45 \
 		--json $(PROJECT).json --pcf $(PCF) \
 		--log build/nextpnr.log -q \
 		--asc $(PROJECT).asc
 	@echo "  ICEPACK (Bitstream)..."
-	@icepack $(PROJECT).asc $(PROJECT).bin
-	@mv -f $(PROJECT).bin $(TARGET)
+	icepack $(PROJECT).asc $(PROJECT).bin
+	mv -f $(PROJECT).bin $(TARGET)
 	@echo "--- FPGA Build Complete ---"
 
 $(GENERATED_SOURCES):	regs.py ../tools/regTool.py

@@ -2,7 +2,7 @@
 `include "regs.sv"
 
 module SPIRegisters (
-		     input logic reset,
+		     input  logic reset,
 
 		     // SPI Interface
 		     input  logic fpgaSCLK,
@@ -13,120 +13,131 @@ module SPIRegisters (
 		     // Destination Domain (90 MHz)
 		     input  logic clk_dest,
 		     output logic [31:0] tuningWord = 0,
-		     output logic [7:0] powerThresh = 8'hFF,
-		     input  logic pllLocked,
-		     output logic txEnable,
+		     output logic [7:0]  powerThresh = 8'hFF,
+		     input  logic        pllLocked,
+		     output logic        txEnable,
 
 		     // Frequency counter values (from 90 MHz domain)
-		     input logic [26:0] ppsCount,
-		     input logic [4:0] ppsGen
+		     input  logic [26:0] ppsCount,
+		     input  logic [4:0]  ppsGen
 		     );
 
-  // --- SPI Domain ---
-  logic [31:0] twRaw = 0;
-  logic [5:0] bitCount = 0;
-  logic isWrite = 0;
-  logic [6:0] selAddr = 0;
-  logic [31:0] writeBuf = 0;
-  tWSPRControl ctrlSPI = initWSPRControl;
+  // =====================================================================
+  // 1. Clock Domain Crossing (90 MHz -> SPI Domain)
+  // =====================================================================
+  logic pllLocked_spi;
+  Synchronizer #(1, 2) sync_pllLocked (
+    .clk(fpgaSCLK),
+    .dIn(pllLocked),
+    .dOut(pllLocked_spi)
+  );
 
-  always_ff @(posedge fpgaSCLK or posedge fpgaNCS) begin
-    if (fpgaNCS) begin
-      bitCount <= '0;
-    end else begin
-      writeBuf <= {writeBuf[30:0], fpgaMOSI};
-      if (bitCount == 0) begin
-        isWrite <= fpgaMOSI;
-      end else if (bitCount < 8) begin
-        selAddr <= {selAddr[5:0], fpgaMOSI};
-      end else if (bitCount == 39 && isWrite) begin
-        if (selAddr == aWSPRControl) ctrlSPI <= {writeBuf[30:0], fpgaMOSI};
-        if (selAddr == aWSPRTuning)  twRaw   <= {writeBuf[30:0], fpgaMOSI};
-      end
-      bitCount <= bitCount + 1;
-    end
-  end
+  // For multi-bit signals, we use a shadow register that freezes when SPI is active.
+  // We use fpgaNCS (asynchronous to clk_dest) to freeze the shadow.
+  // To avoid meta-stability on the freeze signal, we sync NCS into clk_dest.
+  logic ncs_clk_dest;
+  Synchronizer #(1, 2) sync_ncs_dest (
+    .clk(clk_dest),
+    .dIn(fpgaNCS),
+    .dOut(ncs_clk_dest)
+  );
 
-  // --- Clock Domain Isolation (Readback Shadow Registers) ---
-  // We must isolate the 90MHz FreqCounter from the SPI read MUX, or Nextpnr
-  // will drag the FreqCounter logic across the chip and destroy timing closure.
   logic [26:0] ppsCount_shadow;
   logic [4:0]  ppsGen_shadow;
 
   always_ff @(posedge clk_dest) begin
-    // When SPI is idle (fpgaNCS is HIGH), keep updating the shadow registers.
-    // When SPI is active (fpgaNCS is LOW), freeze them so the SPI domain can read stably.
-    if (fpgaNCS) begin
+    if (ncs_clk_dest) begin // SPI is idle
       ppsCount_shadow <= ppsCount;
       ppsGen_shadow   <= ppsGen;
     end
   end
 
-  // --- SPI Readback Logic ---
-  logic [31:0] readMux;
+  // =====================================================================
+  // 2. SPI Domain Logic (Write & Readback)
+  // =====================================================================
+  logic [31:0] twRaw = 0;
+  logic [5:0]  bitCount = 0;
+  logic        isWrite = 0;
+  logic [6:0]  selAddr = 0;
+  logic [31:0] writeBuf = 0;
   
-  // 1. Decode the requested register based on the 7-bit address
-  always_comb begin
-    case (selAddr)
-//      aWSPRControl: readMux = {ctrlSPI.powerThresh, 22'd0, pllLocked, ctrlSPI.txEnable};
-      aWSPRControl: readMux = {30'd0, pllLocked, 1'b0};
-      aWSPRTuning:  readMux = '0; // twRaw;
-      aWSPRPPS:     readMux = '0; // {ppsCount_shadow, ppsGen_shadow}; // Read from the frozen shadow!
-      aWSPRSig:     readMux = eWSPRSigVal; // 32'h52505357
-      default:      readMux = 32'h00000000;
-    endcase
-  end
+  tWSPRControl ctrlSPI = initWSPRControl;
+  logic [31:0] readShift = 0;
 
-  logic [30:0] readShift = 0;
+  // Output on the negative edge to be stable for ESP32
+  // We use the MSB of readShift.
+  assign fpgaMISO = fpgaNCS ? 1'bZ : readShift[31];
 
-  // 2. Output on the NEGATIVE edge so it is stable for the ESP32 to read on the POSITIVE edge
-  always_ff @(negedge fpgaSCLK or posedge fpgaNCS) begin
+  always_ff @(posedge fpgaSCLK or posedge fpgaNCS) begin
     if (fpgaNCS) begin
-      fpgaMISO  <= 1'b0;
-      readShift <= 0;
+      bitCount <= '0;
+      readShift <= '0;
     end else begin
-      if (bitCount == 8 && !isWrite) begin
-        // Output the MSB immediately, shift the rest
-        fpgaMISO  <= readMux[31];
-        readShift <= readMux[30:0];
-      end else if (bitCount > 8 && !isWrite) begin
-        fpgaMISO  <= readShift[30];
-        readShift <= {readShift[29:0], 1'b0};
-      end else begin
-        fpgaMISO  <= 1'b0;
+      writeBuf <= {writeBuf[30:0], fpgaMOSI};
+      
+      if (bitCount == 0) begin
+        isWrite <= fpgaMOSI;
+      end else if (bitCount < 8) begin
+        selAddr <= {selAddr[5:0], fpgaMOSI};
+      end 
+      
+      // READBACK MUX
+      // At bit 8, we have the address and know if it's a read.
+      else if (bitCount == 8 && !isWrite) begin
+        case (selAddr)
+          aWSPRControl: readShift <= {ctrlSPI.powerThresh, 22'd0, pllLocked_spi, ctrlSPI.txEnable};
+          aWSPRTuning:  readShift <= twRaw;
+          aWSPRPPS:     readShift <= {ppsCount_shadow, ppsGen_shadow};
+          aWSPRSig:     readShift <= eWSPRSigVal;
+          default:      readShift <= 32'hDEADBEEF; 
+        endcase
+      end 
+      
+      // SHIFT OUT
+      else if (bitCount >= 8 && !isWrite) begin
+        readShift <= {readShift[30:0], 1'b0};
       end
+      
+      // WRITE COMMIT
+      if (bitCount == 39 && isWrite) begin
+        if (selAddr == aWSPRControl) ctrlSPI <= {writeBuf[30:0], fpgaMOSI};
+        if (selAddr == aWSPRTuning)  twRaw   <= {writeBuf[30:0], fpgaMOSI};
+      end
+      
+      bitCount <= bitCount + 1;
     end
   end
 
-  // --- Destination Domain Sync (90 MHz) ---
-  logic ncs_s1, ncs_s2, ncs_s3;
+  // =====================================================================
+  // 3. Destination Domain Sync (SPI -> 90 MHz)
+  // =====================================================================
+  logic ncs_sync_d1;
   logic [31:0] tw_sync;
   logic [7:0]  pwr_sync;
   logic        tx_sync;
 
   always_ff @(posedge clk_dest) begin
-    ncs_s1 <= fpgaNCS;
-    ncs_s2 <= ncs_s1;
-    ncs_s3 <= ncs_s2;
+    ncs_sync_d1 <= ncs_clk_dest;
 
     if (reset) begin
-      tw_sync <= 0;
-      pwr_sync <= 8'hFF;
-      tx_sync <= 0;
-      tuningWord <= 0;
+      tw_sync     <= 0;
+      pwr_sync    <= 8'hFF;
+      tx_sync     <= 0;
+      tuningWord  <= 0;
       powerThresh <= 8'hFF;
-      txEnable <= 0;
+      txEnable    <= 0;
     end else begin
-      if (ncs_s2 && !ncs_s3) begin 
-        tw_sync <= twRaw;
+      // Transaction complete (NCS rising edge)
+      if (ncs_clk_dest && !ncs_sync_d1) begin 
+        tw_sync  <= twRaw;
         pwr_sync <= ctrlSPI.powerThresh;
-        tx_sync <= ctrlSPI.txEnable;
+        tx_sync  <= ctrlSPI.txEnable;
       end
-      // Registration stage
-      tuningWord <= tw_sync;
+      
+      tuningWord  <= tw_sync;
       powerThresh <= pwr_sync;
-      txEnable <= tx_sync;
+      txEnable    <= tx_sync;
     end
   end
 
-endmodule
+endmodule // SPIRegisters

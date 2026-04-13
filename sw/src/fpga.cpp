@@ -229,15 +229,14 @@ namespace wspr {
     currentFreq = freqHz;
     if (!initialized) return -ENODEV;
 
-    // NCO tuning for 90 MHz system clock and 180 Msps effective sample rate.
-    // One full RF cycle corresponds to 6 state transitions (NCO overflows).
-    // The NCO frequency f_nco = 6 * freqHz.
-    // The tuning word per 180 Msps sample is M = (f_nco / 180,000,000) * 2^32.
-    // M = (6 * freqHz / 180,000,000) * 2^32 = (freqHz / 30,000,000) * 2^32.
-    // In each 90 MHz clock cycle (2 samples), the FPGA takes two steps of size M.
+    // NCO tuning for 90 MHz system clock. 
+    // The current FPGA Exciter uses phase-to-state mapping where 
+    // one full NCO cycle equals one full RF cycle.
+    // The NCO increments by M every 90 MHz clock cycle.
+    // M = (freqHz / 90,000,000) * 2^32.
 
     // Using 64-bit math to avoid overflow before division
-    const uint64_t f_limit = 30000000ULL;
+    const uint64_t f_limit = 90000000ULL;
     uint64_t word = ((uint64_t)freqHz << 32) / f_limit;
 
     return spiWriteReg(WSPRRegs::aWSPRTuning, (uint32_t)word);
