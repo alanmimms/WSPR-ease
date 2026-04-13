@@ -47,7 +47,56 @@ module SPIRegisters (
     end
   end
 
-  assign fpgaMISO = 1'b0;
+  // --- Clock Domain Isolation (Readback Shadow Registers) ---
+  // We must isolate the 90MHz FreqCounter from the SPI read MUX, or Nextpnr
+  // will drag the FreqCounter logic across the chip and destroy timing closure.
+  logic [26:0] ppsCount_shadow;
+  logic [4:0]  ppsGen_shadow;
+
+  always_ff @(posedge clk_dest) begin
+    // When SPI is idle (fpgaNCS is HIGH), keep updating the shadow registers.
+    // When SPI is active (fpgaNCS is LOW), freeze them so the SPI domain can read stably.
+    if (fpgaNCS) begin
+      ppsCount_shadow <= ppsCount;
+      ppsGen_shadow   <= ppsGen;
+    end
+  end
+
+  // --- SPI Readback Logic ---
+  logic [31:0] readMux;
+  
+  // 1. Decode the requested register based on the 7-bit address
+  always_comb begin
+    case (selAddr)
+//      aWSPRControl: readMux = {ctrlSPI.powerThresh, 22'd0, pllLocked, ctrlSPI.txEnable};
+      aWSPRControl: readMux = {30'd0, pllLocked, 1'b0};
+      aWSPRTuning:  readMux = '0; // twRaw;
+      aWSPRPPS:     readMux = '0; // {ppsCount_shadow, ppsGen_shadow}; // Read from the frozen shadow!
+      aWSPRSig:     readMux = eWSPRSigVal; // 32'h52505357
+      default:      readMux = 32'h00000000;
+    endcase
+  end
+
+  logic [30:0] readShift = 0;
+
+  // 2. Output on the NEGATIVE edge so it is stable for the ESP32 to read on the POSITIVE edge
+  always_ff @(negedge fpgaSCLK or posedge fpgaNCS) begin
+    if (fpgaNCS) begin
+      fpgaMISO  <= 1'b0;
+      readShift <= 0;
+    end else begin
+      if (bitCount == 8 && !isWrite) begin
+        // Output the MSB immediately, shift the rest
+        fpgaMISO  <= readMux[31];
+        readShift <= readMux[30:0];
+      end else if (bitCount > 8 && !isWrite) begin
+        fpgaMISO  <= readShift[30];
+        readShift <= {readShift[29:0], 1'b0};
+      end else begin
+        fpgaMISO  <= 1'b0;
+      end
+    end
+  end
 
   // --- Destination Domain Sync (90 MHz) ---
   logic ncs_s1, ncs_s2, ncs_s3;

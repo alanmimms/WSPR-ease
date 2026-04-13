@@ -10,17 +10,17 @@
  * - Walking ring advances by 0, 1, or 2 steps.
  */
 module WSPRExciter (
-    input  wire        clk90,
-    input  wire        reset,
-    input  wire [31:0] tuningWord,     // M
-    input  wire [7:0]  powerThreshold,
-    input  wire        txEnable,
+		    input  wire        clk90,
+		    input  wire        reset,
+		    input  wire [31:0] tuningWord,     // M
+		    input  wire [7:0]  powerThreshold,
+		    input  wire        txEnable,
 
-    output wire        rfPushBase,
-    output wire        rfPushPeak,
-    output wire        rfPullBase,
-    output wire        rfPullPeak
-    );
+		    output wire        rfPushBase,
+		    output wire        rfPushPeak,
+		    output wire        rfPullBase,
+		    output wire        rfPullPeak
+		    );
 
   // --- Local Sync ---
   reg rst_l, txEn_l;
@@ -61,25 +61,24 @@ module WSPRExciter (
     end
   end
 
-  // Predictive mid-cycle overflow
+  // --- Predictive mid-cycle overflow ---
   reg comp_res;
   always_ff @(posedge clk90) begin
     comp_res <= (acc[7] >= {w_bit32_pipe[7], w_pipe[7][7][3:1]});
   end
 
+  reg [1:0] ovf_full;
+  always_ff @(posedge clk90) begin
+    // Correct 2-bit addition of the MSB and the pipeline carry in the same cycle
+    ovf_full <= w_bit32_pipe[7] + c[7];
+  end
+
   reg [1:0] ovf_full_d1;
   reg ovf_mid;
   always_ff @(posedge clk90) begin
-    ovf_full_d1 <= {c[8], c[7]};
-    // c[8], c[7] are from the same cycle as acc[7]. 
-    // comp_res is from the cycle after acc[7].
-    // So we need to delay c bits to match comp_res.
-    ovf_mid <= ovf_full_d1[1] | (ovf_full_d1[0] & comp_res);
-  end
-
-  reg [1:0] ovf_full; 
-  always_ff @(posedge clk90) begin
-    ovf_full <= ovf_full_d1;
+    ovf_full_d1 <= ovf_full;
+    // Align mid-cycle prediction with the delayed full overflow
+    ovf_mid <= (ovf_full == 2'd2) | ((ovf_full == 2'd1) & ~comp_res);
   end
 
   // --- 3. Walking Ring ---
@@ -95,11 +94,11 @@ module WSPRExciter (
     if (rst_l || !txEn_l) begin
       ring <= 6'b000001;
     end else begin
-      case (ovf_full)
+      case (ovf_full_d1)
         2'd0: ring <= ring;
         2'd1: ring <= advance1(ring);
         2'd2: ring <= advance2(ring);
-        default: ring <= ring;
+        default: ring <= advance1(ring); // Safety fallback
       endcase
     end
   end
@@ -114,7 +113,7 @@ module WSPRExciter (
   reg [7:0] pwrThresh_l;
   always_ff @(posedge clk90) begin
     pwrThresh_l <= powerThreshold;
-    en1 <= (phaseEnd < pwrThresh_l); // Simplified: use end phase for both
+    en1 <= (phaseEnd < pwrThresh_l);
     en2 <= (phaseEnd < pwrThresh_l);
   end
 
@@ -122,23 +121,20 @@ module WSPRExciter (
   function [3:0] ringToGates(input [5:0] r, input en);
     logic [3:0] gates;
     begin
-      gates[0] = r[0] | r[1] | r[2];
-      gates[1] = r[1];
-      gates[2] = r[3] | r[4] | r[5];
-      gates[3] = r[4];
+      gates[0] = r[0] | r[1] | r[2]; // Push Base
+      gates[1] = r[1];               // Push Peak
+      gates[2] = r[3] | r[4] | r[5]; // Pull Base
+      gates[3] = r[4];               // Pull Peak
       ringToGates = gates & {4{en}};
     end
   endfunction
 
   reg [3:0] outR, outF;
   always_ff @(posedge clk90) begin
+    // Rising Edge outputs the start of the 90MHz cycle
+    outR <= ringToGates(ring, en2);
+    // Falling Edge outputs the midpoint of the 90MHz cycle
     outF <= ringToGates(ovf_mid ? advance1(ring) : ring, en1);
-    case (ovf_full)
-      2'd0: outR <= ringToGates(ring, en2);
-      2'd1: outR <= ringToGates(advance1(ring), en2);
-      2'd2: outR <= ringToGates(advance2(ring), en2);
-      default: outR <= ringToGates(ring, en2);
-    endcase
   end
 
   reg [3:0] outR_reg, outF_reg;

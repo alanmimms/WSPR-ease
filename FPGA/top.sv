@@ -15,27 +15,34 @@ module Top (
 	    output logic driverNEN
 	    );
 
-  logic clk90_pre, clk90;
   logic fpgaSCLK, pllLocked;
 
   SB_GB sclkGbuf (.USER_SIGNAL_TO_GLOBAL_BUFFER(fpgaSCLK_pin), .GLOBAL_BUFFER_OUTPUT(fpgaSCLK));
 
-  // 90 MHz System Clock
+// 90 MHz System Clock via Fabric Routing
+  logic clk90_pre, clk90;
+  
   SB_PLL40_PAD #(
-		 .FEEDBACK_PATH("SIMPLE"),
-		 .DIVR(4'b0000),       
-		 .DIVF(7'b0100001),    
-		 .DIVQ(3'b011),        
-		 .FILTER_RANGE(3'b010) 
-		 ) sysPll (
-			   .PACKAGEPIN(clk40), 
-			   .PLLOUTGLOBAL(clk90_pre),
-			   .LOCK(pllLocked),
-			   .RESETB(1'b1),
-			   .BYPASS(1'b0)
-			   );
+    .FEEDBACK_PATH("SIMPLE"),
+    .DIVR(4'b0000),         // DIVR = 0  (PFD = 40MHz)
+    .DIVF(7'b0010001),      // DIVF = 17 (VCO = 720MHz)
+    .DIVQ(3'b011),          // DIVQ = 3  (Output = 90MHz)
+    .FILTER_RANGE(3'b010)   // CORRECT for 40MHz input
+  ) sysPll (
+    .PACKAGEPIN(clk40),     // Pin 35 is the dedicated PLL Pad
+    .PLLOUTCORE(clk90_pre), // Output to fabric, NOT directly to global
+    .LOCK(pllLocked),
+    .RESETB(1'b1),
+    .BYPASS(1'b0)
+  );
 
-  SB_GB clk90Gbuf (.USER_SIGNAL_TO_GLOBAL_BUFFER(clk90_pre), .GLOBAL_BUFFER_OUTPUT(clk90));
+
+  // Buffer the PLL output onto the global clock network exactly as your old version did
+  SB_GB clk90Gbuf (
+    .USER_SIGNAL_TO_GLOBAL_BUFFER(clk90_pre), 
+    .GLOBAL_BUFFER_OUTPUT(clk90)
+  );
+
 
   logic rst90_s1, rst90;
   always_ff @(posedge clk90) begin
@@ -63,7 +70,7 @@ module Top (
 			.clk_dest(clk90), 
 			.tuningWord(tuningWord),
 			.powerThresh(powerThresh),
-			.pllLocked(pllLocked_s2),
+			.pllLocked(pllLocked),
 			.txEnable(txEnable),
 			.ppsCount(27'h0),
 			.ppsGen(5'h0)
