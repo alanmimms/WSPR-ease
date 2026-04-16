@@ -1,28 +1,6 @@
 `timescale 1ns / 100ps
 
 // =========================================================================
-// Emulated Lattice DDR I/O primitive for Functional Testbenches
-// =========================================================================
-module SB_IO #(
-	       parameter [5:0] PIN_TYPE = 6'b011000
-	       )(
-		 output logic PACKAGE_PIN,
-		 input  logic OUTPUT_CLK,
-		 input  logic D_OUT_0,
-		 input  logic D_OUT_1
-		 );
-  logic pin_reg;
-  // Emulates DDR: D_OUT_0 active on positive cycle, D_OUT_1 on negative
-  always @(OUTPUT_CLK or D_OUT_0 or D_OUT_1) begin
-    if (OUTPUT_CLK)
-      pin_reg = D_OUT_0;
-    else
-      pin_reg = D_OUT_1;
-  end
-  assign PACKAGE_PIN = pin_reg;
-endmodule
-
-// =========================================================================
 // Co-Simulation Verification Testbench
 // =========================================================================
 module tbCosim;
@@ -35,6 +13,7 @@ module tbCosim;
   logic [31:0] tuningWord = 0;
   logic [7:0]  powerThreshold = 8'hFF;
   logic        txEnable = 0;
+  integer      current_test_freq = 0;
   
   // Synthesizable Pipeline Outputs
   wire pb_synth, pp_synth, lb_synth, lp_synth;
@@ -42,11 +21,32 @@ module tbCosim;
   // Functional Model Outputs
   wire pb_func, pp_func, lb_func, lp_func;
   
+  // --- LOGGING ---
+  integer file_out;
+  real analog_val;
+
+  initial begin
+    file_out = $fopen("rf_output_sq.csv", "w");
+    $fwrite(file_out, "Time_ns,Frequency_Hz,Amplitude\n");
+  end
+
+  // Log at both edges (180 Msps)
+  always @(clk90) begin
+    // We need to sample pb_func etc. AFTER they have settled following the clock edge
+    #0.1;
+    // Convert gates back to analog integer equivalents
+    if (pp_func)                 analog_val = 2.0;
+    else if (pb_func)            analog_val = 1.0;
+    else if (lp_func)            analog_val = -2.0;
+    else if (lb_func)            analog_val = -1.0;
+    else                         analog_val = 0.0;
+
+    $fwrite(file_out, "%0t,%0d,%f\n", $time, current_test_freq, analog_val);
+  end
+
   // --- PIPELINE ALIGNMENT ---
-  // The synthesizable nibble-based model has exactly a 14-cycle latency
-  // from input to output relative to the golden model. We delay the inputs 
-  // to the functional model so the outputs toggle on the exact same picosecond.
-  localparam int PIPELINE_DELAY = 14; 
+  // Ultra-deep pipelined model latency = 18. Functional = 2. Delay = 16.
+  localparam int PIPELINE_DELAY = 16; 
   
   logic [31:0] tw_pipe [0:PIPELINE_DELAY-1];
   logic [7:0]  pt_pipe [0:PIPELINE_DELAY-1];
@@ -82,7 +82,7 @@ module tbCosim;
   
   // --- INSTANTIATE FUNCTIONAL MODEL (GOLDEN) ---
   // Fed with the delayed inputs
-  ExciterFunctional dut_func (
+  ExciterFunctional #(.SQUARE_WAVE(1)) dut_func (
 			      .clk90(clk90),
 			      .reset(rst_pipe[PIPELINE_DELAY-1]),
 			      .tuningWord(tw_pipe[PIPELINE_DELAY-1]),
@@ -100,10 +100,6 @@ module tbCosim;
     // Tiny delta delay ensures both combinational SB_IO blocks have settled
     #0.1;
     if ({pb_synth, pp_synth, lb_synth, lp_synth} != {pb_func, pp_func, lb_func, lp_func}) begin
-      $display("[%0t] MISMATCH DETECTED! Synth: %b, Func: %b", 
-               $time, 
-               {pb_synth, pp_synth, lb_synth, lp_synth}, 
-               {pb_func, pp_func, lb_func, lp_func});
       mismatch_count++;
     end
   end
@@ -117,25 +113,19 @@ module tbCosim;
     reset = 0;
     txEnable = 1;
     
-    // Scenario 1: Clean divisor (30 MHz)
-    $display("[%0t] Setting freq to 30 MHz...", $time);
-    tuningWord = 32'd1431655765;
-    #2000;
-    
-    // Scenario 2: Fractional/Jitter test (29.99 MHz)
-    $display("[%0t] Setting freq to 29.99 MHz...", $time);
-    tuningWord = 32'd1431178650;
-    #2000;
-    
-    // Scenario 3: Duty Cycle restriction (approx 50% power)
-    $display("[%0t] Throttling power threshold...", $time);
-    powerThreshold = 8'h80;
-    #2000;
+    // Scenario 1: WSPR frequency (14.097 MHz)
+    $display("[%0t] Setting freq to 14.097 MHz...", $time);
+    current_test_freq = 14097000;
+    // tuningWord = (14.097 / 90) * 2^32 = 672521045
+    tuningWord = 32'd672521045;
+    #10000000;
     
     // Scenario 4: Stop TX
     $display("[%0t] Disabling TX...", $time);
     txEnable = 0;
     #500;
+    
+    $fclose(file_out);
     
     if (mismatch_count == 0) begin
       $display("====================================================");

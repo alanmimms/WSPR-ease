@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.signal import welch, find_peaks
 
-def analyze_spectrum(csv_filename, sample_rate_hz=90e6):
+def analyze_spectrum(csv_filename, sample_rate_hz=180e6):
     print(f"Loading data from {csv_filename}...")
     
     # 1. Load the CSV data
@@ -59,6 +59,23 @@ def analyze_spectrum(csv_filename, sample_rate_hz=90e6):
     psd_dbc = psd_db - carrier_power
 
     print(f"Detected Carrier at {carrier_freq / 1e6:.6f} MHz")
+
+    # Detect Harmonics
+    for h in [3, 5]:
+        h_freq = carrier_freq * h
+        # Wrap around Nyquist if necessary (aliasing)
+        aliased_h_freq = h_freq
+        while aliased_h_freq > (sample_rate_hz / 2):
+            aliased_h_freq = abs(sample_rate_hz - aliased_h_freq)
+        
+        # Find the index of the closest frequency
+        h_idx = np.argmin(np.abs(frequencies - aliased_h_freq))
+        # Look in a small window around h_idx for the local peak
+        window = 10
+        local_idx = h_idx - window + np.argmax(psd_dbc[max(0, h_idx-window):min(len(psd_dbc), h_idx+window)])
+        
+        h_power = psd_dbc[local_idx]
+        print(f"{h}rd Harmonic (aliased at {frequencies[local_idx]/1e6:.6f} MHz): {h_power:.2f} dBc")
 
     # 5. Plot the Spectrum
     print("Generating plot...")
