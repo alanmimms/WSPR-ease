@@ -43,7 +43,7 @@ $(TARGET):	$(RTL_SOURCES) $(GENERATED_SOURCES)
 	yosys -q -p "read_verilog -sv $(RTL_SOURCES); synth_ice40 -dsp -top $(TOP) -json $(PROJECT).json"
 	@echo "  NEXTPNR (Place & Route)..."
 	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
-		--pre-pack timing.py --placer heap --seed 42 \
+		--pre-pack timing.py --placer heap --seed 1 \
 		--json $(PROJECT).json --pcf $(PCF) \
 		--log build/nextpnr.log -q \
 		--asc $(PROJECT).asc

@@ -45,8 +45,8 @@ module tbCosim;
   end
 
   // --- PIPELINE ALIGNMENT ---
-  // Ultra-deep pipelined model latency = 18. Functional = 2. Delay = 16.
-  localparam int PIPELINE_DELAY = 16; 
+  // Production-grade DSP-hardened model latency = 11. Functional = 2. Delay = 9.
+  localparam int PIPELINE_DELAY = 9; 
   
   logic [31:0] tw_pipe [0:PIPELINE_DELAY-1];
   logic [7:0]  pt_pipe [0:PIPELINE_DELAY-1];
