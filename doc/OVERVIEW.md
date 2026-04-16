@@ -19,7 +19,7 @@ the stepped RF waveform in real-time.
 
 ### High-Level Data Flow
 ```text
-[GNSS/PPS] -> [ESP32-S3] --(SPI)--> [iCE40 FPGA] --(DDR IO)--> [74ACT Buffer] -> [MOSFET PA] -> [Transformer] -> [Switched LPF] -> [ANT]
+[GNSS/PPS] -> [ESP32-S3] --(SPI)--> [iCE40 FPGA] --(DDR IO)--> [74AHCT Buffer] -> [MOSFET PA] -> [Transformer] -> [Switched LPF] -> [ANT]
 ```
 
 *   **Controller:** ESP32-S3-WROOM-1 (N8R8). Manages Wi-Fi, Web UI,
@@ -42,7 +42,7 @@ the stepped RF waveform in real-time.
 | :--- | :--- | :--- | :--- |
 | **MCU** | ESP32-S3-WROOM-1-N8R8 | Module | 8MB Flash, 8MB Octal PSRAM. |
 | **FPGA** | iCE40UP5K-SG48 | QFN-48 | Note: Pin 29=VCCPLL. |
-| **RF Buffer** | 74ACT244 | TSSOP-20 | "T" (TTL) variant required for 3.3V logic translation. |
+| **Per leg RF Buffer** | 74AHCT1G125 | SOT-533 1.6mm x 16.mm | "T" (TTL) variant required for 3.3V logic translation. |
 | **MOSFETs** | BS170 (x12) | SOT-23 | 3x Parallel per phase (Total 12). Low $V_{GS(th)}$. |
 | **Transformer** | BN-43-202 | Core | Binocular. 4T Primary / 4T Secondary. Safe for 80m. |
 | **Oscillator** | TCXO 40MHz | 3225 | 0.5ppm stability. |
@@ -93,15 +93,14 @@ Uses FSPI (SPI2) on native pins for high-speed bitstream loading
 
 ### Band Switching (LPF Control)
 
-The relays/switches actuate based on the target frequency to select
-the appropriate Low Pass Filter bank.
+The relays actuate based on the target frequency to select the
+appropriate Low Pass Filter bank.
 
 | Signal | GPIO | Logic |
 | :--- | :--- | :--- |
-| **LPF_hiON** | IO 4 | High Band (e.g., 17m - 10m) |
-| **LPF_loON** | IO 5 | Main Low Path Enable (Master Switch) |
-| **LPF_lo1ON** | IO 6 | Low Band 1 (e.g., 80m - 40m) |
-| **LPF_lo2ON** | IO 7 | Low Band 2 (e.g., 30m - 20m) |
+| **loON** | IO 5 | Low Band 6MHz knee (80m) |
+| **midON** | IO 6 | Mid Band 16MHz knee (40m - 20m) |
+| **hiON** | IO 7 | High  (17m - 10m) |
 
 ---
 
@@ -127,7 +126,7 @@ The FPGA logic is frequency-agnostic. It simply steps through the
 A Low-Side Tapped Transformer driver (Class D/E variant) optimized for
 5V operation.
 
-*   **Driver:** 74ACT244 (running at 5V).
+*   **Driver:** 74AHCT1G125 (running at 5V).
 *   **PA:** 4 Groups of 3x Parallel BS170.
 *   **Transformer:** BN-43-202 Binocular Core.
     *   **Primary:** 4 Turns Center Tapped (Tap at 2 Turns).
@@ -143,7 +142,7 @@ A Low-Side Tapped Transformer driver (Class D/E variant) optimized for
     current during the negative half of the "1-2-1" cycle.
 *   **Gate Resistors:** 10Ω series resistors on all Gate lines to
     dampen parasitic oscillation (ringing) which can occur due to the
-    fast edges of the 74ACT244.
+    fast edges of the 74AHCT1G125.
 
 ---
 
@@ -153,7 +152,7 @@ There is a very elegant digital method to reduce power within the FPGA
 without changing the transformer, VBUS voltage, or "1-2-1" harmonic
 cancellation logic.
 
-Since we use an NCO-based sequencer to drive the 74ACT541 buffers, the
+Since we use an NCO-based sequencer to drive the 74AHCT1G125 buffers, the
 simplest method is **Pulse Width Control (Duty Cycle Modulation)** at
 the sequence level.
 
@@ -167,7 +166,7 @@ Instead of a continuous drive, modify the FPGA logic to:
 1. Drive the FET for a portion of the 60° window.
 2. Turn **OFF** all FETs for the remainder of that window.
 
-Because the 74ACT541 has an **Output Enable (nOE)** pin, or simply
+Because the 74AHCT1G125 has an **Output Enable (nOE)** pin, or simply
 drive all four gate signals (`paPushPeak`, `paPushBase`, etc.) to
 **0** in Verilog, to effectively "chop" the waveform.
 
@@ -224,11 +223,11 @@ linear regulator would. In fact, reducing power this way makes the PA
 run **cooler**, as the switching losses remain low but the average
 current decreases.
 
-**Architect's Note:** Using the **nOE** pin of the 74ACT541 for this
-"chopping" is the cleanest way to implement it if you want to ensure
-all lines go high-impedance simultaneously, but doing it in the
+**Architect's Note:** Using the **nOE** pin of the 74AHCT1G125 for
+this "chopping" is the cleanest way to implement it if you want to
+ensure all lines go high-impedance simultaneously, but doing it in the
 gate-drive logic (as shown above) gives you more granular control
-without stressing the 74ACT enable pin's timing.
+without stressing the 74AHCT enable pin's timing.
 
 
 ## PCB Design Rules
@@ -242,7 +241,7 @@ without stressing the 74ACT enable pin's timing.
     *   **RF PA:** Place 22µF bulk capacitance right at the
         Transformer Center Tap.
 *   **Layout:**
-    *   Keep the 74ACT -> MOSFET -> Transformer loop as short as
+    *   Keep the 74AHCT -> MOSFET -> Transformer loop as short as
         possible.
     *   Use Copper Pours for the MOSFET Drains (Heatsinking).
     *   Keep GNSS Antenna input traces away from the 30 MHz RF
