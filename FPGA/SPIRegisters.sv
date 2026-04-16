@@ -72,6 +72,7 @@ module SPIRegisters (
   
   tWSPRControl ctrlSPI = initWSPRControl;
   logic [31:0] readShift = 0;
+  logic [31:0] readMux = 0;
 
   assign fpgaMISO = fpgaNCS ? 1'bZ : readShift[31];
 
@@ -88,14 +89,17 @@ module SPIRegisters (
         selAddr <= {selAddr[5:0], fpgaMOSI};
       end 
       
+      // READBACK MUX
+      // At bit 8, we have the address and know if it's a read.
       else if (bitCount == 8 && !isWrite) begin
         case (selAddr)
-          aWSPRControl: readShift <= {ctrlSPI.powerThresh, 22'd0, pllLocked_spi, ctrlSPI.txEnable};
-          aWSPRTuning:  readShift <= twRaw;
-          aWSPRPPS:     readShift <= {ppsCount_spi, ppsGen_spi};
-          aWSPRSig:     readShift <= eWSPRSigVal;
-          default:      readShift <= 32'hDEADBEEF; 
+          aWSPRControl: readMux <= {ctrlSPI.powerThresh, 22'd0, pllLocked_spi, ctrlSPI.txEnable};
+          aWSPRTuning:  readMux <= twRaw;
+          aWSPRPPS:     readMux <= {ppsCount_spi, ppsGen_spi};
+          aWSPRSig:     readMux <= eWSPRSigVal;
+          default:      readMux <= 32'hDEADBEEF; 
         endcase
+        readShift <= readMux;
       end 
       
       else if (bitCount >= 8 && !isWrite) begin

@@ -26,27 +26,26 @@ module tbCosim;
   real analog_val;
 
   initial begin
-    file_out = $fopen("rf_output_sq.csv", "w");
+    file_out = $fopen("rf_output.csv", "w");
     $fwrite(file_out, "Time_ns,Frequency_Hz,Amplitude\n");
   end
 
-  // Log at both edges (180 Msps)
-  always @(clk90) begin
-    // We need to sample pb_func etc. AFTER they have settled following the clock edge
-    #0.1;
+  // Log at 1ns resolution to see DDR sub-cycle transitions
+  always #1 begin
     // Convert gates back to analog integer equivalents
-    if (pp_func)                 analog_val = 2.0;
-    else if (pb_func)            analog_val = 1.0;
-    else if (lp_func)            analog_val = -2.0;
-    else if (lb_func)            analog_val = -1.0;
+    if (pp_synth)                 analog_val = 2.0;
+    else if (pb_synth)            analog_val = 1.0;
+    else if (lp_synth)            analog_val = -2.0;
+    else if (lb_synth)            analog_val = -1.0;
     else                         analog_val = 0.0;
 
     $fwrite(file_out, "%0t,%0d,%f\n", $time, current_test_freq, analog_val);
   end
 
   // --- PIPELINE ALIGNMENT ---
-  // Production-grade DSP-hardened model latency = 11. Functional = 2. Delay = 9.
+  // Final production model latency = 11. Functional = 2. Delay = 9.
   localparam int PIPELINE_DELAY = 9; 
+
   
   logic [31:0] tw_pipe [0:PIPELINE_DELAY-1];
   logic [7:0]  pt_pipe [0:PIPELINE_DELAY-1];
@@ -113,12 +112,12 @@ module tbCosim;
     reset = 0;
     txEnable = 1;
     
-    // Scenario 1: WSPR frequency (14.097 MHz)
-    $display("[%0t] Setting freq to 14.097 MHz...", $time);
-    current_test_freq = 14097000;
-    // tuningWord = (14.097 / 90) * 2^32 = 672521045
-    tuningWord = 32'd672521045;
-    #10000000;
+    // Scenario 1: 5 MHz Frequency
+    $display("[%0t] Setting freq to 5 MHz...", $time);
+    current_test_freq = 5000000;
+    // tuningWord = (5.0 / 90) * 2^32 = 238609294
+    tuningWord = 32'd238609294;
+    #1000000;
     
     // Scenario 4: Stop TX
     $display("[%0t] Disabling TX...", $time);

@@ -680,6 +680,12 @@
       "/D-": [
         "diff90"
       ],
+      "/Low Pass Filters/RFin": [
+        "RF"
+      ],
+      "/Low Pass Filters/RFout": [
+        "RF"
+      ],
       "Net-(C15-Pad1)": [
         "RF"
       ],
@@ -687,9 +693,6 @@
         "RF"
       ],
       "Net-(C17-Pad1)": [
-        "RF"
-      ],
-      "Net-(C201-Pad2)": [
         "RF"
       ],
       "Net-(C202-Pad1)": [
@@ -717,9 +720,6 @@
         "RF"
       ],
       "Net-(C210-Pad1)": [
-        "RF"
-      ],
-      "Net-(C211-Pad1)": [
         "RF"
       ],
       "Net-(J1-In)": [

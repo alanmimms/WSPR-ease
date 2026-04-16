@@ -1709,16 +1709,6 @@
 	)
 	(wire
 		(pts
-			(xy 52.07 80.01) (xy 55.88 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0230070d-5c60-4561-9f26-fa0be8dbb6a7")
-	)
-	(wire
-		(pts
 			(xy 156.21 128.27) (xy 156.21 80.01)
 		)
 		(stroke
@@ -2299,7 +2289,7 @@
 	)
 	(wire
 		(pts
-			(xy 156.21 80.01) (xy 163.83 80.01)
+			(xy 156.21 80.01) (xy 173.99 80.01)
 		)
 		(stroke
 			(width 0)
@@ -2569,7 +2559,7 @@
 	)
 	(wire
 		(pts
-			(xy 40.64 80.01) (xy 44.45 80.01)
+			(xy 40.64 80.01) (xy 55.88 80.01)
 		)
 		(stroke
 			(width 0)
@@ -2686,16 +2676,6 @@
 			(type default)
 		)
 		(uuid "c8c33d85-5316-4f56-85fd-029e94f2c628")
-	)
-	(wire
-		(pts
-			(xy 173.99 80.01) (xy 171.45 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ccd534e2-2c15-4381-adac-649f607ced41")
 	)
 	(wire
 		(pts
@@ -3579,6 +3559,101 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:L_Small")
+		(at 127 107.95 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0fd54878-ff3f-4f75-be4b-bce144ce92cc")
+		(property "Reference" "L205"
+			(at 127 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "560nH"
+			(at 127 105.41 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Inductor_SMD:L_1008_2520Metric"
+			(at 127 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 127 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Inductor, small symbol"
+			(at 127 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "1008CS-561X"
+			(at 127 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C6364717"
+			(at 127 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Coilcraft"
+			(at 127 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "7a376f37-fc30-4384-94b3-529d29eb6fc3")
+		)
+		(pin "1"
+			(uuid "d4afe106-0c9b-4688-8787-743fdc4eda89")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
+					(reference "L205")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 107.95 137.16 0)
 		(unit 1)
@@ -3640,6 +3715,110 @@
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
 					(reference "#PWR0214")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:L_Small")
+		(at 125.73 166.37 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "3584f537-60c4-4ac5-afd0-a1651893d59f")
+		(property "Reference" "L206"
+			(at 125.73 161.29 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "270nH"
+			(at 125.73 163.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Inductor_SMD:L_0805_2012Metric"
+			(at 125.73 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 125.73 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Inductor, small symbol"
+			(at 125.73 166.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "1008CS-271XGRC"
+			(at 125.73 166.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C404430"
+			(at 125.73 166.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Coilcraft"
+			(at 125.73 166.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "994-1008CS-271XGRC"
+			(at 125.73 166.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "79daf415-b7d3-4993-9e95-68108e470e8b")
+		)
+		(pin "1"
+			(uuid "5c4fc6ab-bdb0-409c-ab27-c9d981651d91")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
+					(reference "L206")
 					(unit 1)
 				)
 			)
@@ -4059,111 +4238,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 167.64 80.01 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "618afd10-b312-4eff-9df7-1cc198ae8945")
-		(property "Reference" "C211"
-			(at 166.37 81.28 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "100nF X7R 50V"
-			(at 171.958 84.074 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 171.45 79.0448 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 167.64 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 167.64 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C24452"
-			(at 167.64 80.01 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Kyocera AVX"
-			(at 167.64 80.01 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "KGM15BR71H104KT"
-			(at 167.64 80.01 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "581-KGM15BR71H104KT"
-			(at 167.64 80.01 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b3032175-db34-4b1d-88db-d64f756c70f5")
-		)
-		(pin "2"
-			(uuid "31d0faf5-7714-40e5-a69b-efb6e6d3474e")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C211")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 100.33 119.38 0)
 		(unit 1)
@@ -4292,7 +4366,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CW252016-1R2J"
+		(property "MPN" "1008LS-122XJR"
 			(at 110.49 53.34 90)
 			(effects
 				(font
@@ -4311,15 +4385,6 @@
 			)
 		)
 		(property "Manufacturer_Name" "Coilcraft"
-			(at 110.49 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "1008LS-222"
 			(at 110.49 53.34 90)
 			(effects
 				(font
@@ -4756,7 +4821,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CW252016-1R2J"
+		(property "MPN" "1008LS-122XJR"
 			(at 127 53.34 90)
 			(effects
 				(font
@@ -4775,15 +4840,6 @@
 			)
 		)
 		(property "Manufacturer_Name" "Coilcraft"
-			(at 127 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "1008LS-222"
 			(at 127 53.34 90)
 			(effects
 				(font
@@ -5122,128 +5178,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:L_Small")
-		(at 127 107.95 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "9cab37c2-dcb5-4e5d-a512-e8d412b644c1")
-		(property "Reference" "L205"
-			(at 127 102.87 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "560nH"
-			(at 127 105.41 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Inductor_SMD:L_1008_2520Metric"
-			(at 127 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 127 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Inductor, small symbol"
-			(at 127 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "muRata"
-			(at 127 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "LQW2UASR56G00L"
-			(at 127 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C6364717"
-			(at 127 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "Coilcraft"
-			(at 127 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "0805CS-391XGLC"
-			(at 127 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "81-LQW2UASR56G00L"
-			(at 127 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "ad99af72-24ba-4b33-80c2-f523ed00b612")
-		)
-		(pin "1"
-			(uuid "c34ed3c6-ad00-40a4-a871-95ef77b7fc53")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L205")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 118.11 58.42 0)
 		(unit 1)
@@ -5409,111 +5343,6 @@
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
 					(reference "#PWR0201")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C")
-		(at 48.26 80.01 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "ad69e024-fb32-4ad4-a502-f16849c7bf74")
-		(property "Reference" "C201"
-			(at 46.99 81.28 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "100nF X7R 50V"
-			(at 53.594 84.074 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 52.07 79.0448 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 48.26 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 48.26 80.01 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C24452"
-			(at 48.26 80.01 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Kyocera AVX"
-			(at 48.26 80.01 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "KGM15BR71H104KT"
-			(at 48.26 80.01 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "581-KGM15BR71H104KT"
-			(at 48.26 80.01 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "903af800-3e19-47b1-ba3d-f0b22054819e")
-		)
-		(pin "2"
-			(uuid "8e6bf5cb-4a84-4702-bcd2-94acf5d8daab")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C201")
 					(unit 1)
 				)
 			)
@@ -5733,128 +5562,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:L_Small")
-		(at 125.73 166.37 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c210a73a-9c08-4fa1-84fc-8da4b15e9e83")
-		(property "Reference" "L206"
-			(at 125.73 161.29 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "270nH"
-			(at 125.73 163.83 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Inductor_SMD:L_0805_2012Metric"
-			(at 125.73 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 125.73 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Inductor, small symbol"
-			(at 125.73 166.37 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Bourns"
-			(at 125.73 166.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "CW252016-R27J"
-			(at 125.73 166.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C404430"
-			(at 125.73 166.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "Coilcraft"
-			(at 125.73 166.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "0805CS-271 XGLC"
-			(at 125.73 166.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "652-CW252016-R27J"
-			(at 125.73 166.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "77c5d72e-d0fa-4101-91ab-111daab6e9bc")
-		)
-		(pin "1"
-			(uuid "e92fa785-9a0f-4c04-8444-6de25a622eb5")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L206")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Diode:SS14")
 		(at 93.98 144.78 270)
 		(unit 1)
@@ -6010,16 +5717,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Bourns"
-			(at 109.22 166.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "CW252016-R27J"
+		(property "MPN" "1008CS-271XGRC"
 			(at 109.22 166.37 90)
 			(effects
 				(font
@@ -6046,16 +5744,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" "0805CS-271 XGLC"
-			(at 109.22 166.37 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "652-CW252016-R27J"
+		(property "Mouser_PN" "994-1008CS-271XGRC"
 			(at 109.22 166.37 90)
 			(effects
 				(font
@@ -6846,16 +6535,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
-			(at 110.49 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "LQW2UASR56G00L"
+		(property "MPN" "1008CS-561X"
 			(at 110.49 107.95 90)
 			(effects
 				(font
@@ -6874,24 +6554,6 @@
 			)
 		)
 		(property "Manufacturer_Name" "Coilcraft"
-			(at 110.49 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser Part Number" "0805CS-391XGLC"
-			(at 110.49 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "81-LQW2UASR56G00L"
 			(at 110.49 107.95 90)
 			(effects
 				(font
