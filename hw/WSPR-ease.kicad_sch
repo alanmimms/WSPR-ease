@@ -5367,7 +5367,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Transistor_FET:BS170F"
+		(symbol "Transistor_FET:2N7002H"
 			(pin_names
 				(offset 0)
 				(hide yes)
@@ -5384,7 +5384,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "BS170F"
+			(property "Value" "2N7002H"
 				(at 5.08 0 0)
 				(effects
 					(font
@@ -5404,7 +5404,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "http://www.diodes.com/assets/Datasheets/BS170F.pdf"
+			(property "Datasheet" "http://www.diodes.com/assets/Datasheets/2N7002H.pdf"
 				(at 5.08 -3.81 0)
 				(effects
 					(font
@@ -5414,7 +5414,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "0.15A Id, 60V Vds, N-Channel MOSFET, SOT-23"
+			(property "Description" "0.21A Id, 60V Vds, N-Channel MOSFET, SOT-23"
 				(at 0 0 0)
 				(effects
 					(font
@@ -5441,7 +5441,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "BS170F_0_1"
+			(symbol "2N7002H_0_1"
 				(polyline
 					(pts
 						(xy 0.254 1.905) (xy 0.254 -1.905)
@@ -5608,7 +5608,7 @@
 					)
 				)
 			)
-			(symbol "BS170F_1_1"
+			(symbol "2N7002H_1_1"
 				(pin input line
 					(at -5.08 0 0)
 					(length 2.54)
@@ -6277,12 +6277,6 @@
 		(uuid "0e2eb713-ad09-4356-b2a6-dd4a7221e1f3")
 	)
 	(junction
-		(at 119.38 66.04)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "10d08615-ce5d-4b24-be14-f1afaba8d01b")
-	)
-	(junction
 		(at 57.15 53.34)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6403,12 +6397,6 @@
 		(uuid "8fdc6209-a5ba-474b-b89d-199b056db59f")
 	)
 	(junction
-		(at 124.46 63.5)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "9482acc2-53d0-43a5-9b84-9f4a270c3206")
-	)
-	(junction
 		(at 21.59 78.74)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6419,6 +6407,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "99c2589e-197e-4088-b587-87e08c630bce")
+	)
+	(junction
+		(at 124.46 66.04)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "9cd6a603-7070-4141-bf5e-66ed45caf677")
 	)
 	(junction
 		(at 17.78 78.74)
@@ -6449,6 +6443,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b1232bb4-c340-4250-a819-5d827c87947a")
+	)
+	(junction
+		(at 119.38 63.5)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b6f0a816-9103-4e82-bdc1-408a38eabfa4")
 	)
 	(junction
 		(at 170.18 157.48)
@@ -6601,10 +6601,6 @@
 		(uuid "67625ecb-4aff-44af-a7e8-37da23fec9f0")
 	)
 	(no_connect
-		(at 88.9 91.44)
-		(uuid "6ff078b0-2745-407b-8f08-89f59e54bad9")
-	)
-	(no_connect
 		(at 39.37 163.83)
 		(uuid "720bf3a0-1213-4ac2-9ef5-2d1079547491")
 	)
@@ -6629,12 +6625,20 @@
 		(uuid "b4b6e1f7-e8ab-4655-b796-5da1a230d223")
 	)
 	(no_connect
+		(at 88.9 91.44)
+		(uuid "ca1964de-f153-4731-85f2-63610317fbb5")
+	)
+	(no_connect
 		(at 88.9 71.12)
 		(uuid "d548de6c-6dd4-4cb6-86e8-701b69706ade")
 	)
 	(no_connect
 		(at 124.46 36.83)
 		(uuid "d621e1c6-6cef-425d-8d0d-63f80564846d")
+	)
+	(no_connect
+		(at 58.42 68.58)
+		(uuid "e12fb0d1-1776-4020-91f9-27282064bd8e")
 	)
 	(no_connect
 		(at 88.9 78.74)
@@ -6773,6 +6777,16 @@
 			(type default)
 		)
 		(uuid "0d47776e-8d37-49e6-b384-4521c35a4ac7")
+	)
+	(wire
+		(pts
+			(xy 128.27 91.44) (xy 129.54 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0d89fd23-33e0-4db4-be54-1133cb1dda55")
 	)
 	(wire
 		(pts
@@ -7106,16 +7120,6 @@
 	)
 	(wire
 		(pts
-			(xy 45.72 68.58) (xy 50.8 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2a89cdac-6149-4887-a40d-22775993836e")
-	)
-	(wire
-		(pts
 			(xy 166.37 24.13) (xy 167.64 24.13)
 		)
 		(stroke
@@ -7426,16 +7430,6 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 62.23) (xy 119.38 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4949b8bd-dd5b-4fb8-9b4c-ea56430c134f")
-	)
-	(wire
-		(pts
 			(xy 173.99 132.08) (xy 175.26 132.08)
 		)
 		(stroke
@@ -7453,16 +7447,6 @@
 			(type default)
 		)
 		(uuid "4b8e46da-1b15-454d-a666-a39e66016243")
-	)
-	(wire
-		(pts
-			(xy 124.46 62.23) (xy 124.46 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4be7cb45-549a-4597-a7f8-6948efde174b")
 	)
 	(wire
 		(pts
@@ -7686,13 +7670,23 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 66.04) (xy 119.38 66.04)
+			(xy 106.68 66.04) (xy 124.46 66.04)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "5ffa7647-deb5-469d-b48c-d8abe0b14a87")
+	)
+	(wire
+		(pts
+			(xy 88.9 88.9) (xy 90.17 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "60189d03-276c-45b4-aae7-0526a964bcfd")
 	)
 	(wire
 		(pts
@@ -7896,13 +7890,13 @@
 	)
 	(wire
 		(pts
-			(xy 45.72 73.66) (xy 50.8 73.66)
+			(xy 119.38 63.5) (xy 154.94 63.5)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "7d081816-a9c0-4176-a5b3-a59e8a2a319d")
+		(uuid "7cfec857-57b5-48b6-8e78-394b860c64d8")
 	)
 	(wire
 		(pts
@@ -7923,6 +7917,16 @@
 			(type default)
 		)
 		(uuid "7f88fb68-8af2-47aa-8b4b-29c5330536cb")
+	)
+	(wire
+		(pts
+			(xy 124.46 62.23) (xy 124.46 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "81c35c3a-b72e-4dc0-be18-2ea1941fcae4")
 	)
 	(wire
 		(pts
@@ -7963,16 +7967,6 @@
 			(type default)
 		)
 		(uuid "8675d73b-63d2-4e07-9327-0a1493e8d9f9")
-	)
-	(wire
-		(pts
-			(xy 106.68 63.5) (xy 124.46 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8683bd7b-cb48-48de-8d79-bb5c3455758b")
 	)
 	(wire
 		(pts
@@ -8036,16 +8030,6 @@
 	)
 	(wire
 		(pts
-			(xy 119.38 66.04) (xy 154.94 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8d5b728a-f4c3-43bb-adf0-83ca4943bb0e")
-	)
-	(wire
-		(pts
 			(xy 134.62 49.53) (xy 135.89 49.53)
 		)
 		(stroke
@@ -8053,16 +8037,6 @@
 			(type default)
 		)
 		(uuid "8fdb431b-0cba-44a8-9b61-5eeda981f92c")
-	)
-	(wire
-		(pts
-			(xy 149.86 120.65) (xy 151.13 120.65)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "90b73acc-63ff-479c-869e-4fe25b38b3d1")
 	)
 	(wire
 		(pts
@@ -8146,6 +8120,16 @@
 	)
 	(wire
 		(pts
+			(xy 106.68 63.5) (xy 119.38 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "98f1b324-45ba-42de-9a23-2f6ee7e66acf")
+	)
+	(wire
+		(pts
 			(xy 73.66 104.14) (xy 73.66 105.41)
 		)
 		(stroke
@@ -8173,16 +8157,6 @@
 			(type default)
 		)
 		(uuid "9ae43f7c-1190-46c9-89ba-8353c6574064")
-	)
-	(wire
-		(pts
-			(xy 124.46 63.5) (xy 154.94 63.5)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9cb272e9-bd64-4039-9a85-9aecf896952c")
 	)
 	(wire
 		(pts
@@ -8216,7 +8190,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 125.73) (xy 151.13 125.73)
+			(xy 149.86 123.19) (xy 151.13 123.19)
 		)
 		(stroke
 			(width 0)
@@ -8326,7 +8300,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 123.19) (xy 151.13 123.19)
+			(xy 149.86 120.65) (xy 151.13 120.65)
 		)
 		(stroke
 			(width 0)
@@ -8396,16 +8370,6 @@
 	)
 	(wire
 		(pts
-			(xy 45.72 76.2) (xy 50.8 76.2)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b9d3be69-877d-4937-ab0d-5ceaa983b840")
-	)
-	(wire
-		(pts
 			(xy 113.03 127) (xy 114.3 127)
 		)
 		(stroke
@@ -8453,26 +8417,6 @@
 			(type default)
 		)
 		(uuid "bdb3d4b2-242d-41db-b912-851fb008ba78")
-	)
-	(wire
-		(pts
-			(xy 128.27 91.44) (xy 129.54 91.44)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bed4daba-03f9-4776-a660-61919f9bbbca")
-	)
-	(wire
-		(pts
-			(xy 88.9 88.9) (xy 90.17 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c29919de-2264-492f-aeb8-978ac7efc3f1")
 	)
 	(wire
 		(pts
@@ -8706,6 +8650,16 @@
 	)
 	(wire
 		(pts
+			(xy 124.46 66.04) (xy 154.94 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dadd48e1-8609-4798-b748-efa96106c5b3")
+	)
+	(wire
+		(pts
 			(xy 128.27 92.71) (xy 128.27 91.44)
 		)
 		(stroke
@@ -8926,16 +8880,6 @@
 	)
 	(wire
 		(pts
-			(xy 45.72 71.12) (xy 50.8 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f19a9d1f-5de0-4754-8f61-1643c9c58122")
-	)
-	(wire
-		(pts
 			(xy 144.78 153.67) (xy 144.78 154.94)
 		)
 		(stroke
@@ -8953,6 +8897,16 @@
 			(type default)
 		)
 		(uuid "f34b78c3-16f9-4087-9025-b0aade616c2d")
+	)
+	(wire
+		(pts
+			(xy 119.38 62.23) (xy 119.38 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f3a75b62-2bb8-424b-8f0e-583482ec4a6f")
 	)
 	(wire
 		(pts
@@ -9016,16 +8970,6 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 68.58) (xy 58.42 68.58)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "feca424a-924a-4d0f-adaf-77f7494c31ec")
-	)
-	(wire
-		(pts
 			(xy 106.68 147.32) (xy 110.49 147.32)
 		)
 		(stroke
@@ -9045,7 +8989,7 @@
 		(uuid "080f4491-eefa-4423-a764-dc75fe14966e")
 	)
 	(label "loON"
-		(at 45.72 68.58 180)
+		(at 55.88 71.12 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -9075,7 +9019,7 @@
 		(uuid "1031ee8a-25cc-434b-9333-1721b59ea0db")
 	)
 	(label "hiON"
-		(at 149.86 125.73 180)
+		(at 149.86 123.19 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -9093,16 +9037,6 @@
 			(justify right bottom)
 		)
 		(uuid "1264e2e0-bb2e-4a85-999b-77874404a9ba")
-	)
-	(label "lo1ON"
-		(at 149.86 120.65 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "128f7bc2-b5ad-4e93-951d-f434a924d57d")
 	)
 	(label "loON"
 		(at 149.86 118.11 180)
@@ -9264,8 +9198,8 @@
 		)
 		(uuid "7213d14b-bf88-4127-940a-8b8e431d3b11")
 	)
-	(label "lo1ON"
-		(at 45.72 71.12 180)
+	(label "midON"
+		(at 55.88 73.66 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -9274,8 +9208,8 @@
 		)
 		(uuid "77654f4a-c086-46c8-b855-348fde06481e")
 	)
-	(label "lo2ON"
-		(at 149.86 123.19 180)
+	(label "midON"
+		(at 149.86 120.65 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -9293,16 +9227,6 @@
 			(justify right bottom)
 		)
 		(uuid "81f8ddc9-edd7-4d84-8f4a-83789268001e")
-	)
-	(label "lo2ON"
-		(at 45.72 73.66 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "85b606ed-76b0-4f41-8b58-6e4b32faff0b")
 	)
 	(label "fpgaDONE"
 		(at 57.15 83.82 180)
@@ -9405,7 +9329,7 @@
 		(uuid "d736e55e-d7a9-4a2e-9672-cabf2de89b64")
 	)
 	(label "hiON"
-		(at 45.72 76.2 180)
+		(at 55.88 76.2 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -11811,7 +11735,7 @@
 				)
 			)
 		)
-		(property "Value" "CR2032 holder"
+		(property "Value" "CR3032 holder"
 			(at 48.26 118.11 0)
 			(effects
 				(font
@@ -11935,7 +11859,7 @@
 				(hide yes)
 			)
 		)
-		(property "label" "CR2032 holder"
+		(property "label" "GNSS backup CR2032"
 			(at 48.514 119.38 0)
 			(effects
 				(font
@@ -11956,117 +11880,6 @@
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
 					(reference "BT101")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Transistor_FET:BS170F")
-		(at 31.75 76.2 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "40728227-83b8-4def-b9d4-94b0df5e1de3")
-		(property "Reference" "Q101"
-			(at 32.004 73.914 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "MMBF170"
-			(at 21.844 73.914 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 29.845 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-					(italic yes)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "http://www.diodes.com/assets/Datasheets/BS170F.pdf"
-			(at 27.94 81.28 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-		(property "Description" "0.15A Id, 60V Vds, N-Channel MOSFET, SOT-23"
-			(at 31.75 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C28871"
-			(at 31.75 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Diodes inc"
-			(at 31.75 76.2 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "MMBF170Q-13-F"
-			(at 31.75 76.2 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "621-MMBF170Q-13-F"
-			(at 31.75 76.2 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "3"
-			(uuid "31fc790d-fdb1-44f7-98d5-57afc7bc51f1")
-		)
-		(pin "2"
-			(uuid "9bba2530-bd61-422a-b837-0f04795d968a")
-		)
-		(pin "1"
-			(uuid "5dbf5214-4e28-4ddd-8188-627a1abb4fcd")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "Q101")
 					(unit 1)
 				)
 			)
@@ -13434,73 +13247,6 @@
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
 					(reference "#PWR0124")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_Small_US")
-		(at 53.34 71.12 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "4bcc760d-6060-47f8-95a7-15c54bd9459e")
-		(property "Reference" "R104"
-			(at 49.276 70.104 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "22"
-			(at 56.134 70.104 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 53.34 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 53.34 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, small US symbol"
-			(at 53.34 71.12 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "d9897589-168b-4e26-86d7-15582a258e06")
-		)
-		(pin "1"
-			(uuid "0919e24d-d7d8-4660-ac7e-a56deef6135f")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R104")
 					(unit 1)
 				)
 			)
@@ -17116,73 +16862,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_Small_US")
-		(at 53.34 68.58 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "93b658b6-6d2c-4cc7-9c7b-0153d83b743d")
-		(property "Reference" "R103"
-			(at 49.276 67.564 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "22"
-			(at 56.134 67.564 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 53.34 68.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 53.34 68.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, small US symbol"
-			(at 53.34 68.58 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "0180f4e1-807b-4b63-8871-6020b695e7d1")
-		)
-		(pin "1"
-			(uuid "1bbd1f18-1ea8-4e5f-b2b6-b3fcffcddbac")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R103")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 152.4 187.96 0)
 		(mirror y)
@@ -17735,73 +17414,6 @@
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
 					(reference "#PWR0123")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_Small_US")
-		(at 53.34 76.2 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "9ad3f439-b949-43cf-bccd-1cede252d350")
-		(property "Reference" "R106"
-			(at 49.276 75.184 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "22"
-			(at 56.134 75.184 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 53.34 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 53.34 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, small US symbol"
-			(at 53.34 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "eee9f9d2-f989-4dfc-ab6b-a62c2f4b2812")
-		)
-		(pin "1"
-			(uuid "f9d363c2-8a48-49d3-9ff9-6b780f846a62")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R106")
 					(unit 1)
 				)
 			)
@@ -20838,6 +20450,79 @@
 		)
 	)
 	(symbol
+		(lib_id "Transistor_FET:2N7002H")
+		(at 31.75 76.2 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "e12cdd7f-403e-4c9d-9db2-b7cae4c424d2")
+		(property "Reference" "Q101"
+			(at 34.544 73.66 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2N7002H"
+			(at 38.608 80.264 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+			(at 29.845 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "http://www.diodes.com/assets/Datasheets/2N7002H.pdf"
+			(at 27.94 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Description" "0.21A Id, 60V Vds, N-Channel MOSFET, SOT-23"
+			(at 31.75 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "9b1620cd-5a96-46d0-8fcc-2bd2f1d9b972")
+		)
+		(pin "3"
+			(uuid "01ef88d7-e946-4c85-ad3c-4e4b57d49bbf")
+		)
+		(pin "1"
+			(uuid "9fe6b51a-dcf9-4cc6-b363-f29541bad987")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
+					(reference "Q101")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Mechanical:Fiducial")
 		(at 15.24 184.15 0)
 		(unit 1)
@@ -20975,73 +20660,6 @@
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
 					(reference "#PWR0140")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_Small_US")
-		(at 53.34 73.66 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "e370e75f-1e38-4735-8b26-5c30a8b09f35")
-		(property "Reference" "R105"
-			(at 49.276 72.644 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "22"
-			(at 56.134 72.644 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 53.34 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 53.34 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, small US symbol"
-			(at 53.34 73.66 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "5d950e94-5c87-49c6-8dda-3c4441ab0c33")
-		)
-		(pin "1"
-			(uuid "fecc7c6a-1095-4020-a10b-f8a96c66b686")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R105")
 					(unit 1)
 				)
 			)
@@ -22165,28 +21783,8 @@
 			)
 		)
 		(pin "hiON" input
-			(at 151.13 125.73 180)
-			(uuid "93b0d098-1f11-48a2-a76f-4b7d98042b5b")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "lo1ON" input
-			(at 151.13 120.65 180)
-			(uuid "cdf94c0a-9782-4f46-ba94-850150de50d2")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "lo2ON" input
 			(at 151.13 123.19 180)
-			(uuid "355cb0e6-0476-4cac-952a-a0d717655d68")
+			(uuid "93b0d098-1f11-48a2-a76f-4b7d98042b5b")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22197,6 +21795,16 @@
 		(pin "loON" input
 			(at 151.13 118.11 180)
 			(uuid "bf17060f-898c-4a6c-baf5-a8f54a029c74")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "midON" input
+			(at 151.13 120.65 180)
+			(uuid "595158f6-50f3-4cfa-b20a-54527be25fe3")
 			(effects
 				(font
 					(size 1.27 1.27)
