@@ -19,13 +19,13 @@ module Exciter (
   // =====================================================================
   reg [31:0] twReg = 0;
   reg [7:0]  ptReg = 0;
-  reg        txEnReg = 0, rstReg = 1;
+  reg        txEnReg = 0, rst_nco = 1;
 
   always_ff @(posedge clk90) begin
     twReg   <= tuningWord;
     ptReg   <= powerThreshold;
     txEnReg <= txEnable;
-    rstReg  <= reset;
+    rst_nco <= reset;
   end
 
   // =====================================================================
@@ -33,17 +33,17 @@ module Exciter (
   // =====================================================================
   wire [31:0] nco_out;
   SB_MAC16 #(
-    .C_REG(1'b1), .D_REG(1'b1),
-    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1),
-    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1),
+    .A_REG(1'b1), .B_REG(1'b1),
+    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b0), // iA + iQ
+    .BOTADDSUB_LOWERINPUT(2'b00), .BOTADDSUB_UPPERINPUT(1'b0), // iB + iS
     .MODE_8x8(1'b0),
-    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10),
-    .TOPOUTPUT_SELECT(2'b10), .BOTOUTPUT_SELECT(2'b10)
+    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // Carry LCO to HCI
+    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) // Output registered adder (iQ, iS)
   ) dsp_nco (
     .CLK(clk90), .CE(1'b1),
-    .C(twReg[31:16]), .D(twReg[15:0]),
-    .A(16'd0), .B(16'd0),
-    .IRSTTOP(rstReg), .IRSTBOT(rstReg), .ORSTTOP(rstReg), .ORSTBOT(rstReg),
+    .C(16'd0), .D(16'd0),
+    .A(twReg[31:16]), .B(twReg[15:0]),
+    .IRSTTOP(rst_nco), .IRSTBOT(rst_nco), .ORSTTOP(rst_nco), .ORSTBOT(rst_nco),
     .O(nco_out)
   );
   // nco_out T=3
@@ -59,17 +59,17 @@ module Exciter (
   end
 
   SB_MAC16 #(
-    .A_REG(1'b1), .B_REG(1'b1),
-    .TOPADDSUB_LOWERINPUT(2'b01), .TOPADDSUB_UPPERINPUT(1'b1),
-    .BOTADDSUB_LOWERINPUT(2'b01), .BOTADDSUB_UPPERINPUT(1'b1),
+    .A_REG(1'b1), .C_REG(1'b1),
+    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b1), // iA + iC
+    .BOTADDSUB_LOWERINPUT(2'b00), .BOTADDSUB_UPPERINPUT(1'b1), // iB + iD
     .MODE_8x8(1'b0),
-    .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11)
+    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) // Output registered adder
   ) dsp_offset (
     .CLK(clk90), .CE(1'b1),
-    .A(nco_out[31:16]), .B(16'd1),
+    .A(nco_out[31:16]), .B(16'd0),
     .C(m2h_d2), .D(16'd0),
     .O(phase_f),
-    .IRSTTOP(rstReg), .IRSTBOT(rstReg), .ORSTTOP(rstReg), .ORSTBOT(rstReg)
+    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0)
   );
   // phase_f T=5
   wire [15:0] ph_f_h = phase_f[31:16];
@@ -86,13 +86,13 @@ module Exciter (
   // 4. Multipliers (DSP 2 & 3)
   // =====================================================================
   wire [31:0] d1, d2;
-  SB_MAC16 #( .A_REG(1'b1), .B_REG(1'b1), .TOPOUTPUT_SELECT(2'b00), .BOTOUTPUT_SELECT(2'b00) ) 
+  SB_MAC16 #( .A_REG(1'b1), .B_REG(1'b1), .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11) ) 
   m_r ( .CLK(clk90), .CE(1'b1), .A(ph_r_h), .B(16'd6), .O(d1),
-        .IRSTTOP(rstReg), .IRSTBOT(rstReg), .ORSTTOP(rstReg), .ORSTBOT(rstReg) );
+        .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) );
 
-  SB_MAC16 #( .A_REG(1'b1), .B_REG(1'b1), .TOPOUTPUT_SELECT(2'b00), .BOTOUTPUT_SELECT(2'b00) ) 
+  SB_MAC16 #( .A_REG(1'b1), .B_REG(1'b1), .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11) ) 
   m_f ( .CLK(clk90), .CE(1'b1), .A(ph_f_h), .B(16'd6), .O(d2),
-        .IRSTTOP(rstReg), .IRSTBOT(rstReg), .ORSTTOP(rstReg), .ORSTBOT(rstReg) );
+        .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) );
   // Result at T=7
 
   // =====================================================================
@@ -110,46 +110,46 @@ module Exciter (
   end
   
   wire [31:0] cmp_r, cmp_f;
-  // O = A*1 - C  => if O <= 0 then Frac <= PT
+  // Use adder: XW = iA + (iC ^ FFFF) + 0 = iA - iC - 1
+  // This cleverly makes the sign bit O[31] exactly represent (iA <= iC)
   SB_MAC16 #(
-    .A_REG(1'b1), .B_REG(1'b1), .C_REG(1'b1),
-    .TOPADDSUB_LOWERINPUT(2'b01), .TOPADDSUB_UPPERINPUT(1'b1),
-    .BOTADDSUB_LOWERINPUT(2'b01), .BOTADDSUB_UPPERINPUT(1'b1),
-    .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11)
+    .A_REG(1'b1), .C_REG(1'b1),
+    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b1), // iA and iC
+    .TOPADDSUB_CARRYSELECT(2'b00), // Force HCI=0 for A - C - 1
+    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b00) // Top is registered
   ) dsp_cmp_r (
     .CLK(clk90), .CE(1'b1),
-    .A(d1[15:0]), .B(16'd1), // Multiplier is A*B
+    .A({8'd0, d1[15:8]}), .B(16'd0), 
     .C({8'd0, pt_p[6]}), .D(16'd0),
-    .ADDSUBTOP(1'b1), .ADDSUBBOT(1'b1), // Subtraction: A - C
+    .ADDSUBTOP(1'b1), .ADDSUBBOT(1'b0), // Subtraction: A + ~C + 0
     .O(cmp_r),
-    .IRSTTOP(rstReg), .IRSTBOT(rstReg), .ORSTTOP(rstReg), .ORSTBOT(rstReg)
+    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0)
   );
 
   SB_MAC16 #(
-    .A_REG(1'b1), .B_REG(1'b1), .C_REG(1'b1),
-    .TOPADDSUB_LOWERINPUT(2'b01), .TOPADDSUB_UPPERINPUT(1'b1),
-    .BOTADDSUB_LOWERINPUT(2'b01), .BOTADDSUB_UPPERINPUT(1'b1),
-    .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11)
+    .A_REG(1'b1), .C_REG(1'b1),
+    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b1), // iA and iC
+    .TOPADDSUB_CARRYSELECT(2'b00), // Force HCI=0 for A - C - 1
+    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b00) // Top is registered
   ) dsp_cmp_f (
     .CLK(clk90), .CE(1'b1),
-    .A(d2[15:0]), .B(16'd1),
+    .A({8'd0, d2[15:8]}), .B(16'd0),
     .C({8'd0, pt_p[6]}), .D(16'd0),
-    .ADDSUBTOP(1'b1), .ADDSUBBOT(1'b1),
+    .ADDSUBTOP(1'b1), .ADDSUBBOT(1'b0),
     .O(cmp_f),
-    .IRSTTOP(rstReg), .IRSTBOT(rstReg), .ORSTTOP(rstReg), .ORSTBOT(rstReg)
+    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0)
   );
   // cmp result at T=9
 
   // =====================================================================
   // 6. Decoding & Output
   // =====================================================================
-  // Sign bit check for comparison: result <= 0 means sign bit is 0 (for positive) 
-  // Wait, in 2's complement: A - B <= 0  is  A <= B.
-  // Sign bit O[31] = 1 means negative (A < B). O=0 means equal.
-  // So (O[31] || O == 0) is A <= B.
+  // With HCI=0, O = A - C - 1. 
+  // If A <= C, then A - C - 1 < 0, so the sign bit O[31] is 1.
+  // If A > C, then A - C - 1 >= 0, so the sign bit O[31] is 0.
   
-  wire en_r_raw = (cmp_r[31] || cmp_r == 0);
-  wire en_f_raw = (cmp_f[31] || cmp_f == 0);
+  wire en_r_raw = cmp_r[31];
+  wire en_f_raw = cmp_f[31];
   
   // Pipeline txEnable to T=9
   reg [8:0] tx_p = 0;
@@ -185,9 +185,10 @@ module Exciter (
 
   // Total latency: 11 cycles. Delay = 12.
 
-  SB_IO #(.PIN_TYPE(6'b011000)) io0 (.PACKAGE_PIN(rfPushBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[0]), .D_OUT_1(oFi[0]));
-  SB_IO #(.PIN_TYPE(6'b011000)) io1 (.PACKAGE_PIN(rfPushPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[1]), .D_OUT_1(oFi[1]));
-  SB_IO #(.PIN_TYPE(6'b011000)) io2 (.PACKAGE_PIN(rfPullBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[2]), .D_OUT_1(oFi[2]));
-  SB_IO #(.PIN_TYPE(6'b011000)) io3 (.PACKAGE_PIN(rfPullPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[3]), .D_OUT_1(oFi[3]));
+  // PIN_TYPE 6'b010000 means "Output Pin, DDR output using dout_q_0 and dout_q_1"
+  SB_IO #(.PIN_TYPE(6'b010000)) io0 (.PACKAGE_PIN(rfPushBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[0]), .D_OUT_1(oFi[0]));
+  SB_IO #(.PIN_TYPE(6'b010000)) io1 (.PACKAGE_PIN(rfPushPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[1]), .D_OUT_1(oFi[1]));
+  SB_IO #(.PIN_TYPE(6'b010000)) io2 (.PACKAGE_PIN(rfPullBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[2]), .D_OUT_1(oFi[2]));
+  SB_IO #(.PIN_TYPE(6'b010000)) io3 (.PACKAGE_PIN(rfPullPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[3]), .D_OUT_1(oFi[3]));
 
 endmodule
