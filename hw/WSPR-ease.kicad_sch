@@ -9636,7 +9636,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "042a8b28-d16d-433b-8caa-f9dec3797225")
-		(property "Reference" "R108"
+		(property "Reference" "R104"
 			(at 106.172 150.114 0)
 			(effects
 				(font
@@ -9942,7 +9942,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R108")
+					(reference "R104")
 					(unit 1)
 				)
 			)
@@ -10023,7 +10023,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "111b5b9b-b62b-4af0-9cd0-10e5bbb836c2")
-		(property "Reference" "R112"
+		(property "Reference" "R108"
 			(at 107.696 99.314 90)
 			(effects
 				(font
@@ -10075,7 +10075,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R112")
+					(reference "R108")
 					(unit 1)
 				)
 			)
@@ -10224,7 +10224,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "193bcfdb-9c54-4dd4-982c-f99bf2c5b1a9")
-		(property "Reference" "R107"
+		(property "Reference" "R103"
 			(at 94.996 91.694 90)
 			(effects
 				(font
@@ -10276,7 +10276,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R107")
+					(reference "R103")
 					(unit 1)
 				)
 			)
@@ -10665,7 +10665,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "28ce535b-5933-4ca9-95b9-e5a6366b69d7")
-		(property "Reference" "R109"
+		(property "Reference" "R105"
 			(at 103.378 196.088 0)
 			(effects
 				(font
@@ -10717,7 +10717,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R109")
+					(reference "R105")
 					(unit 1)
 				)
 			)
@@ -12459,7 +12459,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4641f470-b565-43d6-93c6-405ade8c799a")
-		(property "Reference" "R114"
+		(property "Reference" "R110"
 			(at 145.796 51.308 90)
 			(effects
 				(font
@@ -12781,7 +12781,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R114")
+					(reference "R110")
 					(unit 1)
 				)
 			)
@@ -13261,7 +13261,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4c458cb1-bca1-48a1-90e2-affb96df3b42")
-		(property "Reference" "R110"
+		(property "Reference" "R106"
 			(at 107.696 91.694 90)
 			(effects
 				(font
@@ -13313,7 +13313,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R110")
+					(reference "R106")
 					(unit 1)
 				)
 			)
@@ -13741,7 +13741,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5a47d5b5-dc5e-40af-a5d0-7fdedf280b2a")
-		(property "Reference" "R111"
+		(property "Reference" "R107"
 			(at 107.696 95.504 90)
 			(effects
 				(font
@@ -13793,7 +13793,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R111")
+					(reference "R107")
 					(unit 1)
 				)
 			)
@@ -13808,7 +13808,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "62e117d7-61a8-4a73-adb5-ec18c7f51cba")
-		(property "Reference" "R113"
+		(property "Reference" "R109"
 			(at 119.126 91.694 90)
 			(effects
 				(font
@@ -13860,7 +13860,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R113")
+					(reference "R109")
 					(unit 1)
 				)
 			)
@@ -14221,7 +14221,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "66e39540-8108-4da5-9c2f-73ec3329c952")
-		(property "Reference" "R117"
+		(property "Reference" "R113"
 			(at 231.394 159.766 0)
 			(effects
 				(font
@@ -14543,7 +14543,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R117")
+					(reference "R113")
 					(unit 1)
 				)
 			)
@@ -17429,7 +17429,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a1552464-0d5c-4ac1-81f0-2412f159f809")
-		(property "Reference" "R116"
+		(property "Reference" "R112"
 			(at 231.648 150.114 0)
 			(effects
 				(font
@@ -17735,7 +17735,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R116")
+					(reference "R112")
 					(unit 1)
 				)
 			)
@@ -19844,7 +19844,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d748aa3f-642f-466a-b0b4-ad94c6bd7f18")
-		(property "Reference" "R115"
+		(property "Reference" "R111"
 			(at 146.304 57.912 90)
 			(effects
 				(font
@@ -20166,7 +20166,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "R115")
+					(reference "R111")
 					(unit 1)
 				)
 			)

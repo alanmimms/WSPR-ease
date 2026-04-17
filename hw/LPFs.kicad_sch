@@ -3396,7 +3396,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "087b5a15-4e48-45dd-aad5-0b44e149a711")
-		(property "Reference" "#PWR0211"
+		(property "Reference" "#PWR0215"
 			(at 119.38 86.36 0)
 			(effects
 				(font
@@ -3447,7 +3447,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0211")
+					(reference "#PWR0215")
 					(unit 1)
 				)
 			)
@@ -3568,7 +3568,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0fd54878-ff3f-4f75-be4b-bce144ce92cc")
-		(property "Reference" "L205"
+		(property "Reference" "L206"
 			(at 127 102.87 90)
 			(effects
 				(font
@@ -3647,7 +3647,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L205")
+					(reference "L206")
 					(unit 1)
 				)
 			)
@@ -3663,7 +3663,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1022b258-fc8c-43a9-affc-1d25cbc09c95")
-		(property "Reference" "#PWR0214"
+		(property "Reference" "#PWR0210"
 			(at 107.95 143.51 0)
 			(effects
 				(font
@@ -3714,7 +3714,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0214")
+					(reference "#PWR0210")
 					(unit 1)
 				)
 			)
@@ -3730,7 +3730,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3584f537-60c4-4ac5-afd0-a1651893d59f")
-		(property "Reference" "L206"
+		(property "Reference" "L204"
 			(at 125.73 161.29 90)
 			(effects
 				(font
@@ -3818,7 +3818,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L206")
+					(reference "L204")
 					(unit 1)
 				)
 			)
@@ -3833,7 +3833,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "37a29073-3d33-4cbf-9beb-a7235a24fd3a")
-		(property "Reference" "C204"
+		(property "Reference" "C201"
 			(at 99.314 169.418 0)
 			(effects
 				(font
@@ -3923,7 +3923,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C204")
+					(reference "C201")
 					(unit 1)
 				)
 			)
@@ -3939,7 +3939,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3867dd58-f89d-4482-b538-a934827691ed")
-		(property "Reference" "#PWR0215"
+		(property "Reference" "#PWR0213"
 			(at 118.11 143.51 0)
 			(effects
 				(font
@@ -3990,7 +3990,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0215")
+					(reference "#PWR0213")
 					(unit 1)
 				)
 			)
@@ -4006,7 +4006,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "42a48b26-4f2d-4570-b91a-32c99011be9a")
-		(property "Reference" "K202"
+		(property "Reference" "K203"
 			(at 130.81 87.6299 0)
 			(effects
 				(font
@@ -4079,7 +4079,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "K202")
+					(reference "K203")
 					(unit 1)
 				)
 			)
@@ -4160,7 +4160,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5072d72c-f714-419e-a001-444fe91d59b0")
-		(property "Reference" "K201"
+		(property "Reference" "K202"
 			(at 134.62 35.56 90)
 			(effects
 				(font
@@ -4231,7 +4231,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "K201")
+					(reference "K202")
 					(unit 1)
 				)
 			)
@@ -4247,7 +4247,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "669aee59-fda4-40c2-989a-58291de491a8")
-		(property "Reference" "#PWR0204"
+		(property "Reference" "#PWR0206"
 			(at 100.33 125.73 0)
 			(effects
 				(font
@@ -4298,7 +4298,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0204")
+					(reference "#PWR0206")
 					(unit 1)
 				)
 			)
@@ -4314,7 +4314,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6716787b-1e4a-40eb-8a3e-fd4855867e19")
-		(property "Reference" "L201"
+		(property "Reference" "L202"
 			(at 110.49 48.26 90)
 			(effects
 				(font
@@ -4411,7 +4411,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L201")
+					(reference "L202")
 					(unit 1)
 				)
 			)
@@ -4427,7 +4427,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "67818708-630e-435a-bf3e-5de555fc3f68")
-		(property "Reference" "#PWR0210"
+		(property "Reference" "#PWR0212"
 			(at 109.22 86.36 0)
 			(effects
 				(font
@@ -4478,7 +4478,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0210")
+					(reference "#PWR0212")
 					(unit 1)
 				)
 			)
@@ -4493,7 +4493,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "72edae65-c509-4fb9-9d4d-5878a9b9158f")
-		(property "Reference" "D201"
+		(property "Reference" "D202"
 			(at 96.52 83.058 0)
 			(effects
 				(font
@@ -4581,7 +4581,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "D201")
+					(reference "D202")
 					(unit 1)
 				)
 			)
@@ -4597,7 +4597,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "764c5257-750d-413c-bb12-2bb4e9fe7997")
-		(property "Reference" "#PWR0208"
+		(property "Reference" "#PWR0202"
 			(at 91.44 125.73 0)
 			(effects
 				(font
@@ -4648,7 +4648,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0208")
+					(reference "#PWR0202")
 					(unit 1)
 				)
 			)
@@ -4663,7 +4663,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7718a5a0-f6cf-4873-99b0-f7866faf4350")
-		(property "Reference" "C210"
+		(property "Reference" "C207"
 			(at 134.874 169.418 0)
 			(effects
 				(font
@@ -4753,7 +4753,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C210")
+					(reference "C207")
 					(unit 1)
 				)
 			)
@@ -4769,7 +4769,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7e71d84b-98a1-4a89-a601-4bcadfa1d8d7")
-		(property "Reference" "L204"
+		(property "Reference" "L205"
 			(at 127 48.26 90)
 			(effects
 				(font
@@ -4866,7 +4866,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L204")
+					(reference "L205")
 					(unit 1)
 				)
 			)
@@ -4987,7 +4987,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "85399592-2b29-4dca-a130-c8b34f86dce1")
-		(property "Reference" "#PWR0212"
+		(property "Reference" "#PWR0201"
 			(at 90.17 184.15 0)
 			(effects
 				(font
@@ -5038,7 +5038,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0212")
+					(reference "#PWR0201")
 					(unit 1)
 				)
 			)
@@ -5054,7 +5054,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "922b8851-7dc1-43f6-813c-7c1aaa469db6")
-		(property "Reference" "#PWR0213"
+		(property "Reference" "#PWR0207"
 			(at 102.87 139.7 0)
 			(effects
 				(font
@@ -5104,7 +5104,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0213")
+					(reference "#PWR0207")
 					(unit 1)
 				)
 			)
@@ -5120,7 +5120,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "939626a1-272f-464f-9f70-75d1fe57c6c2")
-		(property "Reference" "#PWR0203"
+		(property "Reference" "#PWR0205"
 			(at 100.33 71.12 0)
 			(effects
 				(font
@@ -5171,7 +5171,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0203")
+					(reference "#PWR0205")
 					(unit 1)
 				)
 			)
@@ -5292,7 +5292,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "aad27e80-6ae6-4a00-a4a3-deea9fedc1b6")
-		(property "Reference" "#PWR0201"
+		(property "Reference" "#PWR0208"
 			(at 104.14 29.21 0)
 			(effects
 				(font
@@ -5342,7 +5342,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0201")
+					(reference "#PWR0208")
 					(unit 1)
 				)
 			)
@@ -5357,7 +5357,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "af12b082-a449-470c-af9f-0b0fc1a4283f")
-		(property "Reference" "Q203"
+		(property "Reference" "Q201"
 			(at 85.09 168.656 90)
 			(effects
 				(font
@@ -5415,7 +5415,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "Q203")
+					(reference "Q201")
 					(unit 1)
 				)
 			)
@@ -5431,7 +5431,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b045afdd-9dea-40c4-b41b-e595ec3f6769")
-		(property "Reference" "#PWR0206"
+		(property "Reference" "#PWR0211"
 			(at 109.22 33.02 0)
 			(effects
 				(font
@@ -5482,7 +5482,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0206")
+					(reference "#PWR0211")
 					(unit 1)
 				)
 			)
@@ -5497,7 +5497,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b3495392-c6d2-4b80-9c7e-db91f00cc663")
-		(property "Reference" "Q201"
+		(property "Reference" "Q203"
 			(at 87.63 55.626 90)
 			(effects
 				(font
@@ -5555,7 +5555,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "Q201")
+					(reference "Q203")
 					(unit 1)
 				)
 			)
@@ -5570,7 +5570,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c2e3da6c-3016-4f77-9f61-67d6f604e9fa")
-		(property "Reference" "D203"
+		(property "Reference" "D201"
 			(at 95.25 140.208 0)
 			(effects
 				(font
@@ -5658,7 +5658,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "D203")
+					(reference "D201")
 					(unit 1)
 				)
 			)
@@ -5674,7 +5674,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c37118e0-14bb-4d47-bb16-178374a745eb")
-		(property "Reference" "L203"
+		(property "Reference" "L201"
 			(at 109.22 161.29 90)
 			(effects
 				(font
@@ -5762,7 +5762,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L203")
+					(reference "L201")
 					(unit 1)
 				)
 			)
@@ -5883,7 +5883,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cc5de383-4030-4d0b-ab1f-b8fefd4def76")
-		(property "Reference" "K203"
+		(property "Reference" "K201"
 			(at 129.54 144.7799 0)
 			(effects
 				(font
@@ -5956,7 +5956,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "K203")
+					(reference "K201")
 					(unit 1)
 				)
 			)
@@ -6077,7 +6077,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e589417e-8821-452e-a5f7-20db06006b4e")
-		(property "Reference" "#PWR0207"
+		(property "Reference" "#PWR0214"
 			(at 119.38 33.02 0)
 			(effects
 				(font
@@ -6128,7 +6128,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0207")
+					(reference "#PWR0214")
 					(unit 1)
 				)
 			)
@@ -6216,7 +6216,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e61e011c-decb-4f29-9758-925fc2ee32be")
-		(property "Reference" "C207"
+		(property "Reference" "C204"
 			(at 117.094 169.418 0)
 			(effects
 				(font
@@ -6306,7 +6306,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C207")
+					(reference "C204")
 					(unit 1)
 				)
 			)
@@ -6322,7 +6322,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ed770e1a-409a-4827-aa2e-edee977c6d60")
-		(property "Reference" "#PWR0205"
+		(property "Reference" "#PWR0204"
 			(at 99.06 184.15 0)
 			(effects
 				(font
@@ -6373,7 +6373,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0205")
+					(reference "#PWR0204")
 					(unit 1)
 				)
 			)
@@ -6388,7 +6388,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f3bc9fb0-214f-4114-9b21-6fb52e78273d")
-		(property "Reference" "D202"
+		(property "Reference" "D203"
 			(at 97.79 29.718 0)
 			(effects
 				(font
@@ -6476,7 +6476,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "D202")
+					(reference "D203")
 					(unit 1)
 				)
 			)
@@ -6492,7 +6492,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f665869a-6dc7-421d-ad7e-a2bf338e1aa3")
-		(property "Reference" "L202"
+		(property "Reference" "L203"
 			(at 110.49 102.87 90)
 			(effects
 				(font
@@ -6571,7 +6571,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L202")
+					(reference "L203")
 					(unit 1)
 				)
 			)
@@ -6692,7 +6692,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "fc29404d-db2e-49d9-8125-6b7fc22375a6")
-		(property "Reference" "#PWR0202"
+		(property "Reference" "#PWR0203"
 			(at 92.71 71.12 0)
 			(effects
 				(font
@@ -6743,7 +6743,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "#PWR0202")
+					(reference "#PWR0203")
 					(unit 1)
 				)
 			)
