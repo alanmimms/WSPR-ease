@@ -101,6 +101,6 @@ module Top (
 
   logic dEn;
   always_ff @(posedge clk90) dEn <= !(txEnable & pllLocked_clk90);
-  SB_IO #(.PIN_TYPE(6'b010101)) ioD (.PACKAGE_PIN(driverNEN), .D_OUT_0(dEn));
+  assign driverNEN = dEn;
 
 endmodule

@@ -1,5 +1,5 @@
 `timescale 1ns / 100ps
-// Behavioral model for Lattice SB_IO (Registered DDR Output)
+// Behavioral model for Lattice SB_IO
 module SB_IO #(
     parameter [5:0] PIN_TYPE = 6'b000000,
     parameter [0:0] PULLUP = 1'b0,
@@ -19,22 +19,34 @@ module SB_IO #(
     input  logic LATCH_INPUT_VALUE
 );
 
-    // Simple DDR registered output model
-    logic r0, r1;
+    logic dout_q_0 = 0;
+    logic dout_q_1 = 0;
+    
+    // Sample the outputs on the clock edges if we are in a registered mode
     always @(posedge OUTPUT_CLK) begin
-        // For simulation, assume CE is 1 if not connected
-        r0 <= D_OUT_0;
-        r1 <= D_OUT_1;
+        dout_q_0 <= D_OUT_0;
+    end
+    always @(negedge OUTPUT_CLK) begin
+        dout_q_1 <= D_OUT_1;
     end
 
-    // Use PIN_TYPE bits 3:2 to decide if we use DDR
-    // Bits 3:2 == 2'b10 means DDR.
-    // However, many Lattice users use 2'b11 for Registered Inverted.
-    // For simulation we just check if OUTPUT_CLK is used.
-    wire out_val = (PIN_TYPE[3:2] == 2'b10) ? (OUTPUT_CLK ? r0 : r1) : D_OUT_0;
+    logic dout;
+    always @(*) begin
+        if (PIN_TYPE[3:2] == 2'b10) begin
+            // Combinatorial (e.g., 6'b011000)
+            dout = D_OUT_0;
+        end else if (PIN_TYPE[3:2] == 2'b00) begin
+            // DDR Registered (e.g., 6'b010000)
+            // Outputs dout_q_0 on high phase of OUTPUT_CLK, dout_q_1 on low phase
+            dout = OUTPUT_CLK ? dout_q_0 : dout_q_1;
+        end else begin
+            // Default to D_OUT_0 for others right now to avoid simulation issues
+            dout = D_OUT_0;
+        end
+    end
     
     // For simulation, assume OUTPUT_ENABLE is 1 if not connected
-    assign PACKAGE_PIN = out_val;
+    assign PACKAGE_PIN = dout;
     assign PACKAGE_PIN_OUT = PACKAGE_PIN;
 
 endmodule

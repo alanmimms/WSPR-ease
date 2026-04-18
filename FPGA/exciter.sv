@@ -96,66 +96,13 @@ module Exciter (
   // Result at T=7
 
   // =====================================================================
-  // 5. DSP-Hardened Comparison (DSP 4 & 5)
+  // 5. Hardcoded Power Enable (100% Duty Cycle)
   // =====================================================================
-  // We use the DSP block to perform (Fractional Phase - Power Threshold).
-  // If result is negative or zero, then Frac <= PT.
-  // We care about the sign bit (O[31]) or O == 0.
+  // We have removed the DSP comparators entirely.
+  // We hardcode the enable signals to 1'b1.
   
-  // Pipeline Power Threshold to T=7
-  reg [7:0] pt_p [6:0];
-  always_ff @(posedge clk90) begin
-    pt_p[0] <= ptReg;
-    for (int i=1; i<7; i++) pt_p[i] <= pt_p[i-1];
-  end
-  
-  wire [31:0] cmp_r, cmp_f;
-  // Use adder: XW = iA + (iC ^ FFFF) + 0 = iA - iC - 1
-  // This cleverly makes the sign bit O[31] exactly represent (iA <= iC)
-  SB_MAC16 #(
-    .A_REG(1'b1), .C_REG(1'b1),
-    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b1), // iA and iC
-    .TOPADDSUB_CARRYSELECT(2'b00), // Force HCI=0 for A - C - 1
-    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b00) // Top is registered
-  ) dsp_cmp_r (
-    .CLK(clk90), .CE(1'b1),
-    .A({8'd0, d1[15:8]}), .B(16'd0), 
-    .C({8'd0, pt_p[6]}), .D(16'd0),
-    .ADDSUBTOP(1'b1), .ADDSUBBOT(1'b0), // Subtraction: A + ~C + 0
-    .O(cmp_r),
-    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0)
-  );
-
-  SB_MAC16 #(
-    .A_REG(1'b1), .C_REG(1'b1),
-    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b1), // iA and iC
-    .TOPADDSUB_CARRYSELECT(2'b00), // Force HCI=0 for A - C - 1
-    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b00) // Top is registered
-  ) dsp_cmp_f (
-    .CLK(clk90), .CE(1'b1),
-    .A({8'd0, d2[15:8]}), .B(16'd0),
-    .C({8'd0, pt_p[6]}), .D(16'd0),
-    .ADDSUBTOP(1'b1), .ADDSUBBOT(1'b0),
-    .O(cmp_f),
-    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0)
-  );
-  // cmp result at T=9
-
-  // =====================================================================
-  // 6. Decoding & Output
-  // =====================================================================
-  // With HCI=0, O = A - C - 1. 
-  // If A <= C, then A - C - 1 < 0, so the sign bit O[31] is 1.
-  // If A > C, then A - C - 1 >= 0, so the sign bit O[31] is 0.
-  
-  wire en_r_raw = cmp_r[31];
-  wire en_f_raw = cmp_f[31];
-  
-  // Pipeline txEnable to T=9
-  reg [8:0] tx_p = 0;
-  always_ff @(posedge clk90) begin
-    tx_p <= {tx_p[7:0], txEnReg};
-  end
+  wire en_r_raw = 1'b1;
+  wire en_f_raw = 1'b1;
   
   // Pipeline state to T=9
   reg [2:0] str_p1, str_p2, str_p3;
@@ -178,9 +125,9 @@ module Exciter (
   reg [3:0] oR, oF;
   reg [3:0] oRi, oFi;
   always_ff @(posedge clk90) begin
-    oR <= decode(str_p3) & {4{en_r_raw && tx_p[8]}}; // T=10
-    oF <= decode(stf_p3) & {4{en_f_raw && tx_p[8]}}; // T=10
-    oRi <= oR; oFi <= oF;                           // T=11
+    oR <= decode(str_p3) & {4{txEnReg}}; // T=10
+    oF <= decode(stf_p3) & {4{txEnReg}}; // T=10
+    oRi <= oR; oFi <= oF;                // T=11
   end
 
   // Total latency: 11 cycles. Delay = 12.

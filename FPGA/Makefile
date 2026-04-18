@@ -16,7 +16,7 @@ VERILATOR_FLAGS += -LDFLAGS "-lm"
 
 # Source files
 RTL_SOURCES := top.sv exciter.sv SPIRegisters.sv freqCounter.sv syncronizer.sv edgeDetector.sv
-RTL_SIM_SOURCES += $(SIM_DIR)/sbIO.sv $(SIM_DIR)/sbPLL40Core.sv $(SIM_DIR)/sbPLL40Pad.sv $(SIM_DIR)/sbRAM404K.sv $(SIM_DIR)/sbGB.sv
+RTL_SIM_SOURCES += $(SIM_DIR)/sbIO.sv $(SIM_DIR)/sbMAC16.sv $(SIM_DIR)/sbPLL40Core.sv $(SIM_DIR)/sbPLL40Pad.sv $(SIM_DIR)/sbRAM404K.sv $(SIM_DIR)/sbGB.sv
 GENERATED_SOURCES := regs.sv regs.hpp regs.md
 
 CPP_SOURCES := tbTop.cpp

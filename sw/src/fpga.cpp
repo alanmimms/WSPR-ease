@@ -236,8 +236,9 @@ namespace wspr {
     // M = (freqHz / 90,000,000) * 2^32.
 
     // Using 64-bit math to avoid overflow before division
-    const uint64_t f_limit = 90000000ULL;
-    uint64_t word = ((uint64_t)freqHz << 32) / f_limit;
+    uint64_t word = ((uint64_t)freqHz << 32) / ncoHz;
+
+    logger.inf("config", "Setting tuning word to 0x%08X", (uint32_t) word);
 
     return spiWriteReg(WSPRRegs::aWSPRTuning, (uint32_t)word);
   }

@@ -28,7 +28,8 @@ namespace wspr {
   public:
     static FPGA& instance();
 
-    static const int tcxoFreqHz = 40*1000*1000;
+    static const unsigned tcxoFreqHz = 40 * 1000 * 1000;
+    static const uint64_t ncoHz = 90ull * 1000ull * 1000ull;
 
     int init();
     int reset();
