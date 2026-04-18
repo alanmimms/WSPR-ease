@@ -14,6 +14,17 @@ target_include_directories(app PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/../FPGA
 )
 
+# Calculate paths dynamically to remain generalized
+set(toolsDirPath "${CMAKE_CURRENT_SOURCE_DIR}/../tools")
+set(flashScriptPath "${toolsDirPath}/remote-flash.sh")
+set(binFilePath "${CMAKE_BINARY_DIR}/zephyr/zephyr.bin")
+
+# Define the custom target that depends on the final zephyr binary
+add_custom_target(remoteFlash
+  COMMAND bash ${flashScriptPath} ${binFilePath}
+  DEPENDS zephyr_final
+)
+
 # Source files
 target_sources(app PRIVATE
   src/main.cpp

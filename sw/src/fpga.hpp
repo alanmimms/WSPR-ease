@@ -44,9 +44,6 @@ namespace wspr {
     int stopTX();
     bool isTransmitting() const { return initialized && transmitting; }
 
-    // Power control (0-255)
-    int setPowerLevel(uint8_t level);
-
     // Send WSPR symbol (0-3) - 4-FSK modulation
     int sendSymbol(uint8_t symbol);
 

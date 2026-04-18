@@ -94,7 +94,6 @@ namespace wspr {
     sweepContinuous = (argc > 2 && strcmp(argv[2], "continuous") == 0);
     
     auto& fpga = FPGA::instance();
-    fpga.setPowerLevel(255); // Full power for sweep
     fpga.startTX();
 
     sweepRunning = true;
@@ -132,10 +131,9 @@ namespace wspr {
 
       auto& fpga = FPGA::instance();
       fpga.setFrequency(freqHz);
-      fpga.setPowerLevel(pwr);
       int ret = fpga.startTX();
       if (ret == 0 || ret == -EALREADY) {
-        shell_print(sh, "TX: %.6f MHz (Power %u)", freqMhz, pwr);
+        shell_print(sh, "TX: %.6f MHz", freqMhz);
         return 0;
       } else {
         shell_error(sh, "Failed to start TX: %d", ret);
@@ -251,7 +249,6 @@ namespace wspr {
     shell_print(sh, "Status:            TX=%s, PLL=%s",
                 ctrl.txEnable ? "ON" : "OFF",
 		ctrl.pllLocked ? "LOCKED" : "NO_LOCK");
-    shell_print(sh, "Power Thresh:            0x%02x", ctrl.powerThresh);
     shell_print(sh, "Tuning Word:       0x%08x", tuning);
     
     // We are measuring exactly 1 second between two rising edges
@@ -390,7 +387,6 @@ namespace wspr {
     shell_print(sh, "PLL Locked:      %s", (ctrl.pllLocked) ? "YES" : "NO");
     shell_print(sh, "--- Registers ---");
     shell_print(sh, "Tuning Word:     0x%08X", tuning);
-    shell_print(sh, "Power Thresh:          0x%02X", ctrl.powerThresh);
     if (!ctrl.pllLocked) shell_warn(sh, "WARNING: FPGA PLL is not locked.");
     return 0;
   }

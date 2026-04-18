@@ -267,16 +267,6 @@ namespace wspr {
     return spiWriteReg(WSPRRegs::aWSPRControl, ctrl.u);
   }
 
-  int FPGA::setPowerLevel(uint8_t level) {
-    if (!initialized) return -ENODEV;
-    logger.inf("config", "Setting FPGA power level to %u", level);
-
-    WSPRRegs::WSPRControl ctrl;
-    spiReadReg(WSPRRegs::aWSPRControl, &ctrl.u);
-    ctrl.powerThresh = level;
-    return spiWriteReg(WSPRRegs::aWSPRControl, ctrl.u);
-  }
-
   int FPGA::sendSymbol(uint8_t symbol) {
     if (!initialized) return -ENODEV;
 
