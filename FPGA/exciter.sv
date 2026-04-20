@@ -60,13 +60,13 @@ module Exciter (
 
   SB_MAC16 #(
     .A_REG(1'b1), .C_REG(1'b1),
-    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b1), // iA + iC
-    .BOTADDSUB_LOWERINPUT(2'b00), .BOTADDSUB_UPPERINPUT(1'b1), // iB + iD
+    .TOPADDSUB_LOWERINPUT(2'b01), .TOPADDSUB_UPPERINPUT(1'b1), // iA + iC
+    .BOTADDSUB_LOWERINPUT(2'b01), .BOTADDSUB_UPPERINPUT(1'b1), // iB + iD
     .MODE_8x8(1'b0),
     .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) // Output registered adder
   ) dsp_offset (
     .CLK(clk90), .CE(1'b1),
-    .A(prh_d2), .B(16'd0), // Use prh_d2 (T=4) to align with m2h_d2 (T=4)
+    .A(nco_out[31:16]), .B(16'd0), // Align nco_out (T=3) with m2h_d2 (T=3)
     .C(m2h_d2), .D(16'd0),
     .O(phase_f),
     .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0)
@@ -74,14 +74,13 @@ module Exciter (
   // phase_f T=5
   wire [15:0] ph_f_h = phase_f[31:16];
 
-  // Align Rising Phase to T=5 (to match Falling Phase T=5)
-  reg [15:0] prh_d1, prh_d2, prh_d3;
+  // Align Rising Phase to T=5 (to match Falling Phase phase_f T=5)
+  reg [15:0] prh_d1, prh_d2;
   always_ff @(posedge clk90) begin
     prh_d1 <= nco_out[31:16];
-    prh_d2 <= prh_d1;
-    prh_d3 <= prh_d2; // T=5
+    prh_d2 <= prh_d1; // T=5
   end
-  wire [15:0] ph_r_h = prh_d3;
+  wire [15:0] ph_r_h = prh_d2;
 
   // =====================================================================
   // 4. Phase Dither Generator (LCG PRNG in DSP 4)
@@ -94,7 +93,7 @@ module Exciter (
     .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), // Top: Mult_High + C
     .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), // Bot: Mult_Low + D
     .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // Propagate carry
-    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01)         // Unregistered adder output
+    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01)         // Registered adder output
   ) dsp_prng (
     .CLK(clk90), .CE(1'b1),
     .A(lcg_out[15:0]), .B(16'd25173), // Multiplier (a)
@@ -103,11 +102,14 @@ module Exciter (
     .IRSTTOP(rst_nco), .IRSTBOT(rst_nco), .ORSTTOP(rst_nco), .ORSTBOT(rst_nco)
   );
 
-  // The top 16 bits of the 32-bit PRNG result have the best entropy for a 16-bit LCG.
-  // We use the full 16-bit width to ensure dither spans the entire fractional
-  // remainder of the phase-to-state mapping.
-  wire [15:0] noise_r = lcg_out[31:16];
-  wire [15:0] noise_f = ~lcg_out[31:16]; 
+  // Scale dither noise to exactly bridge the quantization gap (1/6 of a cycle).
+  // Each state covers 1/6 of the 16-bit phase range (~10922 counts).
+  // We take the 16-bit LCG state and scale it to [0..10921] by multiplying 
+  // by (10922/65536) ≈ 1/6. A simple shift by 3 (noise/8) gives ~8192, 
+  // which is close, but noise/6 is better. 
+  // Let's use noise/6 to perfectly span the 10922 count state width.
+  wire [15:0] noise_r_scaled = lcg_out[15:0] / 16'd6;
+  wire [15:0] noise_f_scaled = (~lcg_out[15:0]) / 16'd6;
 
   // =====================================================================
   // 5. Multipliers (DSP 2 & 3) with Zero-Cost Dither Injection
@@ -117,14 +119,14 @@ module Exciter (
   // Rising Edge Mapping
   SB_MAC16 #( 
     .A_REG(1'b1), .B_REG(1'b1), .C_REG(1'b0), .D_REG(1'b0), 
-    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), // Top: Mult_High + C
-    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), // Bot: Mult_Low + D
-    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // MUST propagate carry to State bits
+    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), 
+    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), 
+    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), 
     .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) 
   ) m_r ( 
     .CLK(clk90), .CE(1'b1), 
     .A(ph_r_h), .B(16'd6), 
-    .C(16'd0), .D(noise_r), // Small dither injected into fractional remainder
+    .C(16'd0), .D(noise_r_scaled), // Dither exactly spans one state width
     .O(d1),
     .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) 
   );
@@ -139,7 +141,7 @@ module Exciter (
   ) m_f ( 
     .CLK(clk90), .CE(1'b1), 
     .A(ph_f_h), .B(16'd6), 
-    .C(16'd0), .D(noise_f), // Small dither injected into fractional remainder
+    .C(16'd0), .D(noise_f_scaled), // Dither exactly spans one state width
     .O(d2),
     .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) 
   );
@@ -183,10 +185,10 @@ module Exciter (
 
   // Total latency: 12 cycles.
 
-  // PIN_TYPE 6'b010000 means "Output Pin, DDR output using dout_q_0 and dout_q_1"
-  SB_IO #(.PIN_TYPE(6'b010000)) io0 (.PACKAGE_PIN(rfPushBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[0]), .D_OUT_1(oFi[0]));
-  SB_IO #(.PIN_TYPE(6'b010000)) io1 (.PACKAGE_PIN(rfPushPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[1]), .D_OUT_1(oFi[1]));
-  SB_IO #(.PIN_TYPE(6'b010000)) io2 (.PACKAGE_PIN(rfPullBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[2]), .D_OUT_1(oFi[2]));
-  SB_IO #(.PIN_TYPE(6'b010000)) io3 (.PACKAGE_PIN(rfPullPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[3]), .D_OUT_1(oFi[3]));
+  // PIN_TYPE 6'b011000 means "Output Pin, DDR output using dout_q_0 and dout_q_1"
+  SB_IO #(.PIN_TYPE(6'b011000)) io0 (.PACKAGE_PIN(rfPushBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[0]), .D_OUT_1(oFi[0]));
+  SB_IO #(.PIN_TYPE(6'b011000)) io1 (.PACKAGE_PIN(rfPushPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[1]), .D_OUT_1(oFi[1]));
+  SB_IO #(.PIN_TYPE(6'b011000)) io2 (.PACKAGE_PIN(rfPullBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[2]), .D_OUT_1(oFi[2]));
+  SB_IO #(.PIN_TYPE(6'b011000)) io3 (.PACKAGE_PIN(rfPullPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[3]), .D_OUT_1(oFi[3]));
 
 endmodule

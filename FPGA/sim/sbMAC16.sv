@@ -113,9 +113,11 @@ module SB_MAC16 (
 	assign iG = BOT_8x8_MULT_REG ? rG : p_Al_Bl;
 
 	// Adder Stage
-	wire [23:0] iK_e = {A_SIGNED ? {8{iK[15]}} : 8'b0, iK};
-	wire [23:0] iJ_e = {B_SIGNED ? {8{iJ[15]}} : 8'b0, iJ};
-	assign iL = iG + (iK_e << 8) + (iJ_e << 8) + (iF << 16);
+	wire [31:0] p_Al_Bl_32 = {16'b0, p_Al_Bl};
+	wire [31:0] p_Al_Bh_32 = {8'b0, p_Al_Bh, 8'b0};
+	wire [31:0] p_Ah_Bl_32 = {8'b0, p_Ah_Bl, 8'b0};
+	wire [31:0] p_Ah_Bh_32 = {p_Ah_Bh, 16'b0};
+	assign iL = p_Al_Bl_32 + p_Al_Bh_32 + p_Ah_Bl_32 + p_Ah_Bh_32;
 
 	// Reg H
 	reg [31:0] rH;
@@ -133,6 +135,14 @@ module SB_MAC16 (
 	reg [15:0] rQ;
 	assign iW = TOPADDSUB_UPPERINPUT ? iC : iQ;
 	assign iX = (TOPADDSUB_LOWERINPUT == 0) ? iA : (TOPADDSUB_LOWERINPUT == 1) ? iF : (TOPADDSUB_LOWERINPUT == 2) ? iH[31:16] : {16{iZ[15]}};
+	
+	// Carry logic for Top stage
+	// HCI (High Carry In)
+	assign HCI = (TOPADDSUB_CARRYSELECT == 0) ? 1'b0 : 
+	             (TOPADDSUB_CARRYSELECT == 1) ? 1'b1 : 
+	             (TOPADDSUB_CARRYSELECT == 2) ? LCO : 
+	             LCO ^ ADDSUBBOT;
+
 	assign {ACCUMCO, XW} = iX + (iW ^ {16{ADDSUBTOP}}) + HCI;
 	assign CO = ACCUMCO ^ ADDSUBTOP;
 	assign iP = OLOADTOP ? iC : XW ^ {16{ADDSUBTOP}};
@@ -145,7 +155,6 @@ module SB_MAC16 (
 	end
 	assign iQ = rQ;
 	assign Oh = (TOPOUTPUT_SELECT == 0) ? iP : (TOPOUTPUT_SELECT == 1) ? iQ : (TOPOUTPUT_SELECT == 2) ? iF : iH[31:16];
-	assign HCI = (TOPADDSUB_CARRYSELECT == 0) ? 1'b0 : (TOPADDSUB_CARRYSELECT == 1) ? 1'b1 : (TOPADDSUB_CARRYSELECT == 2) ? LCO : LCO ^ ADDSUBBOT;
 	assign SIGNEXTOUT = iX[15];
 
 	// Lo Output Stage
@@ -153,6 +162,13 @@ module SB_MAC16 (
 	reg [15:0] rS;
 	assign iY = BOTADDSUB_UPPERINPUT ? iD : iS;
 	assign iZ = (BOTADDSUB_LOWERINPUT == 0) ? iB : (BOTADDSUB_LOWERINPUT == 1) ? iG : (BOTADDSUB_LOWERINPUT == 2) ? iH[15:0] : {16{SIGNEXTIN}};
+
+	// LCI (Low Carry In)
+	assign LCI = (BOTADDSUB_CARRYSELECT == 0) ? 1'b0 : 
+	             (BOTADDSUB_CARRYSELECT == 1) ? 1'b1 : 
+	             (BOTADDSUB_CARRYSELECT == 2) ? ACCUMCI : 
+	             CI;
+
 	assign {LCO, YZ} = iZ + (iY ^ {16{ADDSUBBOT}}) + LCI;
 	assign iR = OLOADBOT ? iD : YZ ^ {16{ADDSUBBOT}};
 	always @(posedge clock, posedge ORSTBOT) begin
@@ -164,6 +180,5 @@ module SB_MAC16 (
 	end
 	assign iS = rS;
 	assign Ol = (BOTOUTPUT_SELECT == 0) ? iR : (BOTOUTPUT_SELECT == 1) ? iS : (BOTOUTPUT_SELECT == 2) ? iG : iH[15:0];
-	assign LCI = (BOTADDSUB_CARRYSELECT == 0) ? 1'b0 : (BOTADDSUB_CARRYSELECT == 1) ? 1'b1 : (BOTADDSUB_CARRYSELECT == 2) ? ACCUMCI : CI;
 	assign O = {Oh, Ol};
 endmodule

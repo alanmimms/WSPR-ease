@@ -80,10 +80,11 @@ addition, making it a perfect fit for a standalone `SB_MAC16` block.
     .IRSTTOP(rst_nco), .IRSTBOT(rst_nco), .ORSTTOP(rst_nco), .ORSTBOT(rst_nco)
   );
 
-  // The top 16 bits of an LCG have the best entropy.
-  // Invert the falling edge noise to lightly decorrelate the DDR samples.
-  wire [15:0] noise_r = lcg_out[31:16];
-  wire [15:0] noise_f = ~lcg_out[31:16]; 
+  // The top 16 bits of an LCG state have the best entropy.
+  // We use the full 16-bit state to ensure dither spans the entire fractional
+  // remainder of the phase-to-state mapping.
+  wire [15:0] noise_r = lcg_out[15:0];
+  wire [15:0] noise_f = ~lcg_out[15:0]; 
 ```
 
 ### Step B: Zero-Cost Injection into State Mapping
@@ -110,8 +111,8 @@ correctly propagates up and increments the actual State bits
   // Rising Edge Mapping
   SB_MAC16 #( 
     .A_REG(1'b1), .B_REG(1'b1), .C_REG(1'b1), .D_REG(1'b1), 
-    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b1), // Top: Mult_High + C
-    .BOTADDSUB_LOWERINPUT(2'b00), .BOTADDSUB_UPPERINPUT(1'b1), // Bot: Mult_Low + D
+    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), // Top: Mult_High + C
+    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), // Bot: Mult_Low + D
     .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // MUST propagate carry to State bits
     .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11) 
   ) m_r ( 
@@ -125,8 +126,8 @@ correctly propagates up and increments the actual State bits
   // Falling Edge Mapping
   SB_MAC16 #( 
     .A_REG(1'b1), .B_REG(1'b1), .C_REG(1'b1), .D_REG(1'b1), 
-    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b1), 
-    .BOTADDSUB_LOWERINPUT(2'b00), .BOTADDSUB_UPPERINPUT(1'b1), 
+    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), 
+    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), 
     .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), 
     .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11) 
   ) m_f ( 

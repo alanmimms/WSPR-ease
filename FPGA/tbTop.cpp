@@ -48,11 +48,11 @@ int main(int argc, char** argv) {
   // Set Frequency: 5.555555 MHz
   uint32_t freqHz = 5555555;
   // Update rate in simulation:
-  // clk40 is passed through to clk90 (40MHz).
-  // DDR means 2 updates per clk90 cycle = 80Msps.
-  uint32_t tuningWord = ((uint64_t)freqHz << 32) / 80000000ULL;
+  // clk40 is passed through to clk90 (90MHz).
+  // DDR means 2 updates per clk90 cycle = 180Msps.
+  uint32_t tuningWord = ((uint64_t)freqHz << 32) / 180000000ULL;
 
-  std::cout << "Setting Tuning Word: 0x" << std::hex << tuningWord << std::dec << " for " << freqHz << " Hz at 80 Msps" << std::endl;
+  std::cout << "Setting Tuning Word: 0x" << std::hex << tuningWord << std::dec << " for " << freqHz << " Hz at 180 Msps" << std::endl;
   spi.writeReg(0x01, tuningWord);
 
   uint32_t rb = spi.readReg(0x01);
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
     top->clk40 = !top->clk40;
     top->eval();
     if (tfp) tfp->dump(mainTime);
-    mainTime += 12500; // 40MHz clock half-period
+    mainTime += 5555; // 90MHz clock half-period
   }
 
   top->final();

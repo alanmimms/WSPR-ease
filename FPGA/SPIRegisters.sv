@@ -93,13 +93,12 @@ module SPIRegisters (
       // At bit 8, we have the address and know if it's a read.
       else if (bitCount == 8 && !isWrite) begin
         case (selAddr)
-          aWSPRControl: readMux <= {ctrlSPI.reserved, pllLocked_spi, ctrlSPI.txEnable};
-          aWSPRTuning:  readMux <= twRaw;
-          aWSPRPPS:     readMux <= {ppsCount_spi, ppsGen_spi};
-          aWSPRSig:     readMux <= eWSPRSigVal;
-          default:      readMux <= 32'hDEADBEEF; 
+          aWSPRControl: readShift <= {ctrlSPI.reserved, pllLocked_spi, ctrlSPI.txEnable};
+          aWSPRTuning:  readShift <= twRaw;
+          aWSPRPPS:     readShift <= {ppsCount_spi, ppsGen_spi};
+          aWSPRSig:     readShift <= eWSPRSigVal;
+          default:      readShift <= 32'hDEADBEEF; 
         endcase
-        readShift <= readMux;
       end 
       
       else if (bitCount >= 8 && !isWrite) begin

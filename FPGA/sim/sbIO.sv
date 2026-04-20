@@ -33,17 +33,18 @@ module SB_IO #(
     logic dout;
     always @(*) begin
         if (PIN_TYPE[3:2] == 2'b10) begin
-            // Combinatorial (e.g., 6'b011000)
-            dout = D_OUT_0;
-        end else if (PIN_TYPE[3:2] == 2'b00) begin
-            // DDR Registered (e.g., 6'b010000)
+            // DDR Registered (e.g., 6'b011000)
             // Outputs dout_q_0 on high phase of OUTPUT_CLK, dout_q_1 on low phase
             dout = OUTPUT_CLK ? dout_q_0 : dout_q_1;
+        end else if (PIN_TYPE[3:2] == 2'b00) begin
+            // Simple Registered (e.g., 6'b010000)
+            dout = dout_q_0;
         end else begin
             // Default to D_OUT_0 for others right now to avoid simulation issues
             dout = D_OUT_0;
         end
     end
+
     
     // For simulation, assume OUTPUT_ENABLE is 1 if not connected
     assign PACKAGE_PIN = dout;
