@@ -83,41 +83,92 @@ module Exciter (
   wire [15:0] ph_r_h = prh_d2;
 
   // =====================================================================
-  // 4. Multipliers (DSP 2 & 3)
+  // 4. Phase Dither Generator (LCG PRNG in DSP 4)
+  // =====================================================================
+  wire [31:0] lcg_out;
+  
+  // X_next = (X * 25173) + 13849 mod 2^16
+  SB_MAC16 #(
+    .A_REG(1'b1), .B_REG(1'b0), .C_REG(1'b0), .D_REG(1'b0),
+    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), // Top: Mult_High + C
+    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), // Bot: Mult_Low + D
+    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // Propagate carry
+    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01)         // Register output (iQ, iS)
+  ) dsp_prng (
+    .CLK(clk90), .CE(1'b1),
+    .A(lcg_out[15:0]), .B(16'd25173), // Multiplier (a)
+    .C(16'd0), .D(16'd13849),         // Increment (c)
+    .O(lcg_out),
+    .IRSTTOP(rst_nco), .IRSTBOT(rst_nco), .ORSTTOP(rst_nco), .ORSTBOT(rst_nco)
+  );
+
+  // The top 16 bits of the LCG state (lcg_out[15:0]) have the best entropy.
+  // We use only 4 bits of dither to avoid excessive phase noise.
+  // Shifting the 4 random bits to the bottom of the 16-bit dither port
+  // results in a dither amplitude of 1/4096 of a State.
+  wire [15:0] noise_r = {12'b0, lcg_out[15:12]};
+  wire [15:0] noise_f = {12'b0, ~lcg_out[15:12]}; 
+
+  // =====================================================================
+  // 5. Multipliers (DSP 2 & 3) with Zero-Cost Dither Injection
   // =====================================================================
   wire [31:0] d1, d2;
-  SB_MAC16 #( .A_REG(1'b1), .B_REG(1'b1), .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11) ) 
-  m_r ( .CLK(clk90), .CE(1'b1), .A(ph_r_h), .B(16'd6), .O(d1),
-        .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) );
 
-  SB_MAC16 #( .A_REG(1'b1), .B_REG(1'b1), .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11) ) 
-  m_f ( .CLK(clk90), .CE(1'b1), .A(ph_f_h), .B(16'd6), .O(d2),
-        .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) );
-  // Result at T=7
+  // Rising Edge Mapping
+  SB_MAC16 #( 
+    .A_REG(1'b1), .B_REG(1'b1), .C_REG(1'b0), .D_REG(1'b0), 
+    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), // Top: Mult_High + C
+    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), // Bot: Mult_Low + D
+    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // MUST propagate carry to State bits
+    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) 
+  ) m_r ( 
+    .CLK(clk90), .CE(1'b1), 
+    .A(ph_r_h), .B(16'd6), 
+    .C(16'd0), .D(noise_r), // Small dither injected into fractional remainder
+    .O(d1),
+    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) 
+  );
+
+  // Falling Edge Mapping
+  SB_MAC16 #( 
+    .A_REG(1'b1), .B_REG(1'b1), .C_REG(1'b0), .D_REG(1'b0), 
+    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), 
+    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), 
+    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), 
+    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) 
+  ) m_f ( 
+    .CLK(clk90), .CE(1'b1), 
+    .A(ph_f_h), .B(16'd6), 
+    .C(16'd0), .D(noise_f), // Small dither injected into fractional remainder
+    .O(d2),
+    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) 
+  );
+  // Result at T=8 (Multiplier reg T=7, Adder reg T=8)
 
   // =====================================================================
-  // 5. Hardcoded Power Enable (100% Duty Cycle)
+  // 6. Hardcoded Power Enable (100% Duty Cycle)
   // =====================================================================
-  // We have removed the DSP comparators entirely.
-  // We hardcode the enable signals to 1'b1.
   
-  wire en_r_raw = 1'b1;
-  wire en_f_raw = 1'b1;
-  
-  // Pipeline state to T=9
-  reg [2:0] str_p1, str_p2, str_p3;
-  reg [2:0] stf_p1, stf_p2, stf_p3;
+  // Pipeline state to T=10
+  reg [2:0] str_p1, str_p2;
+  reg [2:0] stf_p1, stf_p2;
   always_ff @(posedge clk90) begin
-    str_p1 <= d1[18:16]; str_p2 <= str_p1; str_p3 <= str_p2; // T=9
-    stf_p1 <= d2[18:16]; stf_p2 <= stf_p1; stf_p3 <= stf_p2; // T=9
+    str_p1 <= d1[18:16]; str_p2 <= str_p1; // T=10
+    stf_p1 <= d2[18:16]; stf_p2 <= stf_p1; // T=10
   end
 
+  // Decode logic with modulo-6 protection to ensure dither-induced
+  // overflows (e.g. State 5 + dither -> State 6) wrap back to State 0.
   function [3:0] decode(input [2:0] st);
     begin
       case (st)
-        3'd0: decode = 4'b0001; 3'd1: decode = 4'b0010; 3'd2: decode = 4'b0001;
-        3'd3: decode = 4'b0100; 3'd4: decode = 4'b1000; 3'd5: decode = 4'b0100;
-        default: decode = 4'b0000;
+        3'd0, 3'd6: decode = 4'b0001; 
+        3'd1, 3'd7: decode = 4'b0010; 
+        3'd2:       decode = 4'b0001;
+        3'd3:       decode = 4'b0100; 
+        3'd4:       decode = 4'b1000; 
+        3'd5:       decode = 4'b0100;
+        default:    decode = 4'b0000;
       endcase
     end
   endfunction
@@ -125,12 +176,12 @@ module Exciter (
   reg [3:0] oR, oF;
   reg [3:0] oRi, oFi;
   always_ff @(posedge clk90) begin
-    oR <= decode(str_p3) & {4{txEnReg}}; // T=10
-    oF <= decode(stf_p3) & {4{txEnReg}}; // T=10
-    oRi <= oR; oFi <= oF;                // T=11
+    oR <= decode(str_p2) & {4{txEnReg}}; // T=11
+    oF <= decode(stf_p2) & {4{txEnReg}}; // T=11
+    oRi <= oR; oFi <= oF;                // T=12
   end
 
-  // Total latency: 11 cycles. Delay = 12.
+  // Total latency: 12 cycles.
 
   // PIN_TYPE 6'b010000 means "Output Pin, DDR output using dout_q_0 and dout_q_1"
   SB_IO #(.PIN_TYPE(6'b010000)) io0 (.PACKAGE_PIN(rfPushBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[0]), .D_OUT_1(oFi[0]));

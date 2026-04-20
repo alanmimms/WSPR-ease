@@ -30,6 +30,15 @@ doc/FPGA.md for details on what we're doing right now.
   `const char*`) instead of `std::string` or `std::string_view` to
   avoid verbosity and conversion overhead.
 
+## Documentation
+
+All documents we write will be in markdown format, with wrap at 80
+columns applied to all paragraph text so it's readable in source form.
+Each section or item will not be manually numbered by you to make the
+document more easily maintained. Instead use markdown markup to
+identify such entities so they are numbered by the markdown rendering
+process used by the reader.
+
 ## Interaction Preferences
 * **Tone:** Provide direct, technical responses. Do not include
   congratulations or attempts to validate intelligence.

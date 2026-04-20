@@ -8,8 +8,7 @@ regs = RegisterSet("WSPR")
 class Control:
   txEnable:     Bit(0, "Enable RF output")
   pllLocked:    Bit(0, "PLL is locked to 180 MHz (Read Only)")
-  reserved:     UInt(0, 22, "Reserved")
-  powerThresh:  UInt(0xFF, 8, "Power Threshold for transmission")
+  reserved:     UInt(0, 30, "Reserved")
 
 @regs.register(0x01, "32-bit NCO tuning word")
 class Tuning:

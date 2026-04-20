@@ -93,7 +93,7 @@ module SPIRegisters (
       // At bit 8, we have the address and know if it's a read.
       else if (bitCount == 8 && !isWrite) begin
         case (selAddr)
-          aWSPRControl: readMux <= {ctrlSPI.powerThresh, 22'd0, pllLocked_spi, ctrlSPI.txEnable};
+          aWSPRControl: readMux <= {ctrlSPI.reserved, pllLocked_spi, ctrlSPI.txEnable};
           aWSPRTuning:  readMux <= twRaw;
           aWSPRPPS:     readMux <= {ppsCount_spi, ppsGen_spi};
           aWSPRSig:     readMux <= eWSPRSigVal;
@@ -120,7 +120,6 @@ module SPIRegisters (
   // =====================================================================
   logic ncs_sync_d1;
   logic [31:0] tw_meta, tw_stable;
-  logic [7:0]  pwr_meta, pwr_stable;
   logic        tx_meta, tx_stable;
 
   always_ff @(posedge clk_dest) begin
@@ -128,21 +127,19 @@ module SPIRegisters (
 
     if (ncs_clk_dest && !ncs_sync_d1) begin 
       tw_meta  <= twRaw;
-      pwr_meta <= ctrlSPI.powerThresh;
       tx_meta  <= ctrlSPI.txEnable;
     end
     
     tw_stable  <= tw_meta;
-    pwr_stable <= pwr_meta;
     tx_stable  <= tx_meta;
 
     if (reset) begin
       tuningWord  <= 0;
-      powerThresh <= 8'hFF;
+      powerThresh <= 8'hFF; // Hardcoded default
       txEnable    <= 0;
     end else begin
       tuningWord  <= tw_stable;
-      powerThresh <= pwr_stable;
+      powerThresh <= 8'hFF; // Hardcoded
       txEnable    <= tx_stable;
     end
   end
