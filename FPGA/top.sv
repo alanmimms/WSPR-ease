@@ -66,6 +66,18 @@ module Top (
   logic [31:0] tuningWord, tuningWord_d1;
   logic txEnable, txEnable_d1;
 
+  logic [26:0] ppsCount;
+  logic [4:0]  ppsGen;
+
+  FreqCounter freqCounterCore (
+    .clk90(clk90),
+    .reset(rst90),
+    .fpgaNCS(fpgaNCS),
+    .samplePPS(gnssPPS),
+    .ppsCount(ppsCount),
+    .ppsGen(ppsGen)
+  );
+
   SPIRegisters spiCore (
 			.reset(rst90),
 			.fpgaSCLK(fpgaSCLK),
@@ -77,8 +89,8 @@ module Top (
 			.powerThresh(powerThresh),
 			.pllLocked(pllLocked_gb),
 			.txEnable(txEnable),
-			.ppsCount(27'h0),
-			.ppsGen(5'h0)
+			.ppsCount(ppsCount),
+			.ppsGen(ppsGen)
 			);
 
   always_ff @(posedge clk90) begin
