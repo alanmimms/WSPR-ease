@@ -50,16 +50,22 @@ int main(int argc, char** argv) {
   // Update rate in simulation:
   // clk40 is passed through to clk90 (90MHz).
   // DDR means 2 updates per clk90 cycle = 180Msps.
-  uint32_t tuningWord = ((uint64_t)freqHz << 32) / 180000000ULL;
+  uint64_t tuningWord = ((uint64_t)freqHz << 48) / 180000000ULL;
 
   std::cout << "Setting Tuning Word: 0x" << std::hex << tuningWord << std::dec << " for " << freqHz << " Hz at 180 Msps" << std::endl;
-  spi.writeReg(0x01, tuningWord);
+  spi.writeReg(0x01, (uint32_t)(tuningWord & 0xFFFFFFFF));
+  spi.writeReg(0x02, (uint32_t)(tuningWord >> 32));
 
-  uint32_t rb = spi.readReg(0x01);
+  uint32_t rb_low = spi.readReg(0x01);
+  uint32_t rb_high = spi.readReg(0x02);
+  uint64_t rb = ((uint64_t)rb_high << 32) | rb_low;
   std::cout << "Readback Tuning: 0x" << std::hex << rb << std::dec << std::endl;
 
+  uint32_t sig = spi.readReg(0x0F);
+  std::cout << "Readback Signature: 0x" << std::hex << sig << std::dec << std::endl;
+
   std::cout << "Enabling TX..." << std::endl;
-  spi.writeReg(0x00, 0xFF000001); // TX EN = 1, Power Threshold = 255
+  spi.writeReg(0x00, 0x00000001); // TX EN = 1
   
   // Simulation loop
   std::cout << "Running RF simulation for 5000 cycles..." << std::endl;

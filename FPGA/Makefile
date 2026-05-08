@@ -15,9 +15,8 @@ VERILATOR_FLAGS += -CFLAGS "-std=c++17 -I$(SW_DIR)"
 VERILATOR_FLAGS += -LDFLAGS "-lm"
 
 # Source files
-RTL_SOURCES := top.sv exciter.sv SPIRegisters.sv freqCounter.sv syncronizer.sv edgeDetector.sv
+RTL_SOURCES := top_gen.v
 RTL_SIM_SOURCES += $(SIM_DIR)/sbIO.sv $(SIM_DIR)/sbMAC16.sv $(SIM_DIR)/sbPLL40Core.sv $(SIM_DIR)/sbPLL40Pad.sv $(SIM_DIR)/sbRAM404K.sv $(SIM_DIR)/sbGB.sv
-GENERATED_SOURCES := top_gen.v
 
 CPP_SOURCES := tbTop.cpp
 
@@ -31,7 +30,7 @@ PACKAGE=sg48
 TARGET := build/fpga.img
 SIMTARGET := obj_dir/VTop
 
-.PHONY: all clean run sim fast superfast help
+.PHONY: all clean run sim fast superfast help test
 
 all: $(TARGET)
 
@@ -53,19 +52,13 @@ $(TARGET):	build.py $(PCF) timing.py gateware.py regs.py
 	mv -f $(PROJECT).bin $(TARGET)
 	@echo "--- FPGA Build Complete ---"
 
-exciterDP.v: ncogen.py
-	python3 ncogen.py
-
-regs.hpp regs.md: regs.py ../tools/regTool.py
-	python3 regs.py
-
 # Build the Verilator simulation
-$(SIMTARGET): $(RTL_SOURCES) $(RTL_SIM_SOURCES) $(CPP_SOURCES) simHAL.hpp
+$(SIMTARGET): top_gen.v $(RTL_SIM_SOURCES) $(CPP_SOURCES) simHAL.hpp
 	@echo "Building Verilator simulation..."
 	$(VERILATOR) $(VERILATOR_FLAGS) \
 		-o VTop \
 		--top-module Top \
-		$(RTL_SOURCES) \
+		top_gen.v \
 		$(RTL_SIM_SOURCES) \
 		$(CPP_SOURCES)
 	@echo "Build complete: $@"
@@ -76,8 +69,7 @@ run: $(SIMTARGET)
 	@./$(SIMTARGET)
 	@echo "Simulation complete. Waveform saved to waveform.vcd"
 
-# Alias for run
-sim: run
+test: fast
 
 # Run fast simulation (no waveforms)
 fast: $(SIMTARGET)
