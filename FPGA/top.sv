@@ -6,7 +6,7 @@ module Top (
 	    input logic fpgaNRESET,
 	    input  logic fpgaSCLK_pin,
 	    input  logic fpgaMOSI,
-	    output logic fpgaMISO,
+	    output wire fpgaMISO,
 	    input  logic fpgaNCS,
 	    output logic rfPushBase,
 	    output wire rfPushPeak,
@@ -62,9 +62,9 @@ module Top (
     .dOut(pllLocked_clk90)
   );
 
-  logic [7:0] powerThresh, powerThresh_d1;
-  logic [31:0] tuningWord, tuningWord_d1;
+  logic [47:0] tuningWord, tuningWord_d1;
   logic txEnable, txEnable_d1;
+  logic modeSquare, modeSquare_d1;
 
   logic [26:0] ppsCount;
   logic [4:0]  ppsGen;
@@ -86,24 +86,32 @@ module Top (
 			.fpgaNCS(fpgaNCS),
 			.clk_dest(clk90), 
 			.tuningWord(tuningWord),
-			.powerThresh(powerThresh),
 			.pllLocked(pllLocked_gb),
 			.txEnable(txEnable),
+			.modeSquare(modeSquare),
 			.ppsCount(ppsCount),
 			.ppsGen(ppsGen)
 			);
 
+  logic [47:0] twSPISync1;
+  logic [47:0] twSPISync2;
+
   always_ff @(posedge clk90) begin
-    tuningWord_d1 <= tuningWord;
-    powerThresh_d1 <= powerThresh;
+    // Register the SPI data twice into the 90MHz domain This allows
+    // the tool to place these registers anywhere without impacting
+    // the core NCO timing.
+    twSPISync1 <= tuningWord;
+    twSPISync2 <= twSPISync1;
+
     txEnable_d1 <= txEnable;
+    modeSquare_d1 <= modeSquare;
   end
 
   Exciter exciterCore (
 		       .reset(rst90),
 		       .clk90(clk90), 
-		       .tuningWord(tuningWord_d1),
-		       .powerThreshold(powerThresh_d1),
+		       .tuningWord(twSPISync2),
+		       .modeSquare(modeSquare_d1),
 		       .txEnable(txEnable_d1 & pllLocked_clk90), 
 		       .rfPushBase(rfPushBase),
 		       .rfPushPeak(rfPushPeak),

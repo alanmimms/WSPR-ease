@@ -12,3 +12,5 @@ build/
 *.vcd
 tbCosim
 *.log
+.venv/
+exciterDP.v

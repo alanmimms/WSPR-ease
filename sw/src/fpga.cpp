@@ -229,29 +229,36 @@ namespace wspr {
     currentFreq = freqHz;
     if (!initialized) return -ENODEV;
 
-    // NCO tuning for 90 MHz system clock. 
-    // The current FPGA Exciter uses phase-to-state mapping where 
-    // one full NCO cycle equals one full RF cycle.
-    // The NCO increments by M every 90 MHz clock cycle.
-    // M = (freqHz / 90,000,000) * 2^32.
+    // NCO tuning for 90 MHz system clock with 48-bit accumulator.
+    // tuningWord = (freqHz * 2^48) / 90,000,000
+    // Using __uint128_t to prevent overflow during intermediate calculation
+    uint64_t tuningWord = ((__uint128_t)freqHz << 48) / ncoHz;
 
-    // Using 64-bit math to avoid overflow before division
-    uint64_t word = ((uint64_t)freqHz << 32) / ncoHz;
+    logger.inf("config", "Setting 48-bit tuning word to 0x%012llX", tuningWord);
 
-    logger.inf("config", "Setting tuning word to 0x%08X", (uint32_t) word);
+    // Update Mode based on frequency: < 10MHz use 1-2-1, >= 10MHz use Square
+    WSPRRegs::WSPRControl ctrl;
+    spiReadReg(WSPRRegs::aWSPRControl, &ctrl.u);
+    ctrl.modeSquare = (freqHz >= 10000000) ? 1 : 0;
+    spiWriteReg(WSPRRegs::aWSPRControl, ctrl.u);
 
-    return spiWriteReg(WSPRRegs::aWSPRTuning, (uint32_t)word);
+    // Write 48-bit tuning word across two registers
+    int ret = spiWriteReg(WSPRRegs::aWSPRTuningLow, (uint32_t)(tuningWord & 0xFFFFFFFF));
+    if (ret < 0) return ret;
+    return spiWriteReg(WSPRRegs::aWSPRTuningHigh, (uint32_t)(tuningWord >> 32));
   }
 
   int FPGA::startTX() {
     if (!initialized) return -ENODEV;
     if (transmitting) return -EALREADY;
-    logger.inf("config", "Starting transmission at %u Hz", currentFreq);
+    logger.inf("config", "Starting transmission at %u Hz (Mode: %s)", 
+               currentFreq, (currentFreq >= 10000000) ? "Square" : "1-2-1");
     transmitting = true;
 
     WSPRRegs::WSPRControl ctrl;
     spiReadReg(WSPRRegs::aWSPRControl, &ctrl.u);
     ctrl.txEnable = 1;
+    ctrl.modeSquare = (currentFreq >= 10000000) ? 1 : 0;
     return spiWriteReg(WSPRRegs::aWSPRControl, ctrl.u);
   }
 

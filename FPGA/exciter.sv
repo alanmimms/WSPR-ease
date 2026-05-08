@@ -2,193 +2,154 @@
 `default_nettype none
 
 module Exciter (
-    input  wire        clk90,
-    input  wire        reset,
-    input  wire [31:0] tuningWord,
-    input  wire [7:0]  powerThreshold,
-    input  wire        txEnable,
+		input  wire        clk90,
+		input  wire        reset,
+		input  wire [47:0] tuningWord,
+		input  wire        modeSquare,
+		input  wire        txEnable,
 
-    output wire        rfPushBase,
-    output wire        rfPushPeak,
-    output wire        rfPullBase,
-    output wire        rfPullPeak
-);
+		output wire        rfPushBase,
+		output wire        rfPushPeak,
+		output wire        rfPullBase,
+		output wire        rfPullPeak
+		);
 
-  // =====================================================================
-  // 1. Input Registration (T=1)
-  // =====================================================================
-  reg [31:0] twReg = 0;
-  reg [7:0]  ptReg = 0;
-  reg        txEnReg = 0, rst_nco = 1;
+  // DDR signal component naming convention, trailing
+  // R==>rising edge signal
+  // F==>falling edge signal
+
+  // --- STAGE 1: Input Registration & LFSR Dither (T=1) ---
+  logic [47:0] tw1;
+  logic mode1, tx1, rst1;
+  logic [15:0] lfsr;
 
   always_ff @(posedge clk90) begin
-    twReg   <= tuningWord;
-    ptReg   <= powerThreshold;
-    txEnReg <= txEnable;
-    rst_nco <= reset;
+    tw1 <= tuningWord;
+    mode1 <= modeSquare;
+    tx1 <= txEnable;
+    rst1 <= reset;
+    lfsr <= {lfsr[14:0], lfsr[15] ^ lfsr[13] ^ lfsr[12] ^ lfsr[10]};
   end
 
-  // =====================================================================
-  // 2. 32-bit Phase Accumulator (DSP 0)
-  // =====================================================================
-  wire [31:0] nco_out;
-  SB_MAC16 #(
-    .A_REG(1'b1), .B_REG(1'b1),
-    .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b0), // iA + iQ
-    .BOTADDSUB_LOWERINPUT(2'b00), .BOTADDSUB_UPPERINPUT(1'b0), // iB + iS
-    .MODE_8x8(1'b0),
-    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // Carry LCO to HCI
-    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) // Output registered adder (iQ, iS)
-  ) dsp_nco (
-    .CLK(clk90), .CE(1'b1),
-    .C(16'd0), .D(16'd0),
-    .A(twReg[31:16]), .B(twReg[15:0]),
-    .IRSTTOP(rst_nco), .IRSTBOT(rst_nco), .ORSTTOP(rst_nco), .ORSTBOT(rst_nco),
-    .O(nco_out)
+  // Next stage(es) are a pipelined NCO via Amaranth.
+  wire [47:0] ncoPhase;
+
+  PipelinedNCO auto_nco (
+      .clk(clk90),                // Amaranth auto-generates clock/reset ports
+      .rst(rst1),
+      .tw(tw1),
+      .phase(ncoPhase)
   );
-  // nco_out T=3
 
-  // =====================================================================
-  // 3. Falling Edge Phase Adder (DSP 1)
-  // =====================================================================
-  wire [31:0] phase_f;
-  reg [15:0] m2h_d1, m2h_d2;
-  always_ff @(posedge clk90) begin
-    m2h_d1 <= {1'b0, twReg[31:17]};
-    m2h_d2 <= m2h_d1; // T=3
-  end
-
-  SB_MAC16 #(
-    .A_REG(1'b1), .C_REG(1'b1),
-    .TOPADDSUB_LOWERINPUT(2'b01), .TOPADDSUB_UPPERINPUT(1'b1), // iA + iC
-    .BOTADDSUB_LOWERINPUT(2'b01), .BOTADDSUB_UPPERINPUT(1'b1), // iB + iD
-    .MODE_8x8(1'b0),
-    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) // Output registered adder
-  ) dsp_offset (
-    .CLK(clk90), .CE(1'b1),
-    .A(nco_out[31:16]), .B(16'd0), // Align nco_out (T=3) with m2h_d2 (T=3)
-    .C(m2h_d2), .D(16'd0),
-    .O(phase_f),
-    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0)
-  );
-  // phase_f T=5
-  wire [15:0] ph_f_h = phase_f[31:16];
-
-  // Align Rising Phase to T=5 (to match Falling Phase phase_f T=5)
-  reg [15:0] prh_d1, prh_d2;
-  always_ff @(posedge clk90) begin
-    prh_d1 <= nco_out[31:16];
-    prh_d2 <= prh_d1; // T=5
-  end
-  wire [15:0] ph_r_h = prh_d2;
-
-  // =====================================================================
-  // 4. Phase Dither Generator (LCG PRNG in DSP 4)
-  // =====================================================================
-  wire [31:0] lcg_out;
+  // --- STAGE 2-4: Skewed Pipeline NCO (T=2,3,4) ---
+  // We break the 48-bit addition into three 16-bit cycles.
+  // This removes the 48-bit carry-chain bottleneck.
   
-  // X_next = (X * 25173) + 13849 mod 2^16
-  SB_MAC16 #(
-    .A_REG(1'b1), .B_REG(1'b0), .C_REG(1'b0), .D_REG(1'b0),
-    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), // Top: Mult_High + C
-    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), // Bot: Mult_Low + D
-    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // Propagate carry
-    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01)         // Registered adder output
-  ) dsp_prng (
-    .CLK(clk90), .CE(1'b1),
-    .A(lcg_out[15:0]), .B(16'd25173), // Multiplier (a)
-    .C(16'd0), .D(16'd13849),         // Increment (c)
-    .O(lcg_out),
-    .IRSTTOP(rst_nco), .IRSTBOT(rst_nco), .ORSTTOP(rst_nco), .ORSTBOT(rst_nco)
-  );
+  logic [15:0] accL, accM, accH;
+  logic carryL, carryM;
+  logic [31:16] twMpipe;
+  logic [47:32] twHpipe1, twHpipe2;
 
-  // Scale dither noise to exactly bridge the quantization gap (1/6 of a cycle).
-  // Each state covers 1/6 of the 16-bit phase range (~10922 counts).
-  // We take the 16-bit LCG state and scale it to [0..10921] by multiplying 
-  // by (10922/65536) ≈ 1/6. A simple shift by 3 (noise/8) gives ~8192, 
-  // which is close, but noise/6 is better. 
-  // Let's use noise/6 to perfectly span the 10922 count state width.
-  wire [15:0] noise_r_scaled = lcg_out[15:0] / 16'd6;
-  wire [15:0] noise_f_scaled = (~lcg_out[15:0]) / 16'd6;
-
-  // =====================================================================
-  // 5. Multipliers (DSP 2 & 3) with Zero-Cost Dither Injection
-  // =====================================================================
-  wire [31:0] d1, d2;
-
-  // Rising Edge Mapping
-  SB_MAC16 #( 
-    .A_REG(1'b1), .B_REG(1'b1), .C_REG(1'b0), .D_REG(1'b0), 
-    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), 
-    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), 
-    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), 
-    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) 
-  ) m_r ( 
-    .CLK(clk90), .CE(1'b1), 
-    .A(ph_r_h), .B(16'd6), 
-    .C(16'd0), .D(noise_r_scaled), // Dither exactly spans one state width
-    .O(d1),
-    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) 
-  );
-
-  // Falling Edge Mapping
-  SB_MAC16 #( 
-    .A_REG(1'b1), .B_REG(1'b1), .C_REG(1'b0), .D_REG(1'b0), 
-    .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), 
-    .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), 
-    .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), 
-    .TOPOUTPUT_SELECT(2'b01), .BOTOUTPUT_SELECT(2'b01) 
-  ) m_f ( 
-    .CLK(clk90), .CE(1'b1), 
-    .A(ph_f_h), .B(16'd6), 
-    .C(16'd0), .D(noise_f_scaled), // Dither exactly spans one state width
-    .O(d2),
-    .IRSTTOP(1'b0), .IRSTBOT(1'b0), .ORSTTOP(1'b0), .ORSTBOT(1'b0) 
-  );
-  // Result at T=8 (Multiplier reg T=7, Adder reg T=8)
-
-  // =====================================================================
-  // 6. Hardcoded Power Enable (100% Duty Cycle)
-  // =====================================================================
-  
-  // Pipeline state to T=10
-  reg [2:0] str_p1, str_p2;
-  reg [2:0] stf_p1, stf_p2;
   always_ff @(posedge clk90) begin
-    str_p1 <= d1[18:16]; str_p2 <= str_p1; // T=10
-    stf_p1 <= d2[18:16]; stf_p2 <= stf_p1; // T=10
-  end
+    if (rst1) begin
+      {accL, accM, accH} <= 48'h0;
+      {carryL, carryM}   <= 2'b0;
+    end else begin
+      // Cycle 1: Low 16 bits
+      {carryL, accL} <= accL + tw1[15:0];
+      twMpipe <= tw1[31:16];
+      twHpipe1 <= tw1[47:32];
 
-  // Decode logic with modulo-6 protection to ensure dither-induced
-  // overflows (e.g. State 5 + dither -> State 6) wrap back to State 0.
-  function [3:0] decode(input [2:0] st);
-    begin
-      case (st)
-        3'd0, 3'd6: decode = 4'b0001; 
-        3'd1, 3'd7: decode = 4'b0010; 
-        3'd2:       decode = 4'b0001;
-        3'd3:       decode = 4'b0100; 
-        3'd4:       decode = 4'b1000; 
-        3'd5:       decode = 4'b0100;
-        default:    decode = 4'b0000;
-      endcase
+      // Cycle 2: Mid 16 bits (receives carry from cycle 1)
+      {carryM, accM} <= accM + twMpipe + carryL;
+      twHpipe2 <= twHpipe1;
+
+      // Cycle 3: High 16 bits (receives carry from cycle 2)
+      accH <= accH + twHpipe2 + carryM;
     end
-  endfunction
-
-  reg [3:0] oR, oF;
-  reg [3:0] oRi, oFi;
-  always_ff @(posedge clk90) begin
-    oR <= decode(str_p2) & {4{txEnReg}}; // T=11
-    oF <= decode(stf_p2) & {4{txEnReg}}; // T=11
-    oRi <= oR; oFi <= oF;                // T=12
   end
 
-  // Total latency: 12 cycles.
+  // --- STAGE 5: Phase Capture & DDR Offset (T=5) ---
+  logic [15:0] phR, phF;
+  logic mode5, tx5, sq5;
+  logic [7:0] dither5;
 
-  // PIN_TYPE 6'b011000 means "Output Pin, DDR output using dout_q_0 and dout_q_1"
-  SB_IO #(.PIN_TYPE(6'b011000)) io0 (.PACKAGE_PIN(rfPushBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[0]), .D_OUT_1(oFi[0]));
-  SB_IO #(.PIN_TYPE(6'b011000)) io1 (.PACKAGE_PIN(rfPushPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[1]), .D_OUT_1(oFi[1]));
-  SB_IO #(.PIN_TYPE(6'b011000)) io2 (.PACKAGE_PIN(rfPullBase), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[2]), .D_OUT_1(oFi[2]));
-  SB_IO #(.PIN_TYPE(6'b011000)) io3 (.PACKAGE_PIN(rfPullPeak), .OUTPUT_CLK(clk90), .D_OUT_0(oRi[3]), .D_OUT_1(oFi[3]));
+  always_ff @(posedge clk90) begin
+    phR <= accH;
+    phF <= accH + (twHpipe2 >> 1); // 180-degree offset
+    sq5 <= accH[15]; 
+    dither5 <= lfsr[7:0]; 
+    mode5 <= mode1; // Note: may need to delay mode/tx to match NCO pipe
+    tx5 <= tx1;
+  end
 
-endmodule
+  // --- STAGE 6: Fabric Multiplier by 6 (T=6) ---
+  // Logic: (Phase * 4) + (Phase * 2) + Dither
+  logic [18:0] mulR, mulF;
+  logic mode6, tx6, sq6;
+
+  // Force MAC pattern.
+  always_ff @(posedge clk90) begin
+    mulR <= (phR * 19'd6) + dither5;
+    mulF <= (phF * 19'd6) + dither5;
+    sq6 <= sq5;
+    mode6 <= mode5;
+    tx6 <= tx5;
+  end
+
+  // --- STAGE 7: Decoder & Output Selection (T=7) ---
+  logic pushBaseR, pushPeakR, pushBaseF, pushPeakF;
+  logic pullBaseR, pullPeakR, pullBaseF, pullPeakF;
+  logic pushBaseRpre, pushPeakRpre, pushBaseFpre, pushPeakFpre;
+  logic pullBaseRpre, pullPeakRpre, pullBaseFpre, pullPeakFpre;
+  logic txFinal;
+
+  // Bits [18:16] of the multiplication are the 0-5 state index
+  wire [2:0] stXR = mulR[18:16];
+  wire [2:0] stXF = mulF[18:16];
+
+  always_ff @(posedge clk90) begin
+    txFinal <= tx6;
+
+    if (mode6) begin
+      // Mode 1: Square Wave
+      pushBaseR <= sq6;
+      pushPeakR <= sq6;
+      pushBaseF <= sq6;
+      pushPeakF <= sq6;
+
+      pullBaseR <= !sq6;
+      pullPeakR <= !sq6;
+      pullBaseF <= !sq6;
+      pullPeakF <= !sq6;
+    end else begin
+      // Mode 0: 1-2-1 Decoding pipelined
+      pushBaseR <= pushBaseRpre;
+      pushPeakR <= pushPeakRpre;
+      pullBaseR <= pullBaseRpre;
+      pullPeakR <= pullPeakRpre;
+
+      pushBaseRpre <= (stXR == 3'd0 || stXR == 3'd2) && txFinal;
+      pushPeakRpre <= (stXR == 3'd1) && txFinal;
+      pullBaseRpre <= (stXR == 3'd3 || stXR == 3'd5) && txFinal;
+      pullPeakRpre <= (stXR == 3'd4) && txFinal;
+      
+      pushBaseF <= pushBaseFpre;
+      pushPeakF <= pushPeakFpre;
+      pullBaseF <= pullBaseFpre;
+      pullPeakF <= pullPeakFpre;
+
+      pushBaseFpre <= txFinal && (stXF == 3'd0 || stXF == 3'd2);
+      pushPeakFpre <= txFinal && (stXF == 3'd1);
+      pullBaseFpre <= txFinal && (stXF == 3'd3 || stXF == 3'd5);
+      pullPeakFpre <= txFinal && (stXF == 3'd4);
+    end
+  end
+
+  // --- STAGE 8: Physical DDR Pin Drive ---
+  SB_IO #(.PIN_TYPE(6'b010001)) io_pb (.PACKAGE_PIN(rfPushBase), .OUTPUT_CLK(clk90), .D_OUT_0(pushBaseR), .D_OUT_1(pushBaseF));
+  SB_IO #(.PIN_TYPE(6'b010001)) io_pp (.PACKAGE_PIN(rfPushPeak), .OUTPUT_CLK(clk90), .D_OUT_0(pushPeakR), .D_OUT_1(pushPeakF));
+  SB_IO #(.PIN_TYPE(6'b010001)) io_lb (.PACKAGE_PIN(rfPullBase), .OUTPUT_CLK(clk90), .D_OUT_0(pullBaseR), .D_OUT_1(pullBaseF));
+  SB_IO #(.PIN_TYPE(6'b010001)) io_lp (.PACKAGE_PIN(rfPullPeak), .OUTPUT_CLK(clk90), .D_OUT_0(pullPeakR), .D_OUT_1(pullPeakF));
+
+endmodule // Exciter

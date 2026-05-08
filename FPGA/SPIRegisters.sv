@@ -2,84 +2,72 @@
 `include "regs.sv"
 
 module SPIRegisters (
-		     input  logic reset,
+    input  logic reset,
 
-		     // SPI Interface
-		     input  logic fpgaSCLK,
-		     input  logic fpgaMOSI,
-		     output logic fpgaMISO,
-		     input  logic fpgaNCS,
+    // SPI Interface
+    input  logic fpgaSCLK,
+    input  logic fpgaMOSI,
+    output logic fpgaMISO,
+    input  logic fpgaNCS,
 
-		     // Destination Domain (90 MHz)
-		     input  logic clk_dest,
-		     output logic [31:0] tuningWord = 0,
-		     output logic [7:0]  powerThresh = 8'hFF,
-		     input  logic        pllLocked,
-		     output logic        txEnable,
+    // Destination Domain (90 MHz)
+    input  logic clk_dest,
+    output logic [47:0] tuningWord,
+    output logic [7:0]  powerThresh,
+    input  logic        pllLocked,
+    output logic        txEnable,
+    output logic        modeSquare,
 
-		     // Frequency counter values (from 90 MHz domain)
-		     input  logic [26:0] ppsCount,
-		     input  logic [4:0]  ppsGen
-		     );
+    // Frequency counter values (from 90 MHz domain)
+    input  logic [26:0] ppsCount,
+    input  logic [4:0]  ppsGen
+);
 
-  // =====================================================================
-  // 1. Clock Domain Crossing (90 MHz -> SPI Domain)
-  // =====================================================================
-  logic pllLocked_spi;
-  Synchronizer #(1, 2) sync_pllLocked (
-    .clk(fpgaSCLK),
-    .dIn(pllLocked),
-    .dOut(pllLocked_spi)
-  );
+  // Synchronizers
+  logic [1:0] syncPll;
+  always_ff @(posedge fpgaSCLK) syncPll <= {syncPll[0], pllLocked};
+  wire pll_spi = syncPll[1];
 
-  // For multi-bit signals, we use a shadow register that freezes when SPI is active.
-  logic ncs_clk_dest;
-  Synchronizer #(1, 2) sync_ncs_dest (
-    .clk(clk_dest),
-    .dIn(fpgaNCS),
-    .dOut(ncs_clk_dest)
-  );
+  logic [1:0] syncNCS;
+  always_ff @(posedge clk_dest) syncNCS <= {syncNCS[0], fpgaNCS};
+  wire ncs_dest = syncNCS[1];
 
-  logic [26:0] ppsCount_shadow, ppsCount_spi;
-  logic [4:0]  ppsGen_shadow, ppsGen_spi;
+  // Shadow registers
+  logic [26:0] ppsCountShadow, ppsCountSpi;
+  logic [4:0]  ppsGenShadow, ppsGenSpi;
 
   always_ff @(posedge clk_dest) begin
-    if (ncs_clk_dest) begin // SPI is idle
-      ppsCount_shadow <= ppsCount;
-      ppsGen_shadow   <= ppsGen;
+    if (ncs_dest) begin
+      ppsCountShadow <= ppsCount;
+      ppsGenShadow <= ppsGen;
     end
   end
 
-  // Capture into SPI domain on NCS low to avoid cross-domain paths during shifting
+  reg [5:0] bitCount = 0;
   always_ff @(posedge fpgaSCLK or posedge fpgaNCS) begin
     if (fpgaNCS) begin
-      ppsCount_spi <= 0;
-      ppsGen_spi   <= 0;
+      ppsCountSpi <= 0;
+      ppsGenSpi <= 0;
     end else if (bitCount == 0) begin
-      ppsCount_spi <= ppsCount_shadow;
-      ppsGen_spi   <= ppsGen_shadow;
+      ppsCountSpi <= ppsCountShadow;
+      ppsGenSpi <= ppsGenShadow;
     end
   end
 
-  // =====================================================================
-  // 2. SPI Domain Logic (Write & Readback)
-  // =====================================================================
-  logic [31:0] twRaw = 0;
-  logic [5:0]  bitCount = 0;
+  // SPI Protocol
+  logic [31:0] twLowRaw = 0;
+  logic [15:0] twHighRaw = 0;
   logic        isWrite = 0;
   logic [6:0]  selAddr = 0;
   logic [31:0] writeBuf = 0;
-  
-  tWSPRControl ctrlSPI = initWSPRControl;
+  logic [1:0]  ctrlSpi = 0;
   logic [31:0] readShift = 0;
-  logic [31:0] readMux = 0;
-
-  assign fpgaMISO = fpgaNCS ? 1'bZ : readShift[31];
 
   always_ff @(posedge fpgaSCLK or posedge fpgaNCS) begin
     if (fpgaNCS) begin
-      bitCount <= '0;
-      readShift <= '0;
+      bitCount <= 0;
+      readShift <= 0;
+      fpgaMISO <= 0;
     end else begin
       writeBuf <= {writeBuf[30:0], fpgaMOSI};
       
@@ -89,58 +77,57 @@ module SPIRegisters (
         selAddr <= {selAddr[5:0], fpgaMOSI};
       end 
       
-      // READBACK MUX
-      // At bit 8, we have the address and know if it's a read.
-      else if (bitCount == 8 && !isWrite) begin
+      if (bitCount == 8 && !isWrite) begin
         case (selAddr)
-          aWSPRControl: readShift <= {ctrlSPI.reserved, pllLocked_spi, ctrlSPI.txEnable};
-          aWSPRTuning:  readShift <= twRaw;
-          aWSPRPPS:     readShift <= {ppsCount_spi, ppsGen_spi};
-          aWSPRSig:     readShift <= eWSPRSigVal;
-          default:      readShift <= 32'hDEADBEEF; 
+          aWSPRControl:    readShift <= {29'd0, pll_spi, ctrlSpi};
+          aWSPRTuningLow:  readShift <= twLowRaw;
+          aWSPRTuningHigh: readShift <= {16'd0, twHighRaw};
+          aWSPRPPS:        readShift <= {ppsCountSpi, ppsGenSpi};
+          aWSPRSig:        readShift <= eWSPRSigVal;
+          default:         readShift <= 32'hDEADBEEF; 
         endcase
       end 
       
-      else if (bitCount >= 8 && !isWrite) begin
+      if (bitCount >= 8 && !isWrite) begin
+        fpgaMISO <= (bitCount == 8) ? readShift[31] : readShift[30];
         readShift <= {readShift[30:0], 1'b0};
       end
       
       if (bitCount == 39 && isWrite) begin
-        if (selAddr == aWSPRControl) ctrlSPI <= {writeBuf[30:0], fpgaMOSI};
-        if (selAddr == aWSPRTuning)  twRaw   <= {writeBuf[30:0], fpgaMOSI};
+        if (selAddr == aWSPRControl)    ctrlSpi   <= {writeBuf[0], fpgaMOSI};
+        if (selAddr == aWSPRTuningLow)  twLowRaw  <= {writeBuf[30:0], fpgaMOSI};
+        if (selAddr == aWSPRTuningHigh) twHighRaw <= {writeBuf[14:0], fpgaMOSI};
       end
       
       bitCount <= bitCount + 1;
     end
   end
 
-  // =====================================================================
-  // 3. Destination Domain Sync (SPI -> 90 MHz)
-  // =====================================================================
-  logic ncs_sync_d1;
-  logic [31:0] tw_meta, tw_stable;
-  logic        tx_meta, tx_stable;
+  // Dest domain sync
+  logic ncsD1;
+  logic [47:0] twMeta, twStable;
+  logic [1:0]  ctrlMeta, ctrlStable;
 
   always_ff @(posedge clk_dest) begin
-    ncs_sync_d1 <= ncs_clk_dest;
-
-    if (ncs_clk_dest && !ncs_sync_d1) begin 
-      tw_meta  <= twRaw;
-      tx_meta  <= ctrlSPI.txEnable;
+    ncsD1 <= ncs_dest;
+    if (ncs_dest && !ncsD1) begin
+      twMeta <= {twHighRaw, twLowRaw};
+      ctrlMeta <= ctrlSpi;
     end
-    
-    tw_stable  <= tw_meta;
-    tx_stable  <= tx_meta;
+    twStable <= twMeta;
+    ctrlStable <= ctrlMeta;
 
     if (reset) begin
-      tuningWord  <= 0;
-      powerThresh <= 8'hFF; // Hardcoded default
-      txEnable    <= 0;
+      tuningWord <= 0;
+      powerThresh <= 8'hFF;
+      txEnable <= 0;
+      modeSquare <= 0;
     end else begin
-      tuningWord  <= tw_stable;
-      powerThresh <= 8'hFF; // Hardcoded
-      txEnable    <= tx_stable;
+      tuningWord <= twStable;
+      powerThresh <= 8'hFF;
+      txEnable <= ctrlStable[0];
+      modeSquare <= ctrlStable[1];
     end
   end
 
-endmodule // SPIRegisters
+endmodule

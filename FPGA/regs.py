@@ -7,12 +7,18 @@ regs = RegisterSet("WSPR")
 @regs.register(0x00, "Main control and status")
 class Control:
   txEnable:     Bit(0, "Enable RF output")
+  modeSquare:   Bit(0, "Enable Pure Square Wave mode")
   pllLocked:    Bit(0, "PLL is locked to 180 MHz (Read Only)")
-  reserved:     UInt(0, 30, "Reserved")
+  reserved:     UInt(0, 29, "Reserved")
 
-@regs.register(0x01, "32-bit NCO tuning word")
-class Tuning:
-  word:         UInt(0, 32, "NCO frequency control word")
+@regs.register(0x01, "Low 32 bits of 48-bit NCO tuning word")
+class TuningLow:
+  word:         UInt(0, 32, "NCO frequency control word (Low)")
+
+@regs.register(0x02, "High 16 bits of 48-bit NCO tuning word")
+class TuningHigh:
+  word:         UInt(0, 16, "NCO frequency control word (High)")
+  reserved:     UInt(16, 16, "Reserved")
 
 @regs.register(0x03, "PPS and GNSS edge tracking")
 class PPS:

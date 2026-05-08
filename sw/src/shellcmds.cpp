@@ -239,17 +239,21 @@ namespace wspr {
     uint32_t delta_f = pps.count - prev.count;
 
     WSPRControl ctrl;
-    uint32_t tuning, sig;
+    uint32_t tuningL, tuningH, sig;
     fpga.readRegister(aWSPRControl, &ctrl.u);
-    fpga.readRegister(aWSPRTuning, &tuning);
+    fpga.readRegister(aWSPRTuningLow, &tuningL);
+    fpga.readRegister(aWSPRTuningHigh, &tuningH);
     fpga.readRegister(aWSPRSig, &sig);
+
+    uint64_t tuning = ((uint64_t)tuningH << 32) | tuningL;
 
     shell_print(sh, "=== FPGA PPS Diagnostics ===");
     shell_print(sh, "FPGA Signature:    0x%04X %s", sig, (sig == eWSPRSigVal) ? "(OK)" : "(FAIL)");
-    shell_print(sh, "Status:            TX=%s, PLL=%s",
+    shell_print(sh, "Status:            TX=%s, Mode=%s, PLL=%s",
                 ctrl.txEnable ? "ON" : "OFF",
+                ctrl.modeSquare ? "Square" : "1-2-1",
 		ctrl.pllLocked ? "LOCKED" : "NO_LOCK");
-    shell_print(sh, "Tuning Word:       0x%08x", tuning);
+    shell_print(sh, "Tuning Word:       0x%012llx", tuning);
     
     // We are measuring exactly 1 second between two rising edges
     if (delta_f > 0) {
@@ -378,15 +382,19 @@ namespace wspr {
     }
     
     WSPRControl ctrl;
-    uint32_t tuning;
+    uint32_t tuningL, tuningH;
     fpga.readRegister(aWSPRControl, &ctrl.u);
-    fpga.readRegister(aWSPRTuning, &tuning);
+    fpga.readRegister(aWSPRTuningLow, &tuningL);
+    fpga.readRegister(aWSPRTuningHigh, &tuningH);
+
+    uint64_t tuning = ((uint64_t)tuningH << 32) | tuningL;
 
     shell_print(sh, "=== FPGA Hardware Status ===");
     shell_print(sh, "TX Enable:       %s", (ctrl.txEnable) ? "ON" : "OFF");
+    shell_print(sh, "Mode:            %s", (ctrl.modeSquare) ? "Square" : "1-2-1");
     shell_print(sh, "PLL Locked:      %s", (ctrl.pllLocked) ? "YES" : "NO");
     shell_print(sh, "--- Registers ---");
-    shell_print(sh, "Tuning Word:     0x%08X", tuning);
+    shell_print(sh, "Tuning Word:     0x%012llX", tuning);
     if (!ctrl.pllLocked) shell_warn(sh, "WARNING: FPGA PLL is not locked.");
     return 0;
   }
