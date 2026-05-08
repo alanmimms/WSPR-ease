@@ -5,7 +5,6 @@ wspr_ease.json
 build/
 regs.hpp
 regs.md
-regs.sv
 build/
 *.csv
 *.png
@@ -14,3 +13,5 @@ tbCosim
 *.log
 .venv/
 exciterDP.v
+top_gen.v
+regs_gen.py

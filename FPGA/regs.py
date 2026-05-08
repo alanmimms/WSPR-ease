@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
-from tools.regTool import RegisterSet, UInt, Bit, Enum, Int
+import sys
 import os
+
+# Add project root to path so we can find tools/
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+from tools.regTool import RegisterSet, UInt, Bit, Enum, Int
 
 regs = RegisterSet("WSPR")
 
@@ -33,4 +38,4 @@ if __name__ == "__main__":
   # Generate files in the current directory (FPGA/)
   prefix = os.path.join(os.path.dirname(__file__), "regs")
   regs.writeFiles(prefix)
-  print(f"Generated registers at {prefix}.[sv|hpp|md]")
+  print(f"Generated registers at {prefix}.[hpp|md|py]")

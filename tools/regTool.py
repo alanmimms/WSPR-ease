@@ -104,6 +104,42 @@ class RegisterSet:
       lines.append(f"localparam logic [6:0] a{self.namespace}{reg.name} = 7'h{reg.addr:02X};")
     return "\n".join(lines)
 
+  def emitAmaranth(self):
+    lines = [f"# Generated Amaranth Signatures for {self.namespace}", "from amaranth import *", "from amaranth.lib import enum, data", ""]
+    
+    # Emit Enums
+    for reg in self.registers:
+      for f in reg.fields:
+        if isinstance(f, Enum):
+          enumName = f"{reg.name}{f.name[0].upper()}{f.name[1:]}"
+          lines.append(f"class {enumName}(enum.Enum, shape={f.bits}):")
+          for vName, vVal in f.values:
+            suffix = f"{vName[0].upper()}{vName[1:]}" if vName else "Value"
+            lines.append(f"    {suffix} = {vVal}")
+          lines.append("")
+
+    # Emit Structs using amaranth.lib.data.Struct
+    for reg in self.registers:
+      lines.append(f"class {reg.name}Struct(data.Struct):")
+      for f in reg.fields:
+        fName = f.name
+        if fName == "reserved":
+          fName = f"reserved{f.offset}"
+        
+        if isinstance(f, Enum):
+          typeName = f"{reg.name}{f.name[0].upper()}{f.name[1:]}"
+          lines.append(f"    {fName}: {typeName}")
+        else:
+          signedStr = ", signed=True" if f.signed else ""
+          lines.append(f"    {fName}: unsigned({f.bits}){signedStr}")
+      lines.append("")
+
+    # Emit Address Map
+    lines.append(f"class {self.namespace}Addr(enum.Enum, shape=7):")
+    for reg in self.registers:
+      lines.append(f"    {reg.name} = 0x{reg.addr:02X}")
+    return "\n".join(lines)
+
   def emitCpp(self):
     lines = [f"// Generated Register Definitions for {self.namespace}", "#pragma once", "#include <cstdint>", ""]
     
@@ -213,12 +249,12 @@ class RegisterSet:
     return "\n".join(lines)
 
   def writeFiles(self, prefix):
-    with open(f"{prefix}.sv", "w") as f:
-      f.write(self.emitSv())
     with open(f"{prefix}.hpp", "w") as f:
       f.write(self.emitCpp())
     with open(f"{prefix}.md", "w") as f:
       f.write(self.emitMd())
+    with open(f"{prefix}_gen.py", "w") as f:
+      f.write(self.emitAmaranth())
 
 if __name__ == "__main__":
   print("Register Tool: Import this module in your definition script.")

@@ -17,7 +17,7 @@ VERILATOR_FLAGS += -LDFLAGS "-lm"
 # Source files
 RTL_SOURCES := top.sv exciter.sv SPIRegisters.sv freqCounter.sv syncronizer.sv edgeDetector.sv
 RTL_SIM_SOURCES += $(SIM_DIR)/sbIO.sv $(SIM_DIR)/sbMAC16.sv $(SIM_DIR)/sbPLL40Core.sv $(SIM_DIR)/sbPLL40Pad.sv $(SIM_DIR)/sbRAM404K.sv $(SIM_DIR)/sbGB.sv
-GENERATED_SOURCES := regs.sv regs.hpp regs.md exciterDP.v
+GENERATED_SOURCES := top_gen.v
 
 CPP_SOURCES := tbTop.cpp
 
@@ -36,11 +36,12 @@ SIMTARGET := obj_dir/VTop
 all: $(TARGET)
 
 # The FPGA image
-$(TARGET):	$(RTL_SOURCES) $(GENERATED_SOURCES) $(PCF) timing.py
+$(TARGET):	build.py $(PCF) timing.py gateware.py regs.py
+	.venv/bin/python3 build.py
 	@echo "--- Building FPGA Bitstream ---"
 	@mkdir -p build
 	@echo "  YOSYS (Synthesis)..."
-	yosys -q -p "read_verilog exciterDP.v; read_verilog -sv $(RTL_SOURCES); synth_ice40 -dsp -top $(TOP) -json $(PROJECT).json"
+	yosys -q -p "read_verilog top_gen.v; synth_ice40 -dsp -top Top -json $(PROJECT).json"
 	@echo "  NEXTPNR (Place & Route)..."
 	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
 		--pre-pack timing.py --placer heap --seed 1 \
@@ -55,7 +56,7 @@ $(TARGET):	$(RTL_SOURCES) $(GENERATED_SOURCES) $(PCF) timing.py
 exciterDP.v: ncogen.py
 	python3 ncogen.py
 
-regs.sv regs.hpp regs.md: regs.py ../tools/regTool.py
+regs.hpp regs.md: regs.py ../tools/regTool.py
 	python3 regs.py
 
 # Build the Verilator simulation
