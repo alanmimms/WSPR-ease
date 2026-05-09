@@ -294,7 +294,10 @@ class SPIRegisters(Elaboratable):
         m.d.sync += load_miso_en.eq(is_bit7_f & ~is_write_latch)
 
         with m.If(sclk_falling & load_miso_en):
-            m.d.sync += miso_shift.eq(read_val_pipe)
+            m.d.sync += [
+                miso_shift.eq(read_val_pipe << 1),
+                miso_reg.eq(read_val_pipe[31])
+            ]
 
         # 6. Write logic (Pipelined to break routing delays)
         do_write_ctrl = Signal(reset_less=True)
