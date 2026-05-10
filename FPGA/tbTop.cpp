@@ -88,16 +88,27 @@ int main(int argc, char** argv) {
   uint32_t sig = spi.readReg(0x0F);
   std::cout << "Readback Signature: 0x" << std::hex << sig << std::dec << std::endl;
 
-  std::cout << "Enabling TX (Square Wave Mode)..." << std::endl;
-  spi.writeReg(0x00, 0x00000003); // TX EN = 1, Mode Square = 1
+  std::cout << "Enabling TX (1-2-1 Mode)..." << std::endl;
+  spi.writeReg(0x00, 0x00000001); // TX EN = 1, Mode Square = 0
   
   // Simulation loop
-  std::cout << "Running RF simulation for 5000 cycles..." << std::endl;
-  for (int i = 0; i < 10000; i++) {
+  std::cout << "Running RF simulation (1-2-1) for 5000 cycles..." << std::endl;
+  for (int i = 0; i < 5000; i++) {
     top->clk40 = !top->clk40;
     top->eval();
     if (tfp) tfp->dump(mainTime);
-    mainTime += 5555; // 90MHz clock half-period
+    mainTime += 12500; // 40MHz clock half-period
+  }
+
+  std::cout << "Switching to Square Wave Mode..." << std::endl;
+  spi.writeReg(0x00, 0x00000003); // TX EN = 1, Mode Square = 1
+
+  std::cout << "Running RF simulation (Square Wave) for 5000 cycles..." << std::endl;
+  for (int i = 0; i < 5000; i++) {
+    top->clk40 = !top->clk40;
+    top->eval();
+    if (tfp) tfp->dump(mainTime);
+    mainTime += 12500; // 40MHz clock half-period
   }
 
   top->final();

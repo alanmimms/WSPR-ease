@@ -132,17 +132,31 @@ class Exciter(Elaboratable):
         mul_r = Signal(32); mul_f = Signal(32)
         m.submodules.mr = Instance("SB_MAC16", p_BOTADDSUB_LOWERINPUT=1, p_TOPADDSUB_LOWERINPUT=2, i_A=ph_r, i_B=6, i_D=noise, p_TOPOUTPUT_SELECT=1, p_BOTOUTPUT_SELECT=1, i_CLK=ClockSignal(), i_CE=1, o_O=mul_r, o_CO=Signal(), o_ACCUMCO=Signal(), o_SIGNEXTOUT=Signal())
         m.submodules.mf = Instance("SB_MAC16", p_BOTADDSUB_LOWERINPUT=1, p_TOPADDSUB_LOWERINPUT=2, i_A=ph_f, i_B=6, i_D=~noise, p_TOPOUTPUT_SELECT=1, p_BOTOUTPUT_SELECT=1, i_CLK=ClockSignal(), i_CE=1, o_O=mul_f, o_CO=Signal(), o_ACCUMCO=Signal(), o_SIGNEXTOUT=Signal())
-        st_r = mul_r[16:19]; st_f = mul_f[16:19]
-        tx_p = Signal(6, reset_less=True); mode_p = Signal(6, reset_less=True); m.d.sync += [tx_p.eq(Cat(self.tx_enable, tx_p[:-1])), mode_p.eq(Cat(self.mode_square, mode_p[:-1]))]
-        st_f_reg = Signal(3, reset_less=True); m.d.sync += st_f_reg.eq(st_f)
+        
+        st_r_raw = mul_r[16:19]; st_f_raw = mul_f[16:19]
+        st_r_d1 = Signal(3, reset_less=True); st_r = Signal(3, reset_less=True)
+        st_f = Signal(3, reset_less=True)
+        m.d.sync += [
+            st_r_d1.eq(st_r_raw),
+            st_r.eq(st_r_d1),
+            st_f.eq(st_f_raw)
+        ]
+        
+        tx_p = Signal(8, reset_less=True); mode_p = Signal(8, reset_less=True)
+        m.d.sync += [
+            tx_p.eq(Cat(self.tx_enable, tx_p[:-1])),
+            mode_p.eq(Cat(self.mode_square, mode_p[:-1]))
+        ]
+        
         pb_r = Signal(); pp_r = Signal(); lb_r = Signal(); lp_r = Signal(); sq_r = st_r < 3
-        with m.If(tx_p[5]):
-            with m.If(mode_p[5]): m.d.comb += [pb_r.eq(sq_r), pp_r.eq(sq_r), lb_r.eq(~sq_r), lp_r.eq(~sq_r)]
+        with m.If(tx_p[7]):
+            with m.If(mode_p[7]): m.d.comb += [pb_r.eq(sq_r), pp_r.eq(sq_r), lb_r.eq(~sq_r), lp_r.eq(~sq_r)]
             with m.Else(): m.d.comb += [pb_r.eq((st_r == 0) | (st_r == 2)), pp_r.eq(st_r == 1), lb_r.eq((st_r == 3) | (st_r == 5)), lp_r.eq(st_r == 4)]
-        pb_f = Signal(); pp_f = Signal(); lb_f = Signal(); lp_f = Signal(); sq_f = st_f_reg < 3
-        with m.If(tx_p[5]):
-            with m.If(mode_p[5]): m.d.comb += [pb_f.eq(sq_f), pp_f.eq(sq_f), lb_f.eq(~sq_f), lp_f.eq(~sq_f)]
-            with m.Else(): m.d.comb += [pb_f.eq((st_f_reg == 0) | (st_f_reg == 2)), pp_f.eq(st_f_reg == 1), lb_f.eq((st_f_reg == 3) | (st_f_reg == 5)), lp_f.eq(st_f_reg == 4)]
+        
+        pb_f = Signal(); pp_f = Signal(); lb_f = Signal(); lp_f = Signal(); sq_f = st_f < 3
+        with m.If(tx_p[7]):
+            with m.If(mode_p[7]): m.d.comb += [pb_f.eq(sq_f), pp_f.eq(sq_f), lb_f.eq(~sq_f), lp_f.eq(~sq_f)]
+            with m.Else(): m.d.comb += [pb_f.eq((st_f == 0) | (st_f == 2)), pp_f.eq(st_f == 1), lb_f.eq((st_f == 3) | (st_f == 5)), lp_f.eq(st_f == 4)]
         pb_or = Signal(reset_less=True); pp_or = Signal(reset_less=True); lb_or = Signal(reset_less=True); lp_or = Signal(reset_less=True)
         pb_of = Signal(reset_less=True); pp_of = Signal(reset_less=True); lb_of = Signal(reset_less=True); lp_of = Signal(reset_less=True)
         m.d.sync += [pb_or.eq(pb_r), pp_or.eq(pp_r), lb_or.eq(lb_r), lp_or.eq(lp_r), pb_of.eq(pb_f), pp_of.eq(pp_f), lb_of.eq(lb_f), lp_of.eq(lp_f)]
