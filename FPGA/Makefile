@@ -10,6 +10,7 @@ OBJDIR := build
 # Verilator configuration
 VERILATOR := verilator
 VERILATOR_FLAGS := -Wall -Wno-fatal --trace --cc --exe --build
+VERILATOR_FLAGS += -Wno-PINMISSING -Wno-WIDTHEXPAND -Wno-WIDTHTRUNC -Wno-UNUSEDSIGNAL -Wno-UNUSEDPARAM -Wno-UNDRIVEN -Wno-TIMESCALEMOD
 VERILATOR_FLAGS += -I$(SIM_DIR)
 VERILATOR_FLAGS += -CFLAGS "-std=c++17 -I$(SW_DIR)"
 VERILATOR_FLAGS += -LDFLAGS "-lm"
@@ -30,13 +31,18 @@ PACKAGE=sg48
 TARGET := build/fpga.img
 SIMTARGET := obj_dir/VTop
 
-.PHONY: all clean run sim fast superfast help test
+.PHONY: all clean run sim fast superfast help test top_gen.v
 
 all: $(TARGET)
 
-# The FPGA image
-$(TARGET):	build.py $(PCF) timing.py gateware.py regs.py
+# Generate Verilog from Amaranth
+top_gen.v: gateware.py regs_gen.py
 	.venv/bin/python3 build.py
+	sed -i '/\$$auto\$$verilog_backend/d' top_gen.v
+	sed -i 's/\$$/_/g' top_gen.v
+
+# The FPGA image
+$(TARGET):	top_gen.v $(PCF) timing.py
 	@echo "--- Building FPGA Bitstream ---"
 	@mkdir -p build
 	@echo "  YOSYS (Synthesis)..."
@@ -84,7 +90,7 @@ superfast: $(SIMTARGET)
 	@echo "Superfast simulation complete."
 
 # View waveform with gtkwave (if available)
-wave: $(OBJDIR)/waveform.vcd
+wave: waveform.vcd
 	@if command -v gtkwave > /dev/null; then \
 		gtkwave $< & \
 	else \
@@ -96,6 +102,7 @@ clean:
 	@echo "Cleaning build artifacts..."
 	@rm -rf $(OBJDIR)
 	@rm -f waveform.vcd
+	@rm -f top_gen.v
 	@echo "Clean complete."
 
 # Help target

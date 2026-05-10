@@ -22,26 +22,25 @@ module SB_IO #(
     logic dout_q_0 = 0;
     logic dout_q_1 = 0;
     
-    // Sample the outputs on the clock edges if we are in a registered mode
+    // Sample the outputs on the clock edges
     always @(posedge OUTPUT_CLK) begin
         dout_q_0 <= D_OUT_0;
-    end
-    always @(negedge OUTPUT_CLK) begin
-        dout_q_1 <= D_OUT_1;
+        dout_q_1 <= D_OUT_1; // Temporarily posedge
     end
 
     logic dout;
     always @(*) begin
-        if (PIN_TYPE[3:2] == 2'b10) begin
-            // DDR Registered (e.g., 6'b011000)
-            // Outputs dout_q_0 on high phase of OUTPUT_CLK, dout_q_1 on low phase
-            dout = OUTPUT_CLK ? dout_q_0 : dout_q_1;
-        end else if (PIN_TYPE[3:2] == 2'b00) begin
-            // Simple Registered (e.g., 6'b010000)
-            dout = dout_q_0;
+        if (PIN_TYPE[3]) begin
+            // 2'b10 = Combinatorial, 2'b11 = Inverted
+            dout = PIN_TYPE[2] ? !dout_q_0 : D_OUT_0;
         end else begin
-            // Default to D_OUT_0 for others right now to avoid simulation issues
-            dout = D_OUT_0;
+            if (PIN_TYPE[2]) begin
+                // 2'b01 = Simple Registered (e.g., 6'b010101)
+                dout = dout_q_0;
+            end else begin
+                // 2'b00 = DDR Registered (e.g., 6'b010001)
+                dout = OUTPUT_CLK ? dout_q_0 : dout_q_1;
+            end
         end
     end
 

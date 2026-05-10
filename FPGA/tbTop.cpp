@@ -7,6 +7,32 @@
 #include <memory>
 #include <iomanip>
 
+/**
+ * Calculates the NCO tuning word for a 48-bit accumulator.
+ * Generalized for 32-bit architectures without 128-bit integer support.
+ */
+static uint64_t calculateNCOTuningWord(uint64_t freqHz, uint64_t ncoHz) {
+  // Define constants for the 48-bit accumulator
+  const uint64_t ncoShift = 48ULL;
+  const uint64_t ncoScale = 1ULL << ncoShift;
+
+  // Decompose ncoScale / ncoHz into quotient and remainder
+  // ncoScale = (q * ncoHz) + r
+  const uint64_t q = ncoScale / ncoHz;
+  const uint64_t r = ncoScale % ncoHz;
+
+  // result = (freqHz * q) + ((freqHz * r) / ncoHz)
+  // Both intermediate products (freqHz * q) and (freqHz * r) 
+  // fit within 64 bits for standard HF frequencies.
+  uint64_t term1 = freqHz * q;
+  uint64_t term2 = (freqHz * r) / ncoHz;
+
+  uint64_t tuningWord = term1 + term2;
+
+  return tuningWord;
+}
+
+
 int main(int argc, char** argv) {
   Verilated::commandArgs(argc, argv);
   VTop* top = new VTop;
@@ -46,11 +72,9 @@ int main(int argc, char** argv) {
   SimSpi spi(top, &mainTime);
 
   // Set Frequency: 5.555555 MHz
-  uint32_t freqHz = 5555555;
-  // Update rate in simulation:
-  // clk40 is passed through to clk90 (90MHz).
-  // DDR means 2 updates per clk90 cycle = 180Msps.
-  uint64_t tuningWord = ((uint64_t)freqHz << 48) / 180000000ULL;
+  uint64_t freqHz = 5555555ull;
+  uint64_t ncoHz = 90ul*1000ull*1000ull;
+  uint64_t tuningWord = calculateNCOTuningWord(freqHz, ncoHz);
 
   std::cout << "Setting Tuning Word: 0x" << std::hex << tuningWord << std::dec << " for " << freqHz << " Hz at 180 Msps" << std::endl;
   spi.writeReg(0x01, (uint32_t)(tuningWord & 0xFFFFFFFF));
@@ -64,8 +88,8 @@ int main(int argc, char** argv) {
   uint32_t sig = spi.readReg(0x0F);
   std::cout << "Readback Signature: 0x" << std::hex << sig << std::dec << std::endl;
 
-  std::cout << "Enabling TX..." << std::endl;
-  spi.writeReg(0x00, 0x00000001); // TX EN = 1
+  std::cout << "Enabling TX (Square Wave Mode)..." << std::endl;
+  spi.writeReg(0x00, 0x00000003); // TX EN = 1, Mode Square = 1
   
   // Simulation loop
   std::cout << "Running RF simulation for 5000 cycles..." << std::endl;
