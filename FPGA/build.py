@@ -25,7 +25,7 @@ def main():
         top.driverNEN
     ]
     
-    output_file = "top_gen.v"
+    output_file = "Top.v"
     with open(output_file, "w") as f:
         # Amaranth natively generates Verilog-2005. 
         f.write(verilog.convert(top, ports=ports, name="Top"))

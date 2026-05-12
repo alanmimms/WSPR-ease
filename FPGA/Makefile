@@ -16,8 +16,8 @@ VERILATOR_FLAGS += -CFLAGS "-std=c++17 -I$(SW_DIR)"
 VERILATOR_FLAGS += -LDFLAGS "-lm"
 
 # Source files
-RTL_SOURCES := top_gen.v
-RTL_SIM_SOURCES += $(SIM_DIR)/sbIO.sv $(SIM_DIR)/sbMAC16.sv $(SIM_DIR)/sbPLL40Core.sv $(SIM_DIR)/sbPLL40Pad.sv $(SIM_DIR)/sbRAM404K.sv $(SIM_DIR)/sbGB.sv
+RTL_SOURCES := Top.v
+RTL_SIM_SOURCES += $(SIM_DIR)/SB_IO.sv $(SIM_DIR)/SB_MAC16.sv $(SIM_DIR)/SB_PLL40_CORE.sv $(SIM_DIR)/SB_PLL40_PAD.sv $(SIM_DIR)/SB_RAM40_4K.sv $(SIM_DIR)/SB_GB.sv
 
 CPP_SOURCES := tbTop.cpp
 
@@ -31,22 +31,22 @@ PACKAGE=sg48
 TARGET := build/fpga.img
 SIMTARGET := obj_dir/VTop
 
-.PHONY: all clean run sim fast superfast help test top_gen.v
+.PHONY: all clean run sim fast superfast help test Top.v
 
 all: $(TARGET)
 
 # Generate Verilog from Amaranth
-top_gen.v: gateware.py regs_gen.py
+Top.v: gateware.py regs_gen.py
 	.venv/bin/python3 build.py
-	sed -i '/\$$auto\$$verilog_backend/d' top_gen.v
-	sed -i 's/\$$/_/g' top_gen.v
+	sed -i '/\$$auto\$$verilog_backend/d' Top.v
+	sed -i 's/\$$/_/g' Top.v
 
 # The FPGA image
-$(TARGET):	top_gen.v $(PCF) timing.py
+$(TARGET):	Top.v $(PCF) timing.py
 	@echo "--- Building FPGA Bitstream ---"
 	@mkdir -p build
 	@echo "  YOSYS (Synthesis)..."
-	yosys -q -p "read_verilog top_gen.v; synth_ice40 -dsp -top Top -json $(PROJECT).json"
+	yosys -q -p "read_verilog Top.v; synth_ice40 -dsp -top Top -json $(PROJECT).json"
 	@echo "  NEXTPNR (Place & Route)..."
 	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
 		--pre-pack timing.py --placer heap --seed 1 \
@@ -59,12 +59,12 @@ $(TARGET):	top_gen.v $(PCF) timing.py
 	@echo "--- FPGA Build Complete ---"
 
 # Build the Verilator simulation
-$(SIMTARGET): top_gen.v $(RTL_SIM_SOURCES) $(CPP_SOURCES) simHAL.hpp
+$(SIMTARGET): Top.v $(RTL_SIM_SOURCES) $(CPP_SOURCES) simHAL.hpp
 	@echo "Building Verilator simulation..."
 	$(VERILATOR) $(VERILATOR_FLAGS) \
 		-o VTop \
 		--top-module Top \
-		top_gen.v \
+		Top.v \
 		$(RTL_SIM_SOURCES) \
 		$(CPP_SOURCES)
 	@echo "Build complete: $@"
@@ -102,7 +102,7 @@ clean:
 	@echo "Cleaning build artifacts..."
 	@rm -rf $(OBJDIR)
 	@rm -f waveform.vcd
-	@rm -f top_gen.v
+	@rm -f Top.v
 	@echo "Clean complete."
 
 # Help target

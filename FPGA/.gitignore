@@ -13,5 +13,5 @@ tbCosim
 *.log
 .venv/
 exciterDP.v
-top_gen.v
+Top.v
 regs_gen.py
