@@ -35,7 +35,9 @@ class Sig:
   val:          Enum(0x52505357, 32, [("", 0x52505357)], "Fixed value ASCII 'WSPR'")
 
 if __name__ == "__main__":
-  # Generate files in the current directory (FPGA/)
-  prefix = os.path.join(os.path.dirname(__file__), "regs")
+  # Generate files in the 'gen/' directory
+  gen_dir = os.path.join(os.path.dirname(__file__), "gen")
+  os.makedirs(gen_dir, exist_ok=True)
+  prefix = os.path.join(gen_dir, "regs")
   regs.writeFiles(prefix)
   print(f"Generated registers at {prefix}.[hpp|md|py]")

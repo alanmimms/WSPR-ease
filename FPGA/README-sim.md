@@ -17,12 +17,12 @@ Linux distribution provides (I did).**
 
 The simulation integrates:
 
-- **FPGA RTL** (`top.sv`, `sequencer.sv`) - The actual iCE40 FPGA
-  design with NCO and 6-step sequencer
+- **FPGA RTL** (`gen/Top.v`) - The Amaranth-generated iCE40 FPGA
+  design with NCO and pipelined DSP stages.
 - **ESP32 Software** (`../sw/transmitter.cpp`,
-  `../sw/wspr-encoder.cpp`) - Real transmitter and WSPR encoder code
+  `../sw/wspr-encoder.cpp`) - Real transmitter and WSPR encoder code.
 - **Simulation HAL** (`simHAL.hpp`) - Hardware abstraction layer
-  implementations for Verilator
+  implementations for Verilator, featuring a centralized `SimTime` singleton.
 
 This allows testing the complete signal chain from WSPR encoding
 through SPI transactions to RF output generation.
@@ -30,7 +30,8 @@ through SPI transactions to RF output generation.
 ## Building
 
 ```bash
-make        # Build the simulation
+make        # Build the FPGA bitstream
+make sim    # Build and run the simulation
 make clean  # Clean build artifacts
 ```
 
@@ -39,7 +40,6 @@ make clean  # Clean build artifacts
 ```bash
 make run              # Build and run simulation (with waveforms)
 make fast             # Fast mode without waveforms
-make superfast        # Event-driven fast-forward mode
 make wave             # View waveforms with gtkwave (if installed)
 ```
 
@@ -47,8 +47,13 @@ make wave             # View waveforms with gtkwave (if installed)
 ```bash
 obj_dir/VTop                        # With waveforms
 obj_dir/VTop --notrace              # No waveforms
-obj_dir/VTop --notrace --fastforward # Superfast mode
 ```
+
+**Timing Architecture:**
+The simulation uses a centralized `SimTime` class in `simHAL.hpp` to ensure
+DRY (Don't Repeat Yourself) timing. It tracks simulation time in picoseconds
+based on a parameterized clock rate (default 90MHz), avoiding accumulation 
+errors by calculating elapsed time directly from the half-cycle counter.
 
 **Performance Comparison:**
 

@@ -10,8 +10,8 @@ def main():
 
     # 2. Generate Amaranth Gateware (Verilog output)
     print("Elaborating Amaranth gateware...")
-    # We need to make sure the current directory is in the path so we can import .regs_gen
-    sys.path.append(os.getcwd())
+    # We need to make sure the 'gen' directory is in the path so we can import .regs_gen
+    sys.path.append(os.path.join(os.getcwd(), "gen"))
     
     from gateware import Top
     from amaranth.back import verilog
@@ -25,7 +25,8 @@ def main():
         top.driverNEN
     ]
     
-    output_file = "Top.v"
+    os.makedirs("gen", exist_ok=True)
+    output_file = "gen/Top.v"
     with open(output_file, "w") as f:
         # Amaranth natively generates Verilog-2005. 
         f.write(verilog.convert(top, ports=ports, name="Top"))
@@ -36,7 +37,7 @@ def main():
     # The ESP32 firmware expects them in sw/hal/ (or similar)
     # Let's check where regs.hpp should go.
     
-    cpp_header = "regs.hpp"
+    cpp_header = "gen/regs.hpp"
     target_dir = "../sw/hal/"
     if os.path.exists(target_dir):
         import shutil

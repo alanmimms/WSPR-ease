@@ -11,7 +11,7 @@ import os
 
 # Import the generated registers if they exist, or provide placeholders for first run
 try:
-    from .regs_gen import ControlStruct, TuningLowStruct, TuningHighStruct, PPSStruct, SigStruct, WSPRAddr
+    from regs_gen import ControlStruct, TuningLowStruct, TuningHighStruct, PPSStruct, SigStruct, WSPRAddr
 
 except ImportError:
     class ControlStruct(data.Struct):

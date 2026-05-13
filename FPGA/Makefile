@@ -18,8 +18,8 @@ VERILATOR_FLAGS += -CFLAGS "-std=c++17 -I$(SW_DIR)"
 VERILATOR_FLAGS += -LDFLAGS "-lm"
 
 # Source files
-RTL_SOURCES := Top.v
-RTL_SIM_SOURCES := Top.v
+RTL_SOURCES := gen/Top.v
+RTL_SIM_SOURCES := gen/Top.v
 
 CPP_SOURCES := tbTop.cpp
 
@@ -39,22 +39,22 @@ PACKAGE=sg48
 TARGET := build/fpga.img
 SIMTARGET := obj_dir/VTop
 
-.PHONY: all clean run sim fast superfast help test Top.v
+.PHONY: all clean run sim fast superfast help test gen/Top.v
 
 all: $(TARGET)
 
 # Generate Verilog from Amaranth
-Top.v: gateware.py regs_gen.py
+gen/Top.v: gateware.py regs.py
 	.venv/bin/python3 build.py
-	sed -i '/\$$auto\$$verilog_backend/d' Top.v
-	sed -i 's/\$$/_/g' Top.v
+	sed -i '/\$$auto\$$verilog_backend/d' gen/Top.v
+	sed -i 's/\$$/_/g' gen/Top.v
 
 # The FPGA image
-$(TARGET):	Top.v $(PCF) timing.py
+$(TARGET):	gen/Top.v $(PCF) timing.py
 	@echo "--- Building FPGA Bitstream ---"
 	@mkdir -p build
 	@echo "  YOSYS (Synthesis)..."
-	yosys -q -p "read_verilog Top.v; synth_ice40 -dsp -top Top -json $(PROJECT).json"
+	yosys -q -p "read_verilog gen/Top.v; synth_ice40 -dsp -top Top -json $(PROJECT).json"
 	@echo "  NEXTPNR (Place & Route)..."
 	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
 		--pre-pack timing.py --placer heap --seed 31 \
@@ -67,7 +67,7 @@ $(TARGET):	Top.v $(PCF) timing.py
 	@echo "--- FPGA Build Complete ---"
 
 # Build the Verilator simulation
-$(SIMTARGET): Top.v $(RTL_SIM_SOURCES) $(CPP_SOURCES) simHAL.hpp
+$(SIMTARGET): gen/Top.v $(RTL_SIM_SOURCES) $(CPP_SOURCES) simHAL.hpp
 	@echo "Building Verilator simulation..."
 	$(VERILATOR) $(VERILATOR_FLAGS) \
 		-o VTop \

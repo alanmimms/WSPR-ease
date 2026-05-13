@@ -9,6 +9,8 @@
 
 static const vluint64_t clockHz = 90ull * 1000ull * 1000ull;
 
+static const char waveformFileName[] = "waveform.vcd";
+
 
 /**
  * Calculates the NCO tuning word for a 48-bit accumulator.
@@ -52,12 +54,11 @@ int main(int argc, char** argv) {
     tfp = new VerilatedVcdC;
     Verilated::traceEverOn(true);
     top->trace(tfp, 99);
-    tfp->open("waveform.vcd");
+    tfp->open(waveformFileName);
   }
 
-  vluint64_t mainTime = 0;
-  vluint64_t clockCounter = 0;
-  const vluint64_t clockPeriodPS = 1000ull * 1000ull * 1000ull * 1000ull / clockHz;
+  SimTime simTime(clockHz, tfp);
+  
   top->clk = 0;
   top->fpgaNCS = 1;
   top->fpgaSCLKpin = 0;
@@ -66,15 +67,10 @@ int main(int argc, char** argv) {
   top->fpgaNRESET = 1;
 
   std::cout << "Starting simulation..." << std::endl;
-  // Let PLL lock
-  for (int i = 0; i < 100; i++) {
-    top->clk = !top->clk;
-    top->eval();
-    if (tfp) tfp->dump(mainTime);
-    mainTime = ++clockCounter * clockPeriodPS / 2;
-  }
+  // Let PLL lock and reset clear
+  simTime.step(top, 1000);
 
-  SimSpi spi(top, &mainTime);
+  SimSpi spi(top, &simTime);
 
   // Set Frequency: 5.555555 MHz
   uint64_t freqHz = 5555555ull;
@@ -98,27 +94,17 @@ int main(int argc, char** argv) {
   
   // Simulation loop
   std::cout << "Running RF simulation (1-2-1) for 5000 cycles..." << std::endl;
-  for (int i = 0; i < 5000; i++) {
-    top->clk = !top->clk;
-    top->eval();
-    if (tfp) tfp->dump(mainTime);
-    mainTime = ++clockCounter * clockPeriodPS / 2;
-  }
+  simTime.step(top, 5000 * 2);
 
   std::cout << "Switching to Square Wave Mode..." << std::endl;
   spi.writeReg(0x00, 0x00000003); // TX EN = 1, Mode Square = 1
 
   std::cout << "Running RF simulation (Square Wave) for 5000 cycles..." << std::endl;
-  for (int i = 0; i < 5000; i++) {
-    top->clk = !top->clk;
-    top->eval();
-    if (tfp) tfp->dump(mainTime);
-    mainTime = ++clockCounter * clockPeriodPS / 2;
-  }
+  simTime.step(top, 5000 * 2);
 
   top->final();
   if (tfp) { tfp->close(); delete tfp; }
   delete top;
-  std::cout << "Simulation finished. Waveform saved to waveform.vcd" << std::endl;
+  std::cout << "Simulation finished. Waveform saved to " << waveformFileName << std::endl;
   return 0;
 }

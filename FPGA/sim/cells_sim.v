@@ -1,3 +1,20 @@
+/*
+ *  yosys -- Yosys Open SYnthesis Suite
+ *
+ *  Copyright (C) 2012  Claire Xenia Wolf <claire@yosyshq.com>
+ *
+ *  Permission to use, copy, modify, and/or distribute this software for any
+ *  purpose with or without fee is hereby granted, provided that the above
+ *  copyright notice and this permission notice appear in all copies.
+ *
+ *  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ *  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ *  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ *  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ *  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ *  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ *  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
 `timescale 1ps / 1ps
 `define SB_DFF_INIT initial Q = 0;
 // `define SB_DFF_INIT
@@ -2421,7 +2438,6 @@ endmodule
 
 // SiliconBlue PLL Cells
 
-(* blackbox *)
 module SB_PLL40_CORE (
 	input   REFERENCECLK,
 	output  PLLOUTCORE,
@@ -2450,9 +2466,19 @@ module SB_PLL40_CORE (
 	parameter ENABLE_ICEGATE = 1'b0;
 	parameter TEST_MODE = 1'b0;
 	parameter EXTERNAL_DIVIDE_FACTOR = 1;
+
+	reg lock_reg = 0;
+	assign LOCK = lock_reg;
+	assign PLLOUTCORE = REFERENCECLK;
+	assign PLLOUTGLOBAL = REFERENCECLK;
+
+	always @(posedge REFERENCECLK or negedge RESETB) begin
+		if (!RESETB) lock_reg <= 0;
+		else lock_reg <= 1;
+	end
+
 endmodule
 
-(* blackbox *)
 module SB_PLL40_PAD (
 	input   PACKAGEPIN,
 	output  PLLOUTCORE,
@@ -2481,6 +2507,17 @@ module SB_PLL40_PAD (
 	parameter ENABLE_ICEGATE = 1'b0;
 	parameter TEST_MODE = 1'b0;
 	parameter EXTERNAL_DIVIDE_FACTOR = 1;
+
+	reg lock_reg = 0;
+	assign LOCK = lock_reg;
+	assign PLLOUTCORE = PACKAGEPIN;
+	assign PLLOUTGLOBAL = PACKAGEPIN;
+
+	always @(posedge PACKAGEPIN or negedge RESETB) begin
+		if (!RESETB) lock_reg <= 0;
+		else lock_reg <= 1;
+	end
+
 endmodule
 
 (* blackbox *)
