@@ -1,3 +1,9 @@
+# RTL for the WSPR-ease FPGA.
+
+# NOTE: Keep this file in camelCase, with real language for the names
+# of identifiers, and continue to use the whitespace style I have used
+# here so it's readable.
+
 from amaranth import *
 from amaranth.lib import enum, data, cdc
 from amaranth.back import verilog
@@ -70,7 +76,7 @@ class PipelinedNCO(Elaboratable):
             accOut = Signal(32)
             coOut = Signal()
 
-            m.submodules[f"mac_{i}"] = Instance("SB_MAC16",
+            m.submodules[f"mMAC{i}"] = Instance("SB_MAC16",
                                                 p_BOTADDSUB_LOWERINPUT=0,
                                                 p_BOTADDSUB_UPPERINPUT=1,
                                                 p_BOTADDSUB_CARRYSELECT=3 if i > 0 else 0,
@@ -124,27 +130,27 @@ class FreqCounter(Elaboratable):
         m = Module()
         countOut = Signal(32)
 
-        m.submodules.counter_dsp = Instance("SB_MAC16",
-                                            p_BOTADDSUB_LOWERINPUT=0,
-                                            p_BOTADDSUB_UPPERINPUT=2,
-                                            p_BOTADDSUB_CARRYSELECT=1,
-                                            i_B=0,
-                                            i_CI=0,
-                                            p_TOPADDSUB_LOWERINPUT=0,
-                                            p_TOPADDSUB_UPPERINPUT=2,
-                                            p_TOPADDSUB_CARRYSELECT=2,
-                                            i_A=0,
-                                            p_TOPOUTPUT_SELECT=1,
-                                            p_BOTOUTPUT_SELECT=1,
-                                            i_CLK=ClockSignal(),
-                                            i_CE=1,
-                                            o_O=countOut,
-                                            o_CO=Signal(),
-                                            o_ACCUMCO=Signal(),
-                                            o_SIGNEXTOUT=Signal())
+        m.submodules.counterDSP = Instance("SB_MAC16",
+                                           p_BOTADDSUB_LOWERINPUT=0,
+                                           p_BOTADDSUB_UPPERINPUT=2,
+                                           p_BOTADDSUB_CARRYSELECT=1,
+                                           i_B=0,
+                                           i_CI=0,
+                                           p_TOPADDSUB_LOWERINPUT=0,
+                                           p_TOPADDSUB_UPPERINPUT=2,
+                                           p_TOPADDSUB_CARRYSELECT=2,
+                                           i_A=0,
+                                           p_TOPOUTPUT_SELECT=1,
+                                           p_BOTOUTPUT_SELECT=1,
+                                           i_CLK=ClockSignal(),
+                                           i_CE=1,
+                                           o_O=countOut,
+                                           o_CO=Signal(),
+                                           o_ACCUMCO=Signal(),
+                                           o_SIGNEXTOUT=Signal())
 
         syncPPS = Signal()
-        m.submodules.pps_sync = cdc.FFSynchronizer(self.samplePPS, syncPPS)
+        m.submodules.ppsSync = cdc.FFSynchronizer(self.samplePPS, syncPPS)
         lastPPS = Signal(reset_less=True)
         m.d.sync += lastPPS.eq(syncPPS)
 
@@ -161,10 +167,10 @@ class FreqCounter(Elaboratable):
 class SPIRegisters(Elaboratable):
 
     def __init__(self):
-        self.i_sclk = Signal()
-        self.i_mosi = Signal()
-        self.o_miso = Signal()
-        self.i_ncs = Signal()
+        self.iSCLK = Signal()
+        self.iMOSI = Signal()
+        self.oMISO = Signal()
+        self.iNCS = Signal()
         self.tw = Signal(48)
         self.txEn = Signal()
         self.modeSq = Signal()
@@ -179,9 +185,9 @@ class SPIRegisters(Elaboratable):
         ncsSync = Signal()
 
         m.submodules += [
-            cdc.FFSynchronizer(self.i_sclk, sclkSync),
-            cdc.FFSynchronizer(self.i_mosi, mosiSync),
-            cdc.FFSynchronizer(self.i_ncs, ncsSync)]
+            cdc.FFSynchronizer(self.iSCLK, sclkSync),
+            cdc.FFSynchronizer(self.iMOSI, mosiSync),
+            cdc.FFSynchronizer(self.iNCS, ncsSync)]
 
         sclk = Signal(reset_less=True)
         mosi = Signal(reset_less=True)
@@ -207,7 +213,7 @@ class SPIRegisters(Elaboratable):
         # 32-bit shift register for outgoing MISO data
         misoSR = Signal(32, reset_less=True)
         misoReg = Signal(reset_less=True)
-        m.d.comb += self.o_miso.eq(misoReg)
+        m.d.comb += self.oMISO.eq(misoReg)
         
         with m.If(ncs):
             m.d.sync += [bitCount.eq(0),
@@ -277,11 +283,11 @@ class SPIRegisters(Elaboratable):
                      vPPS.eq(Mux(isPPS, localPpsC, 0)),
                      vSig.eq(Mux(isSig, 0x52505357, 0))]
         
-        vStage1_0 = Signal(32, reset_less=True)
-        vStage1_1 = Signal(32, reset_less=True)
-        m.d.sync += [vStage1_0.eq(vCtrl | vTwLow | vTwHi),
-                     vStage1_1.eq(vPPS | vSig)]
-        m.d.sync += readValPipe.eq(vStage1_0 | vStage1_1)
+        vStage1d0 = Signal(32, reset_less=True)
+        vStage1d1 = Signal(32, reset_less=True)
+        m.d.sync += [vStage1d0.eq(vCtrl | vTwLow | vTwHi),
+                     vStage1d1.eq(vPPS | vSig)]
+        m.d.sync += readValPipe.eq(vStage1d0 | vStage1d1)
         
         loadMisoEn = Signal(reset_less=True)
         m.d.sync += loadMisoEn.eq(isBit7F & ~isWriteLatch)
@@ -313,14 +319,14 @@ class SPIRegisters(Elaboratable):
         return m
 
 class Exciter(Elaboratable):
-    def __init__(self, pb_pin, pp_pin, lb_pin, lp_pin):
+    def __init__(self, pbPin, ppPin, lbPin, lpPin):
         self.tw = Signal(48)
         self.modeSq = Signal()
         self.txEn = Signal()
-        self.pb_pin = pb_pin
-        self.pp_pin = pp_pin
-        self.lb_pin = lb_pin
-        self.lp_pin = lp_pin
+        self.pbPin = pbPin
+        self.ppPin = ppPin
+        self.lbPin = lbPin
+        self.lpPin = lpPin
 
     def elaborate(self, platform):
         m = Module()
@@ -328,6 +334,10 @@ class Exciter(Elaboratable):
         m.d.comb += nco.tw.eq(self.tw)
         lcg = Signal(32)
 
+        # Use a LCG pseudo-random number generator (PRNG) to compute
+        # noise to dither the freq VERY SLIGHTLY to eliminate
+        # artifacts from tuning right near a freq that divides into
+        # our 90MHz clock evenly.
         m.submodules.prng = Instance("SB_MAC16",
                                      p_BOTADDSUB_UPPERINPUT=2,
                                      p_BOTADDSUB_LOWERINPUT=0,
@@ -344,7 +354,13 @@ class Exciter(Elaboratable):
                                      o_ACCUMCO=Signal(),
                                      o_SIGNEXTOUT=Signal())
 
-        noise = lcg[:16]
+        #noise = lcg[:16]
+        noise = 0
+        noiseD1inv = 0
+
+        # Delay the noise by 1 clock to align with the 1-clock delay of phaseF
+        #noiseD1inv = Signal(16, reset_less=True)
+        #m.d.sync += noiseD1inv.eq(~noise)
 
         # Upper 16 bits of NCO phase for the rising edge sample
         phaseR = nco.phase[32:48]
@@ -353,11 +369,14 @@ class Exciter(Elaboratable):
         # Phase for the falling edge sample (calculated with 0.5 cycle offset)
         phaseF = Signal(16)
 
+        # Calculate the half cycle offset for falling edge, computing
+        # phaseR * 1 + tw/2. This just uses this "expensive" SB_MAC16
+        # as a fast 32-bit adder.
         m.submodules.offs = Instance("SB_MAC16",
-                                     p_TOPADDSUB_LOWERINPUT=0,
-                                     p_TOPADDSUB_UPPERINPUT=1,
+                                     p_TOPADDSUB_LOWERINPUT=2, # Use i_D as addend after multiply
+                                     p_TOPADDSUB_UPPERINPUT=0,
                                      i_A=phaseR,
-                                     i_B=0,
+                                     i_B=1,
                                      i_D=self.tw[32:48] >> 1,
                                      p_TOPOUTPUT_SELECT=1,
                                      i_CLK=ClockSignal(),
@@ -373,9 +392,10 @@ class Exciter(Elaboratable):
         mulR = Signal(32)
         mulF = Signal(32)
 
+        # Compute mulR = phaseR * 6 + noise
         m.submodules.mr = Instance("SB_MAC16",
                                    p_BOTADDSUB_LOWERINPUT=1,
-                                   p_TOPADDSUB_LOWERINPUT=2,
+                                   p_TOPADDSUB_LOWERINPUT=0,
                                    i_A=phaseR,
                                    i_B=6,
                                    i_D=noise,
@@ -388,12 +408,13 @@ class Exciter(Elaboratable):
                                    o_ACCUMCO=Signal(),
                                    o_SIGNEXTOUT=Signal())
 
+        # Compute mulF = phaseF * 6 + (inverted)noise
         m.submodules.mf = Instance("SB_MAC16",
                                    p_BOTADDSUB_LOWERINPUT=1,
-                                   p_TOPADDSUB_LOWERINPUT=2,
+                                   p_TOPADDSUB_LOWERINPUT=0,
                                    i_A=phaseF,
                                    i_B=6,
-                                   i_D=~noise,
+                                   i_D=noiseD1inv,      # Aligned, delayed noise
                                    p_TOPOUTPUT_SELECT=1,
                                    p_BOTOUTPUT_SELECT=1,
                                    i_CLK=ClockSignal(),
@@ -491,22 +512,22 @@ class Exciter(Elaboratable):
         pinType = 17
         m.submodules.mPushBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
-                                          o_PACKAGE_PIN=self.pb_pin,
+                                          o_PACKAGE_PIN=self.pbPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_D_OUT_0=pushBaseRegR, i_D_OUT_1=pushBaseRegF)
         m.submodules.mPushPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
-                                          o_PACKAGE_PIN=self.pp_pin,
+                                          o_PACKAGE_PIN=self.ppPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_D_OUT_0=pushPeakRegR, i_D_OUT_1=pushPeakRegF)
         m.submodules.mPullBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
-                                          o_PACKAGE_PIN=self.lb_pin,
+                                          o_PACKAGE_PIN=self.lbPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_D_OUT_0=pullBaseRegR, i_D_OUT_1=pullBaseRegF)
         m.submodules.mPullPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
-                                          o_PACKAGE_PIN=self.lp_pin,
+                                          o_PACKAGE_PIN=self.lpPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_D_OUT_0=pullPeakRegR, i_D_OUT_1=pullPeakRegF)
         return m
@@ -516,7 +537,7 @@ class Top(Elaboratable):
         self.clk40 = Signal(name="clk40")
         self.gnssPPS = Signal(name="gnssPPS")
         self.fpgaNRESET = Signal(name="fpgaNRESET")
-        self.fpgaSCLK_pin = Signal(name="fpgaSCLK_pin")
+        self.fpgaSCLKpin = Signal(name="fpgaSCLKpin")
         self.fpgaMOSI = Signal(name="fpgaMOSI")
         self.fpgaMISO = Signal(name="fpgaMISO")
         self.fpgaNCS = Signal(name="fpgaNCS")
@@ -545,46 +566,46 @@ class Top(Elaboratable):
                                     o_LOCK=pllLockedRaw)
 
         clk90Gb = Signal()
-        m.submodules.clk_gb = Instance("SB_GB",
-                                       i_USER_SIGNAL_TO_GLOBAL_BUFFER=clk90,
-                                       o_GLOBAL_BUFFER_OUTPUT=clk90Gb)
+        m.submodules.clkGB = Instance("SB_GB",
+                                      i_USER_SIGNAL_TO_GLOBAL_BUFFER=clk90,
+                                      o_GLOBAL_BUFFER_OUTPUT=clk90Gb)
 
         pllLocked = Signal()
-        m.submodules.lock_gb = Instance("SB_GB",
-                                        i_USER_SIGNAL_TO_GLOBAL_BUFFER=pllLockedRaw,
-                                        o_GLOBAL_BUFFER_OUTPUT=pllLocked)
+        m.submodules.lockGB = Instance("SB_GB",
+                                       i_USER_SIGNAL_TO_GLOBAL_BUFFER=pllLockedRaw,
+                                       o_GLOBAL_BUFFER_OUTPUT=pllLocked)
 
         sclkGb = Signal()
-        m.submodules.sclk_gb = Instance("SB_GB",
-                                        i_USER_SIGNAL_TO_GLOBAL_BUFFER=self.fpgaSCLK_pin,
-                                        o_GLOBAL_BUFFER_OUTPUT=sclkGb)
+        m.submodules.sclkGB = Instance("SB_GB",
+                                       i_USER_SIGNAL_TO_GLOBAL_BUFFER=self.fpgaSCLKpin,
+                                       o_GLOBAL_BUFFER_OUTPUT=sclkGb)
 
         m.domains.sync = ClockDomain()
         m.d.comb += ClockSignal("sync").eq(clk90Gb)
 
         rstSyncRaw = Signal()
-        m.submodules.rst_sync = cdc.FFSynchronizer(~self.fpgaNRESET, rstSyncRaw, reset=1)
+        m.submodules.rstSync = cdc.FFSynchronizer(~self.fpgaNRESET, rstSyncRaw, reset=1)
 
         rstGb = Signal()
-        m.submodules.rst_gb = Instance("SB_GB", i_USER_SIGNAL_TO_GLOBAL_BUFFER=rstSyncRaw, o_GLOBAL_BUFFER_OUTPUT=rstGb)
+        m.submodules.rstGB = Instance("SB_GB", i_USER_SIGNAL_TO_GLOBAL_BUFFER=rstSyncRaw, o_GLOBAL_BUFFER_OUTPUT=rstGb)
         m.d.comb += ResetSignal("sync").eq(rstGb)
 
         m.submodules.freq = freq = FreqCounter()
         m.d.comb += freq.samplePPS.eq(self.gnssPPS)
 
         m.submodules.spi = spi = SPIRegisters()
-        m.d.comb += [spi.i_sclk.eq(sclkGb),
-                     spi.i_mosi.eq(self.fpgaMOSI),
-                     self.fpgaMISO.eq(spi.o_miso),
-                     spi.i_ncs.eq(self.fpgaNCS),
+        m.d.comb += [spi.iSCLK.eq(sclkGb),
+                     spi.iMOSI.eq(self.fpgaMOSI),
+                     self.fpgaMISO.eq(spi.oMISO),
+                     spi.iNCS.eq(self.fpgaNCS),
                      spi.pllLocked.eq(pllLocked),
                      spi.ppsCount.eq(freq.ppsCount),
                      spi.ppsGen.eq(freq.ppsGen)]
 
-        m.submodules.exciter = exciter = Exciter(pb_pin=self.rfPushBase,
-                                                 pp_pin=self.rfPushPeak,
-                                                 lb_pin=self.rfPullBase,
-                                                 lp_pin=self.rfPullPeak)
+        m.submodules.exciter = exciter = Exciter(pbPin=self.rfPushBase,
+                                                 ppPin=self.rfPushPeak,
+                                                 lbPin=self.rfPullBase,
+                                                 lpPin=self.rfPullPeak)
         m.d.comb += [exciter.tw.eq(spi.tw),
                      exciter.txEn.eq(spi.txEn & pllLocked),
                      exciter.modeSq.eq(spi.modeSq)]
@@ -596,7 +617,7 @@ if __name__ == "__main__":
     ports = [top.clk40,
              top.gnssPPS,
              top.fpgaNRESET,
-             top.fpgaSCLK_pin,
+             top.fpgaSCLKpin,
              top.fpgaMOSI,
              top.fpgaMISO,
              top.fpgaNCS,

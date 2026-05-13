@@ -82,6 +82,61 @@ that is easily filtered by the RF bandpass filters.
 
 ---
 
+## Pipeline Tick Pseudocode
+
+```python
+	def exciterPipelineTick(ncoPhase, prngNoise):
+		# =======================================================
+		# TICK 0: The Initial State
+		# =======================================================
+		ncoPhase = ncoPhase				# phaseR(Tick0)
+		prngNoise = prngNoise			# noise(Tick0)
+		ddrOffset = (tw >> 1)			# 0.5 cycle offset
+
+		# =======================================================
+		# TICK 1: First Stage Math (Multiplier & Offset)
+		# =======================================================
+
+		# 1. Rising Edge Math (mr DSP)
+		# The multiplier takes 1 clock cycle. 
+		mulRT1 = ncoPhase * 6 + prngNoise
+
+		# 2. Noise Delay Registration
+		# Invert the noise and hold it for the falling edge math
+		noiseD1invT1 = ~prngNoise
+
+		# 3. Falling Edge Offset (offs DSP)
+		phaseFT1 = ncoPhase * 1 + ddrOffset 
+
+		# =======================================================
+		# TICK 2: Falling Edge Math & Rising Edge Wait State
+		# =======================================================
+
+		# 1. Falling Edge Math (mf DSP)
+		# Now that phaseFT1 and noiseD1invT1 are ready, compute the falling edge.
+		mulFT2 = phaseFT1 * 6 + noiseD1invT1
+		stateFraw = mulFT2[16:19]  # 3-bit state extracted
+
+		# 2. Rising Edge Wait State 1
+		# Because the Falling Edge took an extra clock cycle to compute the offset,
+		# the Rising Edge must be delayed to wait for it.
+		stateRraw = mulRT1[16:19]
+		stateRD1T2 = stateRraw     # Latch it into stateRD1
+
+		# =======================================================
+		# TICK 3: Final Alignment to DDR Pins
+		# =======================================================
+
+		# Rising edge state finishes waiting
+		stateRfinal = stateRD1T2
+
+		# Falling edge state arrives
+		stateFfinal = stateFraw
+
+		# RESULT: Both states map to the DDR pins on the exact same 90MHz clock tick!
+		return (stateRfinal, stateFfinal)
+```
+
 ## SPI Interface Protocol
 
 The SPI control plane is implemented using oversampling on the 90 MHz

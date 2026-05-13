@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
   vluint64_t mainTime = 0;
   top->clk40 = 0;
   top->fpgaNCS = 1;
-  top->fpgaSCLK_pin = 0;
+  top->fpgaSCLKpin = 0;
   top->fpgaMOSI = 0;
   top->gnssPPS = 0;
   top->fpgaNRESET = 1;

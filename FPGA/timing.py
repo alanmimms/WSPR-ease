@@ -1,8 +1,8 @@
 ctx.addClock("clk90Gb", 90.0)
 
 # Mock SPI clock with low frequency to ignore CDC timing
-# Amaranth generates a net named something like 'fpgaSCLK_pin'
-ctx.addClock("fpgaSCLK_pin", 5.0)
+# Amaranth generates a net named something like 'fpgaSCLKpin'
+ctx.addClock("fpgaSCLKpin", 5.0)
 
 # This removes the "posedge fpgaSCLK -> posedge clk90" constraint.
 #ctx.setClockAsync("clk90", "fpgaSCLK")

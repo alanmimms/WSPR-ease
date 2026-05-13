@@ -4,7 +4,7 @@ module Top (
 	    input  logic clk40,
 	    input logic gnssPPS,
 	    input logic fpgaNRESET,
-	    input  logic fpgaSCLK_pin,
+	    input  logic fpgaSCLKpin,
 	    input  logic fpgaMOSI,
 	    output wire fpgaMISO,
 	    input  logic fpgaNCS,
@@ -17,7 +17,7 @@ module Top (
 
   logic fpgaSCLK, pllLocked, pllLocked_gb;
 
-  SB_GB sclkGbuf (.USER_SIGNAL_TO_GLOBAL_BUFFER(fpgaSCLK_pin), .GLOBAL_BUFFER_OUTPUT(fpgaSCLK));
+  SB_GB sclkGbuf (.USER_SIGNAL_TO_GLOBAL_BUFFER(fpgaSCLKpin), .GLOBAL_BUFFER_OUTPUT(fpgaSCLK));
 
   // Use a global buffer for the LOCK signal to move it away from the PLL tile and resolve placement issues.
   SB_GB pllLockGbuf (.USER_SIGNAL_TO_GLOBAL_BUFFER(pllLocked), .GLOBAL_BUFFER_OUTPUT(pllLocked_gb));
