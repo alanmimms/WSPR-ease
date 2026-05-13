@@ -5,3 +5,4 @@ production/
 symbols/
 build/
 **/__pycache__/
+FPGA/wave.gtkw

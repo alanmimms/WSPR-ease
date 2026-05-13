@@ -76,22 +76,22 @@ class PipelinedNCO(Elaboratable):
             accOut = Signal(32)
             coOut = Signal()
 
-            m.submodules[f"mMAC{i}"] = Instance("SB_MAC16",
-                                                p_BOTADDSUB_LOWERINPUT=0,
-                                                p_BOTADDSUB_UPPERINPUT=1,
-                                                p_BOTADDSUB_CARRYSELECT=3 if i > 0 else 0,
-                                                i_B=0xFFFF,
-                                                i_D=0,
-                                                i_CI=carryIn,
-                                                p_TOPADDSUB_LOWERINPUT=0,
-                                                p_TOPADDSUB_UPPERINPUT=2,
-                                                p_TOPADDSUB_CARRYSELECT=2,
-                                                p_TOPOUTPUT_SELECT=1,
-                                                i_A=twDelayed[i], o_O=accOut, o_CO=coOut,
-                                                i_CLK=ClockSignal(),
-                                                i_CE=1,
-                                                o_ACCUMCO=Signal(),
-                                                o_SIGNEXTOUT=Signal())
+            m.submodules[f"ncoAccum{i}"] = Instance("SB_MAC16",
+                                                    p_BOTADDSUB_LOWERINPUT=0,
+                                                    p_BOTADDSUB_UPPERINPUT=1,
+                                                    p_BOTADDSUB_CARRYSELECT=3 if i > 0 else 0,
+                                                    i_B=0xFFFF,
+                                                    i_D=0,
+                                                    i_CI=carryIn,
+                                                    p_TOPADDSUB_LOWERINPUT=0,
+                                                    p_TOPADDSUB_UPPERINPUT=2,
+                                                    p_TOPADDSUB_CARRYSELECT=2,
+                                                    p_TOPOUTPUT_SELECT=1,
+                                                    i_A=twDelayed[i], o_O=accOut, o_CO=coOut,
+                                                    i_CLK=ClockSignal(),
+                                                    i_CE=1,
+                                                    o_ACCUMCO=Signal(),
+                                                    o_SIGNEXTOUT=Signal())
 
             accChunks.append(accOut[16:32])
             nc = Signal(reset_less=True)
@@ -514,27 +514,35 @@ class Exciter(Elaboratable):
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.pbPin,
                                           i_OUTPUT_CLK=ClockSignal(),
+                                          i_CLOCK_ENABLE=1,
+                                          i_OUTPUT_ENABLE=1,
                                           i_D_OUT_0=pushBaseRegR, i_D_OUT_1=pushBaseRegF)
         m.submodules.mPushPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.ppPin,
                                           i_OUTPUT_CLK=ClockSignal(),
+                                          i_CLOCK_ENABLE=1,
+                                          i_OUTPUT_ENABLE=1,
                                           i_D_OUT_0=pushPeakRegR, i_D_OUT_1=pushPeakRegF)
         m.submodules.mPullBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.lbPin,
                                           i_OUTPUT_CLK=ClockSignal(),
+                                          i_CLOCK_ENABLE=1,
+                                          i_OUTPUT_ENABLE=1,
                                           i_D_OUT_0=pullBaseRegR, i_D_OUT_1=pullBaseRegF)
         m.submodules.mPullPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.lpPin,
                                           i_OUTPUT_CLK=ClockSignal(),
+                                          i_CLOCK_ENABLE=1,
+                                          i_OUTPUT_ENABLE=1,
                                           i_D_OUT_0=pullPeakRegR, i_D_OUT_1=pullPeakRegF)
         return m
 
 class Top(Elaboratable):
     def __init__(self):
-        self.clk40 = Signal(name="clk40")
+        self.clk = Signal(name="clk")
         self.gnssPPS = Signal(name="gnssPPS")
         self.fpgaNRESET = Signal(name="fpgaNRESET")
         self.fpgaSCLKpin = Signal(name="fpgaSCLKpin")
@@ -558,7 +566,7 @@ class Top(Elaboratable):
                                     p_DIVF=17,
                                     p_DIVQ=3,
                                     p_FILTER_RANGE=2,
-                                    i_PACKAGEPIN=self.clk40,
+                                    i_PACKAGEPIN=self.clk,
                                     i_RESETB=1,
                                     i_BYPASS=0,
                                     o_PLLOUTCORE=clk90,
@@ -614,7 +622,7 @@ class Top(Elaboratable):
 
 if __name__ == "__main__":
     top = Top()
-    ports = [top.clk40,
+    ports = [top.clk,
              top.gnssPPS,
              top.fpgaNRESET,
              top.fpgaSCLKpin,

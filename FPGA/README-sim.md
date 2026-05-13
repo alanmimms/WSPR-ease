@@ -3,6 +3,16 @@
 This directory contains the Verilator-based testbench for the
 WSPR-ease FPGA design, integrated with the ESP32 software stack.
 
+**NOTE: Building this requires you to install `yosys-dev` or at least
+have enough of yosys that the `yosys-config` program works and can
+find the `--datdir` with its "ground truth" models for iCE40.**
+
+**NOTE: Building this requires you use Verilator >= 5.x, which is
+_not_ what is included in Ubuntu 24.04 and earlier. See
+https://verilator.org/guide/latest/install.html#git-quick-install for
+how to get this and build it if you need a newer version than your
+Linux distribution provides (I did).**
+
 ## Architecture
 
 The simulation integrates:

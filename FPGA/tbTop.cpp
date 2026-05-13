@@ -7,6 +7,9 @@
 #include <memory>
 #include <iomanip>
 
+static const vluint64_t clockHz = 90ull * 1000ull * 1000ull;
+
+
 /**
  * Calculates the NCO tuning word for a 48-bit accumulator.
  * Generalized for 32-bit architectures without 128-bit integer support.
@@ -53,7 +56,9 @@ int main(int argc, char** argv) {
   }
 
   vluint64_t mainTime = 0;
-  top->clk40 = 0;
+  vluint64_t clockCounter = 0;
+  const vluint64_t clockPeriodPS = 1000ull * 1000ull * 1000ull * 1000ull / clockHz;
+  top->clk = 0;
   top->fpgaNCS = 1;
   top->fpgaSCLKpin = 0;
   top->fpgaMOSI = 0;
@@ -63,10 +68,10 @@ int main(int argc, char** argv) {
   std::cout << "Starting simulation..." << std::endl;
   // Let PLL lock
   for (int i = 0; i < 100; i++) {
-    top->clk40 = !top->clk40;
+    top->clk = !top->clk;
     top->eval();
     if (tfp) tfp->dump(mainTime);
-    mainTime += 12500;
+    mainTime = ++clockCounter * clockPeriodPS / 2;
   }
 
   SimSpi spi(top, &mainTime);
@@ -94,10 +99,10 @@ int main(int argc, char** argv) {
   // Simulation loop
   std::cout << "Running RF simulation (1-2-1) for 5000 cycles..." << std::endl;
   for (int i = 0; i < 5000; i++) {
-    top->clk40 = !top->clk40;
+    top->clk = !top->clk;
     top->eval();
     if (tfp) tfp->dump(mainTime);
-    mainTime += 12500; // 40MHz clock half-period
+    mainTime = ++clockCounter * clockPeriodPS / 2;
   }
 
   std::cout << "Switching to Square Wave Mode..." << std::endl;
@@ -105,10 +110,10 @@ int main(int argc, char** argv) {
 
   std::cout << "Running RF simulation (Square Wave) for 5000 cycles..." << std::endl;
   for (int i = 0; i < 5000; i++) {
-    top->clk40 = !top->clk40;
+    top->clk = !top->clk;
     top->eval();
     if (tfp) tfp->dump(mainTime);
-    mainTime += 12500; // 40MHz clock half-period
+    mainTime = ++clockCounter * clockPeriodPS / 2;
   }
 
   top->final();

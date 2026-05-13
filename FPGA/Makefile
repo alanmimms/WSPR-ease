@@ -11,15 +11,23 @@ OBJDIR := build
 VERILATOR := verilator
 VERILATOR_FLAGS := -Wall -Wno-fatal --trace --cc --exe --build
 VERILATOR_FLAGS += -Wno-PINMISSING -Wno-WIDTHEXPAND -Wno-WIDTHTRUNC -Wno-UNUSEDSIGNAL -Wno-UNUSEDPARAM -Wno-UNDRIVEN -Wno-TIMESCALEMOD
+VERILATOR_FLAGS += -Wno-GENUNNAMED -Wno-DECLFILENAME -Wno-PROCASSINIT -Wno-COMBDLY
 VERILATOR_FLAGS += -I$(SIM_DIR)
+VERILATOR_FLAGS += -sv
 VERILATOR_FLAGS += -CFLAGS "-std=c++17 -I$(SW_DIR)"
 VERILATOR_FLAGS += -LDFLAGS "-lm"
 
 # Source files
 RTL_SOURCES := Top.v
-RTL_SIM_SOURCES += $(SIM_DIR)/SB_IO.sv $(SIM_DIR)/SB_MAC16.sv $(SIM_DIR)/SB_PLL40_CORE.sv $(SIM_DIR)/SB_PLL40_PAD.sv $(SIM_DIR)/SB_RAM40_4K.sv $(SIM_DIR)/SB_GB.sv
+RTL_SIM_SOURCES := Top.v
 
 CPP_SOURCES := tbTop.cpp
+
+# Ask Yosys where its data directory is located (works on Linux, Mac, Windows MSYS2)
+YOSYS_DATDIR := $(shell yosys-config --datdir)
+
+# Construct the path to the iCE40 simulation models
+ICE40_SIM_MODELS := $(SIM_DIR)/cells_sim.v
 
 PROJECT=wspr_ease
 TOP=Top
@@ -64,8 +72,8 @@ $(SIMTARGET): Top.v $(RTL_SIM_SOURCES) $(CPP_SOURCES) simHAL.hpp
 	$(VERILATOR) $(VERILATOR_FLAGS) \
 		-o VTop \
 		--top-module Top \
-		Top.v \
 		$(RTL_SIM_SOURCES) \
+		$(ICE40_SIM_MODELS) \
 		$(CPP_SOURCES)
 	@echo "Build complete: $@"
 

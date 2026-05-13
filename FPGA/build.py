@@ -18,7 +18,7 @@ def main():
     
     top = Top()
     ports = [
-        top.clk40, top.gnssPPS, top.fpgaNRESET,
+        top.clk, top.gnssPPS, top.fpgaNRESET,
         top.fpgaSCLKpin, top.fpgaMOSI, top.fpgaMISO, top.fpgaNCS,
         top.rfPushBase, top.rfPushPeak,
         top.rfPullBase, top.rfPullPeak,
