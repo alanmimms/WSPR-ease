@@ -39,7 +39,7 @@ PACKAGE=sg48
 TARGET := build/fpga.img
 SIMTARGET := obj_dir/VTop
 
-.PHONY: all clean run sim fast superfast help test gen/Top.v
+.PHONY: all clean run fast superfast help test gen/Top.v
 
 all: $(TARGET)
 
@@ -57,7 +57,7 @@ $(TARGET):	gen/Top.v $(PCF) timing.py
 	yosys -q -p "read_verilog gen/Top.v; synth_ice40 -dsp -top Top -json $(PROJECT).json"
 	@echo "  NEXTPNR (Place & Route)..."
 	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
-		--pre-pack timing.py --placer heap --seed 31 \
+		--pre-pack timing.py --placer heap --seed 42 \
 		--json $(PROJECT).json --pcf $(PCF) \
 		--log build/nextpnr.log -q \
 		--asc $(PROJECT).asc
@@ -110,7 +110,7 @@ clean:
 	@echo "Cleaning build artifacts..."
 	@rm -rf $(OBJDIR)
 	@rm -f waveform.vcd
-	@rm -f Top.v
+	@rm -rf gen/*
 	@echo "Clean complete."
 
 # Help target
