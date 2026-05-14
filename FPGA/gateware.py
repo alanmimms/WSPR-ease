@@ -364,30 +364,43 @@ class Exciter(Elaboratable):
 
         # Upper 16 bits of NCO phase for the rising edge sample
         phaseR = nco.phase[32:48]
-        phaseF32 = Signal(32)
 
         # Phase for the falling edge sample (calculated with 0.5 cycle offset)
         phaseF = Signal(16)
 
+        # DEBUGGING
+        a = Signal(16)
+        b = Signal(16)
+        d = Signal(16)
+        o = Signal(16)
+
+        m.d.comb += [
+            a.eq(phaseR),
+            b.eq(1),
+            d.eq(self.tw[32:48] >> 1),
+            o.eq(phaseF)
+        ]
+        
+
         # Calculate the half cycle offset for falling edge, computing
-        # phaseR * 1 + tw/2. This just uses this "expensive" SB_MAC16
-        # as a fast 32-bit adder.
+        # phaseR + tw/2. This just uses this "expensive" SB_MAC16 as a
+        # fast 16-bit adder.
         m.submodules.offs = Instance("SB_MAC16",
-                                     p_TOPADDSUB_LOWERINPUT=2, # Use i_D as addend after multiply
+                                     p_TOPADDSUB_LOWERINPUT=0,
                                      p_TOPADDSUB_UPPERINPUT=0,
-                                     i_A=phaseR,
-                                     i_B=1,
-                                     i_D=self.tw[32:48] >> 1,
+                                     p_MODE_8x8=1,
                                      p_TOPOUTPUT_SELECT=1,
+                                     p_BOTOUTPUT_SELECT=1,
+                                     i_A=phaseR,
+                                     i_B=self.tw[32:48] >> 1,
+                                     i_D=0,
                                      i_CLK=ClockSignal(),
                                      i_CE=1,
-                                     o_O=phaseF32,
+                                     o_O=phaseF,
                                      o_CO=Signal(),
                                      o_ACCUMCO=Signal(),
                                      o_SIGNEXTOUT=Signal())
 
-        m.d.comb += phaseF.eq(phaseF32[16:32])
-        
         # 32-bit DSP multiplier output for rising/falling edge state mapping
         mulR = Signal(32)
         mulF = Signal(32)
