@@ -27,11 +27,15 @@ The simulation integrates:
 This allows testing the complete signal chain from WSPR encoding
 through SPI transactions to RF output generation.
 
+If you're interested in `SB_MAC16`, see
+https://docs.google.com/spreadsheets/d/1jjXNm3odW6X0ZwHNr2LNg4OeOiAb1WFJu1MC-8Jqy6c/edit?usp=sharing
+for a much easier to read table of configuations.
+
+
 ## Building
 
 ```bash
 make        # Build the FPGA bitstream
-make sim    # Build and run the simulation
 make clean  # Clean build artifacts
 ```
 
