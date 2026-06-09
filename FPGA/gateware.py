@@ -612,14 +612,11 @@ class Exciter(Elaboratable):
         pullBaseRegR = Signal(reset_less=True)
         pullPeakRegR = Signal(reset_less=True)
 
-        m.d.sync += [
-            pushBaseRegR.eq(pushBaseR),
-            pushPeakRegR.eq(pushPeakR),
-            pullBaseRegR.eq(pullBaseR),
-            pullPeakRegR.eq(pullPeakR)
-        ]
+        pushBaseRegR2 = Signal(reset_less=True)
+        pushPeakRegR2 = Signal(reset_less=True)
+        pullBaseRegR2 = Signal(reset_less=True)
+        pullPeakRegR2 = Signal(reset_less=True)
 
-        # Falling edge outputs registered on positive edge (double-stage for timing and 0.5-cycle alignment)
         pushBaseRegF = Signal(reset_less=True)
         pushPeakRegF = Signal(reset_less=True)
         pullBaseRegF = Signal(reset_less=True)
@@ -631,46 +628,60 @@ class Exciter(Elaboratable):
         pullPeakRegF2 = Signal(reset_less=True)
 
         m.d.sync += [
+            # Stage 1 Rising edge
+            pushBaseRegR.eq(pushBaseR),
+            pushPeakRegR.eq(pushPeakR),
+            pullBaseRegR.eq(pullBaseR),
+            pullPeakRegR.eq(pullPeakR),
+
+            # Stage 1 Falling edge
             pushBaseRegF.eq(pushBaseF),
             pushPeakRegF.eq(pushPeakF),
             pullBaseRegF.eq(pullBaseF),
             pullPeakRegF.eq(pullPeakF),
 
+            # Stage 2 Rising edge
+            pushBaseRegR2.eq(pushBaseRegR),
+            pushPeakRegR2.eq(pushPeakRegR),
+            pullBaseRegR2.eq(pullBaseRegR),
+            pullPeakRegR2.eq(pullPeakRegR),
+
+            # Stage 2 Falling edge
             pushBaseRegF2.eq(pushBaseRegF),
             pushPeakRegF2.eq(pushPeakRegF),
             pullBaseRegF2.eq(pullBaseRegF),
             pullPeakRegF2.eq(pullPeakRegF)
         ]
 
-        pinType = 17
+        pinType = 32
         m.submodules.mPushBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.pbPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_CLOCK_ENABLE=1,
                                           i_OUTPUT_ENABLE=1,
-                                          i_D_OUT_0=pushBaseRegR, i_D_OUT_1=pushBaseRegF2)
+                                          i_D_OUT_0=pushBaseRegR2, i_D_OUT_1=pushBaseRegF2)
         m.submodules.mPushPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.ppPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_CLOCK_ENABLE=1,
                                           i_OUTPUT_ENABLE=1,
-                                          i_D_OUT_0=pushPeakRegR, i_D_OUT_1=pushPeakRegF2)
+                                          i_D_OUT_0=pushPeakRegR2, i_D_OUT_1=pushPeakRegF2)
         m.submodules.mPullBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.lbPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_CLOCK_ENABLE=1,
                                           i_OUTPUT_ENABLE=1,
-                                          i_D_OUT_0=pullBaseRegR, i_D_OUT_1=pullBaseRegF2)
+                                          i_D_OUT_0=pullBaseRegR2, i_D_OUT_1=pullBaseRegF2)
         m.submodules.mPullPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.lpPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_CLOCK_ENABLE=1,
                                           i_OUTPUT_ENABLE=1,
-                                          i_D_OUT_0=pullPeakRegR, i_D_OUT_1=pullPeakRegF2)
+                                          i_D_OUT_0=pullPeakRegR2, i_D_OUT_1=pullPeakRegF2)
         return m
 
 class Top(Elaboratable):
