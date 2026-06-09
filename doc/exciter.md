@@ -1,5 +1,8 @@
 # RF Exciter Algorithmic Detail
 
+> [!NOTE]
+> This exciter logic is implemented in **Amaranth HDL** inside [gateware.py](file:///home/alan/ham/WSPR-ease/FPGA/gateware.py). The Python pseudocode below illustrates the mathematical behavior modeled by the hardware.
+
 The WSPR-ease RF exciter utilizes a high-performance, pipelined digital
 synthesis chain to generate clean RF signals using a "1-2-1" stepped
 amplitude modulation scheme. This document explains the mathematical

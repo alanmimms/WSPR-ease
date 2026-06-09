@@ -4,6 +4,9 @@ This document describes the internal architecture, evolution, and SPI
 register interface of the iCE40UP5K FPGA used in the WSPR-ease
 project.
 
+> [!IMPORTANT]
+> **This is an Amaranth HDL-based design.** All source logic is written in Python using Amaranth HDL (see [gateware.py](file:///home/alan/ham/WSPR-ease/FPGA/gateware.py)). The SystemVerilog code is not written directly; it is generated as an intermediate build artifact (under the `gen-hw` and `gen-sim` directories) during the build process. Do not modify the SystemVerilog files directly; edits should always be made in [gateware.py](file:///home/alan/ham/WSPR-ease/FPGA/gateware.py).
+
 ## Architecture Overview
 
 The FPGA performs real-time RF synthesis and timing measurement. To
@@ -12,8 +15,7 @@ the FPGA operates at a **90 MHz** internal clock rate. Utilizing DDR
 (Double Data Rate) outputs, the system achieves an effective sample
 rate of **180 Msps**.
 
-The gateware was recently rewritten in **Amaranth HDL**, a
-Python-based hardware description language. This move enables better
+The gateware is implemented in **Amaranth HDL**, a Python-based hardware description language. This move enables better
 abstraction for complex pipelining and automated register map
 generation, which are crucial for meeting the strict 11.1 ns timing
 requirement.
@@ -26,7 +28,7 @@ requirement.
     RF cycle).
 *   **NCO Resolution:** 48-bit frequency control for sub-millihertz
     accuracy.
-*   **Timing Margin:** ~35% (Achieved 121 MHz Fmax).
+*   **Timing Margin:** ~6% (Achieved 95.45 MHz Fmax).
 *   **3rd Harmonic Suppression:** ~55 dBc (practically eliminating the
     need for aggressive analog filtering).
 

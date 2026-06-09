@@ -1,5 +1,8 @@
 # WSPR-ease FPGA: Phase Dithering & Zero-Cost DSP Noise Injection
 
+> [!IMPORTANT]
+> **This is an Amaranth HDL-based design.** All source logic is written in Python using Amaranth HDL (see [gateware.py](file:///home/alan/ham/WSPR-ease/FPGA/gateware.py)). The SystemVerilog code snippets below are conceptual examples or derived from intermediate generated Verilog. Edits should always be made in [gateware.py](file:///home/alan/ham/WSPR-ease/FPGA/gateware.py).
+
 ## 1. The Problem: Phase Truncation Limit Cycles (The "Breathing" Bug)
 During testing of the 1-2-1 modulated RF output (specifically
 `rfPullPeak`), we observed a "breathing" effect where the pulse width
@@ -71,7 +74,7 @@ addition, making it a perfect fit for a standalone `SB_MAC16` block.
     .TOPADDSUB_LOWERINPUT(2'b00), .TOPADDSUB_UPPERINPUT(1'b1), // Top add C
     .BOTADDSUB_LOWERINPUT(2'b00), .BOTADDSUB_UPPERINPUT(1'b1), // Bot add D
     .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // Propagate carry
-    .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11)         // Register output
+    .TOPOUTPUT_SELECT(2'b00), .BOTOUTPUT_SELECT(2'b00)         // Register output
   ) dsp_prng (
     .CLK(clk90), .CE(1'b1),
     .A(lcg_out[15:0]), .B(16'd25173), // Multiplier (a)
@@ -97,10 +100,7 @@ bits) of the existing multipliers (`m_r` and `m_f`), we get the dither
 addition for free.
 
 **Crucial Configuration:** We must set
-`.TOPADDSUB_CARRYSELECT(2'b10)`. This ensures that when the injected
-noise causes the fractional remainder to overflow, the carry bit
-correctly propagates up and increments the actual State bits
-(`d1[18:16]`).
+`.TOPADDSUB_CARRYSELECT(2'b10)` and `.TOPADDSUB_LOWERINPUT(2'b10)`. This ensures that the multiplier's high product bits `iH[31:16]` are selected, and when the injected noise causes the fractional remainder to overflow, the carry bit correctly propagates up (`HCI = LCO`) and increments the actual State bits. Both output selectors are set to `2'b00` to select the unregistered adder outputs (`iP` and `iR`).
 
 ```systemverilog
   // =====================================================================
@@ -114,7 +114,7 @@ correctly propagates up and increments the actual State bits
     .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), // Top: Mult_High + C
     .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), // Bot: Mult_Low + D
     .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), // MUST propagate carry to State bits
-    .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11) 
+    .TOPOUTPUT_SELECT(2'b00), .BOTOUTPUT_SELECT(2'b00) 
   ) m_r ( 
     .CLK(clk90), .CE(1'b1), 
     .A(ph_r_h), .B(16'd6), 
@@ -129,7 +129,7 @@ correctly propagates up and increments the actual State bits
     .TOPADDSUB_LOWERINPUT(2'b10), .TOPADDSUB_UPPERINPUT(1'b1), 
     .BOTADDSUB_LOWERINPUT(2'b10), .BOTADDSUB_UPPERINPUT(1'b1), 
     .BOTADDSUB_CARRYSELECT(2'b00), .TOPADDSUB_CARRYSELECT(2'b10), 
-    .TOPOUTPUT_SELECT(2'b11), .BOTOUTPUT_SELECT(2'b11) 
+    .TOPOUTPUT_SELECT(2'b00), .BOTOUTPUT_SELECT(2'b00) 
   ) m_f ( 
     .CLK(clk90), .CE(1'b1), 
     .A(ph_f_h), .B(16'd6), 

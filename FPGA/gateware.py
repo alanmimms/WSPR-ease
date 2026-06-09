@@ -1,7 +1,7 @@
 # RTL for the WSPR-ease FPGA.
 
 # NOTE: Keep this file in camelCase, with real language for the names
-# of identifiers, and continue to use the whitespace style I have used
+# of identifiers and continue to use the whitespace style I have used
 # here so it's readable.
 
 from amaranth import *
@@ -83,11 +83,11 @@ class PipelinedNCO(Elaboratable):
                                                     p_B_SIGNED=0,
                                                     p_A_SIGNED=0,
                                                     p_MODE_8x8=1,
-                                                    p_BOTADDSUB_CARRYSELECT=0,
-                                                    p_BOTADDSUB_UPPERINPUT=0,
+                                                    p_BOTADDSUB_CARRYSELECT=3,
+                                                    p_BOTADDSUB_UPPERINPUT=1,
                                                     p_BOTADDSUB_LOWERINPUT=0,
                                                     p_BOTOUTPUT_SELECT=1,
-                                                    p_TOPADDSUB_CARRYSELECT=0,
+                                                    p_TOPADDSUB_CARRYSELECT=2,
                                                     p_TOPADDSUB_UPPERINPUT=0,
                                                     p_TOPADDSUB_LOWERINPUT=0,
                                                     p_TOPOUTPUT_SELECT=1,
@@ -154,7 +154,7 @@ class FreqCounter(Elaboratable):
                                            p_B_SIGNED=0,
                                            p_A_SIGNED=0,
                                            p_MODE_8x8=1,
-                                           p_BOTADDSUB_CARRYSELECT=0,
+                                           p_BOTADDSUB_CARRYSELECT=3,
                                            p_BOTADDSUB_UPPERINPUT=0,
                                            p_BOTADDSUB_LOWERINPUT=0,
                                            p_BOTOUTPUT_SELECT=1,
@@ -440,9 +440,9 @@ class Exciter(Elaboratable):
                                      p_B_REG=0,
                                      p_A_REG=0,
                                      p_C_REG=0,
-                                     i_A=phaseR,
-                                     i_B=self.tw[32:48] >> 1,
-                                     i_D=0,
+                                     i_A=0,
+                                     i_B=phaseR,
+                                     i_D=self.tw[32:48] >> 1,
                                      i_CLK=ClockSignal(),
                                      i_CE=1,
                                      o_O=phaseF,
@@ -466,8 +466,8 @@ class Exciter(Elaboratable):
                                    p_BOTOUTPUT_SELECT=0,
                                    p_TOPADDSUB_CARRYSELECT=2,
                                    p_TOPADDSUB_UPPERINPUT=1,
-                                   p_TOPADDSUB_LOWERINPUT=1,
-                                   p_TOPOUTPUT_SELECT=3,
+                                   p_TOPADDSUB_LOWERINPUT=2,
+                                   p_TOPOUTPUT_SELECT=0,
                                    p_PIPELINE_16x16_MULT_REG2=0,
                                    p_PIPELINE_16x16_MULT_REG1=0,
                                    p_BOT_8x8_MULT_REG=0,
@@ -497,8 +497,8 @@ class Exciter(Elaboratable):
                                    p_BOTOUTPUT_SELECT=0,
                                    p_TOPADDSUB_CARRYSELECT=2,
                                    p_TOPADDSUB_UPPERINPUT=1,
-                                   p_TOPADDSUB_LOWERINPUT=1,
-                                   p_TOPOUTPUT_SELECT=3,
+                                   p_TOPADDSUB_LOWERINPUT=2,
+                                   p_TOPOUTPUT_SELECT=0,
                                    p_PIPELINE_16x16_MULT_REG2=0,
                                    p_PIPELINE_16x16_MULT_REG1=0,
                                    p_BOT_8x8_MULT_REG=0,
@@ -521,16 +521,23 @@ class Exciter(Elaboratable):
         stateRRaw = mulR[16:19]
         stateFRaw = mulF[16:19]
 
-        # Aligned 3-bit state values (with pipeline balancing)
-        stateRD1 = Signal(3, reset_less=True)
+        # Aligned 3-bit state values
         stateR = Signal(3, reset_less=True)
+        stateFD1 = Signal(3, reset_less=True)
         stateF = Signal(3, reset_less=True)
 
-        m.d.sync += [
-            stateRD1.eq(stateRRaw),
-            stateR.eq(stateRD1),
-            stateF.eq(stateFRaw)
-        ]
+        # Modulo-6 wrap-around for state mapping (6 wraps to 0)
+        with m.If(stateRRaw == 6):
+            m.d.sync += stateR.eq(0)
+        with m.Else():
+            m.d.sync += stateR.eq(stateRRaw)
+
+        with m.If(stateFRaw == 6):
+            m.d.sync += stateFD1.eq(0)
+        with m.Else():
+            m.d.sync += stateFD1.eq(stateFRaw)
+
+        m.d.sync += stateF.eq(stateFD1)
         
         # Pipeline delay registers for TX enable and Mode Square signals
         txEnPipe = Signal(8, reset_less=True)
@@ -539,6 +546,22 @@ class Exciter(Elaboratable):
         m.d.sync += [
             txEnPipe.eq(Cat(self.txEn, txEnPipe[:-1])),
             modeSqPipe.eq(Cat(self.modeSq, modeSqPipe[:-1]))
+        ]
+
+        # Define falling-edge clock domain for falling-edge register alignment
+        m.domains.sync_neg = ClockDomain("sync_neg", clk_edge="neg", local=True)
+        m.d.comb += [
+            ClockSignal("sync_neg").eq(ClockSignal("sync")),
+            ResetSignal("sync_neg").eq(ResetSignal("sync"))
+        ]
+
+        # Falling-edge registers to align enable and mode to the falling-edge output logic
+        txEnF = Signal(reset_less=True)
+        modeSqF = Signal(reset_less=True)
+
+        m.d.sync_neg += [
+            txEnF.eq(txEnPipe[7]),
+            modeSqF.eq(modeSqPipe[7])
         ]
         
         # Calculated pin levels for Rising edge
@@ -552,15 +575,17 @@ class Exciter(Elaboratable):
 
         with m.If(txEnPipe[7]):
 
-            with m.If(modeSqPipe[7]): m.d.comb += [pushBaseR.eq(sqLevelR),
-                                                   pushPeakR.eq(sqLevelR),
-                                                   pullBaseR.eq(~sqLevelR),
-                                                   pullPeakR.eq(~sqLevelR)]
+            with m.If(modeSqPipe[7]):
+                m.d.comb += [pushBaseR.eq(sqLevelR),
+                             pushPeakR.eq(0),
+                             pullBaseR.eq(~sqLevelR),
+                             pullPeakR.eq(0)]
 
-            with m.Else(): m.d.comb += [pushBaseR.eq((stateR == 0) | (stateR == 2)),
-                                        pushPeakR.eq(stateR == 1),
-                                        pullBaseR.eq((stateR == 3) | (stateR == 5)),
-                                        pullPeakR.eq(stateR == 4)]
+            with m.Else():
+                m.d.comb += [pushBaseR.eq((stateR == 0) | (stateR == 2)),
+                             pushPeakR.eq(stateR == 1),
+                             pullBaseR.eq((stateR == 3) | (stateR == 5)),
+                             pullPeakR.eq(stateR == 4)]
         
         # Calculated pin levels for Falling edge
         pushBaseF = Signal()
@@ -571,37 +596,47 @@ class Exciter(Elaboratable):
         # Boolean level for square wave mode on the falling edge
         sqLevelF = stateF < 3
 
-        with m.If(txEnPipe[7]):
+        with m.If(txEnF):
 
-            with m.If(modeSqPipe[7]): m.d.comb += [pushBaseF.eq(sqLevelF),
-                                                   pushPeakF.eq(sqLevelF),
-                                                   pullBaseF.eq(~sqLevelF),
-                                                   pullPeakF.eq(~sqLevelF)]
+            with m.If(modeSqF):
+                m.d.comb += [pushBaseF.eq(sqLevelF),
+                             pushPeakF.eq(0),
+                             pullBaseF.eq(~sqLevelF),
+                             pullPeakF.eq(0)]
 
-            with m.Else(): m.d.comb += [pushBaseF.eq((stateF == 0) | (stateF == 2)),
-                                        pushPeakF.eq(stateF == 1),
-                                        pullBaseF.eq((stateF == 3) | (stateF == 5)),
-                                        pullPeakF.eq(stateF == 4)]
-        
-        # Final registered levels for DDR IO stage
+            with m.Else():
+                m.d.comb += [pushBaseF.eq((stateF == 0) | (stateF == 2)),
+                             pushPeakF.eq(stateF == 1),
+                             pullBaseF.eq((stateF == 3) | (stateF == 5)),
+                             pullPeakF.eq(stateF == 4)]
+
+        # Fabric registers to ease timing:
+        # Rising edge outputs registered on positive edge
         pushBaseRegR = Signal(reset_less=True)
         pushPeakRegR = Signal(reset_less=True)
         pullBaseRegR = Signal(reset_less=True)
         pullPeakRegR = Signal(reset_less=True)
+
+        m.d.sync += [
+            pushBaseRegR.eq(pushBaseR),
+            pushPeakRegR.eq(pushPeakR),
+            pullBaseRegR.eq(pullBaseR),
+            pullPeakRegR.eq(pullPeakR)
+        ]
+
+        # Falling edge outputs registered on negative edge
         pushBaseRegF = Signal(reset_less=True)
         pushPeakRegF = Signal(reset_less=True)
         pullBaseRegF = Signal(reset_less=True)
         pullPeakRegF = Signal(reset_less=True)
 
-        m.d.sync += [pushBaseRegR.eq(pushBaseR),
-                     pushPeakRegR.eq(pushPeakR),
-                     pullBaseRegR.eq(pullBaseR),
-                     pullPeakRegR.eq(pullPeakR),
-                     pushBaseRegF.eq(pushBaseF),
-                     pushPeakRegF.eq(pushPeakF),
-                     pullBaseRegF.eq(pullBaseF),
-                     pullPeakRegF.eq(pullPeakF)]
-        
+        m.d.sync_neg += [
+            pushBaseRegF.eq(pushBaseF),
+            pushPeakRegF.eq(pushPeakF),
+            pullBaseRegF.eq(pullBaseF),
+            pullPeakRegF.eq(pullPeakF)
+        ]
+
         pinType = 17
         m.submodules.mPushBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
@@ -753,12 +788,15 @@ class Top(Elaboratable):
                      spi.ppsCount.eq(freq.ppsCount),
                      spi.ppsGen.eq(freq.ppsGen)]
 
+        txEnSync = Signal(reset_less=True)
+        m.d.sync += txEnSync.eq(spi.txEn & pllLocked)
+
         m.submodules.exciter = exciter = Exciter(pbPin=self.rfPushBase,
                                                  ppPin=self.rfPushPeak,
                                                  lbPin=self.rfPullBase,
                                                  lpPin=self.rfPullPeak)
         m.d.comb += [exciter.tw.eq(spi.tw),
-                     exciter.txEn.eq(spi.txEn & pllLocked),
+                     exciter.txEn.eq(txEnSync),
                      exciter.modeSq.eq(spi.modeSq)]
-        m.d.sync += self.driverNEN.eq(~(spi.txEn & pllLocked))
+        m.d.sync += self.driverNEN.eq(~txEnSync)
         return m

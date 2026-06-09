@@ -211,37 +211,57 @@ struct WaitTime {
 // A high-level, linear SPI driver coroutine
 // A true Async SPI Master Coroutine
 SimTask spiWrite(VTop* top, uint8_t addr, uint32_t data) {
-  uint64_t halfPeriodPS = 488281; // ~1.024 MHz SPI Clock
+  const uint64_t halfPeriodPS = 488281; // ~1.024 MHz SPI Clock
     
-  // Drop Chip Select and ensure clock is low
   top->fpgaNCS = 0;
   top->fpgaSCLKpin = 0;
-    
-  // Wait a half-period before driving the first bit
   co_await WaitTime{halfPeriodPS};
     
-  // OR in the 0x80 bit to say it's a write.
-  uint64_t payload = (static_cast<uint64_t>(0x80 | addr) << 32) | data;
+  addr |= 0x80;		 // It's a write.
+  uint64_t payload = (static_cast<uint64_t>(addr) << 32) | data;
 
   for (int i = 39; i >= 0; i--) {
-    // 1. Set MOSI data
     top->fpgaMOSI = (payload >> i) & 1;
-        
-    // 2. Wait for MOSI to settle (half period)
     co_await WaitTime{halfPeriodPS};
-        
-    // 3. Rising Edge (FPGA samples the data here)
     top->fpgaSCLKpin = 1;
-        
-    // 4. Wait half period
     co_await WaitTime{halfPeriodPS};
-        
-    // 5. Falling Edge
     top->fpgaSCLKpin = 0;
   }
 
-  // Wait one final half-period before raising Chip Select and then
-  // another to show it idle.
+  co_await WaitTime{halfPeriodPS};
+  top->fpgaNCS = 1;
+  co_await WaitTime{halfPeriodPS};
+}
+
+// A true Async SPI Read Coroutine
+SimTask spiRead(VTop* top, uint8_t addr, uint32_t &dataOut) {
+  const uint64_t halfPeriodPS = 488281; // ~1.024 MHz SPI Clock
+    
+  top->fpgaNCS = 0;
+  top->fpgaSCLKpin = 0;
+  co_await WaitTime{halfPeriodPS};
+    
+  addr &= 0x7F;		 // It's a read (MSB is 0).
+  uint64_t payload = static_cast<uint64_t>(addr) << 32;
+
+  uint32_t readVal = 0;
+
+  for (int i = 39; i >= 0; i--) {
+    top->fpgaMOSI = (payload >> i) & 1;
+    co_await WaitTime{halfPeriodPS};
+    top->fpgaSCLKpin = 1;
+    
+    // Sample MISO while SCLK is high
+    if (i < 32) {
+      readVal = (readVal << 1) | (top->fpgaMISO & 1);
+    }
+    
+    co_await WaitTime{halfPeriodPS};
+    top->fpgaSCLKpin = 0;
+  }
+
+  dataOut = readVal;
+
   co_await WaitTime{halfPeriodPS};
   top->fpgaNCS = 1;
   co_await WaitTime{halfPeriodPS};
@@ -254,13 +274,29 @@ static SimTask runTestSequence(VTop* top) {
   co_await WaitTime{100000};
   top->fpgaNRESET = 1;
 
-  // Wait 10us for PLL Lock Delay
+  // Wait 10us for PLL Lock
   co_await WaitTime{MEG(10)};
+
+  // Read Hardware Signature register to verify SPI read
+  uint32_t sig = 0;
+  co_await spiRead(top, 0x0F, sig);
+  std::cout << "SPI: Read Signature register (0x0F): 0x" 
+            << std::hex << std::setw(8) << std::setfill('0') << sig << std::dec << std::endl;
+  if (sig == 0x52505357) {
+    std::cout << "SPI: Signature matches 'WSPR' (0x52505357) - Success!" << std::endl;
+  } else {
+    std::cout << "SPI ERROR: Signature mismatch! Expected 0x52505357, got 0x" 
+              << std::hex << sig << std::dec << std::endl;
+  }
 
   // Configure the NCO
   uint64_t tw = 17375000000000ull;
   co_await spiWrite(top, 0x01, (uint32_t) tw);
   co_await spiWrite(top, 0x02, (uint32_t) (tw >> 32));
+
+  // Enable transmitter in CONTROL register (set txEnable = 1)
+  co_await spiWrite(top, 0x00, 1);
+  std::cout << "SPI: Wrote 0x00000001 to CONTROL register (0x00) - TX Enabled." << std::endl;
 
   // Wait 10,000 NCO cycles (assuming 90MHz clock = ~11ns period)
   co_await WaitTime{10000 * 11111};
@@ -330,6 +366,9 @@ int main(int argc, char *argv[]) {
   // Set up coroutine that drives our test sequence.
   auto testSeqTask = runTestSequence(top);
 
+  uint64_t rfTransitions = 0;
+  uint8_t lastRF = 0;
+
   while (!Verilated::gotFinish() && currentTime < MAX_SIM_TIME) {
     uint64_t nextTime = UINT64_MAX;
 
@@ -348,12 +387,27 @@ int main(int argc, char *argv[]) {
     theTM.execute();
     top->eval(); 
 
+    uint8_t currentRF = (top->rfPushBase << 3) | (top->rfPushPeak << 2) | (top->rfPullBase << 1) | top->rfPullPeak;
+    if (currentRF != lastRF) {
+      rfTransitions++;
+      lastRF = currentRF;
+    }
+
     if (traceP) traceP->dump(currentTime);
   }
 
   if (traceP) {
     traceP->close();
     delete traceP;
+  }
+
+  std::cout << "=== Simulation Summary ===" << std::endl;
+  std::cout << "Simulation time: " << (currentTime / 1000000ull) << " us" << std::endl;
+  std::cout << "RF pin transitions: " << rfTransitions << std::endl;
+  if (rfTransitions > 0) {
+    std::cout << "SUCCESS: RF outputs toggled successfully!" << std::endl;
+  } else {
+    std::cout << "FAILURE: No RF output activity detected." << std::endl;
   }
 
   delete top;
