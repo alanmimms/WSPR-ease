@@ -3,6 +3,7 @@
 #include "verilated_vcd_c.h"
 #include <iostream>
 #include <cstdint>
+#include "FPGACommon.hpp"
 #include <memory>
 #include <iomanip>
 #include <algorithm>
@@ -289,44 +290,36 @@ static SimTask runTestSequence(VTop* top) {
               << std::hex << sig << std::dec << std::endl;
   }
 
-  // Configure the NCO
-  uint64_t tw = 17375000000000ull;
+  // Spec the freq for the NCO using floating point numbers of MHz (3.0 MHz)
+  const double freqMhz = 3.0;
+  const uint32_t freqHz = static_cast<uint32_t>(freqMhz * 1000000.0);
+  uint64_t tw = wspr::calculateNCOTuningWord(freqHz, wspr::ncoHz);
+
+  std::cout << "TB: NCO freq=" << freqMhz << "MHz" << std::endl;
+  std::cout << "TB: NCO tuning word=0x" << std::hex << tw << std::dec << std::endl;
+
+  // Configure the NCO tuning word registers
   co_await spiWrite(top, 0x01, (uint32_t) tw);
   co_await spiWrite(top, 0x02, (uint32_t) (tw >> 32));
 
   // Enable transmitter in CONTROL register (set txEnable = 1)
-  co_await spiWrite(top, 0x00, 1);
-  std::cout << "SPI: Wrote 0x00000001 to CONTROL register (0x00) - TX Enabled." << std::endl;
+  // Set modeSquare based on freqHz threshold (>= 10 MHz)
+  uint32_t controlVal = 1; // txEnable = 1
+  if (freqHz >= wspr::modeSquareThresholdHz) {
+    controlVal |= 2; // modeSquare = 1 (bit 1)
+    std::cout << "TB: Enabling Square Wave mode (freq >= 10 MHz)" << std::endl;
+  } else {
+    std::cout << "TB: Enabling 1-2-1 mode (freq < 10 MHz)" << std::endl;
+  }
+  co_await spiWrite(top, 0x00, controlVal);
+  std::cout << "SPI: Wrote 0x" << std::hex << controlVal << std::dec 
+            << " to CONTROL register (0x00) - TX Enabled." << std::endl;
 
   // Wait 10,000 NCO cycles (assuming 90MHz clock = ~11ns period)
   co_await WaitTime{10000 * 11111};
 }
 
 
-/**
- * Calculates the NCO tuning word for a 48-bit accumulator.
- * Generalized for 32-bit architectures without 128-bit integer support.
- */
-static uint64_t calculateNCOTuningWord(uint64_t freqHz, uint64_t ncoHz) {
-  // Define constants for the 48-bit accumulator
-  const uint64_t ncoShift = 48ULL;
-  const uint64_t ncoScale = 1ULL << ncoShift;
-
-  // Decompose ncoScale / ncoHz into quotient and remainder
-  // ncoScale = (q * ncoHz) + r
-  const uint64_t q = ncoScale / ncoHz;
-  const uint64_t r = ncoScale % ncoHz;
-
-  // result = (freqHz * q) + ((freqHz * r) / ncoHz)
-  // Both intermediate products (freqHz * q) and (freqHz * r)
-  // fit within 64 bits for standard HF frequencies.
-  uint64_t term1 = freqHz * q;
-  uint64_t term2 = (freqHz * r) / ncoHz;
-
-  uint64_t tuningWord = term1 + term2;
-
-  return tuningWord;
-}
 
 
 int main(int argc, char *argv[]) {

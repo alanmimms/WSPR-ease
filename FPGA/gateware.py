@@ -415,6 +415,8 @@ class Exciter(Elaboratable):
 
         # Phase for the falling edge sample (calculated with 0.5 cycle offset)
         phaseF = Signal(16)
+        offsOut = Signal(32)
+        m.d.comb += phaseF.eq(offsOut[:16])
 
         # Calculate the half cycle offset for falling edge, computing
         # phaseR + tw/2. This just uses this "expensive" SB_MAC16 as a
@@ -445,7 +447,7 @@ class Exciter(Elaboratable):
                                      i_D=self.tw[32:48] >> 1,
                                      i_CLK=ClockSignal(),
                                      i_CE=1,
-                                     o_O=phaseF,
+                                     o_O=offsOut,
                                      o_CO=Signal(),
                                      o_ACCUMCO=Signal(),
                                      o_SIGNEXTOUT=Signal())
@@ -522,22 +524,22 @@ class Exciter(Elaboratable):
         stateFRaw = mulF[16:19]
 
         # Aligned 3-bit state values
-        stateR = Signal(3, reset_less=True)
-        stateFD1 = Signal(3, reset_less=True)
-        stateF = Signal(3, reset_less=True)
+        stateRReg = Signal(3, reset_less=True)
+        stateFReg = Signal(3, reset_less=True)
+
+        m.d.sync += [
+            stateRReg.eq(stateRRaw),
+            stateFReg.eq(stateFRaw)
+        ]
 
         # Modulo-6 wrap-around for state mapping (6 wraps to 0)
-        with m.If(stateRRaw == 6):
-            m.d.sync += stateR.eq(0)
-        with m.Else():
-            m.d.sync += stateR.eq(stateRRaw)
-
-        with m.If(stateFRaw == 6):
-            m.d.sync += stateFD1.eq(0)
-        with m.Else():
-            m.d.sync += stateFD1.eq(stateFRaw)
-
-        m.d.sync += stateF.eq(stateFD1)
+        # Done combinatorially after registering raw DSP outputs to maximize timing margin.
+        stateR = Signal(3)
+        stateF = Signal(3)
+        m.d.comb += [
+            stateR.eq(Mux(stateRReg == 6, 0, stateRReg)),
+            stateF.eq(Mux(stateFReg == 6, 0, stateFReg))
+        ]
         
         # Pipeline delay registers for TX enable and Mode Square signals
         txEnPipe = Signal(8, reset_less=True)
@@ -548,22 +550,6 @@ class Exciter(Elaboratable):
             modeSqPipe.eq(Cat(self.modeSq, modeSqPipe[:-1]))
         ]
 
-        # Define falling-edge clock domain for falling-edge register alignment
-        m.domains.sync_neg = ClockDomain("sync_neg", clk_edge="neg", local=True)
-        m.d.comb += [
-            ClockSignal("sync_neg").eq(ClockSignal("sync")),
-            ResetSignal("sync_neg").eq(ResetSignal("sync"))
-        ]
-
-        # Falling-edge registers to align enable and mode to the falling-edge output logic
-        txEnF = Signal(reset_less=True)
-        modeSqF = Signal(reset_less=True)
-
-        m.d.sync_neg += [
-            txEnF.eq(txEnPipe[7]),
-            modeSqF.eq(modeSqPipe[7])
-        ]
-        
         # Calculated pin levels for Rising edge
         pushBaseR = Signal()
         pushPeakR = Signal()
@@ -596,9 +582,9 @@ class Exciter(Elaboratable):
         # Boolean level for square wave mode on the falling edge
         sqLevelF = stateF < 3
 
-        with m.If(txEnF):
+        with m.If(txEnPipe[7]):
 
-            with m.If(modeSqF):
+            with m.If(modeSqPipe[7]):
                 m.d.comb += [pushBaseF.eq(sqLevelF),
                              pushPeakF.eq(0),
                              pullBaseF.eq(~sqLevelF),
@@ -624,17 +610,27 @@ class Exciter(Elaboratable):
             pullPeakRegR.eq(pullPeakR)
         ]
 
-        # Falling edge outputs registered on negative edge
+        # Falling edge outputs registered on positive edge (double-stage for timing and 0.5-cycle alignment)
         pushBaseRegF = Signal(reset_less=True)
         pushPeakRegF = Signal(reset_less=True)
         pullBaseRegF = Signal(reset_less=True)
         pullPeakRegF = Signal(reset_less=True)
 
-        m.d.sync_neg += [
+        pushBaseRegF2 = Signal(reset_less=True)
+        pushPeakRegF2 = Signal(reset_less=True)
+        pullBaseRegF2 = Signal(reset_less=True)
+        pullPeakRegF2 = Signal(reset_less=True)
+
+        m.d.sync += [
             pushBaseRegF.eq(pushBaseF),
             pushPeakRegF.eq(pushPeakF),
             pullBaseRegF.eq(pullBaseF),
-            pullPeakRegF.eq(pullPeakF)
+            pullPeakRegF.eq(pullPeakF),
+
+            pushBaseRegF2.eq(pushBaseRegF),
+            pushPeakRegF2.eq(pushPeakRegF),
+            pullBaseRegF2.eq(pullBaseRegF),
+            pullPeakRegF2.eq(pullPeakRegF)
         ]
 
         pinType = 17
@@ -644,28 +640,28 @@ class Exciter(Elaboratable):
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_CLOCK_ENABLE=1,
                                           i_OUTPUT_ENABLE=1,
-                                          i_D_OUT_0=pushBaseRegR, i_D_OUT_1=pushBaseRegF)
+                                          i_D_OUT_0=pushBaseRegR, i_D_OUT_1=pushBaseRegF2)
         m.submodules.mPushPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.ppPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_CLOCK_ENABLE=1,
                                           i_OUTPUT_ENABLE=1,
-                                          i_D_OUT_0=pushPeakRegR, i_D_OUT_1=pushPeakRegF)
+                                          i_D_OUT_0=pushPeakRegR, i_D_OUT_1=pushPeakRegF2)
         m.submodules.mPullBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.lbPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_CLOCK_ENABLE=1,
                                           i_OUTPUT_ENABLE=1,
-                                          i_D_OUT_0=pullBaseRegR, i_D_OUT_1=pullBaseRegF)
+                                          i_D_OUT_0=pullBaseRegR, i_D_OUT_1=pullBaseRegF2)
         m.submodules.mPullPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.lpPin,
                                           i_OUTPUT_CLK=ClockSignal(),
                                           i_CLOCK_ENABLE=1,
                                           i_OUTPUT_ENABLE=1,
-                                          i_D_OUT_0=pullPeakRegR, i_D_OUT_1=pullPeakRegF)
+                                          i_D_OUT_0=pullPeakRegR, i_D_OUT_1=pullPeakRegF2)
         return m
 
 class Top(Elaboratable):

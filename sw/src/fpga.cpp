@@ -5,6 +5,7 @@
  */
 
 #include "fpga.hpp"
+#include "FPGACommon.hpp"
 
 namespace WSPRRegs {
 #include "regs.hpp"
@@ -225,30 +226,7 @@ namespace wspr {
     return ret;
   }
 
-  /**
-   * Calculates the NCO tuning word for a 48-bit accumulator.
-   * Generalized for 32-bit architectures without 128-bit integer support.
-   */
-  static uint64_t calculateNCOTuningWord(uint64_t freqHz, uint64_t ncoHz) {
-    // Define constants for the 48-bit accumulator
-    const uint64_t ncoShift = 48ULL;
-    const uint64_t ncoScale = 1ULL << ncoShift;
 
-    // Decompose ncoScale / ncoHz into quotient and remainder
-    // ncoScale = (q * ncoHz) + r
-    const uint64_t q = ncoScale / ncoHz;
-    const uint64_t r = ncoScale % ncoHz;
-
-    // result = (freqHz * q) + ((freqHz * r) / ncoHz)
-    // Both intermediate products (freqHz * q) and (freqHz * r) 
-    // fit within 64 bits for standard HF frequencies.
-    uint64_t term1 = freqHz * q;
-    uint64_t term2 = (freqHz * r) / ncoHz;
-
-    uint64_t tuningWord = term1 + term2;
-
-    return tuningWord;
-  }
 
   int FPGA::setFrequency(uint32_t freqHz) {
     currentFreq = freqHz;
