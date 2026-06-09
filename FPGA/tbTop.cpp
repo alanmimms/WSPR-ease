@@ -8,24 +8,80 @@
 #include <algorithm>
 #include <coroutine>
 #include <exception>
+#include <variant>
 #include <vector>
 
-static const vluint64_t clockHz = 90ull * 1000ull * 1000ull;
+constexpr uint64_t MEG(uint64_t m) { return m * 1000ull * 1000ull; }
+constexpr uint64_t SEC_TO_PS(uint64_t t) { return t * 1000ull * 1000ull * 1000ull * 1000ull; }
 
+static const vluint64_t clockHz = MEG(90ull);
 static const char waveformFileName[] = "waveform.vcd";
 
-
-constexpr uint64_t MEG(uint64_t m) { return m * 1000ull * 1000ull; }
-
+static uint64_t currentTime;	// Current sim time in ps
 
 struct SimTask {
+
   struct promise_type {
-    SimTask get_return_object() { return {}; }
-    std::suspend_never initial_suspend() { return {}; }
-    std::suspend_never final_suspend() noexcept { return {}; }
+    // Saves parent coroutine that called co_await on us
+    std::coroutine_handle<> continuation = nullptr;
+
+    SimTask get_return_object() {
+      return SimTask{std::coroutine_handle<promise_type>::from_promise(*this)};
+    }
+        
+    // Start running immediately upon creation until the first wait
+    std::suspend_never initial_suspend() noexcept { return {}; }
+        
+    // The magic happens here: When this coroutine finishes, wake up the parent!
+    auto final_suspend() noexcept {
+      struct FinalAwaiter {
+	bool await_ready() noexcept { return false; }
+	std::coroutine_handle<> await_suspend(std::coroutine_handle<promise_type> h) noexcept {
+	  // If a parent is waiting for us, return their handle to resume them instantly
+	  if (h.promise().continuation) {
+	    return h.promise().continuation;
+	  }
+	  // Otherwise, just yield back to the main simulation loop
+	  return std::noop_coroutine();
+	}
+	void await_resume() noexcept {}
+      };
+      return FinalAwaiter{};
+    }
+        
     void return_void() {}
     void unhandled_exception() { std::terminate(); }
   };
+
+  std::coroutine_handle<promise_type> handle;
+
+  SimTask(std::coroutine_handle<promise_type> h) : handle(h) {}
+    
+  // --- Rule of 5: Safe C++ Memory Management to prevent memory leaks ---
+  SimTask(const SimTask&) = delete;
+  SimTask& operator=(const SimTask&) = delete;
+  SimTask(SimTask&& other) noexcept : handle(other.handle) { other.handle = nullptr; }
+
+  SimTask& operator=(SimTask&& other) noexcept {
+    if (this != &other) {
+      if (handle) handle.destroy();
+      handle = other.handle;
+      other.handle = nullptr;
+    }
+    return *this;
+  }
+
+  ~SimTask() { if (handle) handle.destroy(); }
+
+  // Is the child already finished before we even tried to wait?
+  bool await_ready() const noexcept { return !handle || handle.done(); }
+
+  // Put the parent to sleep, and tell the child who the parent is.
+  void await_suspend(std::coroutine_handle<> caller) noexcept {
+    handle.promise().continuation = caller;
+  }
+
+  void await_resume() const noexcept {}
 };
 
 
@@ -33,189 +89,181 @@ class EventSource {
 public:
   virtual ~EventSource() = default;
 
-  // Returns the exact simulation time (in ps) of the next event.
-  // Return UINT64_MAX if there are no pending events for this source.
+  // Returns sim time (in ps) of the next event or UINT64_MAX if there
+  // are no pending events for this source.
   virtual uint64_t timeToNextEvent() const = 0;
 
-  // Called by the main loop when the simulation time reaches this event's time.
-  virtual void execute(uint64_t currentTime) = 0;
+  // Called by the main loop when sim time reaches this event's time.
+  virtual void execute() = 0;
 };
 
 class ClockSource : public EventSource {
 private:
-  uint64_t halfPeriodPs;
-  uint64_t nextEdgeTime;
-  uint8_t* signal; // Pointer to the Verilator model's clock pin
+  uint64_t halfPeriodPS;
+  uint64_t nextEdgeTimePS;
+  CData* clkPin;
 
 public:
-  ClockSource(uint64_t freqHz, uint8_t* sigPtr, uint64_t startTimePs = 0) 
-    : signal(sigPtr), nextEdgeTime(startTimePs) {
-        
-    // Calculate the half-period in picoseconds
-    uint64_t periodPs = 1000000000000ULL / freqHz;
-    halfPeriodPs = periodPs / 2;
+  ClockSource(uint64_t freqHz, CData* pin) 
+    : clkPin(pin), nextEdgeTimePS(0) 
+  {
+    uint64_t periodPS = SEC_TO_PS(1) / freqHz;
+    halfPeriodPS = periodPS / 2;
   }
 
-  uint64_t timeToNextEvent() const override {
-    return nextEdgeTime;
-  }
+  uint64_t timeToNextEvent() const override { return nextEdgeTimePS; }
 
-  void execute(uint64_t currentTime) override {
-    if (currentTime >= nextEdgeTime) {
-      *signal = !(*signal); // Toggle the clock pin
-      nextEdgeTime = currentTime + halfPeriodPs; // Schedule next edge
+  void execute() override {
+
+    if (currentTime >= nextEdgeTimePS) {
+      *clkPin = !*clkPin;
+      nextEdgeTimePS += halfPeriodPS;
     }
   }
 };
 
-// A sticky note the Task Manager uses to remember why the coroutine went to sleep.
-struct Waiter {
-  std::coroutine_handle<> handle;
-  uint8_t* signal;      // If nullptr, this is a purely time-based wait
-  uint8_t targetValue;
-  uint64_t wakeTimePs;  // The absolute simulation time to wake up
+struct TimeCondition {
+  uint64_t wakeTime;		// Absolute time to next awaken
+  bool isReady() const { return currentTime >= wakeTime; }
+};
+
+
+struct SignalCondition {
+  CData *signalP;
+  CData expectedValue;
+  bool isReady() const { return *signalP == expectedValue; }
 };
 
 
 class TaskManager : public EventSource {
-private:
+public:
+
+  struct Waiter {
+    std::coroutine_handle<> handle;
+    std::variant<TimeCondition, SignalCondition> condition;
+  };
+
   std::vector<Waiter> waitingTasks;
 
-public:
-  void addWaiter(std::coroutine_handle<> h, uint8_t* sig, uint8_t val) {
-    waitingTasks.push_back({h, sig, val});
+  template <typename ConditionType>
+  void waitFor(std::coroutine_handle<> h, ConditionType cond) {
+    waitingTasks.push_back({h, cond});
   }
 
-  void addEdgeWaiter(std::coroutine_handle<> h, uint8_t* sig, uint8_t val) {
-    waitingTasks.push_back({h, sig, val, UINT64_MAX});
+  // --- REGISTRATION API ---
+  // These are called by the Awaitables to push tasks into the list
+  void waitForTime(std::coroutine_handle<> h, uint64_t wakeTime) {
+    waitingTasks.push_back({h, TimeCondition{wakeTime}});
   }
 
-  void addTimeWaiter(std::coroutine_handle<> h, uint64_t wakeTime) {
-    waitingTasks.push_back({h, nullptr, 0, wakeTime});
+  void waitForSignal(std::coroutine_handle<> h, CData* signal, CData value) {
+    waitingTasks.push_back({h, SignalCondition{signal, value}});
   }
 
   uint64_t timeToNextEvent() const override {
     return UINT64_MAX; 
   }
 
-  // 2-Pass Execution Pattern
-  void execute(uint64_t currentTime) override {
-    std::vector<std::coroutine_handle<>> readyHandles;
+  // 2-Pass Execution Pattern - called once to do sim loop.
+  void execute() override {
+    std::vector<std::coroutine_handle<>> readyTasks;
 
     // Pass 1: Gather ready tasks and remove them from the waiting list
-    auto it = waitingTasks.begin();
-    while (it != waitingTasks.end()) {
-      if (*(it->signal) == it->targetValue) {
-	readyHandles.push_back(it->handle);
+    for (auto it = waitingTasks.begin(); it != waitingTasks.end(); ) {
+      bool ready = std::visit([](auto &&cond) { return cond.isReady(); }, it->condition);
+
+      if (ready) {
+	readyTasks.push_back(it->handle);
 	it = waitingTasks.erase(it); // Returns new iterator
       } else {
 	++it; // Manually increment if no erase
       }
     }
 
-    // Pass 2: Resume the coroutines safely
-    for (auto handle : readyHandles) {
-      handle.resume();
+    // Pass 2: Resume the ready tasks
+    for (auto h: readyTasks) {
+      if (h && !h.done()) h.resume();
     }
   }
 };
 
+static TaskManager theTM;
+
 
 struct WaitEdge {
-  uint8_t* signal;
-  uint8_t targetValue;
-  TaskManager& tm;
+  CData* signal;
+  CData targetValue;
 
   bool await_ready() const { return *signal == targetValue; }
-    
-  void await_suspend(std::coroutine_handle<> h) {
-    tm.addEdgeWaiter(h, signal, targetValue);
-  }
-    
+  void await_suspend(std::coroutine_handle<> h) { theTM.waitForSignal(h, signal, targetValue); }
   void await_resume() const {}
 };
 
 struct WaitTime {
-  uint64_t delayPs;
-  uint64_t* currentTime;
-  TaskManager& tm;
+  uint64_t delayPS;
 
-  bool await_ready() const { return delayPs == 0; }
-    
-  void await_suspend(std::coroutine_handle<> h) {
-    tm.addTimeWaiter(h, *currentTime + delayPs);
-  }
-    
+  bool await_ready() const { return delayPS == 0; }
+  void await_suspend(std::coroutine_handle<> h) { theTM.waitForTime(h, currentTime + delayPS); }
   void await_resume() const {}
 };
 
 
 // A high-level, linear SPI driver coroutine
 // A true Async SPI Master Coroutine
-SimTask spiWrite(VTop* top, TaskManager& tm, uint64_t* currentTime, uint8_t addr, uint32_t data) {
-    uint64_t halfPeriodPs = 488281; // ~1.024 MHz SPI Clock
+SimTask spiWrite(VTop* top, uint8_t addr, uint32_t data) {
+  uint64_t halfPeriodPS = 488281; // ~1.024 MHz SPI Clock
     
-    // Drop Chip Select and ensure clock is low
-    top->fpgaNCS = 0;
+  // Drop Chip Select and ensure clock is low
+  top->fpgaNCS = 0;
+  top->fpgaSCLKpin = 0;
+    
+  // Wait a half-period before driving the first bit
+  co_await WaitTime{halfPeriodPS};
+    
+  // OR in the 0x80 bit to say it's a write.
+  uint64_t payload = (static_cast<uint64_t>(0x80 | addr) << 32) | data;
+
+  for (int i = 39; i >= 0; i--) {
+    // 1. Set MOSI data
+    top->fpgaMOSI = (payload >> i) & 1;
+        
+    // 2. Wait for MOSI to settle (half period)
+    co_await WaitTime{halfPeriodPS};
+        
+    // 3. Rising Edge (FPGA samples the data here)
+    top->fpgaSCLKpin = 1;
+        
+    // 4. Wait half period
+    co_await WaitTime{halfPeriodPS};
+        
+    // 5. Falling Edge
     top->fpgaSCLKpin = 0;
-    
-    // Wait a half-period before driving the first bit
-    co_await WaitTime(halfPeriodPs, currentTime, tm);
-    
-    uint64_t payload = (static_cast<uint64_t>(addr) << 32) | data;
+  }
 
-    for (int i = 39; i >= 0; i--) {
-        // 1. Set MOSI data
-        top->fpgaMOSI = (payload >> i) & 1;
-        
-        // 2. Wait for MOSI to settle (half period)
-        co_await WaitTime(halfPeriodPs, currentTime, tm);
-        
-        // 3. Rising Edge (FPGA samples the data here)
-        top->fpgaSCLKpin = 1;
-        
-        // 4. Wait half period
-        co_await WaitTime(halfPeriodPs, currentTime, tm);
-        
-        // 5. Falling Edge
-        top->fpgaSCLKpin = 0;
-    }
-
-    // Wait one final half-period before raising Chip Select
-    co_await WaitTime(halfPeriodPs, currentTime, tm);
-    top->fpgaNCS = 1;
+  // Wait one final half-period before raising Chip Select and then
+  // another to show it idle.
+  co_await WaitTime{halfPeriodPS};
+  top->fpgaNCS = 1;
+  co_await WaitTime{halfPeriodPS};
 }
 
 
-static SimTask runTestSequence(VTop* top, TaskManager& tm, uint64_t* currentTime) {
-  // 1. Assert Reset
+static SimTask runTestSequence(VTop* top) {
+  // Hold reset for 100ns (100,000 ps) for things to stabilize
   top->fpgaNRESET = 0;
-    
-  // 2. Wait 100ns (100,000 ps) for things to stabilize
-  co_await WaitTime(100000, currentTime, tm);
-    
-  // 3. Clear Reset
+  co_await WaitTime{100000};
   top->fpgaNRESET = 1;
 
-  // 4. Wait for PLL Lock Delay (e.g., 10us / 10,000,000 ps)
-  co_await WaitTime(10000000, currentTime, tm);
+  // Wait 10us for PLL Lock Delay
+  co_await WaitTime{MEG(10)};
 
-  // 5. Run SPI Transactions to configure the NCO
-  // (In C++20, if we don't need to block the main sequence waiting for the SPI 
-  // to finish, we can just call it and it will schedule itself into the TaskManager).
-  spiWrite(top, tm, currentTime, 0x01, 0x0000FFFF); // Set NCO tuning word
+  // Configure the NCO
+  uint64_t tw = 17375000000000ull;
+  co_await spiWrite(top, 0x01, (uint32_t) tw);
+  co_await spiWrite(top, 0x02, (uint32_t) (tw >> 32));
 
-  // 6. Wait for 10,000 NCO cycles (assuming 90MHz clock = ~11ns period)
-  co_await WaitTime(10ull*1000ull * 11111ull, currentTime, tm);
-
-  // 7. Assertions about the resulting state
-#if 0
-  if (top->rf_out == 0) {
-    printf("ERROR: NCO did not output expected waveform!\n");
-  } else {
-    printf("SUCCESS: Sequence completed correctly.\n");
-  }
-#endif
+  // Wait 10,000 NCO cycles (assuming 90MHz clock = ~11ns period)
+  co_await WaitTime{10000 * 11111};
 }
 
 
@@ -262,9 +310,6 @@ int main(int argc, char *argv[]) {
     traceP->open(waveformFileName);
   }
 
-  TaskManager taskMgr;
-    
-  // FIX: Map strictly to the top-level pins Verilator actually exposes!
   ClockSource clk40(MEG(40), &top->clk40);
   ClockSource clk90(MEG(90), &top->clk90sim); // Pointing to the SIM pin, not internal PLL
 
@@ -275,41 +320,35 @@ int main(int argc, char *argv[]) {
   top->fpgaSCLKpin = 0;
   top->fpgaMOSI = 0;
   top->gnssPPS = 0;
-  top->fpgaNRESET = 1;
+  top->fpgaNRESET = 0;
 
   std::cout << "Starting simulation..." << std::endl;
 
-  std::vector<EventSource*> sources = {&clk40, &clk90, &taskMgr};
-  uint64_t curTime = 0;
-  uint64_t MAX_SIM_TIME = 100000000ULL; // Ensure this is defined to prevent infinite loops
+  std::vector<EventSource*> sources = {&clk40, &clk90, &theTM};
+  uint64_t MAX_SIM_TIME = MEG(1000); // 1ms to prevent infinite loops
 
   // Set up coroutine that drives our test sequence.
-  runTestSequence(top, taskMgr, &curTime);
+  auto testSeqTask = runTestSequence(top);
 
-  while (!Verilated::gotFinish() && curTime < MAX_SIM_TIME) {
+  while (!Verilated::gotFinish() && currentTime < MAX_SIM_TIME) {
     uint64_t nextTime = UINT64_MAX;
+
     for (auto* source : sources) {
       nextTime = std::min(nextTime, source->timeToNextEvent());
     }
 
-    curTime = nextTime;
+    currentTime = nextTime;
 
-    // Fire hardware events
+    // Fire events
     for (auto* source : sources) {
-      if (source->timeToNextEvent() <= curTime) {
-        source->execute(curTime);
-      }
+      if (source->timeToNextEvent() <= currentTime) source->execute();
     }
 
     top->eval();
-
-    // Fire software/coroutine events
-    taskMgr.execute(curTime);
-
-    // Settle combinatorial logic resulting from coroutine outputs
+    theTM.execute();
     top->eval(); 
 
-    if (traceP) traceP->dump(curTime);
+    if (traceP) traceP->dump(currentTime);
   }
 
   if (traceP) {
