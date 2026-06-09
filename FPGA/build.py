@@ -4,47 +4,46 @@ import sys
 import subprocess
 
 def main():
+    isSim = os.environ.get("SIMULATION") == "1"
+    genDir = "gen-sim" if isSim else "gen-hw"
+
     # 1. Generate Registers
     print("Generating register definitions...")
-    subprocess.run([sys.executable, "regs.py"], check=True)
+    child_env = os.environ.copy()
+    child_env["SIMULATION"] = os.environ.get("SIMULATION", "0")
+    subprocess.run([sys.executable, "regs.py", genDir], env=child_env, check=True)
 
     # 2. Generate Amaranth Gateware (Verilog output)
     print("Elaborating Amaranth gateware...")
     # We need to make sure the 'gen' directory is in the path so we can import .regs_gen
-    sys.path.append(os.path.join(os.getcwd(), "gen"))
+    sys.path.append(os.path.join(os.getcwd(), genDir))
     
     from gateware import Top
     from amaranth.back import verilog
     
-    top = Top()
-    ports = [
-        top.clk, top.gnssPPS, top.fpgaNRESET,
-        top.fpgaSCLKpin, top.fpgaMOSI, top.fpgaMISO, top.fpgaNCS,
-        top.rfPushBase, top.rfPushPeak,
-        top.rfPullBase, top.rfPullPeak,
-        top.driverNEN
-    ]
+    top = Top(isSim)
+    ports = top.getPorts()
     
-    os.makedirs("gen", exist_ok=True)
-    output_file = "gen/Top.v"
-    with open(output_file, "w") as f:
+    os.makedirs(genDir, exist_ok=True)
+    outF = f"{genDir}/Top.v"
+    with open(outF, "w") as f:
         # Amaranth natively generates Verilog-2005. 
         f.write(verilog.convert(top, ports=ports, name="Top"))
     
-    print(f"Generated {output_file} (Verilog-2005)")
+    print(f"Generated {outF} (Verilog-2005)")
 
     # 3. Copy firmware headers to the correct location if needed
     # The ESP32 firmware expects them in sw/hal/ (or similar)
     # Let's check where regs.hpp should go.
     
-    cpp_header = "gen/regs.hpp"
-    target_dir = "../sw/hal/"
-    if os.path.exists(target_dir):
+    cppHeader = f"{genDir}/regs.hpp"
+    targDir = "../sw/hal/"
+    if os.path.exists(targDir):
         import shutil
-        shutil.copy(cpp_header, os.path.join(target_dir, "regs.hpp"))
-        print(f"Copied {cpp_header} to {target_dir}")
+        shutil.copy(cppHeader, os.path.join(targDir, "regs.hpp"))
+        print(f"Copied {cppHeader} to {targDir}")
     else:
-        print(f"Warning: Target directory {target_dir} not found. skipping header copy.")
+        print(f"Warning: Target directory {targDir} not found. skipping header copy.")
 
 if __name__ == "__main__":
     main()

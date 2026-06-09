@@ -21,8 +21,6 @@ The simulation integrates:
   design with NCO and pipelined DSP stages.
 - **ESP32 Software** (`../sw/transmitter.cpp`,
   `../sw/wspr-encoder.cpp`) - Real transmitter and WSPR encoder code.
-- **Simulation HAL** (`simHAL.hpp`) - Hardware abstraction layer
-  implementations for Verilator, featuring a centralized `SimTime` singleton.
 
 This allows testing the complete signal chain from WSPR encoding
 through SPI transactions to RF output generation.

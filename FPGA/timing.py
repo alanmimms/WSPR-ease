@@ -1,4 +1,4 @@
-ctx.addClock("clk90Gb", 90.0)
+ctx.addClock("clk90GB", 90.0)
 
 # Mock SPI clock with low frequency to ignore CDC timing
 # Amaranth generates a net named something like 'fpgaSCLKpin'

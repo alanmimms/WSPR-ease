@@ -7,6 +7,7 @@
 from amaranth import *
 from amaranth.lib import enum, data, cdc
 from amaranth.back import verilog
+from amaranth import DomainRenamer
 import os
 
 # Import the generated registers if they exist, or provide placeholders for first run
@@ -69,34 +70,50 @@ class PipelinedNCO(Elaboratable):
         
         # Accumulator segments output from the DSP blocks
         accChunks = []
-        # Carry signal propagated between pipelined DSP stages
-        carryIn = Signal()
+
+        carryIn = 0
 
         for i in range(3):
             accOut = Signal(32)
-            coOut = Signal()
+            cOut = Signal()
 
-            m.submodules[f"ncoAccum{i}"] = Instance("SB_MAC16",
+            # 48-bit (three stage) accumulator with carry propagated between 16-bit chunks.
+            # acc_16_bypassed_unsigned
+            m.submodules[f"NCOAccum{i}"] = Instance("SB_MAC16",
+                                                    p_B_SIGNED=0,
+                                                    p_A_SIGNED=0,
+                                                    p_MODE_8x8=1,
+                                                    p_BOTADDSUB_CARRYSELECT=0,
+                                                    p_BOTADDSUB_UPPERINPUT=0,
                                                     p_BOTADDSUB_LOWERINPUT=0,
-                                                    p_BOTADDSUB_UPPERINPUT=1,
-                                                    p_BOTADDSUB_CARRYSELECT=3 if i > 0 else 0,
+                                                    p_BOTOUTPUT_SELECT=1,
+                                                    p_TOPADDSUB_CARRYSELECT=0,
+                                                    p_TOPADDSUB_UPPERINPUT=0,
+                                                    p_TOPADDSUB_LOWERINPUT=0,
+                                                    p_TOPOUTPUT_SELECT=1,
+                                                    p_PIPELINE_16x16_MULT_REG2=0,
+                                                    p_PIPELINE_16x16_MULT_REG1=0,
+                                                    p_BOT_8x8_MULT_REG=0,
+                                                    p_TOP_8x8_MULT_REG=0,
+                                                    p_D_REG=0,
+                                                    p_B_REG=0,
+                                                    p_A_REG=0,
+                                                    p_C_REG=0,
+                                                    i_A=twDelayed[i],
                                                     i_B=0xFFFF,
                                                     i_D=0,
                                                     i_CI=carryIn,
-                                                    p_TOPADDSUB_LOWERINPUT=0,
-                                                    p_TOPADDSUB_UPPERINPUT=2,
-                                                    p_TOPADDSUB_CARRYSELECT=2,
-                                                    p_TOPOUTPUT_SELECT=1,
-                                                    i_A=twDelayed[i], o_O=accOut, o_CO=coOut,
+                                                    o_O=accOut,
+                                                    o_CO=cOut,
                                                     i_CLK=ClockSignal(),
                                                     i_CE=1,
                                                     o_ACCUMCO=Signal(),
                                                     o_SIGNEXTOUT=Signal())
 
             accChunks.append(accOut[16:32])
-            nc = Signal(reset_less=True)
-            m.d.sync += nc.eq(coOut)
-            carryIn = nc
+
+            carryIn = Signal()  # Next iteration's carry in
+            m.d.sync += carryIn.eq(cOut)
 
         finalAcc = []
 
@@ -110,6 +127,7 @@ class PipelinedNCO(Elaboratable):
                 curr = reg
 
             finalAcc.append(curr)
+
         m.d.comb += self.phase.eq(Cat(*finalAcc))
         return m
 
@@ -130,18 +148,31 @@ class FreqCounter(Elaboratable):
         m = Module()
         countOut = Signal(32)
 
+        # FPGACLK frequency counter gated by 1pps signal from GNSS.
+        # This is acc_32_bypassed_unsigned with carryIn tied to 1.
         m.submodules.counterDSP = Instance("SB_MAC16",
+                                           p_B_SIGNED=0,
+                                           p_A_SIGNED=0,
+                                           p_MODE_8x8=1,
+                                           p_BOTADDSUB_CARRYSELECT=0,
+                                           p_BOTADDSUB_UPPERINPUT=0,
                                            p_BOTADDSUB_LOWERINPUT=0,
-                                           p_BOTADDSUB_UPPERINPUT=2,
-                                           p_BOTADDSUB_CARRYSELECT=1,
-                                           i_B=0,
-                                           i_CI=0,
-                                           p_TOPADDSUB_LOWERINPUT=0,
-                                           p_TOPADDSUB_UPPERINPUT=2,
-                                           p_TOPADDSUB_CARRYSELECT=2,
-                                           i_A=0,
-                                           p_TOPOUTPUT_SELECT=1,
                                            p_BOTOUTPUT_SELECT=1,
+                                           p_TOPADDSUB_CARRYSELECT=2,
+                                           p_TOPADDSUB_UPPERINPUT=0,
+                                           p_TOPADDSUB_LOWERINPUT=0,
+                                           p_TOPOUTPUT_SELECT=1,
+                                           p_PIPELINE_16x16_MULT_REG2=0,
+                                           p_PIPELINE_16x16_MULT_REG1=0,
+                                           p_BOT_8x8_MULT_REG=0,
+                                           p_TOP_8x8_MULT_REG=0,
+                                           p_D_REG=0,
+                                           p_B_REG=0,
+                                           p_A_REG=0,
+                                           p_C_REG=0,
+                                           i_B=0,
+                                           i_CI=1,
+                                           i_A=0,
                                            i_CLK=ClockSignal(),
                                            i_CE=1,
                                            o_O=countOut,
@@ -318,6 +349,35 @@ class SPIRegisters(Elaboratable):
 
         return m
 
+class LFSR32(Elaboratable):
+    def __init__(self):
+        self.out = Signal(32)
+
+    def elaborate(self, platform):
+        m = Module()
+        
+        # State MUST be initialized to a non-zero value, otherwise it
+        # will stay stuck at 0 forever.
+        state = Signal(32, reset=0xBEEFCAFE)
+        
+        # Polynomial: x^32 + x^22 + x^2 + x^1 + 1
+        # Represented as tap mask (bits 31, 21, 1, 0)
+        taps = 0x80200003
+        
+        # Feedback is the MSB
+        feedback = state[31]
+        
+        with m.If(feedback):
+            # Shift left and apply XOR taps in parallel (1 LUT delay)
+            m.d.sync += state.eq((state << 1) ^ taps)
+        with m.Else():
+            # Just shift left (0 LUT delay, just routing)
+            m.d.sync += state.eq(state << 1)
+            
+        m.d.comb += self.out.eq(state)
+        
+        return m
+
 class Exciter(Elaboratable):
     def __init__(self, pbPin, ppPin, lbPin, lpPin):
         self.tw = Signal(48)
@@ -332,65 +392,54 @@ class Exciter(Elaboratable):
         m = Module()
         m.submodules.nco = nco = PipelinedNCO(width=48)
         m.d.comb += nco.tw.eq(self.tw)
-        lcg = Signal(32)
-
-        # Use a LCG pseudo-random number generator (PRNG) to compute
-        # noise to dither the freq VERY SLIGHTLY to eliminate
+        
+        # Use a LFSR Galois pseudo-random number generator (PRNG) to
+        # compute noise to dither the freq VERY SLIGHTLY to eliminate
         # artifacts from tuning right near a freq that divides into
         # our 90MHz clock evenly.
-        m.submodules.prng = Instance("SB_MAC16",
-                                     p_BOTADDSUB_UPPERINPUT=2,
-                                     p_BOTADDSUB_LOWERINPUT=0,
-                                     p_TOPADDSUB_UPPERINPUT=2,
-                                     p_TOPADDSUB_LOWERINPUT=1,
-                                     i_A=lcg[:16],
-                                     i_B=25173,
-                                     i_D=13849,
-                                     p_TOPOUTPUT_SELECT=1,
-                                     i_CLK=ClockSignal(),
-                                     i_CE=1,
-                                     o_O=lcg,
-                                     o_CO=Signal(),
-                                     o_ACCUMCO=Signal(),
-                                     o_SIGNEXTOUT=Signal())
+        m.submodules.lfsr = lfsr = LFSR32()
 
-        #noise = lcg[:16]
-        noise = 0
-        noiseD1inv = 0
+        #noise = Signal(16)
+        #m.d.comb += noise.eq(lfsr.out[:16])
 
         # Delay the noise by 1 clock to align with the 1-clock delay of phaseF
         #noiseD1inv = Signal(16, reset_less=True)
         #m.d.sync += noiseD1inv.eq(~noise)
 
-        # Upper 16 bits of NCO phase for the rising edge sample
+        # TEMPORARY TO DEBUG XXX FIXME
+        noise = 0
+        noiseD1inv = 0
+
+        # 16 LSBs of NCO phase for the rising edge sample
         phaseR = nco.phase[32:48]
 
         # Phase for the falling edge sample (calculated with 0.5 cycle offset)
         phaseF = Signal(16)
 
-        # DEBUGGING
-        a = Signal(16)
-        b = Signal(16)
-        d = Signal(16)
-        o = Signal(16)
-
-        m.d.comb += [
-            a.eq(phaseR),
-            b.eq(1),
-            d.eq(self.tw[32:48] >> 1),
-            o.eq(phaseF)
-        ]
-        
-
         # Calculate the half cycle offset for falling edge, computing
         # phaseR + tw/2. This just uses this "expensive" SB_MAC16 as a
         # fast 16-bit adder.
+        # add_sub_16_bypassed_unsigned
         m.submodules.offs = Instance("SB_MAC16",
-                                     p_TOPADDSUB_LOWERINPUT=0,
-                                     p_TOPADDSUB_UPPERINPUT=0,
+                                     p_B_SIGNED=0,
+                                     p_A_SIGNED=0,
                                      p_MODE_8x8=1,
-                                     p_TOPOUTPUT_SELECT=1,
-                                     p_BOTOUTPUT_SELECT=1,
+                                     p_BOTADDSUB_CARRYSELECT=0,
+                                     p_BOTADDSUB_UPPERINPUT=1,
+                                     p_BOTADDSUB_LOWERINPUT=0,
+                                     p_BOTOUTPUT_SELECT=0,
+                                     p_TOPADDSUB_CARRYSELECT=0,
+                                     p_TOPADDSUB_UPPERINPUT=1,
+                                     p_TOPADDSUB_LOWERINPUT=0,
+                                     p_TOPOUTPUT_SELECT=0,
+                                     p_PIPELINE_16x16_MULT_REG2=0,
+                                     p_PIPELINE_16x16_MULT_REG1=0,
+                                     p_BOT_8x8_MULT_REG=0,
+                                     p_TOP_8x8_MULT_REG=0,
+                                     p_D_REG=0,
+                                     p_B_REG=0,
+                                     p_A_REG=0,
+                                     p_C_REG=0,
                                      i_A=phaseR,
                                      i_B=self.tw[32:48] >> 1,
                                      i_D=0,
@@ -405,15 +454,31 @@ class Exciter(Elaboratable):
         mulR = Signal(32)
         mulF = Signal(32)
 
-        # Compute mulR = phaseR * 6 + noise
+        # Compute 16-bit multiply mulR = phaseR * 6 + noise.
+        # mult_16x16_bypass_unsigned
         m.submodules.mr = Instance("SB_MAC16",
-                                   p_BOTADDSUB_LOWERINPUT=1,
-                                   p_TOPADDSUB_LOWERINPUT=0,
+                                   p_B_SIGNED=0,
+                                   p_A_SIGNED=0,
+                                   p_MODE_8x8=0,
+                                   p_BOTADDSUB_CARRYSELECT=0,
+                                   p_BOTADDSUB_UPPERINPUT=1,
+                                   p_BOTADDSUB_LOWERINPUT=2,
+                                   p_BOTOUTPUT_SELECT=0,
+                                   p_TOPADDSUB_CARRYSELECT=2,
+                                   p_TOPADDSUB_UPPERINPUT=1,
+                                   p_TOPADDSUB_LOWERINPUT=1,
+                                   p_TOPOUTPUT_SELECT=3,
+                                   p_PIPELINE_16x16_MULT_REG2=0,
+                                   p_PIPELINE_16x16_MULT_REG1=0,
+                                   p_BOT_8x8_MULT_REG=0,
+                                   p_TOP_8x8_MULT_REG=0,
+                                   p_D_REG=0,
+                                   p_B_REG=0,
+                                   p_A_REG=0,
+                                   p_C_REG=0,
                                    i_A=phaseR,
                                    i_B=6,
                                    i_D=noise,
-                                   p_TOPOUTPUT_SELECT=1,
-                                   p_BOTOUTPUT_SELECT=1,
                                    i_CLK=ClockSignal(),
                                    i_CE=1,
                                    o_O=mulR,
@@ -423,13 +488,28 @@ class Exciter(Elaboratable):
 
         # Compute mulF = phaseF * 6 + (inverted)noise
         m.submodules.mf = Instance("SB_MAC16",
-                                   p_BOTADDSUB_LOWERINPUT=1,
-                                   p_TOPADDSUB_LOWERINPUT=0,
+                                   p_B_SIGNED=0,
+                                   p_A_SIGNED=0,
+                                   p_MODE_8x8=0,
+                                   p_BOTADDSUB_CARRYSELECT=0,
+                                   p_BOTADDSUB_UPPERINPUT=1,
+                                   p_BOTADDSUB_LOWERINPUT=2,
+                                   p_BOTOUTPUT_SELECT=0,
+                                   p_TOPADDSUB_CARRYSELECT=2,
+                                   p_TOPADDSUB_UPPERINPUT=1,
+                                   p_TOPADDSUB_LOWERINPUT=1,
+                                   p_TOPOUTPUT_SELECT=3,
+                                   p_PIPELINE_16x16_MULT_REG2=0,
+                                   p_PIPELINE_16x16_MULT_REG1=0,
+                                   p_BOT_8x8_MULT_REG=0,
+                                   p_TOP_8x8_MULT_REG=0,
+                                   p_D_REG=0,
+                                   p_B_REG=0,
+                                   p_A_REG=0,
+                                   p_C_REG=0,
                                    i_A=phaseF,
                                    i_B=6,
                                    i_D=noiseD1inv,      # Aligned, delayed noise
-                                   p_TOPOUTPUT_SELECT=1,
-                                   p_BOTOUTPUT_SELECT=1,
                                    i_CLK=ClockSignal(),
                                    i_CE=1,
                                    o_O=mulF,
@@ -554,8 +634,12 @@ class Exciter(Elaboratable):
         return m
 
 class Top(Elaboratable):
-    def __init__(self):
-        self.clk = Signal(name="clk")
+    # Pass 'sim' down so the gateware knows whether to bypass the PLL
+    def __init__(self, sim=False):
+        self.sim = sim
+        # Use 'clk40' everywhere to prevent C++ Verilator port confusion
+        self.clk40 = Signal(name="clk40") 
+        self.clk90sim = Signal(name="clk90sim") # Only used in TB
         self.gnssPPS = Signal(name="gnssPPS")
         self.fpgaNRESET = Signal(name="fpgaNRESET")
         self.fpgaSCLKpin = Signal(name="fpgaSCLKpin")
@@ -568,54 +652,100 @@ class Top(Elaboratable):
         self.rfPullPeak = Signal(name="rfPullPeak")
         self.driverNEN = Signal(name="driverNEN")
 
+    def getPorts(self):
+        ports = [
+            self.clk40,
+            self.gnssPPS,
+            self.fpgaNRESET,
+            self.fpgaSCLKpin,
+            self.fpgaMOSI,
+            self.fpgaMISO,
+            self.fpgaNCS,
+            self.rfPushBase,
+            self.rfPushPeak,
+            self.rfPullBase,
+            self.rfPullPeak,
+            self.driverNEN
+        ]
+
+        # Only expose the sim clock to Verilator if we are simulating
+        if self.sim:
+            ports.append(self.clk90sim)
+            
+        return ports        
+
     def elaborate(self, platform):
         m = Module()
-        clk90 = Signal()
+
+        # ==========================================
+        # 40 MHz Domain: TCXO Input -> Global Buffer
+        # ==========================================
+        clk40GB = Signal()
+        m.domains.sync40 = ClockDomain("sync40", local=True)
+        m.d.comb += ClockSignal("sync40").eq(clk40GB)
+
+        # ==========================================
+        # 90 MHz Domain: PLL/Sim -> Global Buffer
+        # ==========================================
+        clk90 = Signal() # Raw PLL output
         pllLockedRaw = Signal()
 
+        # Hardware PLL
         m.submodules.pll = Instance("SB_PLL40_PAD",
                                     p_FEEDBACK_PATH="SIMPLE",
                                     p_DIVR=0,
                                     p_DIVF=17,
                                     p_DIVQ=3,
                                     p_FILTER_RANGE=2,
-                                    i_PACKAGEPIN=self.clk,
+                                    i_PACKAGEPIN=self.clk40,
                                     i_RESETB=1,
                                     i_BYPASS=0,
                                     o_PLLOUTCORE=clk90,
-                                    o_PLLOUTGLOBAL=Signal(),
+                                    o_PLLOUTGLOBAL=clk40GB,
                                     o_LOCK=pllLockedRaw)
 
-        clk90Gb = Signal()
-        m.submodules.clkGB = Instance("SB_GB",
-                                      i_USER_SIGNAL_TO_GLOBAL_BUFFER=clk90,
-                                      o_GLOBAL_BUFFER_OUTPUT=clk90Gb)
+        # MUX the clock source based on the simulation flag
+        clk90Src = Signal()
+        if self.sim:
+            m.d.comb += clk90Src.eq(self.clk90sim), # Inject testbench clock
+        else:
+            m.d.comb += clk90Src.eq(clk90)  # Use physical PLL
 
+        clk90GB = Signal()
+        m.submodules.clk90GB = Instance("SB_GB",
+                                        i_USER_SIGNAL_TO_GLOBAL_BUFFER=clk90Src,
+                                        o_GLOBAL_BUFFER_OUTPUT=clk90GB)
+
+        m.domains.sync = ClockDomain("sync", local=True)
+        m.d.comb += ClockSignal("sync").eq(clk90GB)
+
+        # Globally buffer the lock signal
         pllLocked = Signal()
         m.submodules.lockGB = Instance("SB_GB",
                                        i_USER_SIGNAL_TO_GLOBAL_BUFFER=pllLockedRaw,
                                        o_GLOBAL_BUFFER_OUTPUT=pllLocked)
 
-        sclkGb = Signal()
+        sclkGB = Signal()
         m.submodules.sclkGB = Instance("SB_GB",
                                        i_USER_SIGNAL_TO_GLOBAL_BUFFER=self.fpgaSCLKpin,
-                                       o_GLOBAL_BUFFER_OUTPUT=sclkGb)
-
-        m.domains.sync = ClockDomain()
-        m.d.comb += ClockSignal("sync").eq(clk90Gb)
+                                       o_GLOBAL_BUFFER_OUTPUT=sclkGB)
 
         rstSyncRaw = Signal()
         m.submodules.rstSync = cdc.FFSynchronizer(~self.fpgaNRESET, rstSyncRaw, reset=1)
 
-        rstGb = Signal()
-        m.submodules.rstGB = Instance("SB_GB", i_USER_SIGNAL_TO_GLOBAL_BUFFER=rstSyncRaw, o_GLOBAL_BUFFER_OUTPUT=rstGb)
-        m.d.comb += ResetSignal("sync").eq(rstGb)
+        rstGB = Signal()
+        m.submodules.rstGB = Instance("SB_GB", i_USER_SIGNAL_TO_GLOBAL_BUFFER=rstSyncRaw, o_GLOBAL_BUFFER_OUTPUT=rstGB)
+        m.d.comb += ResetSignal().eq(rstGB)
+        m.d.comb += ResetSignal("sync").eq(rstGB)
+        m.d.comb += ResetSignal("sync40").eq(rstGB)
 
-        m.submodules.freq = freq = FreqCounter()
+        freq = FreqCounter()
+        # Remap freq into 40MHz domain
+        m.submodules.freqRenamed = DomainRenamer({"sync": "sync40"})(freq)
         m.d.comb += freq.samplePPS.eq(self.gnssPPS)
 
         m.submodules.spi = spi = SPIRegisters()
-        m.d.comb += [spi.iSCLK.eq(sclkGb),
+        m.d.comb += [spi.iSCLK.eq(sclkGB),
                      spi.iMOSI.eq(self.fpgaMOSI),
                      self.fpgaMISO.eq(spi.oMISO),
                      spi.iNCS.eq(self.fpgaNCS),
@@ -632,20 +762,3 @@ class Top(Elaboratable):
                      exciter.modeSq.eq(spi.modeSq)]
         m.d.sync += self.driverNEN.eq(~(spi.txEn & pllLocked))
         return m
-
-if __name__ == "__main__":
-    top = Top()
-    ports = [top.clk,
-             top.gnssPPS,
-             top.fpgaNRESET,
-             top.fpgaSCLKpin,
-             top.fpgaMOSI,
-             top.fpgaMISO,
-             top.fpgaNCS,
-             top.rfPushBase,
-             top.rfPushPeak,
-             top.rfPullBase,
-             top.rfPullPeak,
-             top.driverNEN]
-    with open("Top.v", "w") as f: f.write(verilog.convert(top, ports=ports))
-    print("Generated top.v")

@@ -1,6 +1,6 @@
 # Clock Inputs
 set_io fpgaSCLKpin 15
-set_io clk 35
+set_io clk40 35
 set_io gnssPPS 6
 
 # SPI Interface (Standard 4mA is fine for these)

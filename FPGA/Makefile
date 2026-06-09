@@ -4,22 +4,27 @@
 # Directories
 FPGA_DIR := .
 SW_DIR := ../sw
+HAL_DIR := $(SW_DIR)/hal
 SIM_DIR := sim
-OBJDIR := build
+OBJDIR := obj_dir
+GENHWDIR := gen-hw
+GENSIMDIR := gen-sim
 
 # Verilator configuration
 VERILATOR := verilator
 VERILATOR_FLAGS := -Wall -Wno-fatal --trace --cc --exe --build
-VERILATOR_FLAGS += -Wno-PINMISSING -Wno-WIDTHEXPAND -Wno-WIDTHTRUNC -Wno-UNUSEDSIGNAL -Wno-UNUSEDPARAM -Wno-UNDRIVEN -Wno-TIMESCALEMOD
+VERILATOR_FLAGS += -Wno-PINMISSING -Wno-WIDTHEXPAND -Wno-WIDTHTRUNC -Wno-UNUSEDSIGNAL
+VERILATOR_FLAGS += -Wno-UNUSEDPARAM -Wno-UNDRIVEN -Wno-TIMESCALEMOD
 VERILATOR_FLAGS += -Wno-GENUNNAMED -Wno-DECLFILENAME -Wno-PROCASSINIT -Wno-COMBDLY
 VERILATOR_FLAGS += -I$(SIM_DIR)
+VERILATOR_FLAGS += -I$(HAL_DIR)
 VERILATOR_FLAGS += -sv
-VERILATOR_FLAGS += -CFLAGS "-std=c++17 -I$(SW_DIR)"
+VERILATOR_FLAGS += -CFLAGS "-std=c++20 -I$(SW_DIR)"
 VERILATOR_FLAGS += -LDFLAGS "-lm"
 
 # Source files
-RTL_SOURCES := gen/Top.v
-RTL_SIM_SOURCES := gen/Top.v
+RTL_SOURCES := $(GENHWDIR)/Top.v
+RTL_SIM_SOURCES := $(GENSIMDIR)/Top.v
 
 CPP_SOURCES := tbTop.cpp
 
@@ -29,6 +34,8 @@ YOSYS_DATDIR := $(shell yosys-config --datdir)
 # Construct the path to the iCE40 simulation models
 ICE40_SIM_MODELS := $(SIM_DIR)/cells_sim.v
 
+AMARANTH_FILES := gateware.py build.py regs.py
+
 PROJECT=wspr_ease
 TOP=Top
 PCF=pins.pcf
@@ -36,25 +43,33 @@ DEVICE=up5k
 PACKAGE=sg48
 
 # Output image and sim executable
-TARGET := build/fpga.img
+FPGATARGET := build/fpga.img
 SIMTARGET := obj_dir/VTop
 
-.PHONY: all clean run fast superfast help test gen/Top.v
+.PHONY: all hw clean sim run fast superfast help test $(GENHWDIR) $(GENSIMDIR)
 
-all: $(TARGET)
+all: hw
 
-# Generate Verilog from Amaranth
-gen/Top.v: gateware.py regs.py
-	.venv/bin/python3 build.py
-	sed -i '/\$$auto\$$verilog_backend/d' gen/Top.v
-	sed -i 's/\$$/_/g' gen/Top.v
+# Build for FPGA deployment
+$(RTL_SOURCES):	$(AMARANTH_FILES)
+	@echo "--- Building FPGA SystemVerilog ---"
+	SIMULATION=0 .venv/bin/python3 build.py
+	sed -i '/\$$auto\$$verilog_backend/d' $(RTL_SOURCES)
+	sed -i 's/\$$/_/g' $(RTL_SOURCES)
+
+# Build for sim
+$(RTL_SIM_SOURCES): $(AMARANTH_FILES)
+	@echo "--- Building Simulation SystemVerilog ---"
+	SIMULATION=1 .venv/bin/python3 build.py
+	sed -i '/\$$auto\$$verilog_backend/d' $(RTL_SIM_SOURCES)
+	sed -i 's/\$$/_/g' $(RTL_SIM_SOURCES)
 
 # The FPGA image
-$(TARGET):	gen/Top.v $(PCF) timing.py
+hw $(FPGATARGET):	$(RTL_SOURCES) $(PCF) timing.py
 	@echo "--- Building FPGA Bitstream ---"
-	@mkdir -p build
+	@mkdir -p $(GENHWDIR) build
 	@echo "  YOSYS (Synthesis)..."
-	yosys -q -p "read_verilog gen/Top.v; synth_ice40 -dsp -top Top -json $(PROJECT).json"
+	yosys -q -p "read_verilog "$(RTL_SOURCES)"; synth_ice40 -dsp -top Top -json $(PROJECT).json"
 	@echo "  NEXTPNR (Place & Route)..."
 	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
 		--pre-pack timing.py --placer heap --seed 42 \
@@ -63,12 +78,13 @@ $(TARGET):	gen/Top.v $(PCF) timing.py
 		--asc $(PROJECT).asc
 	@echo "  ICEPACK (Bitstream)..."
 	icepack $(PROJECT).asc $(PROJECT).bin
-	mv -f $(PROJECT).bin $(TARGET)
+	mv -f $(PROJECT).bin $(FPGATARGET)
 	@echo "--- FPGA Build Complete ---"
 
 # Build the Verilator simulation
-$(SIMTARGET): gen/Top.v $(RTL_SIM_SOURCES) $(CPP_SOURCES) simHAL.hpp
+sim $(SIMTARGET): $(RTL_SIM_SOURCES) $(CPP_SOURCES)
 	@echo "Building Verilator simulation..."
+	@mkdir -p $(GENSIMDIR) build
 	$(VERILATOR) $(VERILATOR_FLAGS) \
 		-o VTop \
 		--top-module Top \
@@ -108,9 +124,10 @@ wave: waveform.vcd
 # Clean build artifacts
 clean:
 	@echo "Cleaning build artifacts..."
+	@rm -rf build/
 	@rm -rf $(OBJDIR)
-	@rm -f waveform.vcd
 	@rm -rf gen/*
+	@rm -f waveform.vcd
 	@echo "Clean complete."
 
 # Help target
@@ -130,4 +147,3 @@ help:
 	@echo "The simulation integrates:"
 	@echo "  - FPGA RTL (top.sv, sequencer.sv)"
 	@echo "  - ESP32 SW code (transmitter.cpp, wspr-encoder.cpp)"
-	@echo "  - Simulation HAL (simHAL.hpp)"

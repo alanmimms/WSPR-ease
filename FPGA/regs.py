@@ -35,9 +35,14 @@ class Sig:
   val:          Enum(0x52505357, 32, [("", 0x52505357)], "Fixed value ASCII 'WSPR'")
 
 if __name__ == "__main__":
-  # Generate files in the 'gen/' directory
-  gen_dir = os.path.join(os.path.dirname(__file__), "gen")
-  os.makedirs(gen_dir, exist_ok=True)
-  prefix = os.path.join(gen_dir, "regs")
+
+  if len(sys.argv) > 1:
+    genDir = sys.argv[1]
+  else:
+    genDir = "gen-FIXME" # Fallback if no param is passed
+    print("No genDir parameter provided, using 'gen-FIXME'.")
+  
+  os.makedirs(genDir, exist_ok=True)
+  prefix = os.path.join(genDir, "regs")
   regs.writeFiles(prefix)
   print(f"Generated registers at {prefix}.[hpp|md|py]")
