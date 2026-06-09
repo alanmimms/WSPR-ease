@@ -12,6 +12,7 @@
 #include "wifiManager.hpp"
 #include "gnss.hpp"
 #include "regs.hpp"
+#include "buildNumber.hpp"
 #include "fpga.hpp"
 #include "logmanager.hpp"
 
@@ -382,14 +383,18 @@ namespace wspr {
     }
     
     WSPRControl ctrl;
-    uint32_t tuningL, tuningH;
+    uint32_t tuningL, tuningH, sig, buildNum;
     fpga.readRegister(aWSPRControl, &ctrl.u);
     fpga.readRegister(aWSPRTuningLow, &tuningL);
     fpga.readRegister(aWSPRTuningHigh, &tuningH);
+    fpga.readRegister(aWSPRSig, &sig);
+    fpga.readRegister(aWSPRBuildNo, &buildNum);
 
     uint64_t tuning = ((uint64_t)tuningH << 32) | tuningL;
 
     shell_print(sh, "=== FPGA Hardware Status ===");
+    shell_print(sh, "Signature:       0x%08X %s", sig, (sig == 0x52505357) ? "(OK)" : "(FAIL)");
+    shell_print(sh, "Build Number:    %u %s (compiled: %u)", buildNum, (buildNum == fpgaBuildNumber) ? "(OK)" : "(MISMATCH)", fpgaBuildNumber);
     shell_print(sh, "TX Enable:       %s", (ctrl.txEnable) ? "ON" : "OFF");
     shell_print(sh, "Mode:            %s", (ctrl.modeSquare) ? "Square" : "1-2-1");
     shell_print(sh, "PLL Locked:      %s", (ctrl.pllLocked) ? "YES" : "NO");

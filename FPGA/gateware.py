@@ -12,7 +12,7 @@ import os
 
 # Import the generated registers if they exist, or provide placeholders for first run
 try:
-    from regs_gen import ControlStruct, TuningLowStruct, TuningHighStruct, PPSStruct, SigStruct, WSPRAddr
+    from regs_gen import ControlStruct, TuningLowStruct, TuningHighStruct, PPSStruct, BuildNoStruct, SigStruct, WSPRAddr
 
 except ImportError:
     class ControlStruct(data.Struct):
@@ -32,6 +32,9 @@ except ImportError:
         gen: unsigned(5)
         count: unsigned(27)
 
+    class BuildNoStruct(data.Struct):
+        val: unsigned(32)
+
     class SigStruct(data.Struct):
         val: unsigned(32)
 
@@ -40,6 +43,7 @@ except ImportError:
         TuningLow = 0x01
         TuningHigh = 0x02
         PPS = 0x03
+        BuildNo = 0x0E
         Sig = 0x0F
 
 class PipelinedNCO(Elaboratable):
@@ -197,7 +201,8 @@ class FreqCounter(Elaboratable):
 
 class SPIRegisters(Elaboratable):
 
-    def __init__(self):
+    def __init__(self, buildNum=0):
+        self.buildNum = buildNum
         self.iSCLK = Signal()
         self.iMOSI = Signal()
         self.oMISO = Signal()
@@ -295,29 +300,33 @@ class SPIRegisters(Elaboratable):
         isTwLow = Signal(reset_less=True)
         isTwHi = Signal(reset_less=True)
         isPPS = Signal(reset_less=True)
+        isBuildNo = Signal(reset_less=True)
         isSig = Signal(reset_less=True)
 
         m.d.sync += [isCtrl.eq(addrLatch == WSPRAddr.Control),
                      isTwLow.eq(addrLatch == WSPRAddr.TuningLow),
                      isTwHi.eq(addrLatch == WSPRAddr.TuningHigh),
                      isPPS.eq(addrLatch == WSPRAddr.PPS),
+                     isBuildNo.eq(addrLatch == WSPRAddr.BuildNo),
                      isSig.eq(addrLatch == WSPRAddr.Sig)]
         
         vCtrl = Signal(32)
         vTwLow = Signal(32)
         vTwHi = Signal(32)
         vPPS = Signal(32)
+        vBuildNo = Signal(32)
         vSig = Signal(32)
         m.d.comb += [vCtrl.eq(Mux(isCtrl, Cat(ctrlReg.txEnable, ctrlReg.modeSquare, localPLL, Const(0, 29)), 0)),
                      vTwLow.eq(Mux(isTwLow, twLow, 0)),
                      vTwHi.eq(Mux(isTwHi, Cat(twHi, Const(0, 16)), 0)),
                      vPPS.eq(Mux(isPPS, localPpsC, 0)),
+                     vBuildNo.eq(Mux(isBuildNo, Const(self.buildNum, 32), 0)),
                      vSig.eq(Mux(isSig, 0x52505357, 0))]
         
         vStage1d0 = Signal(32, reset_less=True)
         vStage1d1 = Signal(32, reset_less=True)
         m.d.sync += [vStage1d0.eq(vCtrl | vTwLow | vTwHi),
-                     vStage1d1.eq(vPPS | vSig)]
+                     vStage1d1.eq(vPPS | vBuildNo | vSig)]
         m.d.sync += readValPipe.eq(vStage1d0 | vStage1d1)
         
         loadMisoEn = Signal(reset_less=True)
@@ -666,8 +675,9 @@ class Exciter(Elaboratable):
 
 class Top(Elaboratable):
     # Pass 'sim' down so the gateware knows whether to bypass the PLL
-    def __init__(self, sim=False):
+    def __init__(self, sim=False, buildNum=0):
         self.sim = sim
+        self.buildNum = buildNum
         # Use 'clk40' everywhere to prevent C++ Verilator port confusion
         self.clk40 = Signal(name="clk40") 
         self.clk90sim = Signal(name="clk90sim") # Only used in TB
@@ -775,7 +785,7 @@ class Top(Elaboratable):
         m.submodules.freqRenamed = DomainRenamer({"sync": "sync40"})(freq)
         m.d.comb += freq.samplePPS.eq(self.gnssPPS)
 
-        m.submodules.spi = spi = SPIRegisters()
+        m.submodules.spi = spi = SPIRegisters(buildNum=self.buildNum)
         m.d.comb += [spi.iSCLK.eq(sclkGB),
                      spi.iMOSI.eq(self.fpgaMOSI),
                      self.fpgaMISO.eq(spi.oMISO),

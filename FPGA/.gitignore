@@ -15,3 +15,5 @@ tbCosim
 exciterDP.v
 Top.v
 regs_gen.py
+gen-hw/
+gen-sim/

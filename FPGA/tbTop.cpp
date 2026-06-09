@@ -4,6 +4,8 @@
 #include <iostream>
 #include <cstdint>
 #include "FPGACommon.hpp"
+#include "regs.hpp"
+#include "buildNumber.hpp"
 #include <memory>
 #include <iomanip>
 #include <algorithm>
@@ -280,7 +282,7 @@ static SimTask runTestSequence(VTop* top) {
 
   // Read Hardware Signature register to verify SPI read
   uint32_t sig = 0;
-  co_await spiRead(top, 0x0F, sig);
+  co_await spiRead(top, aWSPRSig, sig);
   std::cout << "SPI: Read Signature register (0x0F): 0x" 
             << std::hex << std::setw(8) << std::setfill('0') << sig << std::dec << std::endl;
   if (sig == 0x52505357) {
@@ -288,6 +290,18 @@ static SimTask runTestSequence(VTop* top) {
   } else {
     std::cout << "SPI ERROR: Signature mismatch! Expected 0x52505357, got 0x" 
               << std::hex << sig << std::dec << std::endl;
+  }
+
+  // Read FPGA Build Number register to verify SPI read
+  uint32_t buildNum = 0;
+  co_await spiRead(top, aWSPRBuildNo, buildNum);
+  std::cout << "SPI: Read Build Number register (0x0E): " << buildNum << std::endl;
+  std::cout << "TB: Compiled build number is: " << fpgaBuildNumber << std::endl;
+  if (buildNum == fpgaBuildNumber) {
+    std::cout << "SPI: Build number matches - Success!" << std::endl;
+  } else {
+    std::cout << "SPI ERROR: Build number mismatch! Expected " << fpgaBuildNumber 
+              << ", got " << buildNum << std::endl;
   }
 
   // Spec the freq for the NCO using floating point numbers of MHz (3.0 MHz)

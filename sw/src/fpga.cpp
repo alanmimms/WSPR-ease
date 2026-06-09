@@ -6,6 +6,7 @@
 
 #include "fpga.hpp"
 #include "FPGACommon.hpp"
+#include "buildNumber.hpp"
 
 namespace WSPRRegs {
 #include "regs.hpp"
@@ -117,6 +118,32 @@ namespace wspr {
     }
 
     initialized = true;
+
+    // Verify FPGA hardware signature
+    uint32_t sig = 0;
+    if (spiReadReg(WSPRRegs::aWSPRSig, &sig) == 0) {
+      if (sig == 0x52505357) {
+        logger.inf("SPI signature verified successfully: 0x%08X", sig);
+      } else {
+        logger.err("SPI signature mismatch! Expected 0x52505357, got 0x%08X", sig);
+      }
+    } else {
+      logger.err("Failed to read SPI signature register!");
+    }
+
+    // Read and verify FPGA build number
+    uint32_t buildNum = 0;
+    if (spiReadReg(WSPRRegs::aWSPRBuildNo, &buildNum) == 0) {
+      logger.inf("FPGA Build Number: %u", buildNum);
+      if (buildNum == fpgaBuildNumber) {
+        logger.inf("FPGA Build Number matches expected: %u", fpgaBuildNumber);
+      } else {
+        logger.err("FPGA Build Number mismatch! Expected %u, got %u", fpgaBuildNumber, buildNum);
+      }
+    } else {
+      logger.err("Failed to read FPGA build number register!");
+    }
+
     logger.inf("FPGA initialized and running");
     return 0;
   }

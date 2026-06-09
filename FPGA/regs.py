@@ -30,6 +30,10 @@ class PPS:
   gen:          UInt(0, 5, "Generation incremented at each PPS falling edge")
   count:        UInt(0, 27, "FPGA clock count at last PPS falling edge")
 
+@regs.register(0x0E, "FPGA Build Number")
+class BuildNo:
+  val:          UInt(0, 32, "FPGA 32-bit build number")
+
 @regs.register(0x0F, "FPGA Hardware Signature")
 class Sig:
   val:          Enum(0x52505357, 32, [("", 0x52505357)], "Fixed value ASCII 'WSPR'")
