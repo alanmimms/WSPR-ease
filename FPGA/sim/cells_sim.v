@@ -64,9 +64,7 @@ module SB_IO (
 		always @(posedge INPUT_CLK)  if (clken_pulled)    din_q_0         <= PACKAGE_PIN;
 		always @(negedge INPUT_CLK)  if (clken_pulled_ri) din_q_1         <= PACKAGE_PIN;
 		always @(posedge OUTPUT_CLK)                      clken_pulled_ro <= clken_pulled;
-		reg doutQ0Helper;
-		always @(negedge OUTPUT_CLK) if (clken_pulled)    doutQ0Helper    <= D_OUT_0;
-		always @(posedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= doutQ0Helper;
+		always @(negedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= D_OUT_0;
 		always @(negedge OUTPUT_CLK) if (clken_pulled_ro) dout_q_1        <= D_OUT_1;
 		always @(posedge OUTPUT_CLK) if (clken_pulled)    outena_q        <= OUTPUT_ENABLE;
 	end else begin
@@ -74,10 +72,8 @@ module SB_IO (
 		always @(negedge INPUT_CLK)  if (clken_pulled)    din_q_0         <= PACKAGE_PIN;
 		always @(posedge INPUT_CLK)  if (clken_pulled_ri) din_q_1         <= PACKAGE_PIN;
 		always @(negedge OUTPUT_CLK)                      clken_pulled_ro <= clken_pulled;
-		always @(negedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= D_OUT_0;
-		reg doutQ1Helper;
-		always @(negedge OUTPUT_CLK) if (clken_pulled_ro) doutQ1Helper    <= D_OUT_1;
-		always @(posedge OUTPUT_CLK) if (clken_pulled_ro) dout_q_1        <= doutQ1Helper;
+		always @(posedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= D_OUT_0;
+		always @(posedge OUTPUT_CLK) if (clken_pulled_ro) dout_q_1        <= D_OUT_1;
 		always @(negedge OUTPUT_CLK) if (clken_pulled)    outena_q        <= OUTPUT_ENABLE;
 	end endgenerate
 
@@ -93,30 +89,20 @@ module SB_IO (
 	always @* outclk_delayed_1 <= OUTPUT_CLK;
 	always @* outclk_delayed_2 <= outclk_delayed_1;
 
-	always @* begin
-		case (PIN_TYPE[5:2])
-			// Simple direct output (combinatorial)
-			4'b0100: dout = D_OUT_0;
-			
-			// Simple registered output (clocked on posedge)
-			4'b0101: dout = dout_q_0;
-			
-			// DDR Output (clocked on both edges, always enabled)
-			4'b0110: dout = (outclk_delayed_2 ^ NEG_TRIGGER) ? dout_q_0 : dout_q_1;
-			
-			// DDR Output with Tristate Enable (enable check is handled at PACKAGE_PIN level)
-			4'b1010: dout = (outclk_delayed_2 ^ NEG_TRIGGER) ? dout_q_0 : dout_q_1;
-			
-			default: dout = D_OUT_0;
-		endcase
-	end
+        wire mux1, mux2, mux3;
+        assign mux1 = PIN_TYPE[2] ? !dout_q_0 : D_OUT_0;
+        assign mux2 = !(OUTPUT_CLK | PIN_TYPE[2]) ? dout_q_0 : dout_q_1;
+        assign mux3 = PIN_TYPE[3] ? mux1 : mux2;
 
 	assign D_IN_0 = din_0, D_IN_1 = din_1;
 
 	generate
-		if (PIN_TYPE[5:4] == 2'b01) assign PACKAGE_PIN = dout;
-		if (PIN_TYPE[5:4] == 2'b10) assign PACKAGE_PIN = OUTPUT_ENABLE ? dout : 1'bz;
-		if (PIN_TYPE[5:4] == 2'b11) assign PACKAGE_PIN = outena_q ? dout : 1'bz;
+	  case (PIN_TYPE[5:4])
+	    2'b00: assign PACKAGE_PIN = mux3;
+	    2'b01: assign PACKAGE_PIN = 1'bz;
+	    2'b10: assign PACKAGE_PIN = OUTPUT_ENABLE ? mux3 : 1'bz;
+	    2'b11: assign PACKAGE_PIN = !outena_q ? mux3 : 1'bz;
+	  endcase
 	endgenerate
 `endif
 `ifdef TIMING
