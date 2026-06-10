@@ -653,34 +653,26 @@ class Exciter(Elaboratable):
             pullPeakRegF2.eq(pullPeakRegF)
         ]
 
-        pinType = 32
+        pinType = 16            # PIN_OUTPUT_DDR
         m.submodules.mPushBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.pbPin,
                                           i_OUTPUT_CLK=ClockSignal(),
-                                          i_CLOCK_ENABLE=1,
-                                          i_OUTPUT_ENABLE=1,
                                           i_D_OUT_0=pushBaseRegR2, i_D_OUT_1=pushBaseRegF2)
         m.submodules.mPushPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.ppPin,
                                           i_OUTPUT_CLK=ClockSignal(),
-                                          i_CLOCK_ENABLE=1,
-                                          i_OUTPUT_ENABLE=1,
                                           i_D_OUT_0=pushPeakRegR2, i_D_OUT_1=pushPeakRegF2)
         m.submodules.mPullBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.lbPin,
                                           i_OUTPUT_CLK=ClockSignal(),
-                                          i_CLOCK_ENABLE=1,
-                                          i_OUTPUT_ENABLE=1,
                                           i_D_OUT_0=pullBaseRegR2, i_D_OUT_1=pullBaseRegF2)
         m.submodules.mPullPeak = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.lpPin,
                                           i_OUTPUT_CLK=ClockSignal(),
-                                          i_CLOCK_ENABLE=1,
-                                          i_OUTPUT_ENABLE=1,
                                           i_D_OUT_0=pullPeakRegR2, i_D_OUT_1=pullPeakRegF2)
         return m
 
