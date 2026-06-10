@@ -424,109 +424,15 @@ class Exciter(Elaboratable):
 
         # Phase for the falling edge sample (calculated with 0.5 cycle offset)
         phaseF = Signal(16)
-        offsOut = Signal(32)
-        m.d.comb += phaseF.eq(offsOut[:16])
+        m.d.comb += phaseF.eq(phaseR + (self.tw[32:48] >> 1))
 
-        # Calculate the half cycle offset for falling edge, computing
-        # phaseR + tw/2. This just uses this "expensive" SB_MAC16 as a
-        # fast 16-bit adder.
-        # add_sub_16_bypassed_unsigned
-        m.submodules.offs = Instance("SB_MAC16",
-                                     p_B_SIGNED=0,
-                                     p_A_SIGNED=0,
-                                     p_MODE_8x8=1,
-                                     p_BOTADDSUB_CARRYSELECT=0,
-                                     p_BOTADDSUB_UPPERINPUT=1,
-                                     p_BOTADDSUB_LOWERINPUT=0,
-                                     p_BOTOUTPUT_SELECT=0,
-                                     p_TOPADDSUB_CARRYSELECT=0,
-                                     p_TOPADDSUB_UPPERINPUT=1,
-                                     p_TOPADDSUB_LOWERINPUT=0,
-                                     p_TOPOUTPUT_SELECT=0,
-                                     p_PIPELINE_16x16_MULT_REG2=0,
-                                     p_PIPELINE_16x16_MULT_REG1=0,
-                                     p_BOT_8x8_MULT_REG=0,
-                                     p_TOP_8x8_MULT_REG=0,
-                                     p_D_REG=0,
-                                     p_B_REG=0,
-                                     p_A_REG=0,
-                                     p_C_REG=0,
-                                     i_A=0,
-                                     i_B=phaseR,
-                                     i_D=self.tw[32:48] >> 1,
-                                     i_CLK=ClockSignal(),
-                                     i_CE=1,
-                                     o_O=offsOut,
-                                     o_CO=Signal(),
-                                     o_ACCUMCO=Signal(),
-                                     o_SIGNEXTOUT=Signal())
-
-        # 32-bit DSP multiplier output for rising/falling edge state mapping
+        # 32-bit multiplier output for rising/falling edge state mapping
         mulR = Signal(32)
         mulF = Signal(32)
-
-        # Compute 16-bit multiply mulR = phaseR * 6 + noise.
-        # mult_16x16_bypass_unsigned
-        m.submodules.mr = Instance("SB_MAC16",
-                                   p_B_SIGNED=0,
-                                   p_A_SIGNED=0,
-                                   p_MODE_8x8=0,
-                                   p_BOTADDSUB_CARRYSELECT=0,
-                                   p_BOTADDSUB_UPPERINPUT=1,
-                                   p_BOTADDSUB_LOWERINPUT=2,
-                                   p_BOTOUTPUT_SELECT=0,
-                                   p_TOPADDSUB_CARRYSELECT=2,
-                                   p_TOPADDSUB_UPPERINPUT=1,
-                                   p_TOPADDSUB_LOWERINPUT=2,
-                                   p_TOPOUTPUT_SELECT=0,
-                                   p_PIPELINE_16x16_MULT_REG2=0,
-                                   p_PIPELINE_16x16_MULT_REG1=0,
-                                   p_BOT_8x8_MULT_REG=0,
-                                   p_TOP_8x8_MULT_REG=0,
-                                   p_D_REG=0,
-                                   p_B_REG=0,
-                                   p_A_REG=0,
-                                   p_C_REG=0,
-                                   i_A=phaseR,
-                                   i_B=6,
-                                   i_D=noise,
-                                   i_CLK=ClockSignal(),
-                                   i_CE=1,
-                                   o_O=mulR,
-                                   o_CO=Signal(),
-                                   o_ACCUMCO=Signal(),
-                                   o_SIGNEXTOUT=Signal())
-
-        # Compute mulF = phaseF * 6 + (inverted)noise
-        m.submodules.mf = Instance("SB_MAC16",
-                                   p_B_SIGNED=0,
-                                   p_A_SIGNED=0,
-                                   p_MODE_8x8=0,
-                                   p_BOTADDSUB_CARRYSELECT=0,
-                                   p_BOTADDSUB_UPPERINPUT=1,
-                                   p_BOTADDSUB_LOWERINPUT=2,
-                                   p_BOTOUTPUT_SELECT=0,
-                                   p_TOPADDSUB_CARRYSELECT=2,
-                                   p_TOPADDSUB_UPPERINPUT=1,
-                                   p_TOPADDSUB_LOWERINPUT=2,
-                                   p_TOPOUTPUT_SELECT=0,
-                                   p_PIPELINE_16x16_MULT_REG2=0,
-                                   p_PIPELINE_16x16_MULT_REG1=0,
-                                   p_BOT_8x8_MULT_REG=0,
-                                   p_TOP_8x8_MULT_REG=0,
-                                   p_D_REG=0,
-                                   p_B_REG=0,
-                                   p_A_REG=0,
-                                   p_C_REG=0,
-                                   i_A=phaseF,
-                                   i_B=6,
-                                   i_D=noiseD1inv,      # Aligned, delayed noise
-                                   i_CLK=ClockSignal(),
-                                   i_CE=1,
-                                   o_O=mulF,
-                                   o_CO=Signal(),
-                                   o_ACCUMCO=Signal(),
-                                   o_SIGNEXTOUT=Signal())
+        m.d.comb += [
+            mulR.eq(phaseR * 6 + noise),
+            mulF.eq(phaseF * 6 + noiseD1inv)
+        ]
         
         # Raw 3-bit state values from the multipliers
         stateRRaw = mulR[16:19]
