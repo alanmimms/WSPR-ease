@@ -367,7 +367,7 @@ class LFSR32(Elaboratable):
         
         # State MUST be initialized to a non-zero value, otherwise it
         # will stay stuck at 0 forever.
-        state = Signal(32, reset=0xBEEFCAFE)
+        state = Signal(32, reset=0xBEEFCAFE, reset_less=True)
         
         # Polynomial: x^32 + x^22 + x^2 + x^1 + 1
         # Represented as tap mask (bits 31, 21, 1, 0)
@@ -408,36 +408,134 @@ class Exciter(Elaboratable):
         # our 90MHz clock evenly.
         m.submodules.lfsr = lfsr = LFSR32()
 
-        #noise = Signal(16)
-        #m.d.comb += noise.eq(lfsr.out[:16])
+        # Disable to debug XXX FIXME
+        daNoise = True
 
-        # Delay the noise by 1 clock to align with the 1-clock delay of phaseF
-        #noiseD1inv = Signal(16, reset_less=True)
-        #m.d.sync += noiseD1inv.eq(~noise)
+        if daNoise:
+            noise = Signal(16)
+            m.d.comb += noise.eq(lfsr.out[:16])
 
-        # TEMPORARY TO DEBUG XXX FIXME
-        noise = 0
-        noiseD1inv = 0
+            noiseQ = Signal(16, reset_less=True)
+            noiseQinv = Signal(16, reset_less=True)
+            m.d.sync += [
+                noiseQ.eq(noise),
+                noiseQinv.eq(~noise)
+            ]
+        else:
+            noiseQ = 0
+            noiseQinv = 0
 
         # 16 LSBs of NCO phase for the rising edge sample
         phaseR = nco.phase[32:48]
+ 
+        # ========================================================
+        # STAGE 1: Fabric Pipeline
+        # Break the routing distance by giving the 16-bit phaseF 
+        # addition its own dedicated clock cycle in the fabric.
+        # ========================================================
+        phaseRQ = Signal(16, reset_less=True)
+        phaseFQ = Signal(16, reset_less=True)
+        noiseRQ = Signal(16, reset_less=True)
+        noiseFQ = Signal(16, reset_less=True)
 
-        # Phase for the falling edge sample (calculated with 0.5 cycle offset)
-        phaseF = Signal(16)
-        m.d.comb += phaseF.eq(phaseR + (self.tw[32:48] >> 1))
+        m.d.sync += [
+            phaseRQ.eq(phaseR),
+            phaseFQ.eq(phaseR + (self.tw[32:48] >> 1)),
 
-        # 32-bit multiplier output for rising/falling edge state mapping
+            noiseRQ.eq(noiseQ >> 5),
+            noiseFQ.eq(noiseQinv >> 5)
+        ]
+
+        # 32-bit multiplier outputs
         mulR = Signal(32)
         mulF = Signal(32)
-        m.d.comb += [
-            mulR.eq(phaseR * 6 + noise),
-            mulF.eq(phaseF * 6 + noiseD1inv)
-        ]
-        
-        # Raw 3-bit state values from the multipliers
+
+        # ========================================================
+        # STAGE 2 & 3: DSP Multiplication and Addition
+        # Math: Output = (A * 6) + D (Noise)
+        # ========================================================
+        m.submodules.macR = Instance("SB_MAC16",
+            # 1. Math Configuration (Ensure Unsigned)
+            p_A_SIGNED=0,
+            p_B_SIGNED=0,
+            
+            # 2. Bottom Adder: Add Noise (D) to lower 16 bits
+            p_BOTADDSUB_LOWERINPUT=3,     # 3 = Route i_D (Noise)
+            p_BOTADDSUB_UPPERINPUT=0,     # Route Multiplier lower 16-bits
+            
+            # 3. Top Adder: Add 0 (C) to upper 16 bits
+            p_TOPADDSUB_LOWERINPUT=2,     # 2 = Route i_C (0)
+            p_TOPADDSUB_UPPERINPUT=0,     # Route Multiplier upper 16-bits
+            p_TOPADDSUB_CARRYSELECT=2,    # CRITICAL: Ripple carry from Bottom to Top
+
+            # 4. Pipelining Configuration
+            p_A_REG=1,                    # Register phase input
+            p_B_REG=0,                    # Constant 6 doesn't need an input reg
+            p_C_REG=1,                    # Register the 0 pad
+            p_D_REG=1,                    # Register the noise input
+            p_PIPELINE_16x16_MULT_REG1=1, # Mid-stage multiplier reg
+            p_TOPOUTPUT_SELECT=1,         # Registered Adder Output
+            p_BOTOUTPUT_SELECT=1,         # Registered Adder Output
+
+            # 5. Data Ports
+            i_A=phaseRQ,
+            i_B=6,
+            i_C=0,                        # 16-bit 0 for the Top Adder
+            i_D=noiseRQ,                  # 16-bit Noise for the Bottom Adder
+            
+            # 6. Control Ports
+            i_CLK=ClockSignal(),
+            i_CE=1,
+            
+            # CRITICAL: Tie off all resets to prevent global routing drag
+            i_IRSTTOP=0, i_IRSTBOT=0, 
+            i_ORSTTOP=0, i_ORSTBOT=0,
+            
+            # Tie off unused holds
+            i_AHOLD=0, i_BHOLD=0, i_CHOLD=0, i_DHOLD=0, 
+            i_OHOLDTOP=0, i_OHOLDBOT=0,
+            
+            o_O=mulR)
+
+        m.submodules.macF = Instance("SB_MAC16",
+            # Math Configuration
+            p_A_SIGNED=0,
+            p_B_SIGNED=0,
+            p_BOTADDSUB_LOWERINPUT=3,
+            p_BOTADDSUB_UPPERINPUT=0,
+            p_TOPADDSUB_LOWERINPUT=2,
+            p_TOPADDSUB_UPPERINPUT=0,
+            p_TOPADDSUB_CARRYSELECT=2,
+
+            # Pipelining Configuration
+            p_A_REG=1,
+            p_B_REG=0,
+            p_C_REG=1,
+            p_D_REG=1,
+            p_PIPELINE_16x16_MULT_REG1=1,
+            p_TOPOUTPUT_SELECT=1,
+            p_BOTOUTPUT_SELECT=1,
+
+            # Data Ports
+            i_A=phaseFQ,
+            i_B=6,
+            i_C=0,
+            i_D=noiseFQ,
+            
+            # Control Ports
+            i_CLK=ClockSignal(),
+            i_CE=1,
+            i_IRSTTOP=0, i_IRSTBOT=0, 
+            i_ORSTTOP=0, i_ORSTBOT=0,
+            i_AHOLD=0, i_BHOLD=0, i_CHOLD=0, i_DHOLD=0, 
+            i_OHOLDTOP=0, i_OHOLDBOT=0,
+            
+            o_O=mulF)
+
+        # The raw state values are now derived from the pipelined mulR/mulF
         stateRRaw = mulR[16:19]
         stateFRaw = mulF[16:19]
-
+            
         # Aligned 3-bit state values
         stateRReg = Signal(3, reset_less=True)
         stateFReg = Signal(3, reset_less=True)
@@ -549,7 +647,7 @@ class Exciter(Elaboratable):
             pullPeakRegF2.eq(pullPeakRegF)
         ]
 
-        pinType = 24            # PIN_OUTPUT_DDR
+        pinType = 24            # PIN_OUTPUT_DDR_ENABLE
         m.submodules.mPushBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.pbPin,
