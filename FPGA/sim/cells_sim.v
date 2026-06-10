@@ -90,10 +90,21 @@ module SB_IO (
 	always @* outclk_delayed_2 <= outclk_delayed_1;
 
 	always @* begin
-		if (PIN_TYPE[3])
-			dout = PIN_TYPE[2] ? !dout_q_0 : D_OUT_0;
-		else
-			dout = (outclk_delayed_2 ^ NEG_TRIGGER) || PIN_TYPE[2] ? dout_q_0 : dout_q_1;
+		case (PIN_TYPE[5:2])
+			// Simple direct output (combinatorial)
+			4'b0011: dout = D_OUT_0;
+			
+			// Simple registered output (clocked on posedge)
+			4'b0010: dout = dout_q_0;
+			
+			// DDR Output (clocked on both edges, always enabled)
+			4'b0100: dout = (outclk_delayed_2 ^ NEG_TRIGGER) ? dout_q_0 : dout_q_1;
+			
+			// DDR Output with Tristate Enable (enable check is handled at PACKAGE_PIN level)
+			4'b1000: dout = (outclk_delayed_2 ^ NEG_TRIGGER) ? dout_q_0 : dout_q_1;
+			
+			default: dout = D_OUT_0;
+		endcase
 	end
 
 	assign D_IN_0 = din_0, D_IN_1 = din_1;

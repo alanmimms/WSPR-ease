@@ -34,7 +34,7 @@ YOSYS_DATDIR := $(shell yosys-config --datdir)
 # Construct the path to the iCE40 simulation models
 ICE40_SIM_MODELS := $(SIM_DIR)/cells_sim.v
 
-AMARANTH_FILES := gateware.py build.py regs.py
+AMARANTH_FILES := gateware.py build.py regs.py buildNumber.txt
 
 PROJECT=wspr_ease
 TOP=Top
@@ -82,7 +82,8 @@ hw $(FPGATARGET):	$(RTL_SOURCES) $(PCF) timing.py
 	@echo "--- FPGA Build Complete ---"
 
 # Build the Verilator simulation
-sim $(SIMTARGET): $(RTL_SIM_SOURCES) $(CPP_SOURCES)
+sim $(SIMTARGET): $(RTL_SIM_SOURCES) $(CPP_SOURCES) $(HAL_DIR)/regs.hpp $(HAL_DIR)/buildNumber.hpp
+	@touch $(CPP_SOURCES)
 	@echo "Building Verilator simulation..."
 	@mkdir -p $(GENSIMDIR) build
 	$(VERILATOR) $(VERILATOR_FLAGS) \
@@ -94,7 +95,7 @@ sim $(SIMTARGET): $(RTL_SIM_SOURCES) $(CPP_SOURCES)
 	@echo "Build complete: $@"
 
 # Run the simulation
-run: $(SIMTARGET)
+run: sim $(SIMTARGET)
 	@echo "Running simulation..."
 	@./$(SIMTARGET)
 	@echo "Simulation complete. Waveform saved to waveform.vcd"
