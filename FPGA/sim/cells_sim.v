@@ -64,7 +64,9 @@ module SB_IO (
 		always @(posedge INPUT_CLK)  if (clken_pulled)    din_q_0         <= PACKAGE_PIN;
 		always @(negedge INPUT_CLK)  if (clken_pulled_ri) din_q_1         <= PACKAGE_PIN;
 		always @(posedge OUTPUT_CLK)                      clken_pulled_ro <= clken_pulled;
-		always @(posedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= D_OUT_0;
+		reg doutQ0Helper;
+		always @(negedge OUTPUT_CLK) if (clken_pulled)    doutQ0Helper    <= D_OUT_0;
+		always @(posedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= doutQ0Helper;
 		always @(negedge OUTPUT_CLK) if (clken_pulled_ro) dout_q_1        <= D_OUT_1;
 		always @(posedge OUTPUT_CLK) if (clken_pulled)    outena_q        <= OUTPUT_ENABLE;
 	end else begin
@@ -73,7 +75,9 @@ module SB_IO (
 		always @(posedge INPUT_CLK)  if (clken_pulled_ri) din_q_1         <= PACKAGE_PIN;
 		always @(negedge OUTPUT_CLK)                      clken_pulled_ro <= clken_pulled;
 		always @(negedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= D_OUT_0;
-		always @(posedge OUTPUT_CLK) if (clken_pulled_ro) dout_q_1        <= D_OUT_1;
+		reg doutQ1Helper;
+		always @(negedge OUTPUT_CLK) if (clken_pulled_ro) doutQ1Helper    <= D_OUT_1;
+		always @(posedge OUTPUT_CLK) if (clken_pulled_ro) dout_q_1        <= doutQ1Helper;
 		always @(negedge OUTPUT_CLK) if (clken_pulled)    outena_q        <= OUTPUT_ENABLE;
 	end endgenerate
 
@@ -92,16 +96,16 @@ module SB_IO (
 	always @* begin
 		case (PIN_TYPE[5:2])
 			// Simple direct output (combinatorial)
-			4'b0011: dout = D_OUT_0;
+			4'b0100: dout = D_OUT_0;
 			
 			// Simple registered output (clocked on posedge)
-			4'b0010: dout = dout_q_0;
+			4'b0101: dout = dout_q_0;
 			
 			// DDR Output (clocked on both edges, always enabled)
-			4'b0100: dout = (outclk_delayed_2 ^ NEG_TRIGGER) ? dout_q_0 : dout_q_1;
+			4'b0110: dout = (outclk_delayed_2 ^ NEG_TRIGGER) ? dout_q_0 : dout_q_1;
 			
 			// DDR Output with Tristate Enable (enable check is handled at PACKAGE_PIN level)
-			4'b1000: dout = (outclk_delayed_2 ^ NEG_TRIGGER) ? dout_q_0 : dout_q_1;
+			4'b1010: dout = (outclk_delayed_2 ^ NEG_TRIGGER) ? dout_q_0 : dout_q_1;
 			
 			default: dout = D_OUT_0;
 		endcase

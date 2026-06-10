@@ -549,7 +549,7 @@ class Exciter(Elaboratable):
             pullPeakRegF2.eq(pullPeakRegF)
         ]
 
-        pinType = 16            # PIN_OUTPUT_DDR
+        pinType = 24            # PIN_OUTPUT_DDR
         m.submodules.mPushBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.pbPin,
