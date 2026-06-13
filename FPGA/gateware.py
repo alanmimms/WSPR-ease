@@ -87,28 +87,35 @@ class PipelinedNCO(Elaboratable):
                                                     p_B_SIGNED=0,
                                                     p_A_SIGNED=0,
                                                     p_MODE_8x8=1,
-                                                    p_BOTADDSUB_CARRYSELECT=3,
-                                                    p_BOTADDSUB_UPPERINPUT=1,
-                                                    p_BOTADDSUB_LOWERINPUT=0,
-                                                    p_BOTOUTPUT_SELECT=1,
-                                                    p_TOPADDSUB_CARRYSELECT=2,
+
+                                                    p_BOTADDSUB_CARRYSELECT=0b11,
+                                                    p_BOTADDSUB_UPPERINPUT=0,
+                                                    p_BOTADDSUB_LOWERINPUT=0b00,
+                                                    p_BOTOUTPUT_SELECT=0b01,
+
+                                                    p_TOPADDSUB_CARRYSELECT=0b10,
                                                     p_TOPADDSUB_UPPERINPUT=0,
                                                     p_TOPADDSUB_LOWERINPUT=0,
-                                                    p_TOPOUTPUT_SELECT=1,
+                                                    p_TOPOUTPUT_SELECT=0b01,
+
                                                     p_PIPELINE_16x16_MULT_REG2=0,
                                                     p_PIPELINE_16x16_MULT_REG1=0,
                                                     p_BOT_8x8_MULT_REG=0,
                                                     p_TOP_8x8_MULT_REG=0,
+
                                                     p_D_REG=0,
                                                     p_B_REG=0,
                                                     p_A_REG=0,
                                                     p_C_REG=0,
+
                                                     i_A=twDelayed[i],
                                                     i_B=0xFFFF,
                                                     i_D=0,
                                                     i_CI=carryIn,
+
                                                     o_O=accOut,
                                                     o_CO=cOut,
+
                                                     i_CLK=ClockSignal(),
                                                     i_CE=1,
                                                     o_ACCUMCO=Signal(),
@@ -158,27 +165,33 @@ class FreqCounter(Elaboratable):
                                            p_B_SIGNED=0,
                                            p_A_SIGNED=0,
                                            p_MODE_8x8=1,
-                                           p_BOTADDSUB_CARRYSELECT=3,
+
+                                           p_BOTADDSUB_CARRYSELECT=0b00,
                                            p_BOTADDSUB_UPPERINPUT=0,
-                                           p_BOTADDSUB_LOWERINPUT=0,
-                                           p_BOTOUTPUT_SELECT=1,
-                                           p_TOPADDSUB_CARRYSELECT=2,
+                                           p_BOTADDSUB_LOWERINPUT=0b00,
+                                           p_BOTOUTPUT_SELECT=0b01,
+
+                                           p_TOPADDSUB_CARRYSELECT=0b10,
                                            p_TOPADDSUB_UPPERINPUT=0,
-                                           p_TOPADDSUB_LOWERINPUT=0,
-                                           p_TOPOUTPUT_SELECT=1,
+                                           p_TOPADDSUB_LOWERINPUT=0b00,
+                                           p_TOPOUTPUT_SELECT=0b01,
+
                                            p_PIPELINE_16x16_MULT_REG2=0,
                                            p_PIPELINE_16x16_MULT_REG1=0,
                                            p_BOT_8x8_MULT_REG=0,
                                            p_TOP_8x8_MULT_REG=0,
+
                                            p_D_REG=0,
                                            p_B_REG=0,
                                            p_A_REG=0,
                                            p_C_REG=0,
+
                                            i_B=0,
                                            i_CI=1,
                                            i_A=0,
                                            i_CLK=ClockSignal(),
                                            i_CE=1,
+
                                            o_O=countOut,
                                            o_CO=Signal(),
                                            o_ACCUMCO=Signal(),
@@ -440,7 +453,7 @@ class Exciter(Elaboratable):
 
         m.d.sync += [
             phaseRQ.eq(phaseR),
-            phaseFQ.eq(phaseR + (self.tw[32:48] >> 1)),
+            phaseFQ.eq(phaseR + (self.tw[32:48] >> 1)), # Divide by two for 0.5 cycle
 
             noiseRQ.eq(noiseQ >> 5),
             noiseFQ.eq(noiseQinv >> 5)
@@ -452,38 +465,39 @@ class Exciter(Elaboratable):
 
         # ========================================================
         # STAGE 2 & 3: DSP Multiplication and Addition
-        # Math: Output = (A * 6) + D (Noise)
+        # Math: Output = A=phase{R,F}Q * 6 + D=noise{R,F}Q
         # ========================================================
+        # mac_32_all_pipelined_unsigned
         m.submodules.macR = Instance("SB_MAC16",
-            # 1. Math Configuration (Ensure Unsigned)
             p_A_SIGNED=0,
             p_B_SIGNED=0,
+            p_MODE_8x8=0,
             
-            # 2. Bottom Adder: Add Noise (D) to lower 16 bits
-            p_BOTADDSUB_LOWERINPUT=3,     # 3 = Route i_D (Noise)
-            p_BOTADDSUB_UPPERINPUT=0,     # Route Multiplier lower 16-bits
+            p_BOTADDSUB_CARRYSELECT=0b10,
+            p_BOTADDSUB_UPPERINPUT=0,
+            p_BOTADDSUB_LOWERINPUT=0b10,
+            p_BOTOUTPUT_SELECT=0b01,
             
-            # 3. Top Adder: Add 0 (C) to upper 16 bits
-            p_TOPADDSUB_LOWERINPUT=2,     # 2 = Route i_C (0)
-            p_TOPADDSUB_UPPERINPUT=0,     # Route Multiplier upper 16-bits
-            p_TOPADDSUB_CARRYSELECT=2,    # CRITICAL: Ripple carry from Bottom to Top
+            p_TOPADDSUB_CARRYSELECT=0b10,
+            p_TOPADDSUB_UPPERINPUT=0,
+            p_TOPADDSUB_LOWERINPUT=0b10,
+            p_TOPOUTPUT_SELECT=0b01,
 
-            # 4. Pipelining Configuration
+            p_PIPELINE_16x16_MULT_REG2=1,
+            p_PIPELINE_16x16_MULT_REG1=1,
+            p_BOT_8x8_MULT_REG=1,
+            p_TOP_8x8_MULT_REG=1,
+
             p_A_REG=1,                    # Register phase input
             p_B_REG=0,                    # Constant 6 doesn't need an input reg
             p_C_REG=1,                    # Register the 0 pad
             p_D_REG=1,                    # Register the noise input
-            p_PIPELINE_16x16_MULT_REG1=1, # Mid-stage multiplier reg
-            p_TOPOUTPUT_SELECT=1,         # Registered Adder Output
-            p_BOTOUTPUT_SELECT=1,         # Registered Adder Output
 
-            # 5. Data Ports
             i_A=phaseRQ,
-            i_B=6,
-            i_C=0,                        # 16-bit 0 for the Top Adder
+            i_B=Const(6, 16),
+            i_C=Const(0, 16),
             i_D=noiseRQ,                  # 16-bit Noise for the Bottom Adder
             
-            # 6. Control Ports
             i_CLK=ClockSignal(),
             i_CE=1,
             
@@ -497,29 +511,36 @@ class Exciter(Elaboratable):
             
             o_O=mulR)
 
+        # mac_32_all_pipelined_unsigned
         m.submodules.macF = Instance("SB_MAC16",
-            # Math Configuration
             p_A_SIGNED=0,
             p_B_SIGNED=0,
-            p_BOTADDSUB_LOWERINPUT=3,
+            p_MODE_8x8=0,
+            
+            p_BOTADDSUB_CARRYSELECT=0b10,
             p_BOTADDSUB_UPPERINPUT=0,
-            p_TOPADDSUB_LOWERINPUT=2,
+            p_BOTADDSUB_LOWERINPUT=0b10,
+            p_BOTOUTPUT_SELECT=0b01,
+            
+            p_TOPADDSUB_CARRYSELECT=0b10,
             p_TOPADDSUB_UPPERINPUT=0,
-            p_TOPADDSUB_CARRYSELECT=2,
+            p_TOPADDSUB_LOWERINPUT=0b10,
+            p_TOPOUTPUT_SELECT=0b01,
 
-            # Pipelining Configuration
-            p_A_REG=1,
-            p_B_REG=0,
-            p_C_REG=1,
-            p_D_REG=1,
+            p_PIPELINE_16x16_MULT_REG2=1,
             p_PIPELINE_16x16_MULT_REG1=1,
-            p_TOPOUTPUT_SELECT=1,
-            p_BOTOUTPUT_SELECT=1,
+            p_BOT_8x8_MULT_REG=1,
+            p_TOP_8x8_MULT_REG=1,
+
+            p_A_REG=1,                    # Register phase input
+            p_B_REG=0,                    # Constant 6 doesn't need an input reg
+            p_C_REG=1,                    # Register the 0 pad
+            p_D_REG=1,                    # Register the noise input
 
             # Data Ports
             i_A=phaseFQ,
-            i_B=6,
-            i_C=0,
+            i_B=Const(6, 16),
+            i_C=Const(0, 16),
             i_D=noiseFQ,
             
             # Control Ports
@@ -647,7 +668,8 @@ class Exciter(Elaboratable):
             pullPeakRegF2.eq(pullPeakRegF)
         ]
 
-        pinType = 24            # PIN_OUTPUT_DDR_ENABLE
+        #           543210
+        pinType = 0b010000
         m.submodules.mPushBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.pbPin,

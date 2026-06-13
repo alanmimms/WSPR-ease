@@ -270,7 +270,7 @@ namespace wspr {
     spiWriteReg(WSPRRegs::aWSPRControl, ctrl.u);
 
     // Write 48-bit tuning word across two registers
-    int ret = spiWriteReg(WSPRRegs::aWSPRTuningLow, (uint32_t)(tuningWord & 0xFFFFFFFF));
+    int ret = spiWriteReg(WSPRRegs::aWSPRTuningLow, (uint32_t)tuningWord);
     if (ret < 0) return ret;
     return spiWriteReg(WSPRRegs::aWSPRTuningHigh, (uint32_t)(tuningWord >> 32));
   }

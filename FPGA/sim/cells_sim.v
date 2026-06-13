@@ -91,15 +91,15 @@ module SB_IO (
 
         wire mux1, mux2, mux3;
         assign mux1 = PIN_TYPE[2] ? !dout_q_0 : D_OUT_0;
-        assign mux2 = !(OUTPUT_CLK | PIN_TYPE[2]) ? dout_q_0 : dout_q_1;
+        assign mux2 = !((OUTPUT_CLK & CLOCK_ENABLE) | PIN_TYPE[2]) ? dout_q_1 : dout_q_0;
         assign mux3 = PIN_TYPE[3] ? mux1 : mux2;
 
 	assign D_IN_0 = din_0, D_IN_1 = din_1;
 
 	generate
 	  case (PIN_TYPE[5:4])
-	    2'b00: assign PACKAGE_PIN = mux3;
-	    2'b01: assign PACKAGE_PIN = 1'bz;
+	    2'b00: assign PACKAGE_PIN = 1'bz;
+	    2'b01: assign PACKAGE_PIN = mux3;
 	    2'b10: assign PACKAGE_PIN = OUTPUT_ENABLE ? mux3 : 1'bz;
 	    2'b11: assign PACKAGE_PIN = !outena_q ? mux3 : 1'bz;
 	  endcase
