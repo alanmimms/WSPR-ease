@@ -162,11 +162,11 @@ class FreqCounter(Elaboratable):
         m.submodules.freqCounter = Instance("SB_MAC16",
                                             p_B_SIGNED=0,
                                             p_A_SIGNED=0,
-                                            p_MODE_8x8=0,
+                                            p_MODE_8x8=0, # CONTRARY to iCE40 Tech Lib doc.
 
                                             p_BOTADDSUB_CARRYSELECT=0b00,
                                             p_BOTADDSUB_UPPERINPUT=0,
-                                            p_BOTADDSUB_LOWERINPUT=0b10,
+                                            p_BOTADDSUB_LOWERINPUT=0b00,
                                             p_BOTOUTPUT_SELECT=0b01,
 
                                             p_TOPADDSUB_CARRYSELECT=0b10,
@@ -179,14 +179,16 @@ class FreqCounter(Elaboratable):
                                             p_BOT_8x8_MULT_REG=0,
                                             p_TOP_8x8_MULT_REG=0,
 
-                                            p_D_REG=0,
-                                            p_B_REG=0,
                                             p_A_REG=0,
+                                            p_B_REG=0,
                                             p_C_REG=0,
+                                            p_D_REG=0,
 
-                                            i_B=0,
-                                            i_CI=1,
                                             i_A=0,
+                                            i_B=0,
+                                            i_C=0,
+                                            i_D=0,
+                                            i_CI=1,
                                             i_CLK=ClockSignal(),
                                             i_CE=1,
 
@@ -466,7 +468,7 @@ class Exciter(Elaboratable):
         # STAGE 2 & 3: DSP Multiplication and Addition
         # Math: Output = A=phase{R,F}Q * 6 + D=noise{R,F}Q
         # ========================================================
-        # mac_32_all_pipelined_unsigned
+        # mult_add_16_all_pipelined_unsigned
         m.submodules.macR = Instance("SB_MAC16",
             p_A_SIGNED=0,       # C23
             p_B_SIGNED=0,       # C24
@@ -474,12 +476,12 @@ class Exciter(Elaboratable):
             
             p_BOTADDSUB_CARRYSELECT=0b00, # C21,C20
             p_BOTADDSUB_UPPERINPUT=1,    # C19
-            p_BOTADDSUB_LOWERINPUT=0b10, # C18,C17
+            p_BOTADDSUB_LOWERINPUT=0b01, # C18,C17
             p_BOTOUTPUT_SELECT=0b01, # C16,C15
             
-            p_TOPADDSUB_CARRYSELECT=0b10, # C14,C13
+            p_TOPADDSUB_CARRYSELECT=0b00, # C14,C13
             p_TOPADDSUB_UPPERINPUT=1,    # C12
-            p_TOPADDSUB_LOWERINPUT=0b10, # C11,C10
+            p_TOPADDSUB_LOWERINPUT=0b01, # C11,C10
             p_TOPOUTPUT_SELECT=0b01, # C9,C8
 
             p_PIPELINE_16x16_MULT_REG2=1, # C7
@@ -488,8 +490,8 @@ class Exciter(Elaboratable):
             p_TOP_8x8_MULT_REG=1, # C4
 
             p_A_REG=1,          # C1
-            p_B_REG=1,          # C2
-            p_C_REG=1,          # C0
+            p_B_REG=0,          # C2
+            p_C_REG=0,          # C0
             p_D_REG=1,          # C3
 
             i_A=phaseRQ,
@@ -500,7 +502,7 @@ class Exciter(Elaboratable):
             i_CLK=ClockSignal(),
             i_CE=1,
 
-            i_OLOADTOP=1,
+            i_OLOADTOP=1,               # NOT an internal feedback multiply+add
             i_OLOADBOT=1,
             
             # CRITICAL: Tie off all resets to prevent global routing drag
