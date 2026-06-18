@@ -57,43 +57,41 @@ class PipelinedNCO(Elaboratable):
     def elaborate(self, platform):
         m = Module()
 
-        # Tuning word split into 16-bit segments for the DSP pipeline
-        twChunks = [self.tw[i*16 : (i+1)*16] for i in range(3)]
+        # Split the tuning word into 16-bit segments for the DSP pipeline.
+        twQ = []
 
-        twDelayed = []
-
-        for i, chunk in enumerate(twChunks):
-            curr = chunk
+        for i in range(3):
+            curr = self.tw[i*16 : (i+1)*16]
 
             for j in range(i):
                 reg = Signal(16, reset_less=True)
                 m.d.sync += reg.eq(curr)
                 curr = reg
 
-            twDelayed.append(curr)
+            twQ.append(curr)
         
         # Accumulator segments output from the DSP blocks
-        accChunks = []
+        acc = [None] * 3
 
         carryIn = 0
 
         for i in range(3):
-            accOut = Signal(32)
+            acc[i] = Signal(32)
             cOut = Signal()
 
             # 48-bit (three stage) accumulator with carry propagated between 16-bit chunks.
-            # acc_16_bypassed_unsigned
+            # acc_16_all_pipelined_unsigned
             m.submodules[f"NCOAccum{i}"] = Instance("SB_MAC16",
                                                     p_B_SIGNED=0,
                                                     p_A_SIGNED=0,
-                                                    p_MODE_8x8=1,
+                                                    p_MODE_8x8=0, # CONTRARY to iCE40 Tech Lib doc.
 
-                                                    p_BOTADDSUB_CARRYSELECT=0b11,
+                                                    p_BOTADDSUB_CARRYSELECT=0b00,
                                                     p_BOTADDSUB_UPPERINPUT=0,
                                                     p_BOTADDSUB_LOWERINPUT=0b00,
                                                     p_BOTOUTPUT_SELECT=0b01,
 
-                                                    p_TOPADDSUB_CARRYSELECT=0b10,
+                                                    p_TOPADDSUB_CARRYSELECT=0b00,
                                                     p_TOPADDSUB_UPPERINPUT=0,
                                                     p_TOPADDSUB_LOWERINPUT=0,
                                                     p_TOPOUTPUT_SELECT=0b01,
@@ -103,25 +101,24 @@ class PipelinedNCO(Elaboratable):
                                                     p_BOT_8x8_MULT_REG=0,
                                                     p_TOP_8x8_MULT_REG=0,
 
-                                                    p_D_REG=0,
+                                                    p_A_REG=1,
                                                     p_B_REG=0,
-                                                    p_A_REG=0,
                                                     p_C_REG=0,
+                                                    p_D_REG=0,
 
-                                                    i_A=twDelayed[i],
-                                                    i_B=0xFFFF,
+                                                    i_A=twQ[i], # Note this is the adder's UPPER 16-bits
+                                                    i_B=0,
+                                                    i_C=0,
                                                     i_D=0,
                                                     i_CI=carryIn,
 
-                                                    o_O=accOut,
+                                                    o_O=acc[i],
                                                     o_CO=cOut,
 
                                                     i_CLK=ClockSignal(),
                                                     i_CE=1,
                                                     o_ACCUMCO=Signal(),
                                                     o_SIGNEXTOUT=Signal())
-
-            accChunks.append(accOut[16:32])
 
             carryIn = Signal()  # Next iteration's carry in
             m.d.sync += carryIn.eq(cOut)
@@ -130,7 +127,7 @@ class PipelinedNCO(Elaboratable):
 
         for i in range(3):
             delay = 2 - i
-            curr = accChunks[i]
+            curr = acc[i][16:32]        # Our SB_MAC16 accumulates in UPPER 16 bits
 
             for j in range(delay):
                 reg = Signal(16, reset_less=True)
@@ -161,41 +158,41 @@ class FreqCounter(Elaboratable):
 
         # FPGACLK frequency counter gated by 1pps signal from GNSS.
         # This is acc_32_bypassed_unsigned with carryIn tied to 1.
-        m.submodules.counterDSP = Instance("SB_MAC16",
-                                           p_B_SIGNED=0,
-                                           p_A_SIGNED=0,
-                                           p_MODE_8x8=1,
+        m.submodules.freqCounter = Instance("SB_MAC16",
+                                            p_B_SIGNED=0,
+                                            p_A_SIGNED=0,
+                                            p_MODE_8x8=1,
 
                                            p_BOTADDSUB_CARRYSELECT=0b00,
-                                           p_BOTADDSUB_UPPERINPUT=0,
-                                           p_BOTADDSUB_LOWERINPUT=0b00,
-                                           p_BOTOUTPUT_SELECT=0b01,
+                                            p_BOTADDSUB_UPPERINPUT=0,
+                                            p_BOTADDSUB_LOWERINPUT=0b00,
+                                            p_BOTOUTPUT_SELECT=0b01,
 
                                            p_TOPADDSUB_CARRYSELECT=0b10,
-                                           p_TOPADDSUB_UPPERINPUT=0,
-                                           p_TOPADDSUB_LOWERINPUT=0b00,
-                                           p_TOPOUTPUT_SELECT=0b01,
+                                            p_TOPADDSUB_UPPERINPUT=0,
+                                            p_TOPADDSUB_LOWERINPUT=0b00,
+                                            p_TOPOUTPUT_SELECT=0b01,
 
                                            p_PIPELINE_16x16_MULT_REG2=0,
-                                           p_PIPELINE_16x16_MULT_REG1=0,
-                                           p_BOT_8x8_MULT_REG=0,
-                                           p_TOP_8x8_MULT_REG=0,
+                                            p_PIPELINE_16x16_MULT_REG1=0,
+                                            p_BOT_8x8_MULT_REG=0,
+                                            p_TOP_8x8_MULT_REG=0,
 
                                            p_D_REG=0,
-                                           p_B_REG=0,
-                                           p_A_REG=0,
-                                           p_C_REG=0,
+                                            p_B_REG=0,
+                                            p_A_REG=0,
+                                            p_C_REG=0,
 
                                            i_B=0,
-                                           i_CI=1,
-                                           i_A=0,
-                                           i_CLK=ClockSignal(),
-                                           i_CE=1,
+                                            i_CI=1,
+                                            i_A=0,
+                                            i_CLK=ClockSignal(),
+                                            i_CE=1,
 
                                            o_O=countOut,
-                                           o_CO=Signal(),
-                                           o_ACCUMCO=Signal(),
-                                           o_SIGNEXTOUT=Signal())
+                                            o_CO=Signal(),
+                                            o_ACCUMCO=Signal(),
+                                            o_SIGNEXTOUT=Signal())
 
         syncPPS = Signal()
         m.submodules.ppsSync = cdc.FFSynchronizer(self.samplePPS, syncPPS)
@@ -422,7 +419,7 @@ class Exciter(Elaboratable):
         m.submodules.lfsr = lfsr = LFSR32()
 
         # Disable to debug XXX FIXME
-        daNoise = True
+        daNoise = False
 
         if daNoise:
             noise = Signal(16)
@@ -438,9 +435,10 @@ class Exciter(Elaboratable):
             noiseQ = 0
             noiseQinv = 0
 
-        # 16 LSBs of NCO phase for the rising edge sample
+        # 16 LSBs of NCO phase for the rising edge sample.
+        # Falling edge is computed below, relative to this.
         phaseR = nco.phase[32:48]
- 
+
         # ========================================================
         # STAGE 1: Fabric Pipeline
         # Break the routing distance by giving the 16-bit phaseF 
@@ -453,7 +451,7 @@ class Exciter(Elaboratable):
 
         m.d.sync += [
             phaseRQ.eq(phaseR),
-            phaseFQ.eq(phaseR + (self.tw[32:48] >> 1)), # Divide by two for 0.5 cycle
+            phaseFQ.eq(phaseR + (self.tw[32:48] >> 1)),        # Divide by two for 0.5 cycle
 
             noiseRQ.eq(noiseQ >> 5),
             noiseFQ.eq(noiseQinv >> 5)
@@ -469,29 +467,29 @@ class Exciter(Elaboratable):
         # ========================================================
         # mac_32_all_pipelined_unsigned
         m.submodules.macR = Instance("SB_MAC16",
-            p_A_SIGNED=0,
-            p_B_SIGNED=0,
-            p_MODE_8x8=0,
+            p_A_SIGNED=0,       # C23
+            p_B_SIGNED=0,       # C24
+            p_MODE_8x8=0,       # C22
             
-            p_BOTADDSUB_CARRYSELECT=0b10,
-            p_BOTADDSUB_UPPERINPUT=0,
-            p_BOTADDSUB_LOWERINPUT=0b10,
-            p_BOTOUTPUT_SELECT=0b01,
+            p_BOTADDSUB_CARRYSELECT=0b00, # C21,C20
+            p_BOTADDSUB_UPPERINPUT=1,    # C19
+            p_BOTADDSUB_LOWERINPUT=0b10, # C18,C17
+            p_BOTOUTPUT_SELECT=0b01, # C16,C15
             
-            p_TOPADDSUB_CARRYSELECT=0b10,
-            p_TOPADDSUB_UPPERINPUT=0,
-            p_TOPADDSUB_LOWERINPUT=0b10,
-            p_TOPOUTPUT_SELECT=0b01,
+            p_TOPADDSUB_CARRYSELECT=0b10, # C14,C13
+            p_TOPADDSUB_UPPERINPUT=1,    # C12
+            p_TOPADDSUB_LOWERINPUT=0b10, # C11,C10
+            p_TOPOUTPUT_SELECT=0b01, # C9,C8
 
-            p_PIPELINE_16x16_MULT_REG2=1,
-            p_PIPELINE_16x16_MULT_REG1=1,
-            p_BOT_8x8_MULT_REG=1,
-            p_TOP_8x8_MULT_REG=1,
+            p_PIPELINE_16x16_MULT_REG2=1, # C7
+            p_PIPELINE_16x16_MULT_REG1=1, # C6
+            p_BOT_8x8_MULT_REG=1, # C5
+            p_TOP_8x8_MULT_REG=1, # C4
 
-            p_A_REG=1,                    # Register phase input
-            p_B_REG=0,                    # Constant 6 doesn't need an input reg
-            p_C_REG=1,                    # Register the 0 pad
-            p_D_REG=1,                    # Register the noise input
+            p_A_REG=1,          # C1
+            p_B_REG=1,          # C2
+            p_C_REG=1,          # C0
+            p_D_REG=1,          # C3
 
             i_A=phaseRQ,
             i_B=Const(6, 16),
@@ -500,6 +498,9 @@ class Exciter(Elaboratable):
             
             i_CLK=ClockSignal(),
             i_CE=1,
+
+            i_OLOADTOP=1,
+            i_OLOADBOT=1,
             
             # CRITICAL: Tie off all resets to prevent global routing drag
             i_IRSTTOP=0, i_IRSTBOT=0, 
@@ -517,7 +518,7 @@ class Exciter(Elaboratable):
             p_B_SIGNED=0,
             p_MODE_8x8=0,
             
-            p_BOTADDSUB_CARRYSELECT=0b10,
+            p_BOTADDSUB_CARRYSELECT=0b00,
             p_BOTADDSUB_UPPERINPUT=0,
             p_BOTADDSUB_LOWERINPUT=0b10,
             p_BOTOUTPUT_SELECT=0b01,
@@ -532,16 +533,19 @@ class Exciter(Elaboratable):
             p_BOT_8x8_MULT_REG=1,
             p_TOP_8x8_MULT_REG=1,
 
-            p_A_REG=1,                    # Register phase input
-            p_B_REG=0,                    # Constant 6 doesn't need an input reg
-            p_C_REG=1,                    # Register the 0 pad
-            p_D_REG=1,                    # Register the noise input
+            p_A_REG=1,
+            p_B_REG=6,
+            p_C_REG=1,
+            p_D_REG=1,
 
             # Data Ports
             i_A=phaseFQ,
             i_B=Const(6, 16),
             i_C=Const(0, 16),
             i_D=noiseFQ,
+            
+            i_OLOADTOP=1,
+            i_OLOADBOT=1,
             
             # Control Ports
             i_CLK=ClockSignal(),
@@ -553,28 +557,15 @@ class Exciter(Elaboratable):
             
             o_O=mulF)
 
-        # The raw state values are now derived from the pipelined mulR/mulF
-        stateRRaw = mulR[16:19]
-        stateFRaw = mulF[16:19]
-            
         # Aligned 3-bit state values
         stateRReg = Signal(3, reset_less=True)
         stateFReg = Signal(3, reset_less=True)
 
         m.d.sync += [
-            stateRReg.eq(stateRRaw),
-            stateFReg.eq(stateFRaw)
+            stateRReg.eq(mulR[16:19]),
+            stateFReg.eq(mulF[16:19])
         ]
 
-        # Modulo-6 wrap-around for state mapping (6 wraps to 0)
-        # Done combinatorially after registering raw DSP outputs to maximize timing margin.
-        stateR = Signal(3)
-        stateF = Signal(3)
-        m.d.comb += [
-            stateR.eq(Mux(stateRReg == 6, 0, stateRReg)),
-            stateF.eq(Mux(stateFReg == 6, 0, stateFReg))
-        ]
-        
         # Pipeline delay registers for TX enable and Mode Square signals
         txEnPipe = Signal(8, reset_less=True)
         modeSqPipe = Signal(8, reset_less=True)
@@ -591,7 +582,7 @@ class Exciter(Elaboratable):
         pullPeakR = Signal()
 
         # Boolean level for square wave mode on the rising edge
-        sqLevelR = stateR < 3
+        sqLevelR = stateRReg < 3
 
         with m.If(txEnPipe[7]):
 
@@ -602,10 +593,10 @@ class Exciter(Elaboratable):
                              pullPeakR.eq(0)]
 
             with m.Else():
-                m.d.comb += [pushBaseR.eq((stateR == 0) | (stateR == 2)),
-                             pushPeakR.eq(stateR == 1),
-                             pullBaseR.eq((stateR == 3) | (stateR == 5)),
-                             pullPeakR.eq(stateR == 4)]
+                m.d.comb += [pushBaseR.eq((stateRReg == 0) | (stateRReg == 2)),
+                             pushPeakR.eq(stateRReg == 1),
+                             pullBaseR.eq((stateRReg == 3) | (stateRReg == 5)),
+                             pullPeakR.eq(stateRReg == 4)]
         
         # Calculated pin levels for Falling edge
         pushBaseF = Signal()
@@ -614,7 +605,7 @@ class Exciter(Elaboratable):
         pullPeakF = Signal()
 
         # Boolean level for square wave mode on the falling edge
-        sqLevelF = stateF < 3
+        sqLevelF = stateFReg < 3
 
         with m.If(txEnPipe[7]):
 
@@ -625,10 +616,10 @@ class Exciter(Elaboratable):
                              pullPeakF.eq(0)]
 
             with m.Else():
-                m.d.comb += [pushBaseF.eq((stateF == 0) | (stateF == 2)),
-                             pushPeakF.eq(stateF == 1),
-                             pullBaseF.eq((stateF == 3) | (stateF == 5)),
-                             pullPeakF.eq(stateF == 4)]
+                m.d.comb += [pushBaseF.eq((stateFReg == 0) | (stateFReg == 2)),
+                             pushPeakF.eq(stateFReg == 1),
+                             pullBaseF.eq((stateFReg == 3) | (stateFReg == 5)),
+                             pullPeakF.eq(stateFReg == 4)]
 
         # Fabric registers to ease timing:
         # Rising edge outputs registered on positive edge (1-stage delay)
