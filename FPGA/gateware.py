@@ -140,6 +140,7 @@ class PipelinedNCO(Elaboratable):
         return m
 
 class FreqCounter(Elaboratable):
+
     def __init__(self, width=32):
         self.width = width
 
@@ -157,39 +158,39 @@ class FreqCounter(Elaboratable):
         countOut = Signal(32)
 
         # FPGACLK frequency counter gated by 1pps signal from GNSS.
-        # This is acc_32_bypassed_unsigned with carryIn tied to 1.
+        # This is acc_32_all_pipelined_unsigned carryIn tied to 1.
         m.submodules.freqCounter = Instance("SB_MAC16",
                                             p_B_SIGNED=0,
                                             p_A_SIGNED=0,
-                                            p_MODE_8x8=1,
+                                            p_MODE_8x8=0,
 
-                                           p_BOTADDSUB_CARRYSELECT=0b00,
+                                            p_BOTADDSUB_CARRYSELECT=0b00,
                                             p_BOTADDSUB_UPPERINPUT=0,
-                                            p_BOTADDSUB_LOWERINPUT=0b00,
+                                            p_BOTADDSUB_LOWERINPUT=0b10,
                                             p_BOTOUTPUT_SELECT=0b01,
 
-                                           p_TOPADDSUB_CARRYSELECT=0b10,
+                                            p_TOPADDSUB_CARRYSELECT=0b10,
                                             p_TOPADDSUB_UPPERINPUT=0,
                                             p_TOPADDSUB_LOWERINPUT=0b00,
                                             p_TOPOUTPUT_SELECT=0b01,
 
-                                           p_PIPELINE_16x16_MULT_REG2=0,
+                                            p_PIPELINE_16x16_MULT_REG2=0,
                                             p_PIPELINE_16x16_MULT_REG1=0,
                                             p_BOT_8x8_MULT_REG=0,
                                             p_TOP_8x8_MULT_REG=0,
 
-                                           p_D_REG=0,
+                                            p_D_REG=0,
                                             p_B_REG=0,
                                             p_A_REG=0,
                                             p_C_REG=0,
 
-                                           i_B=0,
+                                            i_B=0,
                                             i_CI=1,
                                             i_A=0,
                                             i_CLK=ClockSignal(),
                                             i_CE=1,
 
-                                           o_O=countOut,
+                                            o_O=countOut,
                                             o_CO=Signal(),
                                             o_ACCUMCO=Signal(),
                                             o_SIGNEXTOUT=Signal())
