@@ -130,6 +130,9 @@ namespace wspr {
         pwr = (uint8_t)strtoul(argv[2], NULL, 10);
       }
 
+      // Setting freq to 0 MHz also means stop.
+      if (freqHz == 0) return cmd_tx_stop(sh, argc - 1, argv + 1);
+
       auto& fpga = FPGA::instance();
       fpga.setFrequency(freqHz);
       int ret = fpga.startTX();

@@ -266,7 +266,7 @@ namespace wspr {
     // Update Mode based on frequency: < 10MHz use 1-2-1, >= 10MHz use Square
     WSPRRegs::WSPRControl ctrl;
     spiReadReg(WSPRRegs::aWSPRControl, &ctrl.u);
-    ctrl.modeSquare = (freqHz >= 10000000) ? 1 : 0;
+    ctrl.modeSquare = (freqHz >= MHZ(10)) ? 1 : 0;
     spiWriteReg(WSPRRegs::aWSPRControl, ctrl.u);
 
     // Write 48-bit tuning word across two registers

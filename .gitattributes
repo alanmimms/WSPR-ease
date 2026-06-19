@@ -3,4 +3,8 @@
 
 # Explicitly declare files that should always use LF (Unix style)
 *.cpp text eol=lf
+*.hpp text eol=lf
 *.h text eol=lf
+*.txt text eol=lf
+*.py text eol=lf
+Makefile text eol=lf
