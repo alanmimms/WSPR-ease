@@ -422,7 +422,7 @@ class Exciter(Elaboratable):
         m.submodules.lfsr = lfsr = LFSR32()
 
         # Disable to debug XXX FIXME
-        daNoise = False
+        daNoise = True
 
         if daNoise:
             noise = Signal(16)
@@ -452,12 +452,14 @@ class Exciter(Elaboratable):
         noiseRQ = Signal(16, reset_less=True)
         noiseFQ = Signal(16, reset_less=True)
 
+        noiseShift = 7
+
         m.d.sync += [
             phaseRQ.eq(phaseR),
             phaseFQ.eq(phaseR + (self.tw[32:48] >> 1)),        # Divide by two for 0.5 cycle
 
-            noiseRQ.eq(noiseQ >> 5),
-            noiseFQ.eq(noiseQinv >> 5)
+            noiseRQ.eq(noiseQ >> noiseShift),
+            noiseFQ.eq(noiseQinv >> noiseShift)
         ]
 
         # 32-bit multiplier outputs
@@ -661,7 +663,7 @@ class Exciter(Elaboratable):
         ]
 
         #           543210
-        pinType = 0b010000
+        pinType = 0b011000      # DDR
         m.submodules.mPushBase = Instance("SB_IO",
                                           p_PIN_TYPE=pinType,
                                           o_PACKAGE_PIN=self.pbPin,

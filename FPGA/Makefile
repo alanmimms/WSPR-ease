@@ -72,7 +72,7 @@ hw $(FPGATARGET):	$(RTL_SOURCES) $(PCF) timing.py
 	yosys -q -p "read_verilog "$(RTL_SOURCES)"; synth_ice40 -dsp -top Top -json $(PROJECT).json"
 	@echo "  NEXTPNR (Place & Route)..."
 	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
-		--pre-pack timing.py --placer heap --seed 13 \
+		--pre-pack timing.py --placer heap --seed 40 \
 		--json $(PROJECT).json --pcf $(PCF) \
 		--log build/nextpnr.log -q \
 		--asc $(PROJECT).asc
