@@ -507,6 +507,10 @@ class Exciter(Elaboratable):
             i_OLOADTOP=0,               # NOT an internal feedback multiply+add XXXX sb=1
             i_OLOADBOT=0,               # XXXX sb=1
             
+            # CRITICAL: Tie off all resets to prevent global routing drag
+            i_IRSTTOP=0, i_IRSTBOT=0, 
+            i_ORSTTOP=0, i_ORSTBOT=0,
+
             o_O=mulR)
 
         # mac_32_all_pipelined_unsigned
