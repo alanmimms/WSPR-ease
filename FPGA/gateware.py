@@ -466,9 +466,11 @@ class Exciter(Elaboratable):
 
         # ========================================================
         # STAGE 2 & 3: DSP Multiplication and Addition
-        # Math: Output = A=phase{R,F}Q * 6 + D=noise{R,F}Q
+        # Math:
+        #   Rising  edge: A=phaseRQ * 6 + D=noiseRQ
+        #   Falling edge: A=phaseFQ * 6 + D=noiseFQ
         # ========================================================
-        # mult_add_16_all_pipelined_unsigned
+        # mult_add_sub_32_all_pipelined_unsigned
         m.submodules.macR = Instance("SB_MAC16",
             p_A_SIGNED=0,       # C23
             p_B_SIGNED=0,       # C24
@@ -476,13 +478,13 @@ class Exciter(Elaboratable):
             
             p_BOTADDSUB_CARRYSELECT=0b00, # C21,C20
             p_BOTADDSUB_UPPERINPUT=1,    # C19
-            p_BOTADDSUB_LOWERINPUT=0b01, # C18,C17
+            p_BOTADDSUB_LOWERINPUT=0b10, # C18,C17
             p_BOTOUTPUT_SELECT=0b01, # C16,C15
             
-            p_TOPADDSUB_CARRYSELECT=0b00, # C14,C13
+            p_TOPADDSUB_CARRYSELECT=0b10, # C14,C13
             p_TOPADDSUB_UPPERINPUT=1,    # C12
-            p_TOPADDSUB_LOWERINPUT=0b01, # C11,C10
-            p_TOPOUTPUT_SELECT=0b01, # C9,C8
+            p_TOPADDSUB_LOWERINPUT=0b10, # C11,C10
+            p_TOPOUTPUT_SELECT=0b01, # C9,C8 XXXX should be 0b01
 
             p_PIPELINE_16x16_MULT_REG2=1, # C7
             p_PIPELINE_16x16_MULT_REG1=1, # C6
@@ -496,22 +498,14 @@ class Exciter(Elaboratable):
 
             i_A=phaseRQ,
             i_B=Const(6, 16),
-            i_C=Const(0, 16),
-            i_D=noiseRQ,                  # 16-bit Noise for the Bottom Adder
+            i_C=0,
+            i_D=noiseRQ,                # 16-bit Noise for the Bottom Adder
             
             i_CLK=ClockSignal(),
             i_CE=1,
 
-            i_OLOADTOP=1,               # NOT an internal feedback multiply+add
-            i_OLOADBOT=1,
-            
-            # CRITICAL: Tie off all resets to prevent global routing drag
-            i_IRSTTOP=0, i_IRSTBOT=0, 
-            i_ORSTTOP=0, i_ORSTBOT=0,
-            
-            # Tie off unused holds
-            i_AHOLD=0, i_BHOLD=0, i_CHOLD=0, i_DHOLD=0, 
-            i_OHOLDTOP=0, i_OHOLDBOT=0,
+            i_OLOADTOP=0,               # NOT an internal feedback multiply+add XXXX sb=1
+            i_OLOADBOT=0,               # XXXX sb=1
             
             o_O=mulR)
 
