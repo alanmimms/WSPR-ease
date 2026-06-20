@@ -3133,12 +3133,6 @@
 		(uuid "9106dd61-59c2-4647-b0a9-aeccad00cf52")
 	)
 	(junction
-		(at 66.04 149.86)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "a329b9ce-181f-43af-909f-29aa5cfabff5")
-	)
-	(junction
 		(at 240.03 133.35)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3237,10 +3231,6 @@
 		(uuid "2f959fd8-b8c7-4986-ba0a-1075bc197720")
 	)
 	(no_connect
-		(at 204.47 147.32)
-		(uuid "31679db4-0a0b-4d4d-965a-7124d9f7af07")
-	)
-	(no_connect
 		(at 63.5 157.48)
 		(uuid "34223f49-2b92-430d-a222-a3937a8a18f4")
 	)
@@ -3289,6 +3279,10 @@
 		(uuid "a37aeeb1-1bfc-4a02-b5b7-a8953bfca606")
 	)
 	(no_connect
+		(at 63.5 149.86)
+		(uuid "b9a576c0-7b04-40b3-a32c-b80e6d235a49")
+	)
+	(no_connect
 		(at 63.5 177.8)
 		(uuid "c225a677-ab61-42bf-9c20-c2c17556aa7b")
 	)
@@ -3311,16 +3305,6 @@
 	(no_connect
 		(at 133.35 165.1)
 		(uuid "feaa9f29-7067-4604-8407-fe0e992a1e77")
-	)
-	(wire
-		(pts
-			(xy 66.04 149.86) (xy 68.58 149.86)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "03380fd6-b44a-4917-8ae9-d3822d7f6860")
 	)
 	(wire
 		(pts
@@ -3384,16 +3368,6 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 73.66) (xy 205.74 73.66)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0ba6dadd-9b80-4fb5-8835-208bf0f0073c")
-	)
-	(wire
-		(pts
 			(xy 100.33 135.89) (xy 97.79 135.89)
 		)
 		(stroke
@@ -3421,6 +3395,16 @@
 			(type default)
 		)
 		(uuid "0cd0faf9-24b0-415d-b292-4f5d49c1bbc5")
+	)
+	(wire
+		(pts
+			(xy 208.28 58.42) (xy 203.2 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0ce82df9-1893-4a25-8b85-877e73fe6523")
 	)
 	(wire
 		(pts
@@ -3494,23 +3478,13 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 20.32) (xy 160.02 21.59)
+			(xy 143.51 21.59) (xy 143.51 22.86)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "1592b80a-7a6b-419d-9207-b41d5d7bdcd9")
-	)
-	(wire
-		(pts
-			(xy 204.47 19.05) (xy 223.52 19.05)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "15b09bdb-5a43-44b0-8cbd-68f53a50a3f6")
 	)
 	(wire
 		(pts
@@ -3544,13 +3518,23 @@
 	)
 	(wire
 		(pts
-			(xy 66.04 148.59) (xy 66.04 149.86)
+			(xy 181.61 40.64) (xy 182.88 40.64)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "1a1d7e7b-863c-40b0-af80-eff98eb7349a")
+		(uuid "180c12ce-1be2-4edf-bb72-f0e92e8cf047")
+	)
+	(wire
+		(pts
+			(xy 204.47 147.32) (xy 205.74 147.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "199935c6-df21-419e-bcf1-fc885c8f2a80")
 	)
 	(wire
 		(pts
@@ -3574,7 +3558,7 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 66.04) (xy 146.05 67.31)
+			(xy 129.54 67.31) (xy 129.54 68.58)
 		)
 		(stroke
 			(width 0)
@@ -3594,7 +3578,7 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 24.13) (xy 184.15 24.13)
+			(xy 181.61 63.5) (xy 182.88 63.5)
 		)
 		(stroke
 			(width 0)
@@ -3604,13 +3588,13 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 58.42) (xy 184.15 58.42)
+			(xy 210.82 55.88) (xy 237.49 55.88)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "25b27188-4b84-4053-80d0-fc32004ac144")
+		(uuid "2255c939-bf62-4e58-a05d-3c5f925a4e68")
 	)
 	(wire
 		(pts
@@ -3664,16 +3648,6 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 35.56) (xy 184.15 35.56)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2acd3858-cc74-4268-ad87-07e3608b1f92")
-	)
-	(wire
-		(pts
 			(xy 107.95 140.97) (xy 109.22 140.97)
 		)
 		(stroke
@@ -3684,7 +3658,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 49.53) (xy 160.02 50.8)
+			(xy 143.51 50.8) (xy 143.51 52.07)
 		)
 		(stroke
 			(width 0)
@@ -3721,6 +3695,16 @@
 			(type default)
 		)
 		(uuid "308366b7-0163-48a8-9f8a-0e63986fa80c")
+	)
+	(wire
+		(pts
+			(xy 210.82 55.88) (xy 210.82 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "319d62bd-dc17-45ea-ad48-b163085f345d")
 	)
 	(wire
 		(pts
@@ -3814,16 +3798,6 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 110.49) (xy 106.68 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4334eebf-ed1b-41b3-9f79-66b7d7dbc339")
-	)
-	(wire
-		(pts
 			(xy 232.41 132.08) (xy 232.41 142.24)
 		)
 		(stroke
@@ -3831,6 +3805,16 @@
 			(type default)
 		)
 		(uuid "443b5fea-c054-41af-8197-eea9287880e6")
+	)
+	(wire
+		(pts
+			(xy 181.61 59.69) (xy 182.88 59.69)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "444fd43d-b35e-43a3-a2c6-83504277eff4")
 	)
 	(wire
 		(pts
@@ -3864,16 +3848,6 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 53.34) (xy 210.82 53.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "49043243-e7a6-4c52-b5be-c05bd52fb1f2")
-	)
-	(wire
-		(pts
 			(xy 229.87 132.08) (xy 232.41 132.08)
 		)
 		(stroke
@@ -3891,26 +3865,6 @@
 			(type default)
 		)
 		(uuid "49ddcafc-faa0-4302-b7df-ab6977b1a023")
-	)
-	(wire
-		(pts
-			(xy 100.33 110.49) (xy 100.33 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4b72c4e8-1cdc-4958-be6b-5ffb3ddd076c")
-	)
-	(wire
-		(pts
-			(xy 63.5 149.86) (xy 66.04 149.86)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4b890332-6ac8-4a39-a69e-a33a04f7a34b")
 	)
 	(wire
 		(pts
@@ -3964,17 +3918,7 @@
 	)
 	(wire
 		(pts
-			(xy 218.44 55.88) (xy 237.49 55.88)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "56c51678-c012-4b48-8b18-e3d2e4eccdcc")
-	)
-	(wire
-		(pts
-			(xy 146.05 39.37) (xy 146.05 40.64)
+			(xy 129.54 40.64) (xy 129.54 41.91)
 		)
 		(stroke
 			(width 0)
@@ -4004,17 +3948,7 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 53.34) (xy 237.49 53.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "58ea5b5c-e5c3-43e2-b134-52a234de526c")
-	)
-	(wire
-		(pts
-			(xy 220.98 46.99) (xy 220.98 69.85)
+			(xy 210.82 39.37) (xy 210.82 46.99)
 		)
 		(stroke
 			(width 0)
@@ -4094,7 +4028,7 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 30.48) (xy 146.05 31.75)
+			(xy 129.54 31.75) (xy 129.54 33.02)
 		)
 		(stroke
 			(width 0)
@@ -4134,16 +4068,6 @@
 	)
 	(wire
 		(pts
-			(xy 66.04 139.7) (xy 66.04 140.97)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6cf23e53-b5f2-430a-b19d-8faeb072985b")
-	)
-	(wire
-		(pts
 			(xy 133.35 162.56) (xy 134.62 162.56)
 		)
 		(stroke
@@ -4174,13 +4098,23 @@
 	)
 	(wire
 		(pts
-			(xy 113.03 102.87) (xy 113.03 101.6)
+			(xy 208.28 53.34) (xy 237.49 53.34)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "726d2130-998d-4cac-8a50-7a5a4fd9fccd")
+		(uuid "72c7fb0a-e54f-4ba2-be98-28868102fd9c")
+	)
+	(wire
+		(pts
+			(xy 181.61 38.1) (xy 182.88 38.1)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "74557b4a-9351-48d3-8b19-36a4fac73f1b")
 	)
 	(wire
 		(pts
@@ -4201,16 +4135,6 @@
 			(type default)
 		)
 		(uuid "76deb78f-3fa0-4d5a-8435-bf43a19e8a18")
-	)
-	(wire
-		(pts
-			(xy 182.88 69.85) (xy 184.15 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "77311bee-f023-40c0-83fa-036791fb38d5")
 	)
 	(wire
 		(pts
@@ -4264,7 +4188,7 @@
 	)
 	(wire
 		(pts
-			(xy 210.82 53.34) (xy 210.82 49.53)
+			(xy 208.28 43.18) (xy 208.28 49.53)
 		)
 		(stroke
 			(width 0)
@@ -4314,16 +4238,6 @@
 	)
 	(wire
 		(pts
-			(xy 223.52 19.05) (xy 223.52 53.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "80fc186f-19ab-4448-a3c1-5c14f69d22a3")
-	)
-	(wire
-		(pts
 			(xy 62.23 33.02) (xy 64.77 33.02)
 		)
 		(stroke
@@ -4331,6 +4245,16 @@
 			(type default)
 		)
 		(uuid "81827a49-5dbc-4357-ae5f-7860e50f9f94")
+	)
+	(wire
+		(pts
+			(xy 210.82 62.23) (xy 203.2 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "845b3590-211e-45c9-8dd7-6ee73ea1466f")
 	)
 	(wire
 		(pts
@@ -4354,23 +4278,13 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 74.93) (xy 184.15 74.93)
+			(xy 203.2 39.37) (xy 210.82 39.37)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "8ac865b9-53c1-4dce-9de4-e7f733d1eed2")
-	)
-	(wire
-		(pts
-			(xy 100.33 102.87) (xy 100.33 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "902fcf1b-3481-46e4-be9f-d2e9faccceed")
+		(uuid "896131c3-f7fe-4e8a-923f-80d1c9126f4c")
 	)
 	(wire
 		(pts
@@ -4391,16 +4305,6 @@
 			(type default)
 		)
 		(uuid "93e525c7-c2e5-4a2a-b816-13c71db2b177")
-	)
-	(wire
-		(pts
-			(xy 119.38 102.87) (xy 119.38 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9428f252-6147-4794-a62d-34c49762bd7c")
 	)
 	(wire
 		(pts
@@ -4434,7 +4338,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 29.21) (xy 160.02 30.48)
+			(xy 143.51 30.48) (xy 143.51 31.75)
 		)
 		(stroke
 			(width 0)
@@ -4514,13 +4418,13 @@
 	)
 	(wire
 		(pts
-			(xy 218.44 35.56) (xy 218.44 55.88)
+			(xy 203.2 43.18) (xy 208.28 43.18)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a16f4ec5-5e6d-42bb-a2aa-04d8c660f64b")
+		(uuid "a169fa60-c0e2-4202-8188-ba77492b88bb")
 	)
 	(wire
 		(pts
@@ -4551,16 +4455,6 @@
 			(type default)
 		)
 		(uuid "a5abaf52-6991-4a15-8d84-dc49ce5507f2")
-	)
-	(wire
-		(pts
-			(xy 113.03 110.49) (xy 113.03 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a61efd44-b65a-4060-8fb2-207577366833")
 	)
 	(wire
 		(pts
@@ -4604,26 +4498,6 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 39.37) (xy 205.74 39.37)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "abeeb434-2441-49e6-8fac-b6809084b7b5")
-	)
-	(wire
-		(pts
-			(xy 204.47 69.85) (xy 220.98 69.85)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "abf538a9-8935-4720-831c-38ffaceee17e")
-	)
-	(wire
-		(pts
 			(xy 50.8 33.02) (xy 57.15 33.02)
 		)
 		(stroke
@@ -4654,7 +4528,7 @@
 	)
 	(wire
 		(pts
-			(xy 220.98 46.99) (xy 237.49 46.99)
+			(xy 210.82 46.99) (xy 237.49 46.99)
 		)
 		(stroke
 			(width 0)
@@ -4694,16 +4568,6 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 102.87) (xy 106.68 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b976b1e5-91b6-4a1a-9888-90fb80d4f191")
-	)
-	(wire
-		(pts
 			(xy 222.25 127) (xy 219.71 127)
 		)
 		(stroke
@@ -4714,7 +4578,7 @@
 	)
 	(wire
 		(pts
-			(xy 210.82 49.53) (xy 237.49 49.53)
+			(xy 208.28 49.53) (xy 237.49 49.53)
 		)
 		(stroke
 			(width 0)
@@ -4734,7 +4598,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 58.42) (xy 160.02 59.69)
+			(xy 143.51 59.69) (xy 143.51 60.96)
 		)
 		(stroke
 			(width 0)
@@ -4751,16 +4615,6 @@
 			(type default)
 		)
 		(uuid "c2d2d27a-5a94-4c69-8036-c388bbd6398f")
-	)
-	(wire
-		(pts
-			(xy 119.38 110.49) (xy 119.38 111.76)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c3f490c1-410f-434d-97d2-a0aa63a5f560")
 	)
 	(wire
 		(pts
@@ -4804,16 +4658,6 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 40.64) (xy 184.15 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cada357a-5dc9-4b44-abdc-a6f22afabd8d")
-	)
-	(wire
-		(pts
 			(xy 204.47 149.86) (xy 205.74 149.86)
 		)
 		(stroke
@@ -4824,13 +4668,13 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 35.56) (xy 218.44 35.56)
+			(xy 181.61 44.45) (xy 182.88 44.45)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "cd3db142-a5c0-413e-9f9b-2edfde211231")
+		(uuid "ce8ce958-8643-4e59-930d-35402ccf7968")
 	)
 	(wire
 		(pts
@@ -4844,16 +4688,6 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 22.86) (xy 205.74 22.86)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cf1167ca-29af-43b1-bf44-8317a5c8ab19")
-	)
-	(wire
-		(pts
 			(xy 251.46 140.97) (xy 251.46 139.7)
 		)
 		(stroke
@@ -4864,7 +4698,7 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 74.93) (xy 146.05 76.2)
+			(xy 129.54 76.2) (xy 129.54 77.47)
 		)
 		(stroke
 			(width 0)
@@ -5024,23 +4858,23 @@
 	)
 	(wire
 		(pts
-			(xy 204.47 57.15) (xy 205.74 57.15)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ea93aa10-b920-490d-a8f4-776e2b44fec1")
-	)
-	(wire
-		(pts
-			(xy 182.88 19.05) (xy 184.15 19.05)
+			(xy 181.61 57.15) (xy 182.88 57.15)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "f07a3bad-b83a-4f34-a438-2941bfa15494")
+	)
+	(wire
+		(pts
+			(xy 208.28 53.34) (xy 208.28 58.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f2cb6c99-5a8e-402f-b51e-27aa50651afc")
 	)
 	(wire
 		(pts
@@ -5084,16 +4918,6 @@
 	)
 	(wire
 		(pts
-			(xy 182.88 53.34) (xy 184.15 53.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fbb43926-41c5-4e38-8ac9-0de4dd79ae7a")
-	)
-	(wire
-		(pts
 			(xy 248.92 133.35) (xy 251.46 133.35)
 		)
 		(stroke
@@ -5111,16 +4935,6 @@
 			(type default)
 		)
 		(uuid "ffe0e8a5-1173-4331-bbf4-0c91f83ac3f2")
-	)
-	(label "pullBaseD"
-		(at 205.74 57.15 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "08c1500e-9499-46c4-87b5-c617f4402eb1")
 	)
 	(label "pushPeak"
 		(at 64.77 170.18 0)
@@ -5162,16 +4976,6 @@
 		)
 		(uuid "1ab6c518-49e0-4bc4-a340-84a526f596df")
 	)
-	(label "pushBaseD"
-		(at 205.74 22.86 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "23a4072d-ca2e-4f94-a9ff-7d056397100c")
-	)
 	(label "hbR"
 		(at 134.62 157.48 0)
 		(effects
@@ -5202,8 +5006,8 @@
 		)
 		(uuid "36b54b71-5974-4eab-a33d-5d08b39a4898")
 	)
-	(label "driverNEN"
-		(at 182.88 24.13 180)
+	(label "driverEN"
+		(at 181.61 63.5 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5212,18 +5016,8 @@
 		)
 		(uuid "39abae5a-7348-49ba-8ca9-9df88fb6c221")
 	)
-	(label "pushPeak"
-		(at 182.88 35.56 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "4742e341-41ec-4504-a8d5-267350a22759")
-	)
 	(label "pullPeakT"
-		(at 233.68 46.99 180)
+		(at 222.25 49.53 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5232,8 +5026,8 @@
 		)
 		(uuid "5df1e438-584a-4ebf-9d3d-1bd3107abbae")
 	)
-	(label "driverNEN"
-		(at 68.58 149.86 0)
+	(label "driverEN"
+		(at 205.74 147.32 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5262,26 +5056,6 @@
 		)
 		(uuid "6bf82e52-00f4-4a40-946d-af3cc6ad65c7")
 	)
-	(label "pullPeakD"
-		(at 205.74 73.66 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "70cb74d5-d305-4aa0-a26d-5a38cf35ffa8")
-	)
-	(label "pullPeak"
-		(at 106.68 101.6 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "70edeb53-0660-4180-ba5b-03dd15ab0e01")
-	)
 	(label "hbB"
 		(at 134.62 162.56 0)
 		(effects
@@ -5303,7 +5077,7 @@
 		(uuid "7b45b411-d7c5-457a-a1c5-1076048fa20d")
 	)
 	(label "pushBase"
-		(at 182.88 19.05 180)
+		(at 181.61 59.69 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5333,7 +5107,7 @@
 		(uuid "93fe67a4-49f7-4731-b23a-7cbaec079d62")
 	)
 	(label "pullBase"
-		(at 182.88 53.34 180)
+		(at 181.61 38.1 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5341,26 +5115,6 @@
 			(justify right bottom)
 		)
 		(uuid "97b950c8-64b3-4050-ac90-cacb01484c20")
-	)
-	(label "pushPeakD"
-		(at 205.74 39.37 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9a81d0de-3311-4b5d-bff0-cccf537e14a5")
-	)
-	(label "pushBase"
-		(at 113.03 101.6 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "9cf9f513-89c2-47f8-a9ec-a1cc82711b43")
 	)
 	(label "hbB"
 		(at 27.94 40.64 180)
@@ -5372,28 +5126,18 @@
 		)
 		(uuid "a0d908f0-ed9d-4c89-9ac4-b96b154df4ef")
 	)
-	(label "driverNEN"
-		(at 182.88 74.93 180)
+	(label "pushPeak"
+		(at 181.61 57.15 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify right bottom)
 		)
-		(uuid "a301c3e8-bd9d-441c-89a4-7cb2a7a6a912")
+		(uuid "ba07cc15-3179-4ac9-92a8-57f6c094b63f")
 	)
-	(label "pushPeak"
-		(at 119.38 101.6 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "aaf10cfa-fbf1-442e-929f-10856031a909")
-	)
-	(label "driverNEN"
-		(at 182.88 58.42 180)
+	(label "driverEN"
+		(at 181.61 44.45 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5402,18 +5146,8 @@
 		)
 		(uuid "c2fffd21-6e8e-448e-b422-a806032be1f2")
 	)
-	(label "pullBase"
-		(at 100.33 101.6 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "c9d24af8-be09-4f69-9d30-9340914ca5b9")
-	)
 	(label "pullPeak"
-		(at 182.88 69.85 180)
+		(at 181.61 40.64 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5422,18 +5156,8 @@
 		)
 		(uuid "d001d739-7a1d-40d2-be8c-14fd71bf81e8")
 	)
-	(label "driverNEN"
-		(at 182.88 40.64 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d45c1516-49f8-43c5-aea6-33a26f641f3b")
-	)
 	(label "pushPeakT"
-		(at 233.68 55.88 180)
+		(at 222.25 53.34 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5453,7 +5177,7 @@
 		(uuid "daa06efa-8712-4b13-be4a-ce2b07e0b19b")
 	)
 	(label "pullBaseT"
-		(at 233.68 49.53 180)
+		(at 222.25 46.99 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5463,7 +5187,7 @@
 		(uuid "f7687049-4a13-4f93-ad70-46ca66a696b7")
 	)
 	(label "pushBaseT"
-		(at 233.68 53.34 180)
+		(at 222.25 55.88 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -5592,7 +5316,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0103d6d1-3384-4057-a318-fb41e94c3b8c")
-		(property "Reference" "#PWR0314"
+		(property "Reference" "#PWR0326"
 			(at 120.65 138.43 0)
 			(effects
 				(font
@@ -5643,74 +5367,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0314")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 113.03 111.76 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "056959ff-0f3a-4f9e-a788-b5bc500fa923")
-		(property "Reference" "#PWR0312"
-			(at 113.03 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 113.03 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 113.03 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 113.03 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 113.03 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "92821c86-2c34-4965-be08-20e4c8c78e37")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0312")
+					(reference "#PWR0326")
 					(unit 1)
 				)
 			)
@@ -5718,15 +5375,15 @@
 	)
 	(symbol
 		(lib_id "power:VBUS")
-		(at 160.02 49.53 0)
+		(at 143.51 50.8 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "073732b0-4954-4b0e-a5a6-d4743639ffc4")
-		(property "Reference" "#PWR0321"
-			(at 160.02 53.34 0)
+		(property "Reference" "#PWR0309"
+			(at 143.51 54.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5735,7 +5392,7 @@
 			)
 		)
 		(property "Value" "VBUS"
-			(at 160.02 44.45 0)
+			(at 143.51 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5743,7 +5400,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 160.02 49.53 0)
+			(at 143.51 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5752,7 +5409,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 160.02 49.53 0)
+			(at 143.51 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5761,7 +5418,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 160.02 49.53 0)
+			(at 143.51 50.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5775,7 +5432,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0321")
+					(reference "#PWR0309")
 					(unit 1)
 				)
 			)
@@ -5791,7 +5448,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "09e87164-60f8-4f0a-9359-a8827434a067")
-		(property "Reference" "C305"
+		(property "Reference" "C321"
 			(at 103.124 134.874 90)
 			(effects
 				(font
@@ -5872,6 +5529,33 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 104.14 135.89 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X7R"
+			(at 104.14 135.89 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 104.14 135.89 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "ccb15d12-f7a6-4e02-bc38-922165767d32")
 		)
@@ -5881,7 +5565,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C305")
+					(reference "C321")
 					(unit 1)
 				)
 			)
@@ -5897,7 +5581,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0e7fe19e-2101-41f7-b996-c629c7c8104e")
-		(property "Reference" "#PWR0324"
+		(property "Reference" "#PWR0323"
 			(at 194.31 130.81 0)
 			(effects
 				(font
@@ -5948,7 +5632,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0324")
+					(reference "#PWR0323")
 					(unit 1)
 				)
 			)
@@ -5964,7 +5648,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0fe56b3b-549d-4144-8410-76ba19a6a817")
-		(property "Reference" "#PWR0332"
+		(property "Reference" "#PWR0317"
 			(at 241.3 99.06 0)
 			(effects
 				(font
@@ -6030,7 +5714,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0332")
+					(reference "#PWR0317")
 					(unit 1)
 				)
 			)
@@ -6045,7 +5729,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "13369397-3fa7-4522-bbe0-cebc7a4cceac")
-		(property "Reference" "#PWR0306"
+		(property "Reference" "#PWR0313"
 			(at 68.58 77.47 0)
 			(effects
 				(font
@@ -6096,7 +5780,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0306")
+					(reference "#PWR0313")
 					(unit 1)
 				)
 			)
@@ -6111,7 +5795,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "139e8bf2-05f4-45bd-b28e-bab4f5dcaffa")
-		(property "Reference" "#PWR0307"
+		(property "Reference" "#PWR0305"
 			(at 77.47 39.37 0)
 			(effects
 				(font
@@ -6161,7 +5845,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0307")
+					(reference "#PWR0305")
 					(unit 1)
 				)
 			)
@@ -6176,7 +5860,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "19649725-af54-4c6d-a119-86caed67db72")
-		(property "Reference" "R303"
+		(property "Reference" "R304"
 			(at 44.196 35.814 90)
 			(effects
 				(font
@@ -6219,6 +5903,42 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 48.26 36.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "Bourns"
+			(at 48.26 36.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CR0402-JW-101GLF"
+			(at 48.26 36.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "652-CR0402JW-101GLF"
+			(at 48.26 36.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "fd88cc44-be35-431d-aac0-cfc73a353c2a")
 		)
@@ -6228,7 +5948,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R303")
+					(reference "R304")
 					(unit 1)
 				)
 			)
@@ -6244,7 +5964,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1a6ff81e-047a-4a18-a547-5e0b5a0ab22a")
-		(property "Reference" "C302"
+		(property "Reference" "C309"
 			(at 38.608 73.914 0)
 			(effects
 				(font
@@ -6558,6 +6278,15 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 38.1 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "cd8f2ba2-56c1-49c5-bfc0-6a635476fab4")
 		)
@@ -6567,7 +6296,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C302")
+					(reference "C309")
 					(unit 1)
 				)
 			)
@@ -6582,7 +6311,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1b196db5-52d5-4b77-99ce-b576060964ab")
-		(property "Reference" "R305"
+		(property "Reference" "R303"
 			(at 55.626 32.004 90)
 			(effects
 				(font
@@ -6625,6 +6354,42 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 59.69 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "Bourns"
+			(at 59.69 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CR0402-JW-101GLF"
+			(at 59.69 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "652-CR0402JW-101GLF"
+			(at 59.69 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "8c5bf76f-0cb3-4287-8a2b-66637d5912eb")
 		)
@@ -6634,7 +6399,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R305")
+					(reference "R303")
 					(unit 1)
 				)
 			)
@@ -6650,7 +6415,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1bda1431-b339-438d-85f3-8898dc4757a7")
-		(property "Reference" "#PWR0309"
+		(property "Reference" "#PWR0331"
 			(at 97.79 148.59 0)
 			(effects
 				(font
@@ -6701,7 +6466,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0309")
+					(reference "#PWR0331")
 					(unit 1)
 				)
 			)
@@ -6717,7 +6482,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1d7cdb8f-8ab7-4a98-91a5-09df19f2a2c6")
-		(property "Reference" "#PWR0337"
+		(property "Reference" "#PWR0308"
 			(at 259.08 54.61 0)
 			(effects
 				(font
@@ -6768,7 +6533,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0337")
+					(reference "#PWR0308")
 					(unit 1)
 				)
 			)
@@ -6776,15 +6541,15 @@
 	)
 	(symbol
 		(lib_id "power:VBUS")
-		(at 146.05 66.04 0)
+		(at 129.54 67.31 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "1ff8dd25-9512-47fc-adfc-d9cc98341eb3")
-		(property "Reference" "#PWR0317"
-			(at 146.05 69.85 0)
+		(property "Reference" "#PWR0312"
+			(at 129.54 71.12 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6793,7 +6558,7 @@
 			)
 		)
 		(property "Value" "VBUS"
-			(at 146.05 60.96 0)
+			(at 129.54 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6801,7 +6566,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 146.05 66.04 0)
+			(at 129.54 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6810,7 +6575,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 146.05 66.04 0)
+			(at 129.54 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6819,7 +6584,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 146.05 66.04 0)
+			(at 129.54 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6833,7 +6598,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0317")
+					(reference "#PWR0312")
 					(unit 1)
 				)
 			)
@@ -6908,216 +6673,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 119.38 106.68 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "270ec994-aece-4933-a48f-7fbfa6b9d89e")
-		(property "Reference" "R311"
-			(at 119.38 103.378 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10k"
-			(at 119.634 109.474 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 120.396 106.934 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 119.38 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 119.38 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C60490"
-			(at 119.38 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Vishay"
-			(at 119.38 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "MCS04020C1002FE000"
-			(at 119.38 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "594-MCS04020C1002FE0"
-			(at 119.38 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "e291ed21-a2c7-4c1c-ba95-f31113b75ad4")
-		)
-		(pin "1"
-			(uuid "51cccf85-4cc0-4ec5-b5ec-8fc9aefc86a1")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R311")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 113.03 106.68 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "2aa8f1a1-9331-4eee-b62b-62c98fdcceee")
-		(property "Reference" "R310"
-			(at 113.03 103.378 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10k"
-			(at 113.284 109.474 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 114.046 106.934 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 113.03 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 113.03 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C60490"
-			(at 113.03 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Vishay"
-			(at 113.03 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "MCS04020C1002FE000"
-			(at 113.03 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "594-MCS04020C1002FE0"
-			(at 113.03 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "9ae13801-e46b-495d-8753-48bb8a4f6890")
-		)
-		(pin "1"
-			(uuid "b5b821bc-5e54-4366-bcc8-54731f779346")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R310")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C")
 		(at 31.75 76.2 0)
 		(unit 1)
@@ -7126,7 +6681,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3210b5d9-2973-4657-bf68-f5513e35f3d0")
-		(property "Reference" "C301"
+		(property "Reference" "C308"
 			(at 30.988 73.914 0)
 			(effects
 				(font
@@ -7440,6 +6995,15 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 31.75 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "4512c1dc-8ca9-4b23-9d2c-3ea3ecdb90a1")
 		)
@@ -7449,7 +7013,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C301")
+					(reference "C308")
 					(unit 1)
 				)
 			)
@@ -7465,7 +7029,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "344508a5-111f-45ff-be1b-1e06c412068e")
-		(property "Reference" "C316"
+		(property "Reference" "C302"
 			(at 231.14 32.004 0)
 			(effects
 				(font
@@ -7475,7 +7039,7 @@
 			)
 		)
 		(property "Value" "10uF X5R 25V"
-			(at 227.838 25.908 90)
+			(at 215.9 27.178 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7546,6 +7110,24 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 231.14 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 231.14 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "8e3760a5-2121-4391-9ebc-9c6cb94d82b3")
 		)
@@ -7555,7 +7137,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C316")
+					(reference "C302")
 					(unit 1)
 				)
 			)
@@ -7649,6 +7231,15 @@
 				)
 			)
 		)
+		(property "Field10" ""
+			(at 71.12 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "1a171f59-fc10-47c6-94e0-fe378a957e39")
 		)
@@ -7680,7 +7271,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "394bd43b-c08c-444b-ae10-40a56122287f")
-		(property "Reference" "#PWR0329"
+		(property "Reference" "#PWR0322"
 			(at 232.41 125.73 0)
 			(effects
 				(font
@@ -7730,7 +7321,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0329")
+					(reference "#PWR0322")
 					(unit 1)
 				)
 			)
@@ -7746,7 +7337,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3aa0cd1d-1b6b-4338-bfb4-360d0fa84954")
-		(property "Reference" "#PWR0336"
+		(property "Reference" "#PWR0320"
 			(at 254 111.76 0)
 			(effects
 				(font
@@ -7797,7 +7388,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0336")
+					(reference "#PWR0320")
 					(unit 1)
 				)
 			)
@@ -7886,6 +7477,15 @@
 			)
 		)
 		(property "Mouser_PN" "842-ICE40UP5K-SG48I"
+			(at 232.41 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
 			(at 232.41 152.4 0)
 			(effects
 				(font
@@ -8052,7 +7652,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 146.05 76.2 0)
+		(at 129.54 77.47 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -8060,8 +7660,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3eedf312-63f6-49f0-a075-c390421a087a")
-		(property "Reference" "#PWR0318"
-			(at 146.05 82.55 0)
+		(property "Reference" "#PWR0314"
+			(at 129.54 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8070,7 +7670,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 146.304 80.01 0)
+			(at 129.794 81.28 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8079,7 +7679,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 146.05 76.2 0)
+			(at 129.54 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8088,7 +7688,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 146.05 76.2 0)
+			(at 129.54 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8097,7 +7697,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 146.05 76.2 0)
+			(at 129.54 77.47 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8111,112 +7711,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0318")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 106.68 106.68 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "4107cc7c-dc1b-4f5e-9eb2-a19967075d87")
-		(property "Reference" "R309"
-			(at 106.68 103.378 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10k"
-			(at 106.934 109.474 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 107.696 106.934 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 106.68 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 106.68 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C60490"
-			(at 106.68 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Vishay"
-			(at 106.68 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "MCS04020C1002FE000"
-			(at 106.68 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "594-MCS04020C1002FE0"
-			(at 106.68 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "4aef5174-1525-4354-ac85-d98709d3a6e9")
-		)
-		(pin "1"
-			(uuid "5454222b-2025-4d35-bfa0-347f9eb102a5")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R309")
+					(reference "#PWR0314")
 					(unit 1)
 				)
 			)
@@ -8231,7 +7726,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "42c4e794-ce8c-4c02-8a1e-aeaf95266061")
-		(property "Reference" "#PWR0304"
+		(property "Reference" "#PWR0324"
 			(at 53.34 137.16 0)
 			(effects
 				(font
@@ -8282,7 +7777,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0304")
+					(reference "#PWR0324")
 					(unit 1)
 				)
 			)
@@ -8298,7 +7793,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4d22d52b-426c-45df-8b43-b2e9a8d76d42")
-		(property "Reference" "#PWR0302"
+		(property "Reference" "#PWR0330"
 			(at 31.75 148.59 0)
 			(effects
 				(font
@@ -8349,7 +7844,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0302")
+					(reference "#PWR0330")
 					(unit 1)
 				)
 			)
@@ -8366,7 +7861,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4f4b279c-dc5c-49f5-a7d7-de8a5ee64a19")
-		(property "Reference" "#PWR0328"
+		(property "Reference" "#PWR0306"
 			(at 231.14 41.91 0)
 			(effects
 				(font
@@ -8417,7 +7912,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0328")
+					(reference "#PWR0306")
 					(unit 1)
 				)
 			)
@@ -8433,7 +7928,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "509801cc-3223-4b67-a6b1-c86bd5a338cd")
-		(property "Reference" "C315"
+		(property "Reference" "C317"
 			(at 225.044 131.064 90)
 			(effects
 				(font
@@ -8514,6 +8009,24 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 226.06 132.08 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 226.06 132.08 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a57f975f-1614-482b-a5c9-b5e87c80bd03")
 		)
@@ -8523,7 +8036,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C315")
+					(reference "C317")
 					(unit 1)
 				)
 			)
@@ -8531,15 +8044,15 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 160.02 25.4 180)
+		(at 143.51 26.67 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "53678183-387c-4c36-9b57-64fbc67815a8")
-		(property "Reference" "C309"
-			(at 165.608 23.114 0)
+		(property "Reference" "C301"
+			(at 149.098 24.384 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8548,7 +8061,7 @@
 			)
 		)
 		(property "Value" "10uF X5R 25V"
-			(at 168.402 27.432 0)
+			(at 151.892 28.702 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8557,7 +8070,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 159.0548 21.59 0)
+			(at 142.5448 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8566,7 +8079,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 160.02 25.4 0)
+			(at 143.51 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8575,7 +8088,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 160.02 25.4 0)
+			(at 143.51 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8584,7 +8097,7 @@
 			)
 		)
 		(property "LCSC" "C96446"
-			(at 160.02 25.4 0)
+			(at 143.51 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8593,7 +8106,7 @@
 			)
 		)
 		(property "MFG" "Kyocera AVX"
-			(at 160.02 25.4 90)
+			(at 143.51 26.67 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8602,7 +8115,7 @@
 			)
 		)
 		(property "MPN" "CM105X5R106M25AT"
-			(at 160.02 25.4 90)
+			(at 143.51 26.67 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8611,7 +8124,25 @@
 			)
 		)
 		(property "Mouser_PN" "346-CM105X5R106M25AT"
-			(at 160.02 25.4 90)
+			(at 143.51 26.67 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
+			(at 143.51 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 143.51 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8628,7 +8159,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C309")
+					(reference "C301")
 					(unit 1)
 				)
 			)
@@ -8636,7 +8167,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 160.02 59.69 0)
+		(at 143.51 60.96 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -8644,8 +8175,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "55b8fb97-be05-4f1d-8807-07572fcd914a")
-		(property "Reference" "#PWR0322"
-			(at 160.02 66.04 0)
+		(property "Reference" "#PWR0310"
+			(at 143.51 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8654,7 +8185,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 160.274 63.5 0)
+			(at 143.764 64.77 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8663,7 +8194,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 160.02 59.69 0)
+			(at 143.51 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8672,7 +8203,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 160.02 59.69 0)
+			(at 143.51 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8681,7 +8212,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 160.02 59.69 0)
+			(at 143.51 60.96 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8695,74 +8226,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0322")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 106.68 111.76 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "562bec6e-939b-4a26-ad22-456d19474892")
-		(property "Reference" "#PWR0311"
-			(at 106.68 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 106.68 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 106.68 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 106.68 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 106.68 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "b78f8266-9d1c-4128-953f-e273069b333c")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0311")
+					(reference "#PWR0310")
 					(unit 1)
 				)
 			)
@@ -8778,7 +8242,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5752fd60-3fe7-4194-bc2c-47b149aac42d")
-		(property "Reference" "#PWR0330"
+		(property "Reference" "#PWR0332"
 			(at 232.41 170.18 0)
 			(effects
 				(font
@@ -8829,7 +8293,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0330")
+					(reference "#PWR0332")
 					(unit 1)
 				)
 			)
@@ -8844,7 +8308,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5d163345-2589-4e28-b625-1fbcba7eab3c")
-		(property "Reference" "C313"
+		(property "Reference" "C310"
 			(at 226.06 78.994 0)
 			(effects
 				(font
@@ -8854,7 +8318,7 @@
 			)
 		)
 		(property "Value" "100pF NP0 100V"
-			(at 231.14 74.168 0)
+			(at 225.552 74.168 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8925,6 +8389,15 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 226.06 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a3c90d46-25a8-462b-80b0-a97dff408cde")
 		)
@@ -8934,7 +8407,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C313")
+					(reference "C310")
 					(unit 1)
 				)
 			)
@@ -8942,15 +8415,15 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 146.05 35.56 180)
+		(at 129.54 36.83 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "63655a58-c7d8-481c-815d-df4aab2b7b4e")
-		(property "Reference" "C307"
-			(at 151.638 33.274 0)
+		(property "Reference" "C305"
+			(at 135.128 34.544 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8959,7 +8432,7 @@
 			)
 		)
 		(property "Value" "10uF X5R 25V"
-			(at 154.432 37.592 0)
+			(at 137.922 38.862 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8968,7 +8441,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 145.0848 31.75 0)
+			(at 128.5748 33.02 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8977,7 +8450,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 146.05 35.56 0)
+			(at 129.54 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8986,7 +8459,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 146.05 35.56 0)
+			(at 129.54 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8995,7 +8468,7 @@
 			)
 		)
 		(property "LCSC" "C96446"
-			(at 146.05 35.56 0)
+			(at 129.54 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9004,7 +8477,7 @@
 			)
 		)
 		(property "MFG" "Kyocera AVX"
-			(at 146.05 35.56 90)
+			(at 129.54 36.83 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9013,7 +8486,7 @@
 			)
 		)
 		(property "MPN" "CM105X5R106M25AT"
-			(at 146.05 35.56 90)
+			(at 129.54 36.83 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9022,7 +8495,25 @@
 			)
 		)
 		(property "Mouser_PN" "346-CM105X5R106M25AT"
-			(at 146.05 35.56 90)
+			(at 129.54 36.83 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
+			(at 129.54 36.83 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 129.54 36.83 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9039,7 +8530,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C307")
+					(reference "C305")
 					(unit 1)
 				)
 			)
@@ -9128,6 +8619,15 @@
 			)
 		)
 		(property "Mouser_PN" "842-ICE40UP5K-SG48I"
+			(at 53.34 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
 			(at 53.34 165.1 0)
 			(effects
 				(font
@@ -9302,7 +8802,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "66f3ace1-1b2b-4598-bdcb-cbbb0bf01d4d")
-		(property "Reference" "#PWR0301"
+		(property "Reference" "#PWR0311"
 			(at 31.75 69.85 0)
 			(effects
 				(font
@@ -9368,7 +8868,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0301")
+					(reference "#PWR0311")
 					(unit 1)
 				)
 			)
@@ -9384,7 +8884,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6855c991-a8e5-4ee4-882d-08c9855c2eed")
-		(property "Reference" "#PWR0333"
+		(property "Reference" "#PWR0319"
 			(at 241.3 111.76 0)
 			(effects
 				(font
@@ -9435,7 +8935,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0333")
+					(reference "#PWR0319")
 					(unit 1)
 				)
 			)
@@ -9451,7 +8951,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "68db6bad-1807-4864-b584-14bf69301b08")
-		(property "Reference" "#PWR0323"
+		(property "Reference" "#PWR0327"
 			(at 172.72 140.97 0)
 			(effects
 				(font
@@ -9502,7 +9002,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0323")
+					(reference "#PWR0327")
 					(unit 1)
 				)
 			)
@@ -9510,15 +9010,15 @@
 	)
 	(symbol
 		(lib_id "power:VBUS")
-		(at 160.02 20.32 0)
+		(at 143.51 21.59 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "6a7dea00-8865-491c-84e9-18bd1233dc9f")
-		(property "Reference" "#PWR0319"
-			(at 160.02 24.13 0)
+		(property "Reference" "#PWR0302"
+			(at 143.51 25.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9527,7 +9027,7 @@
 			)
 		)
 		(property "Value" "VBUS"
-			(at 160.02 15.24 0)
+			(at 143.51 16.51 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9535,7 +9035,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 160.02 20.32 0)
+			(at 143.51 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9544,7 +9044,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 160.02 20.32 0)
+			(at 143.51 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9553,7 +9053,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 160.02 20.32 0)
+			(at 143.51 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9567,7 +9067,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0319")
+					(reference "#PWR0302")
 					(unit 1)
 				)
 			)
@@ -9582,7 +9082,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "742868a8-a9be-4b09-b782-e24a051467be")
-		(property "Reference" "C323"
+		(property "Reference" "C322"
 			(at 246.126 138.684 90)
 			(effects
 				(font
@@ -9663,6 +9163,24 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 245.11 139.7 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 245.11 139.7 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a4ad9c0c-ef74-4a64-9508-a49fd765f095")
 		)
@@ -9672,7 +9190,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C323")
+					(reference "C322")
 					(unit 1)
 				)
 			)
@@ -9688,7 +9206,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "74bec02f-3901-4186-afe5-42961b31efe0")
-		(property "Reference" "C311"
+		(property "Reference" "C316"
 			(at 178.054 127.254 90)
 			(effects
 				(font
@@ -9769,6 +9287,33 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 179.07 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X7R"
+			(at 179.07 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 179.07 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f5c04104-ed6b-49df-b23c-9207e91ddc4c")
 		)
@@ -9778,7 +9323,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C311")
+					(reference "C316")
 					(unit 1)
 				)
 			)
@@ -9794,7 +9339,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "76df1b88-a5de-4171-b834-77b9106581bd")
-		(property "Reference" "C318"
+		(property "Reference" "C303"
 			(at 237.49 32.004 0)
 			(effects
 				(font
@@ -9875,6 +9420,33 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 237.49 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X7R"
+			(at 237.49 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 237.49 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f60e06e2-2782-4c32-b7c2-3a6d4a5df77b")
 		)
@@ -9884,74 +9456,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C318")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 119.38 111.76 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "804abcb2-0331-42c6-a16d-ecfd3b1c2769")
-		(property "Reference" "#PWR0313"
-			(at 119.38 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 119.38 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 119.38 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 119.38 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 119.38 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0673811f-b1f4-430c-9739-cfda17380b80")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0313")
+					(reference "C303")
 					(unit 1)
 				)
 			)
@@ -9966,7 +9471,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "82c17cbc-5358-40e2-8d77-c2d038df2bd0")
-		(property "Reference" "#PWR0326"
+		(property "Reference" "#PWR0301"
 			(at 226.06 24.13 0)
 			(effects
 				(font
@@ -10016,7 +9521,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0326")
+					(reference "#PWR0301")
 					(unit 1)
 				)
 			)
@@ -10067,6 +9572,42 @@
 		)
 		(property "Description" "Resistor, small US symbol"
 			(at 48.26 33.02 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
+			(at 48.26 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "Bourns"
+			(at 48.26 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CR0402-JW-101GLF"
+			(at 48.26 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "652-CR0402JW-101GLF"
+			(at 48.26 33.02 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10169,6 +9710,15 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 247.65 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "8"
 			(uuid "dccad558-e46d-4625-90f5-32942d213fac")
 		)
@@ -10211,7 +9761,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8c0ac681-9fc5-4f97-a9b2-20611bfcb407")
-		(property "Reference" "#PWR0303"
+		(property "Reference" "#PWR0315"
 			(at 38.1 88.9 0)
 			(effects
 				(font
@@ -10262,7 +9812,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0303")
+					(reference "#PWR0315")
 					(unit 1)
 				)
 			)
@@ -10277,7 +9827,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8df9c9db-c5a3-44c4-8406-500fa054f6f7")
-		(property "Reference" "C319"
+		(property "Reference" "C312"
 			(at 238.76 78.994 0)
 			(effects
 				(font
@@ -10287,7 +9837,7 @@
 			)
 		)
 		(property "Value" "10uF X5R 25V"
-			(at 247.904 74.168 0)
+			(at 253.238 73.914 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10358,6 +9908,24 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 238.76 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 238.76 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "0bfa89ff-2009-44b0-a53f-4adf44d1f3ec")
 		)
@@ -10367,7 +9935,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C319")
+					(reference "C312")
 					(unit 1)
 				)
 			)
@@ -10454,6 +10022,15 @@
 			)
 		)
 		(property "Mouser_PN" "842-ICE40UP5K-SG48I"
+			(at 120.65 165.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
 			(at 120.65 165.1 0)
 			(effects
 				(font
@@ -10620,15 +10197,15 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 146.05 71.12 180)
+		(at 129.54 72.39 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "936c8574-c597-49b4-811e-999a4d6aa57d")
-		(property "Reference" "C308"
-			(at 151.638 68.834 0)
+		(property "Reference" "C307"
+			(at 135.128 70.104 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10637,7 +10214,7 @@
 			)
 		)
 		(property "Value" "10uF X5R 25V"
-			(at 154.432 73.152 0)
+			(at 137.922 74.422 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10646,7 +10223,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 145.0848 67.31 0)
+			(at 128.5748 68.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10655,7 +10232,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 146.05 71.12 0)
+			(at 129.54 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10664,7 +10241,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 146.05 71.12 0)
+			(at 129.54 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10673,7 +10250,7 @@
 			)
 		)
 		(property "LCSC" "C96446"
-			(at 146.05 71.12 0)
+			(at 129.54 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10682,7 +10259,7 @@
 			)
 		)
 		(property "MFG" "Kyocera AVX"
-			(at 146.05 71.12 90)
+			(at 129.54 72.39 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10691,7 +10268,7 @@
 			)
 		)
 		(property "MPN" "CM105X5R106M25AT"
-			(at 146.05 71.12 90)
+			(at 129.54 72.39 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10700,7 +10277,25 @@
 			)
 		)
 		(property "Mouser_PN" "346-CM105X5R106M25AT"
-			(at 146.05 71.12 90)
+			(at 129.54 72.39 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
+			(at 129.54 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 129.54 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10717,7 +10312,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C308")
+					(reference "C307")
 					(unit 1)
 				)
 			)
@@ -11096,6 +10691,15 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 39.37 67.31 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ebd01c28-29ba-406d-9729-ec6d6fe87663")
 		)
@@ -11126,7 +10730,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "93f23f1e-0e08-439e-ad9e-8fa230878a3f")
-		(property "Reference" "R304"
+		(property "Reference" "R305"
 			(at 44.196 39.624 90)
 			(effects
 				(font
@@ -11169,6 +10773,42 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 48.26 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "Bourns"
+			(at 48.26 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CR0402-JW-101GLF"
+			(at 48.26 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "652-CR0402JW-101GLF"
+			(at 48.26 40.64 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "430a37ce-9ed8-42e1-bc4b-20a30a53b56a")
 		)
@@ -11178,7 +10818,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R304")
+					(reference "R305")
 					(unit 1)
 				)
 			)
@@ -11194,7 +10834,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9b581ab2-19ed-4ae2-a776-389fa004149b")
-		(property "Reference" "#PWR0331"
+		(property "Reference" "#PWR0316"
 			(at 238.76 88.9 0)
 			(effects
 				(font
@@ -11245,7 +10885,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0331")
+					(reference "#PWR0316")
 					(unit 1)
 				)
 			)
@@ -11261,7 +10901,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9bbc8c1e-a8fc-4605-9d71-0e027bb1f651")
-		(property "Reference" "C303"
+		(property "Reference" "C320"
 			(at 37.084 134.874 90)
 			(effects
 				(font
@@ -11342,6 +10982,33 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 38.1 135.89 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X7R"
+			(at 38.1 135.89 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 38.1 135.89 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f04fe1ea-3039-46bc-b3ea-4f1c73554860")
 		)
@@ -11351,7 +11018,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C303")
+					(reference "C320")
 					(unit 1)
 				)
 			)
@@ -11366,7 +11033,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9da14b1a-e7c7-4449-b417-a8a7b1c15801")
-		(property "Reference" "C324"
+		(property "Reference" "C314"
 			(at 257.048 98.298 0)
 			(effects
 				(font
@@ -11678,6 +11345,15 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 254 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "c9da5396-2046-4531-8a76-106a73e771f2")
 		)
@@ -11687,7 +11363,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C324")
+					(reference "C314")
 					(unit 1)
 				)
 			)
@@ -11703,7 +11379,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9e78482e-ebf7-4dd1-83e1-c0003296753b")
-		(property "Reference" "C304"
+		(property "Reference" "C323"
 			(at 37.084 139.954 90)
 			(effects
 				(font
@@ -11784,6 +11460,24 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 38.1 140.97 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 38.1 140.97 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "b2ea2340-1257-40f5-9f53-0c548d402093")
 		)
@@ -11793,7 +11487,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C304")
+					(reference "C323")
 					(unit 1)
 				)
 			)
@@ -11808,7 +11502,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9f5b384f-b442-46b2-a338-c18f5a6cd646")
-		(property "Reference" "R307"
+		(property "Reference" "R306"
 			(at 82.55 103.378 0)
 			(effects
 				(font
@@ -11862,7 +11556,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Vishay"
+		(property "MFG" "Bourns"
 			(at 82.55 106.68 0)
 			(effects
 				(font
@@ -11871,7 +11565,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MCS04020C1002FE000"
+		(property "MPN" "CRT0402-FZ-1003GLF"
 			(at 82.55 106.68 0)
 			(effects
 				(font
@@ -11880,7 +11574,16 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "594-MCS04020C1002FE0"
+		(property "Mouser_PN" "652-CRT0402FZ1003GLF"
+			(at 82.55 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
 			(at 82.55 106.68 0)
 			(effects
 				(font
@@ -11898,7 +11601,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R307")
+					(reference "R306")
 					(unit 1)
 				)
 			)
@@ -11913,7 +11616,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a070b82a-5653-43d0-8f81-9f8f4bacc128")
-		(property "Reference" "#PWR0335"
+		(property "Reference" "#PWR0318"
 			(at 254 99.06 0)
 			(effects
 				(font
@@ -11979,7 +11682,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0335")
+					(reference "#PWR0318")
 					(unit 1)
 				)
 			)
@@ -11987,7 +11690,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 146.05 40.64 0)
+		(at 129.54 41.91 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -11995,8 +11698,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a0d41b1c-c80c-41b2-a2f6-8f52d842cff8")
-		(property "Reference" "#PWR0316"
-			(at 146.05 46.99 0)
+		(property "Reference" "#PWR0307"
+			(at 129.54 48.26 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12005,7 +11708,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 146.304 44.45 0)
+			(at 129.794 45.72 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12014,7 +11717,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 146.05 40.64 0)
+			(at 129.54 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12023,7 +11726,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 146.05 40.64 0)
+			(at 129.54 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12032,7 +11735,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 146.05 40.64 0)
+			(at 129.54 41.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12046,110 +11749,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0316")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_US")
-		(at 66.04 144.78 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "a2095735-28d7-48ee-b01f-710393071087")
-		(property "Reference" "R306"
-			(at 64.262 145.034 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10k"
-			(at 68.072 144.78 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 65.024 144.526 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 66.04 144.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 66.04 144.78 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2907091"
-			(at 66.04 144.78 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Vishay"
-			(at 66.04 144.78 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "MCT06030C1009FP500"
-			(at 66.04 144.78 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "594-MCT06030C1009FP5"
-			(at 66.04 144.78 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2a59d4fd-9462-4f4f-90db-461fdd5a78d0")
-		)
-		(pin "2"
-			(uuid "3df908f1-49b7-4d5b-905c-5c1c80bf6928")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R306")
+					(reference "#PWR0307")
 					(unit 1)
 				)
 			)
@@ -12164,7 +11764,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a331b2e0-ceae-42cc-a29a-1038bf2da59b")
-		(property "Reference" "C317"
+		(property "Reference" "C311"
 			(at 232.41 78.994 0)
 			(effects
 				(font
@@ -12245,6 +11845,33 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 232.41 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X7R"
+			(at 232.41 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 232.41 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "c6f36165-933f-4434-8502-b1306370822b")
 		)
@@ -12254,73 +11881,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C317")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 66.04 139.7 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "a4d45fdb-65eb-4c78-a176-617a381d4743")
-		(property "Reference" "#PWR0305"
-			(at 66.04 143.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+VFPGAIO"
-			(at 62.738 136.144 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 66.04 139.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 66.04 139.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+VFPGAIO\""
-			(at 66.04 139.7 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "d20f21bb-e379-4d41-ab71-5144fe9fd56e")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0305")
+					(reference "C311")
 					(unit 1)
 				)
 			)
@@ -12336,7 +11897,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a65e38b7-f1d6-4f21-9989-c3de859ca2ad")
-		(property "Reference" "C306"
+		(property "Reference" "C324"
 			(at 103.124 139.954 90)
 			(effects
 				(font
@@ -12417,6 +11978,24 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 104.14 140.97 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 104.14 140.97 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "679ef3f2-ffa8-4108-92dc-d5794056c190")
 		)
@@ -12426,7 +12005,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C306")
+					(reference "C324")
 					(unit 1)
 				)
 			)
@@ -12442,7 +12021,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "aa74cd4f-759e-4861-aba3-7e5112c9f3d3")
-		(property "Reference" "C321"
+		(property "Reference" "C304"
 			(at 243.84 32.004 0)
 			(effects
 				(font
@@ -12452,7 +12031,7 @@
 			)
 		)
 		(property "Value" "100pF NP0 100V"
-			(at 255.524 27.178 0)
+			(at 260.858 27.178 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12523,6 +12102,15 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 243.84 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "0222c188-03bc-4632-8180-0fd400d4f9ee")
 		)
@@ -12532,7 +12120,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C321")
+					(reference "C304")
 					(unit 1)
 				)
 			)
@@ -12621,6 +12209,15 @@
 			)
 		)
 		(property "Mouser_PN" "842-ICE40UP5K-SG48I"
+			(at 194.31 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
 			(at 194.31 147.32 0)
 			(effects
 				(font
@@ -12787,15 +12384,15 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 160.02 54.61 180)
+		(at 143.51 55.88 180)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "b9190a5e-99f5-4df4-b833-9c1abdbed1c7")
-		(property "Reference" "C310"
-			(at 165.608 52.324 0)
+		(property "Reference" "C306"
+			(at 149.098 53.594 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12804,7 +12401,7 @@
 			)
 		)
 		(property "Value" "10uF X5R 25V"
-			(at 168.402 56.642 0)
+			(at 151.892 57.912 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12813,7 +12410,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 159.0548 50.8 0)
+			(at 142.5448 52.07 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12822,7 +12419,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 160.02 54.61 0)
+			(at 143.51 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12831,7 +12428,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 160.02 54.61 0)
+			(at 143.51 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12840,7 +12437,7 @@
 			)
 		)
 		(property "LCSC" "C96446"
-			(at 160.02 54.61 0)
+			(at 143.51 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12849,7 +12446,7 @@
 			)
 		)
 		(property "MFG" "Kyocera AVX"
-			(at 160.02 54.61 90)
+			(at 143.51 55.88 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12858,7 +12455,7 @@
 			)
 		)
 		(property "MPN" "CM105X5R106M25AT"
-			(at 160.02 54.61 90)
+			(at 143.51 55.88 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12867,7 +12464,25 @@
 			)
 		)
 		(property "Mouser_PN" "346-CM105X5R106M25AT"
-			(at 160.02 54.61 90)
+			(at 143.51 55.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
+			(at 143.51 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 143.51 55.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12884,7 +12499,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C310")
+					(reference "C306")
 					(unit 1)
 				)
 			)
@@ -12892,15 +12507,15 @@
 	)
 	(symbol
 		(lib_id "power:VBUS")
-		(at 146.05 30.48 0)
+		(at 129.54 31.75 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "b9335fbb-8c3b-49fe-b824-45842da432cd")
-		(property "Reference" "#PWR0315"
-			(at 146.05 34.29 0)
+		(property "Reference" "#PWR0303"
+			(at 129.54 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12909,7 +12524,7 @@
 			)
 		)
 		(property "Value" "VBUS"
-			(at 146.05 25.4 0)
+			(at 129.54 26.67 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12917,7 +12532,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 146.05 30.48 0)
+			(at 129.54 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12926,7 +12541,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 146.05 30.48 0)
+			(at 129.54 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12935,7 +12550,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 146.05 30.48 0)
+			(at 129.54 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12949,7 +12564,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0315")
+					(reference "#PWR0303")
 					(unit 1)
 				)
 			)
@@ -12965,7 +12580,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bdb4be5e-efe3-4cf7-a5f2-b6b6b217988c")
-		(property "Reference" "#PWR0308"
+		(property "Reference" "#PWR0321"
 			(at 82.55 118.11 0)
 			(effects
 				(font
@@ -13016,7 +12631,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0308")
+					(reference "#PWR0321")
 					(unit 1)
 				)
 			)
@@ -13032,7 +12647,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "cdcc47d4-d6a4-4edb-8b52-a444b5508ad4")
-		(property "Reference" "C314"
+		(property "Reference" "C315"
 			(at 225.044 125.984 90)
 			(effects
 				(font
@@ -13113,6 +12728,33 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 226.06 127 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X7R"
+			(at 226.06 127 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 226.06 127 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "14a4f8f9-cc9f-4275-bc32-e8b32f43c107")
 		)
@@ -13122,7 +12764,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C314")
+					(reference "C315")
 					(unit 1)
 				)
 			)
@@ -13137,7 +12779,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ced9361c-404c-4a1d-9706-1aecd120bdd6")
-		(property "Reference" "C322"
+		(property "Reference" "C319"
 			(at 246.126 132.334 90)
 			(effects
 				(font
@@ -13218,6 +12860,33 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 245.11 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X7R"
+			(at 245.11 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 245.11 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "3c729a4c-6399-4332-89bf-ec485bbc9563")
 		)
@@ -13227,7 +12896,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C322")
+					(reference "C319")
 					(unit 1)
 				)
 			)
@@ -13235,7 +12904,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 160.02 30.48 0)
+		(at 143.51 31.75 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -13243,8 +12912,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "dba0c6e5-997c-4691-80f8-afe8749dbba1")
-		(property "Reference" "#PWR0320"
-			(at 160.02 36.83 0)
+		(property "Reference" "#PWR0304"
+			(at 143.51 38.1 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13253,7 +12922,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 160.274 34.29 0)
+			(at 143.764 35.56 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13262,7 +12931,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 160.02 30.48 0)
+			(at 143.51 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13271,7 +12940,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 160.02 30.48 0)
+			(at 143.51 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13280,7 +12949,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 160.02 30.48 0)
+			(at 143.51 31.75 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -13294,7 +12963,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0320")
+					(reference "#PWR0304")
 					(unit 1)
 				)
 			)
@@ -13352,6 +13021,42 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 35.56 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "Bourns"
+			(at 35.56 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CR0402-JW-101GLF"
+			(at 35.56 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "652-CR0402JW-101GLF"
+			(at 35.56 33.02 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "ab03e8a3-36c0-4567-9bec-7084f8aeb6fa")
 		)
@@ -13368,178 +13073,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 100.33 106.68 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "e109c404-bee8-4d77-8188-5785a0e29d7f")
-		(property "Reference" "R308"
-			(at 100.33 103.378 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10k"
-			(at 100.584 109.474 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 101.346 106.934 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 100.33 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, US symbol"
-			(at 100.33 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C60490"
-			(at 100.33 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Vishay"
-			(at 100.33 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "MCS04020C1002FE000"
-			(at 100.33 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "594-MCS04020C1002FE0"
-			(at 100.33 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "e3df9906-d16a-4734-80b0-ec7c3220c144")
-		)
-		(pin "1"
-			(uuid "999e1b8f-65cd-47f8-b1d4-142cd0049ec4")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R308")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 100.33 111.76 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "e2774551-1ab4-4b0b-8361-20cf553e77af")
-		(property "Reference" "#PWR0310"
-			(at 100.33 118.11 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 100.33 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 100.33 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 100.33 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 100.33 111.76 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "612d5a44-8f95-4901-b2d6-b08811fdc807")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0310")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+3.3V")
 		(at 229.87 140.97 0)
 		(unit 1)
@@ -13549,7 +13082,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e94b46fc-559a-4f28-b92e-418fc5bf7f2b")
-		(property "Reference" "#PWR0327"
+		(property "Reference" "#PWR0328"
 			(at 229.87 144.78 0)
 			(effects
 				(font
@@ -13599,7 +13132,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0327")
+					(reference "#PWR0328")
 					(unit 1)
 				)
 			)
@@ -13615,7 +13148,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e9ca7023-25a0-4dfe-b993-9a8d4d3b0d9b")
-		(property "Reference" "#PWR0334"
+		(property "Reference" "#PWR0329"
 			(at 251.46 147.32 0)
 			(effects
 				(font
@@ -13666,7 +13199,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0334")
+					(reference "#PWR0329")
 					(unit 1)
 				)
 			)
@@ -13682,7 +13215,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ebd39683-8c8a-4af7-ab22-a4e1bec8c04f")
-		(property "Reference" "C312"
+		(property "Reference" "C318"
 			(at 178.054 132.334 90)
 			(effects
 				(font
@@ -13763,6 +13296,24 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 179.07 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 179.07 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "b60bda19-9031-4922-9437-b762d7fb366e")
 		)
@@ -13772,7 +13323,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C312")
+					(reference "C318")
 					(unit 1)
 				)
 			)
@@ -13787,7 +13338,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f69d6c4b-5990-477f-91b0-c10c544597f8")
-		(property "Reference" "C320"
+		(property "Reference" "C313"
 			(at 244.348 98.298 0)
 			(effects
 				(font
@@ -14099,6 +13650,15 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 241.3 100.33 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "49f233e9-094f-40ac-a7cb-8ac4f210385b")
 		)
@@ -14108,7 +13668,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C320")
+					(reference "C313")
 					(unit 1)
 				)
 			)
@@ -14123,7 +13683,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "fba08c72-3137-4328-aac5-e711cf060532")
-		(property "Reference" "R312"
+		(property "Reference" "R307"
 			(at 238.252 128.524 90)
 			(effects
 				(font
@@ -14202,6 +13762,15 @@
 				(hide yes)
 			)
 		)
+		(property "Field10" ""
+			(at 240.03 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "8876c28a-5967-4e69-9eab-accddff7a77d")
 		)
@@ -14211,180 +13780,14 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "R312")
+					(reference "R307")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(sheet
-		(at 184.15 49.53)
-		(size 20.32 11.43)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "3b226a31-184c-44c4-aafa-726f87bf434b")
-		(property "Sheetname" "pullBase Driver"
-			(at 184.15 48.8184 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "phase-driver.kicad_sch"
-			(at 184.15 61.5446 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(pin "driverNEN" input
-			(at 184.15 58.42 180)
-			(uuid "458b5030-59df-4245-a6b6-9ecbbf6bd637")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "in" input
-			(at 184.15 53.34 180)
-			(uuid "6e1c3f55-a406-4c8f-a437-b1c753db7a48")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "out" output
-			(at 204.47 53.34 0)
-			(uuid "8ebec950-5380-4e57-8ae5-3fde30cc48ed")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "drainNet" passive
-			(at 204.47 57.15 0)
-			(uuid "bcb19a6b-dc2f-4843-8853-85704b097ea3")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(page "6")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 184.15 31.75)
-		(size 20.32 11.43)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "4a31c6c1-d769-4782-adc0-421b2d53bf56")
-		(property "Sheetname" "pushPeak Driver"
-			(at 184.15 31.0384 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "phase-driver.kicad_sch"
-			(at 184.15 43.7646 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(pin "driverNEN" input
-			(at 184.15 40.64 180)
-			(uuid "6b329a81-51d6-4e45-832b-e7ae6ba46532")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "in" input
-			(at 184.15 35.56 180)
-			(uuid "c519017f-de1b-42d0-948f-122f71e6ae5f")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "out" output
-			(at 204.47 35.56 0)
-			(uuid "ca19bfc5-f566-44e9-a94b-c8a7c9fdac88")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "drainNet" passive
-			(at 204.47 39.37 0)
-			(uuid "63cb1d53-7245-4b91-9355-5a2fcdc7e3ca")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(page "5")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 184.15 15.24)
+		(at 182.88 54.61)
 		(size 20.32 11.43)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -14399,8 +13802,8 @@
 			(color 0 0 0 0.0000)
 		)
 		(uuid "5629a0c2-0301-4d7f-817a-ddea3efd265b")
-		(property "Sheetname" "pushBase Driver"
-			(at 184.15 14.5284 0)
+		(property "Sheetname" "push Driver"
+			(at 182.88 53.8984 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14409,7 +13812,7 @@
 			)
 		)
 		(property "Sheetfile" "phase-driver.kicad_sch"
-			(at 184.15 27.2546 0)
+			(at 182.88 66.6246 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14418,8 +13821,8 @@
 				(hide yes)
 			)
 		)
-		(pin "driverNEN" input
-			(at 184.15 24.13 180)
+		(pin "en" input
+			(at 182.88 63.5 180)
 			(uuid "5802704e-05fa-42ff-8906-16119baa1de1")
 			(effects
 				(font
@@ -14428,9 +13831,9 @@
 				(justify left)
 			)
 		)
-		(pin "in" input
-			(at 184.15 19.05 180)
-			(uuid "7ffa38ec-1959-44af-b329-ad6945e8cf6e")
+		(pin "in1" input
+			(at 182.88 59.69 180)
+			(uuid "3ca84849-d5b6-4e2d-b0d3-c7bc8ac00737")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14438,9 +13841,19 @@
 				(justify left)
 			)
 		)
-		(pin "out" output
-			(at 204.47 19.05 0)
-			(uuid "4ddef44b-8a99-4878-a16f-01d4f8b9a629")
+		(pin "in2" input
+			(at 182.88 57.15 180)
+			(uuid "4158333c-c87c-48ea-8ea8-6f4827a24441")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "out1" output
+			(at 203.2 62.23 0)
+			(uuid "5be7830a-a48a-4f1a-8781-dd5e774ed840")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14448,9 +13861,9 @@
 				(justify right)
 			)
 		)
-		(pin "drainNet" passive
-			(at 204.47 22.86 0)
-			(uuid "7dcad96d-6c2e-42b4-9b3f-9b2daf7f3563")
+		(pin "out2" output
+			(at 203.2 58.42 0)
+			(uuid "0b521c3c-6ccc-4b69-81d6-1adad5e709c8")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14467,7 +13880,7 @@
 		)
 	)
 	(sheet
-		(at 184.15 66.04)
+		(at 182.88 35.56)
 		(size 20.32 11.43)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -14481,9 +13894,9 @@
 		(fill
 			(color 0 0 0 0.0000)
 		)
-		(uuid "e98b5ab4-d2cc-43e7-a801-3acf84181577")
-		(property "Sheetname" "pullPeak Driver"
-			(at 184.15 65.3284 0)
+		(uuid "f1c7cc76-53c1-478d-8ee0-a18f165db938")
+		(property "Sheetname" "pull Driver"
+			(at 182.88 34.8484 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14492,7 +13905,7 @@
 			)
 		)
 		(property "Sheetfile" "phase-driver.kicad_sch"
-			(at 184.15 78.0546 0)
+			(at 182.88 47.5746 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14501,9 +13914,9 @@
 				(hide yes)
 			)
 		)
-		(pin "driverNEN" input
-			(at 184.15 74.93 180)
-			(uuid "4678d21b-4ac5-4180-9c94-47c0c36a4610")
+		(pin "en" input
+			(at 182.88 44.45 180)
+			(uuid "bb930020-70a1-4032-b9bc-34505dd6dacc")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14511,9 +13924,9 @@
 				(justify left)
 			)
 		)
-		(pin "in" input
-			(at 184.15 69.85 180)
-			(uuid "4a3a7a52-89ea-41d2-bea5-c88dd13b9a90")
+		(pin "in1" input
+			(at 182.88 40.64 180)
+			(uuid "34f0ac44-5313-46a7-b0d7-1d04e25f6968")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14521,9 +13934,19 @@
 				(justify left)
 			)
 		)
-		(pin "out" output
-			(at 204.47 69.85 0)
-			(uuid "f8050614-3546-4842-87da-b88542eaeb4a")
+		(pin "in2" input
+			(at 182.88 38.1 180)
+			(uuid "df57dd7f-b5cc-490d-9976-6124e2960a97")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "out1" output
+			(at 203.2 43.18 0)
+			(uuid "871a210e-cf30-4e3d-b4e3-51bcf0489af0")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14531,9 +13954,9 @@
 				(justify right)
 			)
 		)
-		(pin "drainNet" passive
-			(at 204.47 73.66 0)
-			(uuid "1f4d741a-f3dc-45c8-96b5-5efc55ef18d9")
+		(pin "out2" output
+			(at 203.2 39.37 0)
+			(uuid "3b34f5ec-2be1-469d-b481-2d8cd1923b9a")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14544,7 +13967,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(page "7")
+					(page "5")
 				)
 			)
 		)

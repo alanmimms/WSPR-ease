@@ -13,7 +13,7 @@ set_io rfPushBase 42
 set_io rfPushPeak 37
 set_io rfPullBase 45
 set_io rfPullPeak 48
-set_io driverNEN 25
+set_io driverEN 44
 
 # Reset without reconfiguration
 set_io fpgaNRESET 36

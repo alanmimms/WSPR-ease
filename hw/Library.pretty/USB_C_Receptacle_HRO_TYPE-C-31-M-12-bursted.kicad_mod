@@ -210,10 +210,10 @@
 		(uuid "4558f1f0-2fa3-46e1-a220-284fa2707bb5")
 	)
 	(pad "A1B12" smd rect
-		(at 3.25 -4.045)
+		(at -3.25 -4.045)
 		(size 0.6 1.45)
 		(layers "F.Cu" "F.Mask" "F.Paste")
-		(uuid "3795b0f1-50f9-473e-9d26-381fc08b3c2d")
+		(uuid "245fae56-8b58-4bd8-bbf1-36624dc3fa3e")
 	)
 	(pad "A4B9" smd rect
 		(at -2.45 -4.045)
@@ -252,10 +252,10 @@
 		(uuid "a35f3da7-7460-43f1-99b7-9ed521817778")
 	)
 	(pad "A12B1" smd rect
-		(at -3.25 -4.045)
+		(at 3.25 -4.045)
 		(size 0.6 1.45)
 		(layers "F.Cu" "F.Mask" "F.Paste")
-		(uuid "245fae56-8b58-4bd8-bbf1-36624dc3fa3e")
+		(uuid "3795b0f1-50f9-473e-9d26-381fc08b3c2d")
 	)
 	(pad "B5" smd rect
 		(at 1.75 -4.045)
@@ -320,7 +320,7 @@
 	(embedded_fonts no)
 	(model "${WSPR_EASE_SYMBOLS}/HRO-TYPE-C-31-M-12.step"
 		(offset
-			(xyz -4.5 -3.5 0)
+			(xyz -4.5 -3.65 0)
 		)
 		(scale
 			(xyz 1 1 1)

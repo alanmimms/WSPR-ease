@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.0
+          "min_clearance": 0.2
         }
       },
       "diff_pair_dimensions": [
@@ -622,7 +622,7 @@
     "classes": [
       {
         "bus_width": 12,
-        "clearance": 0.2,
+        "clearance": 0.127,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
@@ -641,17 +641,27 @@
       {
         "name": "RF",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 2,
+        "priority": 3,
         "schematic_color": "rgb(255, 20, 54)",
         "track_width": 0.4,
         "wire_width": 12
+      },
+      {
+        "bus_width": 18,
+        "line_style": 0,
+        "name": "RF-power",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 0,
+        "schematic_color": "rgb(0, 135, 255)",
+        "track_width": 0.5,
+        "wire_width": 18
       },
       {
         "bus_width": 6,
         "line_style": 0,
         "name": "diff90",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 1,
+        "priority": 2,
         "schematic_color": "rgb(25, 22, 255)",
         "wire_width": 12
       },
@@ -660,7 +670,7 @@
         "line_style": 0,
         "name": "power",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "priority": 0,
+        "priority": 1,
         "schematic_color": "rgb(19, 112, 25)",
         "wire_width": 18
       }
@@ -685,6 +695,18 @@
       ],
       "/Low Pass Filters/RFout": [
         "RF"
+      ],
+      "/Transmitter/pullBaseT": [
+        "RF-power"
+      ],
+      "/Transmitter/pullPeakT": [
+        "RF-power"
+      ],
+      "/Transmitter/pushBaseT": [
+        "RF-power"
+      ],
+      "/Transmitter/pushPeakT": [
+        "RF-power"
       ],
       "Net-(C15-Pad1)": [
         "RF"
@@ -722,10 +744,19 @@
       "Net-(C209-Pad1)": [
         "RF"
       ],
+      "Net-(C210-Pad1)": [
+        "RF"
+      ],
+      "Net-(C211-Pad1)": [
+        "RF"
+      ],
       "Net-(J1-In)": [
         "RF"
       ],
       "Net-(J101-In)": [
+        "RF"
+      ],
+      "Net-(J103-In)": [
         "RF"
       ],
       "Net-(S1-J1)": [
@@ -806,11 +837,17 @@
       "Net-(U102-USB_D-)": [
         "diff90"
       ],
+      "Net-(U103-SW)": [
+        "power"
+      ],
       "Net-(U104-IO3)": [
         "diff90"
       ],
       "Net-(U104-IO4)": [
         "diff90"
+      ],
+      "Net-(U104-RF_IN)": [
+        "RF"
       ],
       "Net-(U105-IO3)": [
         "diff90"
@@ -865,70 +902,6 @@
       ]
     },
     "netclass_patterns": [
-      {
-        "netclass": "RF",
-        "pattern": "push1G"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "pull1*"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "push2*"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "pull2*"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/push1G"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/push2G"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/push1D"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/pull1D"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/pull1G"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/push2D"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/pull2G"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/pull2D"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/push1T"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/push2T"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/pull1T"
-      },
-      {
-        "netclass": "RF",
-        "pattern": "/Transmitter/pull2T"
-      },
       {
         "netclass": "RF",
         "pattern": "/Low Pass Filters/RFin"
@@ -1307,7 +1280,7 @@
           "show": false
         }
       ],
-      "filter_string": "r",
+      "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
       "name": "",
@@ -1369,19 +1342,11 @@
     ],
     [
       "5629a0c2-0301-4d7f-817a-ddea3efd265b",
-      "pushBase Driver"
+      "push Driver"
     ],
     [
-      "4a31c6c1-d769-4782-adc0-421b2d53bf56",
-      "pushPeak Driver"
-    ],
-    [
-      "3b226a31-184c-44c4-aafa-726f87bf434b",
-      "pullBase Driver"
-    ],
-    [
-      "e98b5ab4-d2cc-43e7-a801-3acf84181577",
-      "pullPeak Driver"
+      "f1c7cc76-53c1-478d-8ee0-a18f165db938",
+      "pull Driver"
     ]
   ],
   "text_variables": {}

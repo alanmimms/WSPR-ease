@@ -704,7 +704,7 @@ class Top(Elaboratable):
         self.rfPushPeak = Signal(name="rfPushPeak")
         self.rfPullBase = Signal(name="rfPullBase")
         self.rfPullPeak = Signal(name="rfPullPeak")
-        self.driverNEN = Signal(name="driverNEN")
+        self.driverEN = Signal(name="driverEN")
 
     def getPorts(self):
         ports = [
@@ -719,7 +719,7 @@ class Top(Elaboratable):
             self.rfPushPeak,
             self.rfPullBase,
             self.rfPullPeak,
-            self.driverNEN
+            self.driverEN
         ]
 
         # Only expose the sim clock to Verilator if we are simulating
@@ -817,5 +817,5 @@ class Top(Elaboratable):
         m.d.comb += [exciter.tw.eq(spi.tw),
                      exciter.txEn.eq(txEnSync),
                      exciter.modeSq.eq(spi.modeSq)]
-        m.d.sync += self.driverNEN.eq(~txEnSync)
+        m.d.sync += self.driverEN.eq(txEnSync)
         return m

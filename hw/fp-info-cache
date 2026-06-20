@@ -1,4 +1,4 @@
-27253544283060682
+27322071727235543
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -71526,6 +71526,13 @@ Connector
 16
 16
 Library
+USB480003A
+USB4800-03-A-1
+Connector
+0
+16
+16
+Library
 USB_C_Receptacle_HRO_TYPE-C-31-M-12-bursted
 USB Type-C receptacle for USB 2.0 and PD, http://www.krhro.com/uploads/soft/180320/1-1P320120243.pdf
 usb usb-c 2.0 pd
@@ -107498,6 +107505,13 @@ Varistor VF
 0
 2
 2
+symbols
+CONN12_C-31-M-12_HRO
+
+TYPE-C-31-M-12 
+0
+14
+14
 symbols
 CX90M-16P_HIR
 
