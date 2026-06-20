@@ -76,6 +76,7 @@ hw $(FPGATARGET):	$(RTL_SOURCES) $(PCF) timing.py
 		--json $(PROJECT).json --pcf $(PCF) \
 		--log build/nextpnr.log -q \
 		--asc $(PROJECT).asc
+	@grep "Max frequency" build/nextpnr.log
 	@echo "  ICEPACK (Bitstream)..."
 	icepack $(PROJECT).asc $(PROJECT).bin
 	mv -f $(PROJECT).bin $(FPGATARGET)

@@ -454,9 +454,14 @@ class Exciter(Elaboratable):
 
         noiseShift = 7
 
+        # Register the tuning word half-step locally to break the SPI routing path.
+        twHalfStep = Signal(16, reset_less=True)
+
         m.d.sync += [
+            twHalfStep.eq(self.tw[32:48] >> 1),        # Divide by two for 0.5 cycle.
+
             phaseRQ.eq(phaseR),
-            phaseFQ.eq(phaseR + (self.tw[32:48] >> 1)),        # Divide by two for 0.5 cycle
+            phaseFQ.eq(phaseR + twHalfStep),
 
             noiseRQ.eq(noiseQ >> noiseShift),
             noiseFQ.eq(noiseQinv >> noiseShift)
