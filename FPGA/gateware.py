@@ -141,14 +141,12 @@ class PipelinedNCO(Elaboratable):
 
 class FreqCounter(Elaboratable):
 
-    def __init__(self, width=32):
-        self.width = width
-
+    def __init__(self):
         # Input signal for the Pulse-Per-Second GNSS timing edge
         self.samplePPS = Signal()
 
         # Latched count of system clock cycles per PPS interval
-        self.ppsCount = Signal(width, reset_less=True)
+        self.ppsCount = Signal(32, reset_less=True)
 
         # 5-bit generation counter incremented at each PPS edge
         self.ppsGen = Signal(5, reset_less=True)
@@ -207,8 +205,10 @@ class FreqCounter(Elaboratable):
         m.d.sync += risingPPS.eq(syncPPS & ~lastPPS)
 
         with m.If(risingPPS):
-            m.d.sync += [self.ppsGen.eq(self.ppsGen + 1),
-                         self.ppsCount.eq(countOut)]
+            m.d.sync += [
+                self.ppsGen.eq(self.ppsGen + 1),
+                self.ppsCount.eq(countOut)
+            ]
 
         return m
 
@@ -241,13 +241,21 @@ class SPIRegisters(Elaboratable):
         sclk = Signal(reset_less=True)
         mosi = Signal(reset_less=True)
         ncs = Signal(reset_less=True)
-        m.d.sync += [sclk.eq(sclkSync), mosi.eq(mosiSync), ncs.eq(ncsSync)]
+        m.d.sync += [
+            sclk.eq(sclkSync),
+            mosi.eq(mosiSync), ncs.eq(ncsSync)
+        ]
+
         lastSclk = Signal(reset_less=True)
         m.d.sync += lastSclk.eq(sclk)
+
         # Rising/Falling edge detection of the SPI clock
         sclkR = Signal(reset_less=True)
         sclkF = Signal(reset_less=True)
-        m.d.sync += [sclkR.eq(sclk & ~lastSclk), sclkF.eq(~sclk & lastSclk)]
+        m.d.sync += [
+            sclkR.eq(sclk & ~lastSclk),
+            sclkF.eq(~sclk & lastSclk)
+        ]
         
         bitCount = Signal(6, reset_less=True)
 
@@ -265,35 +273,47 @@ class SPIRegisters(Elaboratable):
         m.d.comb += self.oMISO.eq(misoReg)
         
         with m.If(ncs):
-            m.d.sync += [bitCount.eq(0),
-                         isBit7R.eq(0),
-                         isBit7F.eq(0),
-                         isBit39R.eq(0),
-                         misoReg.eq(0)]
+            m.d.sync += [
+                bitCount.eq(0),
+                isBit7R.eq(0),
+                isBit7F.eq(0),
+                isBit39R.eq(0),
+                misoReg.eq(0)
+            ]
 
         with m.Else():
 
             with m.If(sclkR):
-                m.d.sync += [bitCount.eq(bitCount + 1),
-                             isBit7R.eq(bitCount == 6),
-                             isBit39R.eq(bitCount == 38),
-                             mosiSR.eq((mosiSR << 1) | mosi)]
+                m.d.sync += [
+                    bitCount.eq(bitCount + 1),
+                    isBit7R.eq(bitCount == 6),
+                    isBit39R.eq(bitCount == 38),
+                    mosiSR.eq((mosiSR << 1) | mosi)
+                ]
 
             with m.If(sclkF):
-                m.d.sync += [isBit7F.eq(bitCount == 7),
-                             misoReg.eq(misoSR[31]),
-                             misoSR.eq(misoSR << 1)]
+                m.d.sync += [
+                    isBit7F.eq(bitCount == 7),
+                    misoReg.eq(misoSR[31]),
+                    misoSR.eq(misoSR << 1)
+                ]
         
         # Internal register holding the contents of the CONTROL register
         ctrlReg = Signal(ControlStruct, reset_less=True)
 
+        # Clock domain crossing from 40MHz to 90MHz
+
         # Internal registers for the 48-bit NCO tuning word
         twLow = Signal(32, reset_less=True)
         twHi = Signal(16, reset_less=True)
-        localPLL = Signal(reset_less=True)
-        localPpsC = Signal(32, reset_less=True)
-        localPpsG = Signal(5, reset_less=True)
-        m.d.sync += [localPLL.eq(self.pllLocked), localPpsC.eq(self.ppsCount), localPpsG.eq(self.ppsGen)]
+        pllLockedQ = Signal(reset_less=True)
+        ppsCountQ = Signal(32, reset_less=True)
+        ppsGenQ = Signal(5, reset_less=True)
+        m.d.sync += [
+            pllLockedQ.eq(self.pllLocked),
+            ppsCountQ.eq(self.ppsCount),
+            ppsGenQ.eq(self.ppsGen)
+        ]
         
         readValPipe = Signal(32, reset_less=True)
 
@@ -315,13 +335,14 @@ class SPIRegisters(Elaboratable):
         isPPS = Signal(reset_less=True)
         isBuildNo = Signal(reset_less=True)
         isSig = Signal(reset_less=True)
-
-        m.d.sync += [isCtrl.eq(addrLatch == WSPRAddr.Control),
-                     isTwLow.eq(addrLatch == WSPRAddr.TuningLow),
-                     isTwHi.eq(addrLatch == WSPRAddr.TuningHigh),
-                     isPPS.eq(addrLatch == WSPRAddr.PPS),
-                     isBuildNo.eq(addrLatch == WSPRAddr.BuildNo),
-                     isSig.eq(addrLatch == WSPRAddr.Sig)]
+        m.d.sync += [
+            isCtrl.eq(addrLatch == WSPRAddr.Control),
+            isTwLow.eq(addrLatch == WSPRAddr.TuningLow),
+            isTwHi.eq(addrLatch == WSPRAddr.TuningHigh),
+            isPPS.eq(addrLatch == WSPRAddr.PPS),
+            isBuildNo.eq(addrLatch == WSPRAddr.BuildNo),
+            isSig.eq(addrLatch == WSPRAddr.Sig)
+        ]
         
         vCtrl = Signal(32)
         vTwLow = Signal(32)
@@ -329,25 +350,31 @@ class SPIRegisters(Elaboratable):
         vPPS = Signal(32)
         vBuildNo = Signal(32)
         vSig = Signal(32)
-        m.d.comb += [vCtrl.eq(Mux(isCtrl, Cat(ctrlReg.txEnable, ctrlReg.modeSquare, localPLL, Const(0, 29)), 0)),
-                     vTwLow.eq(Mux(isTwLow, twLow, 0)),
-                     vTwHi.eq(Mux(isTwHi, Cat(twHi, Const(0, 16)), 0)),
-                     vPPS.eq(Mux(isPPS, localPpsC, 0)),
-                     vBuildNo.eq(Mux(isBuildNo, Const(self.buildNum, 32), 0)),
-                     vSig.eq(Mux(isSig, 0x52505357, 0))]
+        m.d.comb += [
+            vCtrl.eq(Mux(isCtrl, Cat(ctrlReg.txEnable, ctrlReg.modeSquare, pllLockedQ, Const(0, 29)), 0)),
+            vTwLow.eq(Mux(isTwLow, twLow, 0)),
+            vTwHi.eq(Mux(isTwHi, Cat(twHi, Const(0, 16)), 0)),
+            vPPS.eq(Mux(isPPS, ppsCountQ, 0)),
+            vBuildNo.eq(Mux(isBuildNo, Const(self.buildNum, 32), 0)),
+            vSig.eq(Mux(isSig, 0x52505357, 0))
+        ]
         
         vStage1d0 = Signal(32, reset_less=True)
         vStage1d1 = Signal(32, reset_less=True)
-        m.d.sync += [vStage1d0.eq(vCtrl | vTwLow | vTwHi),
-                     vStage1d1.eq(vPPS | vBuildNo | vSig)]
-        m.d.sync += readValPipe.eq(vStage1d0 | vStage1d1)
+        m.d.sync += [
+            vStage1d0.eq(vCtrl | vTwLow | vTwHi),
+            vStage1d1.eq(vPPS | vBuildNo | vSig),
+            readValPipe.eq(vStage1d0 | vStage1d1)
+        ]
         
         loadMisoEn = Signal(reset_less=True)
         m.d.sync += loadMisoEn.eq(isBit7F & ~isWriteLatch)
 
         with m.If(sclkF & loadMisoEn):
-            m.d.sync += [misoSR.eq(readValPipe << 1),
-                         misoReg.eq(readValPipe[31])]
+            m.d.sync += [
+                misoSR.eq(readValPipe << 1),
+                misoReg.eq(readValPipe[31])
+            ]
         
         doWriteAny = sclkR & isBit39R & isWriteLatch
         dWrite = Signal(32, reset_less=True)
@@ -356,8 +383,11 @@ class SPIRegisters(Elaboratable):
         with m.If(doWriteAny):
 
             with m.If(isCtrl):
-                m.d.sync += [ctrlReg.txEnable.eq(dWrite[0]),
-                             ctrlReg.modeSquare.eq(dWrite[1])]
+                m.d.sync += [
+                    ctrlReg.txEnable.eq(dWrite[0]),
+                    ctrlReg.modeSquare.eq(dWrite[1])
+                ]
+
             with m.If(isTwLow):
                 m.d.sync += twLow.eq(dWrite)
 
@@ -367,7 +397,8 @@ class SPIRegisters(Elaboratable):
         m.d.comb += [
             self.tw.eq(Cat(twLow, twHi)),
             self.txEn.eq(ctrlReg.txEnable),
-            self.modeSq.eq(ctrlReg.modeSquare)]
+            self.modeSq.eq(ctrlReg.modeSquare)
+        ]
 
         return m
 
@@ -377,10 +408,10 @@ class LFSR32(Elaboratable):
 
     def elaborate(self, platform):
         m = Module()
-        
+
         # State MUST be initialized to a non-zero value, otherwise it
         # will stay stuck at 0 forever.
-        state = Signal(32, reset=0xBEEFCAFE, reset_less=True)
+        state = Signal(32, reset=0xBEE5CAFE, reset_less=True)
         
         # Polynomial: x^32 + x^22 + x^2 + x^1 + 1
         # Represented as tap mask (bits 31, 21, 1, 0)
@@ -421,18 +452,14 @@ class Exciter(Elaboratable):
         # our 90MHz clock evenly.
         m.submodules.lfsr = lfsr = LFSR32()
 
-        # Disable to debug XXX FIXME
         daNoise = True
 
         if daNoise:
-            noise = Signal(16)
-            m.d.comb += noise.eq(lfsr.out[:16])
-
-            noiseQ = Signal(16, reset_less=True)
-            noiseQinv = Signal(16, reset_less=True)
+            noiseQ = Signal(Shape(32, signed=True), reset_less=True)
+            noiseQinv = Signal(Shape(32, signed=True), reset_less=True)
             m.d.sync += [
-                noiseQ.eq(noise),
-                noiseQinv.eq(~noise)
+                noiseQ.eq(lfsr.out),
+                noiseQinv.eq(~lfsr.out)
             ]
         else:
             noiseQ = 0
@@ -449,10 +476,12 @@ class Exciter(Elaboratable):
         # ========================================================
         phaseRQ = Signal(16, reset_less=True)
         phaseFQ = Signal(16, reset_less=True)
-        noiseRQ = Signal(16, reset_less=True)
-        noiseFQ = Signal(16, reset_less=True)
+        noiseRQ = Signal(Shape(32, signed=True), reset_less=True)
+        noiseFQ = Signal(Shape(32, signed=True), reset_less=True)
 
-        noiseShift = 7
+        # Number of bits to arithmetically right shift the noise from
+        # LFSR to get the (signed value) to dither by.
+        noiseShift = 16 + 16 - 0
 
         # Register the tuning word half-step locally to break the SPI routing path.
         twHalfStep = Signal(16, reset_less=True)
@@ -474,8 +503,8 @@ class Exciter(Elaboratable):
         # ========================================================
         # STAGE 2 & 3: DSP Multiplication and Addition
         # Math:
-        #   Rising  edge: A=phaseRQ * 6 + D=noiseRQ
-        #   Falling edge: A=phaseFQ * 6 + D=noiseFQ
+        #   Rising  edge: A=phaseRQ * 6 + C,D=noiseRQ
+        #   Falling edge: A=phaseFQ * 6 + C,D=noiseFQ
         # ========================================================
         # mult_add_sub_32_all_pipelined_unsigned
         m.submodules.macR = Instance("SB_MAC16",
@@ -505,8 +534,8 @@ class Exciter(Elaboratable):
 
             i_A=phaseRQ,
             i_B=Const(6, 16),
-            i_C=0,
-            i_D=noiseRQ,                # 16-bit Noise for the Bottom Adder
+            i_C=noiseRQ[16:32],
+            i_D=noiseRQ[0:16],
             
             i_CLK=ClockSignal(),
             i_CE=1,
@@ -549,8 +578,8 @@ class Exciter(Elaboratable):
             # Data Ports
             i_A=phaseFQ,
             i_B=Const(6, 16),
-            i_C=Const(0, 16),
-            i_D=noiseFQ,
+            i_C=noiseFQ[16:32],
+            i_D=noiseFQ[0:16],
             
             i_OLOADTOP=1,
             i_OLOADBOT=1,
@@ -595,16 +624,20 @@ class Exciter(Elaboratable):
         with m.If(txEnPipe[7]):
 
             with m.If(modeSqPipe[7]):
-                m.d.comb += [pushBaseR.eq(sqLevelR),
-                             pushPeakR.eq(0),
-                             pullBaseR.eq(~sqLevelR),
-                             pullPeakR.eq(0)]
+                m.d.comb += [
+                    pushBaseR.eq(sqLevelR),
+                    pushPeakR.eq(0),
+                    pullBaseR.eq(~sqLevelR),
+                    pullPeakR.eq(0)
+                ]
 
             with m.Else():
-                m.d.comb += [pushBaseR.eq((stateRReg == 0) | (stateRReg == 2)),
-                             pushPeakR.eq(stateRReg == 1),
-                             pullBaseR.eq((stateRReg == 3) | (stateRReg == 5)),
-                             pullPeakR.eq(stateRReg == 4)]
+                m.d.comb += [
+                    pushBaseR.eq((stateRReg == 0) | (stateRReg == 2)),
+                    pushPeakR.eq(stateRReg == 1),
+                    pullBaseR.eq((stateRReg == 3) | (stateRReg == 5)),
+                    pullPeakR.eq(stateRReg == 4)
+                ]
         
         # Calculated pin levels for Falling edge
         pushBaseF = Signal()
@@ -618,16 +651,20 @@ class Exciter(Elaboratable):
         with m.If(txEnPipe[7]):
 
             with m.If(modeSqPipe[7]):
-                m.d.comb += [pushBaseF.eq(sqLevelF),
-                             pushPeakF.eq(0),
-                             pullBaseF.eq(~sqLevelF),
-                             pullPeakF.eq(0)]
+                m.d.comb += [
+                    pushBaseF.eq(sqLevelF),
+                    pushPeakF.eq(0),
+                    pullBaseF.eq(~sqLevelF),
+                    pullPeakF.eq(0)
+                ]
 
             with m.Else():
-                m.d.comb += [pushBaseF.eq((stateFReg == 0) | (stateFReg == 2)),
-                             pushPeakF.eq(stateFReg == 1),
-                             pullBaseF.eq((stateFReg == 3) | (stateFReg == 5)),
-                             pullPeakF.eq(stateFReg == 4)]
+                m.d.comb += [
+                    pushBaseF.eq((stateFReg == 0) | (stateFReg == 2)),
+                    pushPeakF.eq(stateFReg == 1),
+                    pullBaseF.eq((stateFReg == 3) | (stateFReg == 5)),
+                    pullPeakF.eq(stateFReg == 4)
+                ]
 
         # Fabric registers to ease timing:
         # Rising edge outputs registered on positive edge (1-stage delay)
@@ -779,10 +816,10 @@ class Top(Elaboratable):
         m.d.comb += ClockSignal("sync").eq(clk90GB)
 
         # Globally buffer the lock signal
-        pllLocked = Signal()
+        pllLockedGB = Signal()
         m.submodules.lockGB = Instance("SB_GB",
                                        i_USER_SIGNAL_TO_GLOBAL_BUFFER=pllLockedRaw,
-                                       o_GLOBAL_BUFFER_OUTPUT=pllLocked)
+                                       o_GLOBAL_BUFFER_OUTPUT=pllLockedGB)
 
         sclkGB = Signal()
         m.submodules.sclkGB = Instance("SB_GB",
@@ -793,7 +830,9 @@ class Top(Elaboratable):
         m.submodules.rstSync = cdc.FFSynchronizer(~self.fpgaNRESET, rstSyncRaw, reset=1)
 
         rstGB = Signal()
-        m.submodules.rstGB = Instance("SB_GB", i_USER_SIGNAL_TO_GLOBAL_BUFFER=rstSyncRaw, o_GLOBAL_BUFFER_OUTPUT=rstGB)
+        m.submodules.rstGB = Instance("SB_GB",
+                                      i_USER_SIGNAL_TO_GLOBAL_BUFFER=rstSyncRaw,
+                                      o_GLOBAL_BUFFER_OUTPUT=rstGB)
         m.d.comb += ResetSignal().eq(rstGB)
         m.d.comb += ResetSignal("sync").eq(rstGB)
         m.d.comb += ResetSignal("sync40").eq(rstGB)
@@ -803,24 +842,31 @@ class Top(Elaboratable):
         m.submodules.freqRenamed = DomainRenamer({"sync": "sync40"})(freq)
         m.d.comb += freq.samplePPS.eq(self.gnssPPS)
 
-        m.submodules.spi = spi = SPIRegisters(buildNum=self.buildNum)
-        m.d.comb += [spi.iSCLK.eq(sclkGB),
-                     spi.iMOSI.eq(self.fpgaMOSI),
-                     self.fpgaMISO.eq(spi.oMISO),
-                     spi.iNCS.eq(self.fpgaNCS),
-                     spi.pllLocked.eq(pllLocked),
-                     spi.ppsCount.eq(freq.ppsCount),
-                     spi.ppsGen.eq(freq.ppsGen)]
+        spi = SPIRegisters(buildNum=self.buildNum)
+        m.submodules.spi = spi
+        m.d.comb += [
+            spi.iSCLK.eq(sclkGB),
+            spi.iMOSI.eq(self.fpgaMOSI),
+            self.fpgaMISO.eq(spi.oMISO),
+            spi.iNCS.eq(self.fpgaNCS),
+            spi.pllLocked.eq(pllLockedGB),
+            spi.ppsCount.eq(freq.ppsCount),
+            spi.ppsGen.eq(freq.ppsGen)
+        ]
 
         txEnSync = Signal(reset_less=True)
-        m.d.sync += txEnSync.eq(spi.txEn & pllLocked)
+        m.d.sync += txEnSync.eq(spi.txEn & pllLockedGB)
 
-        m.submodules.exciter = exciter = Exciter(pbPin=self.rfPushBase,
-                                                 ppPin=self.rfPushPeak,
-                                                 lbPin=self.rfPullBase,
-                                                 lpPin=self.rfPullPeak)
-        m.d.comb += [exciter.tw.eq(spi.tw),
-                     exciter.txEn.eq(txEnSync),
-                     exciter.modeSq.eq(spi.modeSq)]
+        exciter = Exciter(pbPin=self.rfPushBase,
+                          ppPin=self.rfPushPeak,
+                          lbPin=self.rfPullBase,
+                          lpPin=self.rfPullPeak)
+        m.submodules.exciter = exciter
+        m.d.comb += [
+            exciter.tw.eq(spi.tw),
+            exciter.txEn.eq(txEnSync),
+            exciter.modeSq.eq(spi.modeSq)
+        ]
+
         m.d.sync += self.driverEN.eq(txEnSync)
         return m

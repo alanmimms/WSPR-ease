@@ -55,14 +55,12 @@ $(RTL_SOURCES):	$(AMARANTH_FILES)
 	@echo "--- Building FPGA SystemVerilog ---"
 	SIMULATION=0 .venv/bin/python3 build.py
 	sed -i '/\$$auto\$$verilog_backend/d' $(RTL_SOURCES)
-	sed -i 's/\$$/_/g' $(RTL_SOURCES)
 
 # Build for sim
 $(RTL_SIM_SOURCES): $(AMARANTH_FILES)
 	@echo "--- Building Simulation SystemVerilog ---"
 	SIMULATION=1 .venv/bin/python3 build.py
 	sed -i '/\$$auto\$$verilog_backend/d' $(RTL_SIM_SOURCES)
-	sed -i 's/\$$/_/g' $(RTL_SIM_SOURCES)
 
 # The FPGA image
 hw $(FPGATARGET):	$(RTL_SOURCES) $(PCF) timing.py
@@ -128,7 +126,7 @@ clean:
 	@echo "Cleaning build artifacts..."
 	@rm -rf build/
 	@rm -rf $(OBJDIR)
-	@rm -rf gen/*
+	@rm -rf gen-hw gen-sim
 	@rm -f waveform.vcd
 	@echo "Clean complete."
 
