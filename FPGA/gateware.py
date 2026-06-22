@@ -452,14 +452,14 @@ class Exciter(Elaboratable):
         # our 90MHz clock evenly.
         m.submodules.lfsr = lfsr = LFSR32()
 
-        daNoise = True
+        daNoise = False
 
         if daNoise:
             noiseQ = Signal(Shape(32, signed=True), reset_less=True)
             noiseQinv = Signal(Shape(32, signed=True), reset_less=True)
             m.d.sync += [
-                noiseQ.eq(lfsr.out),
-                noiseQinv.eq(~lfsr.out)
+                noiseQ.eq(lfsr.out.as_signed()),
+                noiseQinv.eq(-lfsr.out.as_signed())
             ]
         else:
             noiseQ = 0
@@ -479,9 +479,9 @@ class Exciter(Elaboratable):
         noiseRQ = Signal(Shape(32, signed=True), reset_less=True)
         noiseFQ = Signal(Shape(32, signed=True), reset_less=True)
 
-        # Number of bits to arithmetically right shift the noise from
-        # LFSR to get the (signed value) to dither by.
-        noiseShift = 16 + 16 - 0
+        # Number of bits to shift left to scale the noise from LFSR to
+        # get the (signed value) to dither by.
+        noiseShift = 2
 
         # Register the tuning word half-step locally to break the SPI routing path.
         twHalfStep = Signal(16, reset_less=True)
@@ -492,8 +492,8 @@ class Exciter(Elaboratable):
             phaseRQ.eq(phaseR),
             phaseFQ.eq(phaseR + twHalfStep),
 
-            noiseRQ.eq(noiseQ >> noiseShift),
-            noiseFQ.eq(noiseQinv >> noiseShift)
+            noiseRQ.eq(noiseQ << noiseShift),
+            noiseFQ.eq(noiseQinv << noiseShift)
         ]
 
         # 32-bit multiplier outputs
