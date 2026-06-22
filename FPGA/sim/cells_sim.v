@@ -55,7 +55,11 @@ module SB_IO (
 	reg outena_q;
 
 	// IO tile generates a constant 1'b1 internally if global_cen is not connected
-	wire clken_pulled = 1;
+`ifdef VERILATOR
+        wire clken_pulled = CLOCK_ENABLE;
+`else
+	wire clken_pulled = CLOCK_ENABLE || CLOCK_ENABLE === 1'bz;
+`endif
 	reg  clken_pulled_ri;
 	reg  clken_pulled_ro;
 
@@ -64,7 +68,7 @@ module SB_IO (
 		always @(posedge INPUT_CLK)  if (clken_pulled)    din_q_0         <= PACKAGE_PIN;
 		always @(negedge INPUT_CLK)  if (clken_pulled_ri) din_q_1         <= PACKAGE_PIN;
 		always @(posedge OUTPUT_CLK)                      clken_pulled_ro <= clken_pulled;
-		always @(negedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= D_OUT_0;
+		always @(posedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= D_OUT_0;
 		always @(negedge OUTPUT_CLK) if (clken_pulled_ro) dout_q_1        <= D_OUT_1;
 		always @(posedge OUTPUT_CLK) if (clken_pulled)    outena_q        <= OUTPUT_ENABLE;
 	end else begin
@@ -72,7 +76,7 @@ module SB_IO (
 		always @(negedge INPUT_CLK)  if (clken_pulled)    din_q_0         <= PACKAGE_PIN;
 		always @(posedge INPUT_CLK)  if (clken_pulled_ri) din_q_1         <= PACKAGE_PIN;
 		always @(negedge OUTPUT_CLK)                      clken_pulled_ro <= clken_pulled;
-		always @(posedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= D_OUT_0;
+		always @(negedge OUTPUT_CLK) if (clken_pulled)    dout_q_0        <= D_OUT_0;
 		always @(posedge OUTPUT_CLK) if (clken_pulled_ro) dout_q_1        <= D_OUT_1;
 		always @(negedge OUTPUT_CLK) if (clken_pulled)    outena_q        <= OUTPUT_ENABLE;
 	end endgenerate
@@ -89,20 +93,19 @@ module SB_IO (
 	always @* outclk_delayed_1 <= OUTPUT_CLK;
 	always @* outclk_delayed_2 <= outclk_delayed_1;
 
-        wire mux1, mux2, mux3;
-        assign mux1 = PIN_TYPE[2] ? !dout_q_0 : D_OUT_0;
-        assign mux2 = !((OUTPUT_CLK & CLOCK_ENABLE) | PIN_TYPE[2]) ? dout_q_1 : dout_q_0;
-        assign mux3 = PIN_TYPE[3] ? mux1 : mux2;
+	always @* begin
+		if (PIN_TYPE[3])
+			dout = PIN_TYPE[2] ? !dout_q_0 : D_OUT_0;
+		else
+			dout = (outclk_delayed_2 ^ NEG_TRIGGER) || PIN_TYPE[2] ? dout_q_0 : dout_q_1;
+	end
 
 	assign D_IN_0 = din_0, D_IN_1 = din_1;
 
 	generate
-	  case (PIN_TYPE[5:4])
-	    2'b00: assign PACKAGE_PIN = 1'bz;
-	    2'b01: assign PACKAGE_PIN = mux3;
-	    2'b10: assign PACKAGE_PIN = OUTPUT_ENABLE ? mux3 : 1'bz;
-	    2'b11: assign PACKAGE_PIN = !outena_q ? mux3 : 1'bz;
-	  endcase
+		if (PIN_TYPE[5:4] == 2'b01) assign PACKAGE_PIN = dout;
+		if (PIN_TYPE[5:4] == 2'b10) assign PACKAGE_PIN = OUTPUT_ENABLE ? dout : 1'bz;
+		if (PIN_TYPE[5:4] == 2'b11) assign PACKAGE_PIN = outena_q ? dout : 1'bz;
 	endgenerate
 `endif
 `ifdef TIMING
@@ -2439,6 +2442,7 @@ endmodule
 
 // SiliconBlue PLL Cells
 
+(* blackbox *)
 module SB_PLL40_CORE (
 	input   REFERENCECLK,
 	output  PLLOUTCORE,
@@ -2467,19 +2471,9 @@ module SB_PLL40_CORE (
 	parameter ENABLE_ICEGATE = 1'b0;
 	parameter TEST_MODE = 1'b0;
 	parameter EXTERNAL_DIVIDE_FACTOR = 1;
-
-	reg lock_reg = 0;
-	assign LOCK = lock_reg;
-	assign PLLOUTCORE = REFERENCECLK;
-	assign PLLOUTGLOBAL = REFERENCECLK;
-
-	always @(posedge REFERENCECLK or negedge RESETB) begin
-		if (!RESETB) lock_reg <= 0;
-		else lock_reg <= 1;
-	end
-
 endmodule
 
+(* blackbox *)
 module SB_PLL40_PAD (
 	input   PACKAGEPIN,
 	output  PLLOUTCORE,
@@ -2508,17 +2502,6 @@ module SB_PLL40_PAD (
 	parameter ENABLE_ICEGATE = 1'b0;
 	parameter TEST_MODE = 1'b0;
 	parameter EXTERNAL_DIVIDE_FACTOR = 1;
-
-	reg lock_reg = 0;
-	assign LOCK = lock_reg;
-	assign PLLOUTCORE = PACKAGEPIN;
-	assign PLLOUTGLOBAL = PACKAGEPIN;
-
-	always @(posedge PACKAGEPIN or negedge RESETB) begin
-		if (!RESETB) lock_reg <= 0;
-		else lock_reg <= 1;
-	end
-
 endmodule
 
 (* blackbox *)
