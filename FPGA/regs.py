@@ -2,12 +2,16 @@
 import sys
 import os
 
+# Python 3.7 or later is required for order-preserving dicts.
+if sys.version_info < (3, 7):
+  sys.exit(f"FATAL ERROR: This requires Python 3.7 or higher.")
+
 # Add project root to path so we can find tools/
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from tools.regTool import RegisterSet, UInt, Bit, Enum, Int
 
-regs = RegisterSet("WSPR")
+regs = RegisterSet("FPGA")
 
 @regs.register(0x00, "Main control and status")
 class Control:
@@ -27,8 +31,8 @@ class TuningHigh:
 
 @regs.register(0x03, "PPS and GNSS edge tracking")
 class PPS:
-  gen:          UInt(0, 5, "Generation incremented at each PPS falling edge")
-  count:        UInt(0, 27, "FPGA clock count at last PPS falling edge")
+  gen:          UInt(0, 6, "Generation incremented at each PPS falling edge")
+  count:        UInt(0, 26, "FPGA clock count at last PPS falling edge")
 
 @regs.register(0x0E, "FPGA Build Number")
 class BuildNo:

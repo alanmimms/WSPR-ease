@@ -8,9 +8,7 @@
 #include "FPGACommon.hpp"
 #include "buildNumber.hpp"
 
-namespace WSPRRegs {
 #include "regs.hpp"
-};
 
 #include "filesystem.hpp"
 #include "logmanager.hpp"
@@ -121,7 +119,7 @@ namespace wspr {
 
     // Verify FPGA hardware signature
     uint32_t sig = 0;
-    if (spiReadReg(WSPRRegs::aWSPRSig, &sig) == 0) {
+    if (spiReadReg(WSPRRegs::aFPGASig, &sig) == 0) {
       if (sig == 0x52505357) {
         logger.inf("SPI signature verified successfully: 0x%08X", sig);
       } else {
@@ -133,7 +131,7 @@ namespace wspr {
 
     // Read and verify FPGA build number
     uint32_t buildNum = 0;
-    if (spiReadReg(WSPRRegs::aWSPRBuildNo, &buildNum) == 0) {
+    if (spiReadReg(WSPRRegs::aFPGABuildNo, &buildNum) == 0) {
       logger.inf("FPGA Build Number: %u", buildNum);
       if (buildNum == fpgaBuildNumber) {
         logger.inf("FPGA Build Number matches expected: %u", fpgaBuildNumber);
@@ -264,15 +262,15 @@ namespace wspr {
     logger.inf("config", "Setting 48-bit tuning word to 0x%012llX", tuningWord);
 
     // Update Mode based on frequency: < 10MHz use 1-2-1, >= 10MHz use Square
-    WSPRRegs::WSPRControl ctrl;
-    spiReadReg(WSPRRegs::aWSPRControl, &ctrl.u);
+    FPGAControl ctrl;
+    spiReadReg(aFPGAControl, &ctrl.u);
     ctrl.modeSquare = (freqHz >= MHZ(10)) ? 1 : 0;
-    spiWriteReg(WSPRRegs::aWSPRControl, ctrl.u);
+    spiWriteReg(aFPGAControl, ctrl.u);
 
     // Write 48-bit tuning word across two registers
-    int ret = spiWriteReg(WSPRRegs::aWSPRTuningLow, (uint32_t)tuningWord);
+    int ret = spiWriteReg(aFPGATuningLow, (uint32_t)tuningWord);
     if (ret < 0) return ret;
-    return spiWriteReg(WSPRRegs::aWSPRTuningHigh, (uint32_t)(tuningWord >> 32));
+    return spiWriteReg(aFPGATuningHigh, (uint32_t)(tuningWord >> 32));
   }
 
   int FPGA::startTX() {
@@ -282,11 +280,11 @@ namespace wspr {
                currentFreq, (currentFreq >= 10000000) ? "Square" : "1-2-1");
     transmitting = true;
 
-    WSPRRegs::WSPRControl ctrl;
-    spiReadReg(WSPRRegs::aWSPRControl, &ctrl.u);
+    FPGAControl ctrl;
+    spiReadReg(aFPGAControl, &ctrl.u);
     ctrl.txEnable = 1;
     ctrl.modeSquare = (currentFreq >= 10000000) ? 1 : 0;
-    return spiWriteReg(WSPRRegs::aWSPRControl, ctrl.u);
+    return spiWriteReg(aFPGAControl, ctrl.u);
   }
 
   int FPGA::stopTX() {
@@ -295,10 +293,10 @@ namespace wspr {
     logger.inf("config", "Stopping transmission");
     transmitting = false;
 
-    WSPRRegs::WSPRControl ctrl;
-    spiReadReg(WSPRRegs::aWSPRControl, &ctrl.u);
+    FPGAControl ctrl;
+    spiReadReg(aFPGAControl, &ctrl.u);
     ctrl.txEnable = 0;
-    return spiWriteReg(WSPRRegs::aWSPRControl, ctrl.u);
+    return spiWriteReg(aFPGAControl, ctrl.u);
   }
 
   int FPGA::sendSymbol(uint8_t symbol) {
@@ -319,8 +317,8 @@ namespace wspr {
   uint32_t FPGA::getCounter() {
     if (!initialized) return 0;
 
-    WSPRRegs::WSPRPPS val;
-    spiReadReg(WSPRRegs::aWSPRPPS, &val.u);
+    FPGAPPS val;
+    spiReadReg(aFPGAPPS, &val.u);
     return val.u;
   }
 

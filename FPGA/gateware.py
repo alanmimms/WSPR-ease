@@ -10,41 +10,36 @@ from amaranth.back import verilog
 from amaranth import DomainRenamer
 import os
 
-# Import the generated registers if they exist, or provide placeholders for first run
-try:
-    from regs_gen import ControlStruct, TuningLowStruct, TuningHighStruct, PPSStruct, BuildNoStruct, SigStruct, WSPRAddr
+# Define the registers from our metadata description.
+from regs import regs
 
-except ImportError:
-    class ControlStruct(data.Struct):
-        txEnable: unsigned(1)
-        modeSquare: unsigned(1)
-        pllLocked: unsigned(1)
-        reserved0: unsigned(29)
 
-    class TuningLowStruct(data.Struct):
-        word: unsigned(32)
+# This lets us build Amaranth data structures from our register
+# metadata.
+class RegFactory:
+    @staticmethod
+    def mkField(f: Field) -> Signal:
+        """Dynamically creates an isolated Amaranth Signal from any Field type."""
+        shape = (f.bits, f.signed)
+        return Signal(shape, reset=f.default, name=f.name)
 
-    class TuningHighStruct(data.Struct):
-        word: unsigned(16)
-        reserved0: unsigned(16)
+    @staticmethod
+    def mkRecord(reg: Register) -> Record:
+        """Converts an entire Register into an Amaranth Record bus."""
+        layout = []
+        for f in reg.fields:
+            # Amaranth layouts take a tuple of (name, shape)
+            shape = (f.bits, f.signed)
+            layout.append((f.name, shape))
+            
+        record = Record(layout, name=reg.name)
+        
+        # Apply default reset values to the Record's underlying signals
+        for f in reg.fields:
+            getattr(record, f.name).reset = f.default
+            
+        return record
 
-    class PPSStruct(data.Struct):
-        gen: unsigned(5)
-        count: unsigned(27)
-
-    class BuildNoStruct(data.Struct):
-        val: unsigned(32)
-
-    class SigStruct(data.Struct):
-        val: unsigned(32)
-
-    class WSPRAddr(enum.Enum, shape=7):
-        Control = 0x00
-        TuningLow = 0x01
-        TuningHigh = 0x02
-        PPS = 0x03
-        BuildNo = 0x0E
-        Sig = 0x0F
 
 class PipelinedNCO(Elaboratable):
     def __init__(self, width=48):
@@ -148,29 +143,30 @@ class FreqCounter(Elaboratable):
         # Latched count of system clock cycles per PPS interval
         self.ppsCount = Signal(32, reset_less=True)
 
-        # 5-bit generation counter incremented at each PPS edge
-        self.ppsGen = Signal(5, reset_less=True)
+        # 8-bit generation counter incremented at each PPS edge
+        self.ppsGen = Signal(regs, reset_less=True)
 
     def elaborate(self, platform):
         m = Module()
-        countOut = Signal(32)
+        countOut = Signal(32, reset_less=True)
 
         # FPGACLK frequency counter gated by 1pps signal from GNSS.
-        # This is acc_32_all_pipelined_unsigned carryIn tied to 1.
+        # This is acc_32_all_pipelined_unsigned using internally
+        # generated LSB carry input of 1.
         m.submodules.freqCounter = Instance("SB_MAC16",
                                             p_B_SIGNED=0,
                                             p_A_SIGNED=0,
                                             p_MODE_8x8=0, # CONTRARY to iCE40 Tech Lib doc.
 
-                                            p_BOTADDSUB_CARRYSELECT=0b00,
-                                            p_BOTADDSUB_UPPERINPUT=0,
-                                            p_BOTADDSUB_LOWERINPUT=0b00,
-                                            p_BOTOUTPUT_SELECT=0b01,
+                                            p_BOTADDSUB_CARRYSELECT=0b01, # Carry in is always 1
+                                            p_BOTADDSUB_UPPERINPUT=1,     # D
+                                            p_BOTADDSUB_LOWERINPUT=0b00,  # B
+                                            p_BOTOUTPUT_SELECT=0b01,      # S
 
-                                            p_TOPADDSUB_CARRYSELECT=0b10,
-                                            p_TOPADDSUB_UPPERINPUT=0,
-                                            p_TOPADDSUB_LOWERINPUT=0b00,
-                                            p_TOPOUTPUT_SELECT=0b01,
+                                            p_TOPADDSUB_CARRYSELECT=0b10, # Carry in is carry out of bot adder
+                                            p_TOPADDSUB_UPPERINPUT=1,     # C
+                                            p_TOPADDSUB_LOWERINPUT=0b00,  # A
+                                            p_TOPOUTPUT_SELECT=0b01,      # Q
 
                                             p_PIPELINE_16x16_MULT_REG2=0,
                                             p_PIPELINE_16x16_MULT_REG1=0,
@@ -186,7 +182,6 @@ class FreqCounter(Elaboratable):
                                             i_B=0,
                                             i_C=0,
                                             i_D=0,
-                                            i_CI=1,
                                             i_CLK=ClockSignal(),
                                             i_CE=1,
 
@@ -196,7 +191,7 @@ class FreqCounter(Elaboratable):
                                             o_SIGNEXTOUT=Signal())
 
         syncPPS = Signal()
-        m.submodules.ppsSync = cdc.FFSynchronizer(self.samplePPS, syncPPS)
+        m.submodules.ppsSynchronizer = cdc.FFSynchronizer(self.samplePPS, syncPPS)
         lastPPS = Signal(reset_less=True)
         m.d.sync += lastPPS.eq(syncPPS)
 
@@ -204,6 +199,10 @@ class FreqCounter(Elaboratable):
         risingPPS = Signal(reset_less=True)
         m.d.sync += risingPPS.eq(syncPPS & ~lastPPS)
 
+        # Count seconds as "generations" so we can read the full
+        # 32-bit value coherently by reading twice or even three time
+        # and using the one where generation does not change between
+        # start and finish of reading.
         with m.If(risingPPS):
             m.d.sync += [
                 self.ppsGen.eq(self.ppsGen + 1),
@@ -213,6 +212,16 @@ class FreqCounter(Elaboratable):
         return m
 
 class SPIRegisters(Elaboratable):
+
+# Factory to build an Amaranth Shape (for Signal) from a regTool Field.
+def mkShapeFromField(field, **kwopts):
+    return Shape(field.bits, signed=field.signed, **kwargs)
+
+# Factory to build an Amaranth Enum from a regTool Enum.
+def mkEnumFromRegEnum(e):
+    pairs = [(vName if vName else f"Val{vVal}", vVal) for vName, vVal in e.values]
+    return enum.Enum(f"{e.name}Enum", pairs, shape=e.bits)
+
 
     def __init__(self, buildNum=0):
         self.buildNum = buildNum
@@ -225,7 +234,7 @@ class SPIRegisters(Elaboratable):
         self.modeSq = Signal()
         self.pllLocked = Signal()
         self.ppsCount = Signal(32)
-        self.ppsGen = Signal(5)
+        self.ppsGen = Signal(mkShapeFromField(regs.PPS.gen.bits))
 
     def elaborate(self, platform):
         m = Module()
@@ -308,7 +317,7 @@ class SPIRegisters(Elaboratable):
         twHi = Signal(16, reset_less=True)
         pllLockedQ = Signal(reset_less=True)
         ppsCountQ = Signal(32, reset_less=True)
-        ppsGenQ = Signal(5, reset_less=True)
+        ppsGenQ = Signal(8, reset_less=True)
         m.d.sync += [
             pllLockedQ.eq(self.pllLocked),
             ppsCountQ.eq(self.ppsCount),
@@ -447,7 +456,7 @@ class Exciter(Elaboratable):
         m.d.comb += nco.tw.eq(self.tw)
         
         # Use a LFSR Galois pseudo-random number generator (PRNG) to
-        # compute noise to dither the freq VERY SLIGHTLY to eliminate
+        # compute noise to dither the freq somewhat to eliminate
         # artifacts from tuning right near a freq that divides into
         # our 90MHz clock evenly.
         m.submodules.lfsr = lfsr = LFSR32()
@@ -513,19 +522,19 @@ class Exciter(Elaboratable):
             p_MODE_8x8=0,       # C22
             
             p_BOTADDSUB_CARRYSELECT=0b00, # C21,C20
-            p_BOTADDSUB_UPPERINPUT=1,    # C19
-            p_BOTADDSUB_LOWERINPUT=0b10, # C18,C17
-            p_BOTOUTPUT_SELECT=0b01, # C16,C15
+            p_BOTADDSUB_UPPERINPUT=1,     # C19
+            p_BOTADDSUB_LOWERINPUT=0b10,  # C18,C17
+            p_BOTOUTPUT_SELECT=0b01,      # C16,C15
             
             p_TOPADDSUB_CARRYSELECT=0b10, # C14,C13
-            p_TOPADDSUB_UPPERINPUT=1,    # C12
-            p_TOPADDSUB_LOWERINPUT=0b10, # C11,C10
-            p_TOPOUTPUT_SELECT=0b01, # C9,C8 XXXX should be 0b01
+            p_TOPADDSUB_UPPERINPUT=1,     # C12
+            p_TOPADDSUB_LOWERINPUT=0b10,  # C11,C10
+            p_TOPOUTPUT_SELECT=0b01,      # C9,C8
 
             p_PIPELINE_16x16_MULT_REG2=1, # C7
             p_PIPELINE_16x16_MULT_REG1=1, # C6
-            p_BOT_8x8_MULT_REG=1, # C5
-            p_TOP_8x8_MULT_REG=1, # C4
+            p_BOT_8x8_MULT_REG=1,         # C5
+            p_TOP_8x8_MULT_REG=1,         # C4
 
             p_A_REG=1,          # C1
             p_B_REG=0,          # C2

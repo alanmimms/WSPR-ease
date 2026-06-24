@@ -219,8 +219,8 @@ namespace wspr {
 
   static int cmd_fpga_counter(const struct shell *sh, size_t argc, char **argv) {
     auto& fpga = wspr::FPGA::instance();
-    WSPRPPS pps;
-    WSPRPPS prev;
+    FPGAPPS pps;
+    FPGAPPS prev;
 
     pps.u = ~0ul;
     
@@ -230,7 +230,7 @@ namespace wspr {
     int attempts = 0;
     do {
       prev = pps;
-      fpga.readRegister(aWSPRPPS, &pps.u);
+      fpga.readRegister(aFPGAPPS, &pps.u);
       attempts++;
     } while (pps.gen != prev.gen && attempts < 100);
 
@@ -242,22 +242,23 @@ namespace wspr {
     // Handle 32-bit rollover.
     uint32_t delta_f = pps.count - prev.count;
 
-    WSPRControl ctrl;
+    FPGAControl ctrl;
     uint32_t tuningL, tuningH, sig;
-    fpga.readRegister(aWSPRControl, &ctrl.u);
-    fpga.readRegister(aWSPRTuningLow, &tuningL);
-    fpga.readRegister(aWSPRTuningHigh, &tuningH);
-    fpga.readRegister(aWSPRSig, &sig);
+    fpga.readRegister(aFPGAControl, &ctrl.u);
+    fpga.readRegister(aFPGATuningLow, &tuningL);
+    fpga.readRegister(aFPGATuningHigh, &tuningH);
+    fpga.readRegister(aFPGASig, &sig);
 
     uint64_t tuning = ((uint64_t)tuningH << 32) | tuningL;
 
     shell_print(sh, "=== FPGA PPS Diagnostics ===");
-    shell_print(sh, "FPGA Signature:    0x%04X %s", sig, (sig == eWSPRSigVal) ? "(OK)" : "(FAIL)");
+    shell_print(sh, "FPGA Signature:    0x%04X %s", sig, (sig == eFPGASigVal) ? "(OK)" : "(FAIL)");
     shell_print(sh, "Status:            TX=%s, Mode=%s, PLL=%s",
                 ctrl.txEnable ? "ON" : "OFF",
                 ctrl.modeSquare ? "Square" : "1-2-1",
 		ctrl.pllLocked ? "LOCKED" : "NO_LOCK");
     shell_print(sh, "Tuning Word:       0x%012llx", tuning);
+    shell_print(sh, "PPS.gen/count:     %u/%u", pps.gen, pps.count);
     
     // We are measuring exactly 1 second between two rising edges
     if (delta_f > 0) {
@@ -385,13 +386,13 @@ namespace wspr {
       return 0;
     }
     
-    WSPRControl ctrl;
+    FPGAControl ctrl;
     uint32_t tuningL, tuningH, sig, buildNum;
-    fpga.readRegister(aWSPRControl, &ctrl.u);
-    fpga.readRegister(aWSPRTuningLow, &tuningL);
-    fpga.readRegister(aWSPRTuningHigh, &tuningH);
-    fpga.readRegister(aWSPRSig, &sig);
-    fpga.readRegister(aWSPRBuildNo, &buildNum);
+    fpga.readRegister(aFPGAControl, &ctrl.u);
+    fpga.readRegister(aFPGATuningLow, &tuningL);
+    fpga.readRegister(aFPGATuningHigh, &tuningH);
+    fpga.readRegister(aFPGASig, &sig);
+    fpga.readRegister(aFPGABuildNo, &buildNum);
 
     uint64_t tuning = ((uint64_t)tuningH << 32) | tuningL;
 

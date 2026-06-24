@@ -4,6 +4,7 @@ import sys
 import subprocess
 
 def main():
+    os.environ.setdefault("SIMULATION", "0")
     isSim = os.environ.get("SIMULATION") == "1"
     genDir = "gen-sim" if isSim else "gen-hw"
 
@@ -39,9 +40,7 @@ def main():
 
     # 1. Generate Registers
     print("Generating register definitions...")
-    childEnv = os.environ.copy()
-    childEnv["SIMULATION"] = os.environ.get("SIMULATION", "0")
-    subprocess.run([sys.executable, "regs.py", genDir], env=childEnv, check=True)
+    subprocess.run([sys.executable, "regs.py", genDir], env=os.environ.copy(), check=True)
 
     # 2. Generate Amaranth Gateware (Verilog output)
     print("Elaborating Amaranth gateware...")

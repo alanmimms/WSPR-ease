@@ -19,10 +19,6 @@
 
 LOG_MODULE_REGISTER(wspr_ease, LOG_LEVEL_INF);
 
-namespace WSPRRegs {
-#include "regs.hpp"
-};
-
 namespace wspr {
 // Register subsystem with LogManager
 static Logger& logger = LogManager::instance().registerSubsystem("sys", 
@@ -171,8 +167,8 @@ int main(void)
 
         // Non-disableable warning if FPGA loaded but PLL not locked
         if (fpga.isInitialized()) {
-            WSPRRegs::WSPRControl ctrl;
-            fpga.readRegister(WSPRRegs::aWSPRControl, &ctrl.u);
+            WSPRRegs::FPGAControl ctrl;
+            fpga.readRegister(WSPRRegs::aFPGAControl, &ctrl.u);
             if (!ctrl.pllLocked) {
                 printk("WARNING: FPGA PLL is not locked!\n");
             }
