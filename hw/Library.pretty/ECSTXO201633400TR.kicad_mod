@@ -211,7 +211,7 @@
 		(uuid "9a340c78-3744-49eb-890e-f66a8c484d6e")
 	)
 	(embedded_fonts no)
-	(model "ECS-TXO-2016-33-400-TR.stp"
+	(model "${WSPR_EASE_SYMBOLS}/ECS-TXO-2016-33-400-TR.stp"
 		(offset
 			(xyz 0 0 0)
 		)

@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.2
+          "min_clearance": 0.25
         }
       },
       "diff_pair_dimensions": [
@@ -681,7 +681,9 @@
     "net_colors": {
       "+3.3V": "rgb(255, 153, 0)",
       "+VFPGACORE": "rgb(255, 0, 255)",
-      "+VFPGAIO": "rgb(0, 194, 0)"
+      "+VFPGAIO": "rgb(0, 194, 0)",
+      "Net-(D301-A)": "rgb(255, 0, 255)",
+      "Net-(D301-K)": "rgb(0, 194, 0)"
     },
     "netclass_assignments": {
       "/D+": [
@@ -748,6 +750,9 @@
         "RF"
       ],
       "Net-(C211-Pad1)": [
+        "RF"
+      ],
+      "Net-(C212-Pad1)": [
         "RF"
       ],
       "Net-(J1-In)": [
@@ -933,6 +938,10 @@
       {
         "netclass": "power",
         "pattern": "GND"
+      },
+      {
+        "netclass": "RF-power",
+        "pattern": "/Transmitter/*T"
       }
     ]
   },
@@ -1280,7 +1289,7 @@
           "show": false
         }
       ],
-      "filter_string": "",
+      "filter_string": "r",
       "group_symbols": true,
       "include_excluded_from_bom": true,
       "name": "",
@@ -1315,7 +1324,7 @@
       "version": 1
     },
     "net_format_name": "",
-    "page_layout_descr_file": "",
+    "page_layout_descr_file": "Transmitter",
     "plot_directory": "",
     "space_save_all_events": true,
     "spice_current_sheet_as_root": false,
@@ -1339,14 +1348,6 @@
     [
       "23b3e7ef-2325-4c00-b23e-f86801b0fb79",
       "Transmitter"
-    ],
-    [
-      "5629a0c2-0301-4d7f-817a-ddea3efd265b",
-      "push Driver"
-    ],
-    [
-      "f1c7cc76-53c1-478d-8ee0-a18f165db938",
-      "pull Driver"
     ]
   ],
   "text_variables": {}

@@ -1,4 +1,4 @@
-27322071727235543
+27332776215266647
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -71449,6 +71449,20 @@ Integrated Circuit
 20
 20
 Library
+QFN50P300X300X90-17N-D
+16 pin QFNxx
+Integrated Circuit
+0
+17
+17
+Library
+QFN50P400X400X90-21N
+20-pin QFN
+Integrated Circuit
+0
+21
+21
+Library
 S8401-46
 S8401-46
 Connector
@@ -71472,6 +71486,20 @@ Integrated Circuit
 Library
 SON65P300X300X100-9N-D
 DRB0008J _2022
+Integrated Circuit
+0
+9
+9
+Library
+SOP65P400X130-8N
+DCT (R-PDSO-G8)-
+Integrated Circuit
+0
+8
+8
+Library
+SOP65P490X110-9N
+DGN (S-PDSO-G8)-
 Integrated Circuit
 0
 9
@@ -71539,6 +71567,13 @@ usb usb-c 2.0 pd
 0
 16
 13
+Library
+Untitled
+
+
+0
+0
+0
 Library
 bn-43-202-horizontal
 Fair-Rite BN-43-202 Binocular Core, Horizontal Mount, Wirewound
@@ -107540,6 +107575,13 @@ TPS22918DBVR
 0
 6
 6
+symbols
+DCU0008A_M
+
+SN74LVC1G74DCUR 
+0
+8
+8
 symbols
 HRO-TYPE-C-31-M-12
 USB Type-C Receptacle, 16-Pin, HRO Electronics TYPE-C-31-M-12 (LCSC C165948)

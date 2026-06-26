@@ -1527,7 +1527,7 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "6MHz"
+	(text "4MHz"
 		(exclude_from_sim no)
 		(at 101.092 66.802 0)
 		(effects
@@ -1547,7 +1547,7 @@
 		)
 		(uuid "e7de4df9-9d5f-4b75-88fa-764e1ec4647c")
 	)
-	(text "16MHz"
+	(text "11.5MHz"
 		(exclude_from_sim no)
 		(at 101.092 121.92 0)
 		(effects
@@ -1586,6 +1586,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "163b1963-a649-4aa8-bc4a-d077122309bb")
+	)
+	(junction
+		(at 137.16 53.34)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "18f1ee52-ff91-4df4-ae6a-e072e1726edf")
 	)
 	(junction
 		(at 77.47 154.94)
@@ -1660,19 +1666,13 @@
 		(uuid "88404b93-ac56-4f17-a209-6f2849d5a395")
 	)
 	(junction
-		(at 160.02 77.47)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "944f154c-20a9-45d1-8f83-e14d57cf18ae")
-	)
-	(junction
 		(at 121.92 107.95)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "9d03ba90-5fe1-4576-99cf-c75c6f033342")
 	)
 	(junction
-		(at 55.88 80.01)
+		(at 55.88 16.51)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "aea174c0-d4b6-49dc-8b61-1a7773522b36")
@@ -1694,6 +1694,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "c4342d22-8b50-45bc-8035-4a6f5b6640cc")
+	)
+	(junction
+		(at 119.38 63.5)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c71b70b5-111e-4cb0-8acd-ec6b970d274e")
 	)
 	(junction
 		(at 121.92 118.11)
@@ -1718,6 +1724,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "dc875d8b-debb-4a1f-b7fb-7096a5152aaf")
+	)
+	(junction
+		(at 160.02 25.4)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "e21d1e49-5030-486a-9743-9942ff1c1ec8")
 	)
 	(junction
 		(at 86.36 137.16)
@@ -1750,16 +1762,6 @@
 			(type default)
 		)
 		(uuid "058482a8-d079-4f77-b6b5-fdc8e0531718")
-	)
-	(wire
-		(pts
-			(xy 119.38 46.99) (xy 119.38 53.34)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "06c6bb8d-7125-4f52-a841-52b94cec665f")
 	)
 	(wire
 		(pts
@@ -2093,7 +2095,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 77.47) (xy 165.1 77.47)
+			(xy 160.02 25.4) (xy 165.1 25.4)
 		)
 		(stroke
 			(width 0)
@@ -2193,7 +2195,7 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 80.01) (xy 55.88 72.39)
+			(xy 55.88 72.39) (xy 55.88 128.27)
 		)
 		(stroke
 			(width 0)
@@ -2243,6 +2245,16 @@
 	)
 	(wire
 		(pts
+			(xy 119.38 53.34) (xy 125.73 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "680bd03f-2f91-4f6a-af21-b695faed37f4")
+	)
+	(wire
+		(pts
 			(xy 102.87 25.4) (xy 105.41 25.4)
 		)
 		(stroke
@@ -2283,6 +2295,16 @@
 	)
 	(wire
 		(pts
+			(xy 137.16 63.5) (xy 119.38 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "76f0d56a-b496-47db-81a5-6d3cfb8238ec")
+	)
+	(wire
+		(pts
 			(xy 87.63 25.4) (xy 87.63 26.67)
 		)
 		(stroke
@@ -2300,6 +2322,16 @@
 			(type default)
 		)
 		(uuid "7c4f3c90-150c-4dca-8520-e6a4d814f988")
+	)
+	(wire
+		(pts
+			(xy 137.16 62.23) (xy 137.16 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7f8fdc54-232f-44bc-b650-46dfaf37c264")
 	)
 	(wire
 		(pts
@@ -2360,6 +2392,16 @@
 			(type default)
 		)
 		(uuid "88c09ab1-860b-4b05-8a2b-c285e7e37ffc")
+	)
+	(wire
+		(pts
+			(xy 137.16 53.34) (xy 137.16 54.61)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "89b31805-2450-4dd2-b966-73ce1b4dcccd")
 	)
 	(wire
 		(pts
@@ -2453,7 +2495,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 25.4) (xy 160.02 77.47)
+			(xy 160.02 25.4) (xy 160.02 80.01)
 		)
 		(stroke
 			(width 0)
@@ -2603,7 +2645,7 @@
 	)
 	(wire
 		(pts
-			(xy 107.95 46.99) (xy 119.38 46.99)
+			(xy 107.95 46.99) (xy 137.16 46.99)
 		)
 		(stroke
 			(width 0)
@@ -2643,7 +2685,7 @@
 	)
 	(wire
 		(pts
-			(xy 50.8 80.01) (xy 55.88 80.01)
+			(xy 50.8 16.51) (xy 55.88 16.51)
 		)
 		(stroke
 			(width 0)
@@ -2773,6 +2815,16 @@
 	)
 	(wire
 		(pts
+			(xy 137.16 46.99) (xy 137.16 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cb6ebd25-c242-449e-8d82-132ce1932d1d")
+	)
+	(wire
+		(pts
 			(xy 133.35 107.95) (xy 140.97 107.95)
 		)
 		(stroke
@@ -2820,6 +2872,16 @@
 			(type default)
 		)
 		(uuid "d2239ddc-7a83-4530-b84f-e145b6fde2db")
+	)
+	(wire
+		(pts
+			(xy 130.81 53.34) (xy 137.16 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d5542c3e-510c-4891-b6b3-95a2f3081a63")
 	)
 	(wire
 		(pts
@@ -3033,16 +3095,6 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 77.47) (xy 160.02 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f0bca20d-bf98-4e14-8c06-4db30741594a")
-	)
-	(wire
-		(pts
 			(xy 97.79 46.99) (xy 83.82 46.99)
 		)
 		(stroke
@@ -3083,16 +3135,6 @@
 	)
 	(wire
 		(pts
-			(xy 55.88 128.27) (xy 55.88 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fcbe77e5-3071-4098-a415-e40713256417")
-	)
-	(wire
-		(pts
 			(xy 120.65 175.26) (xy 120.65 176.53)
 		)
 		(stroke
@@ -3110,6 +3152,301 @@
 			(type default)
 		)
 		(uuid "ff9fb8f0-6660-4ef9-96a4-27f1888c93d6")
+	)
+	(table
+		(column_count 4)
+		(border
+			(external yes)
+			(header yes)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+		)
+		(separators
+			(rows yes)
+			(cols yes)
+			(stroke
+				(width 0)
+				(type solid)
+			)
+		)
+		(column_widths 7.62 22.86 15.24 26.67)
+		(row_heights 2.54 2.54 2.54 2.54)
+		(cells
+			(table_cell "Bank"
+				(exclude_from_sim no)
+				(at 171.45 95.25 0)
+				(size 7.62 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "11a3d4f0-9aff-47f0-9cc0-0cce8973b648")
+			)
+			(table_cell "Band"
+				(exclude_from_sim no)
+				(at 179.07 95.25 0)
+				(size 22.86 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "19ae8b8e-1a2d-43b7-951c-6989e74001f1")
+			)
+			(table_cell "Cutoff Freq"
+				(exclude_from_sim no)
+				(at 201.93 95.25 0)
+				(size 15.24 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "1b85682b-8251-4100-9e94-94721eb53c28")
+			)
+			(table_cell "Worst 3rd Harmonic"
+				(exclude_from_sim no)
+				(at 217.17 95.25 0)
+				(size 26.67 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "ae9d6d35-790d-466a-9f33-c2f2de75815c")
+			)
+			(table_cell "1"
+				(exclude_from_sim no)
+				(at 171.45 97.79 0)
+				(size 7.62 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "69719b6c-76e1-4221-89b4-c64c1a7665f5")
+			)
+			(table_cell "160m/80m"
+				(exclude_from_sim no)
+				(at 179.07 97.79 0)
+				(size 22.86 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "7f74e01c-79a7-44e2-9447-dac0d182015e")
+			)
+			(table_cell "4.0MHz"
+				(exclude_from_sim no)
+				(at 201.93 97.79 0)
+				(size 15.24 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "62619d8a-eda0-4703-a9eb-1d2813ed6e9c")
+			)
+			(table_cell "5.51MHz (80m) 33.5dB"
+				(exclude_from_sim no)
+				(at 217.17 97.79 0)
+				(size 26.67 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "6d4cc2d7-c201-4675-aaae-5f5112500820")
+			)
+			(table_cell "2"
+				(exclude_from_sim no)
+				(at 171.45 100.33 0)
+				(size 7.62 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "9012c139-1b3e-4fbe-9b02-1cf28b7fdcd7")
+			)
+			(table_cell "60m/40m/30m"
+				(exclude_from_sim no)
+				(at 179.07 100.33 0)
+				(size 22.86 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "8b184f16-7873-47c0-98e1-cfc3123c45b5")
+			)
+			(table_cell "11.5MHz"
+				(exclude_from_sim no)
+				(at 201.93 100.33 0)
+				(size 15.24 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "7420bb04-75de-4910-9685-c5882d2bb7ec")
+			)
+			(table_cell "16.1MHz (60m) 33.5dB"
+				(exclude_from_sim no)
+				(at 217.17 100.33 0)
+				(size 26.67 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "e6c99acc-85fb-418b-984b-6cdce1ff465b")
+			)
+			(table_cell "3"
+				(exclude_from_sim no)
+				(at 171.45 102.87 0)
+				(size 7.62 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "47484e7c-0fed-4ca6-a8cc-e48c28e88935")
+			)
+			(table_cell "20m/17m/12m/10m"
+				(exclude_from_sim no)
+				(at 179.07 102.87 0)
+				(size 22.86 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "8065e9a8-75a2-4ea6-8598-215314a315ad")
+			)
+			(table_cell "32.0MHz"
+				(exclude_from_sim no)
+				(at 201.93 102.87 0)
+				(size 15.24 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "718b5ba4-db53-4e84-92d1-96808e63197e")
+			)
+			(table_cell "42.29MHz (20m) 33.5dB"
+				(exclude_from_sim no)
+				(at 217.17 102.87 0)
+				(size 26.67 2.54)
+				(margins 0.9525 0.9525 0.9525 0.9525)
+				(span 1 1)
+				(fill
+					(type none)
+				)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left top)
+				)
+				(uuid "bf7a566b-2b1d-45b1-81f3-857d41503bb5")
+			)
+		)
 	)
 	(hierarchical_label "midON"
 		(shape input)
@@ -3146,7 +3483,7 @@
 	)
 	(hierarchical_label "RFin"
 		(shape input)
-		(at 50.8 80.01 180)
+		(at 50.8 16.51 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3157,7 +3494,7 @@
 	)
 	(hierarchical_label "RFout"
 		(shape output)
-		(at 165.1 77.47 0)
+		(at 165.1 25.4 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -3231,7 +3568,7 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape dot)
-		(at 162.56 77.47 0)
+		(at 162.56 25.4 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3241,7 +3578,7 @@
 		)
 		(uuid "1e14d6f1-9eb4-45e6-bb5e-afe63eb9e00f")
 		(property "Netclass" "RF"
-			(at 163.2585 74.93 0)
+			(at 163.2585 22.86 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3250,7 +3587,7 @@
 			)
 		)
 		(property "Component Class" ""
-			(at 144.78 33.02 0)
+			(at 144.78 -19.05 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3325,7 +3662,7 @@
 	(netclass_flag ""
 		(length 2.54)
 		(shape dot)
-		(at 54.61 80.01 0)
+		(at 54.61 16.51 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3335,7 +3672,7 @@
 		)
 		(uuid "346f9519-643e-40cb-b628-9364ba6d10d6")
 		(property "Netclass" "RF"
-			(at 53.9115 77.47 0)
+			(at 53.9115 13.97 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3344,7 +3681,7 @@
 			)
 		)
 		(property "Component Class" ""
-			(at 72.39 35.56 0)
+			(at 72.39 -27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3382,6 +3719,38 @@
 					(size 1.27 1.27)
 					(italic yes)
 				)
+			)
+		)
+	)
+	(netclass_flag ""
+		(length 2.54)
+		(shape dot)
+		(at 135.89 53.34 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "7d738b09-ab39-4ef9-83b7-efc4224fcf02")
+		(property "Netclass" "RF"
+			(at 135.1915 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Component Class" ""
+			(at 153.67 8.89 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+					(italic yes)
+				)
+				(justify left)
 			)
 		)
 	)
@@ -3760,120 +4129,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 119.38 58.42 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0f91c16c-4873-4910-bd15-5e159e2d2d1a")
-		(property "Reference" "C203"
-			(at 119.634 56.134 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "470pF NP0 100V"
-			(at 119.38 60.706 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 120.3452 62.23 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 119.38 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 119.38 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C106259"
-			(at 119.38 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "muRata"
-			(at 119.38 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "GCM1885C2A471FA6D"
-			(at 119.38 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "81-GCM1885C2A471FA6D"
-			(at 119.38 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
-			(at 119.38 58.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "11349b5c-98f4-4932-b593-05c010f71abf")
-		)
-		(pin "2"
-			(uuid "480a3021-23a3-4785-84df-079397c9dd8e")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C203")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:L_Small")
 		(at 111.76 107.95 90)
 		(unit 1)
@@ -3883,7 +4138,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0fd54878-ff3f-4f75-be4b-bce144ce92cc")
-		(property "Reference" "L204"
+		(property "Reference" "L205"
 			(at 111.76 102.87 90)
 			(effects
 				(font
@@ -3891,7 +4146,7 @@
 				)
 			)
 		)
-		(property "Value" "680nH"
+		(property "Value" "1.2uH"
 			(at 111.76 105.41 90)
 			(effects
 				(font
@@ -3926,16 +4181,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "1008CS-681XJRC "
-			(at 111.76 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C6364717"
+		(property "MPN" "1008CS-122XJRC"
 			(at 111.76 107.95 90)
 			(effects
 				(font
@@ -3953,15 +4199,6 @@
 				(hide yes)
 			)
 		)
-		(property "Field10" ""
-			(at 111.76 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(property "MFG" "Coilcraft"
 			(at 111.76 107.95 90)
 			(effects
@@ -3971,7 +4208,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "994-1008CS-681XJRC "
+		(property "Mouser_PN" "994-1008CS-122XJRC "
 			(at 111.76 107.95 90)
 			(effects
 				(font
@@ -3989,7 +4226,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L204")
+					(reference "L205")
 					(unit 1)
 				)
 			)
@@ -4063,6 +4300,215 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 137.16 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1dbebca7-1e1f-4377-a903-a1b3ca6d199b")
+		(property "Reference" "C204"
+			(at 137.414 56.134 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "910pF NP0 100V"
+			(at 137.16 60.706 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 138.1252 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C106259"
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "muRata"
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GCM1885C2A911FA16D"
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "81-GCM1885C2A911FA6D"
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6718582c-61ec-4d54-a8b3-997eac4b4c54")
+		)
+		(pin "2"
+			(uuid "389b4597-84fb-4090-8dc9-29c4c01ff46c")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
+					(reference "C204")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:L_Small")
+		(at 110.49 53.34 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "22b0dedf-6a42-475f-ae34-fba99805898d")
+		(property "Reference" "L202"
+			(at 110.49 48.26 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2.7uH"
+			(at 110.49 50.8 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Inductor_SMD:L_1008_2520Metric"
+			(at 110.49 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 110.49 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Inductor, small symbol"
+			(at 110.49 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "Coilcraft"
+			(at 110.49 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "1008LS-272XJRC "
+			(at 110.49 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "994-1008LS-272XJRC "
+			(at 110.49 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "b8462ad1-e242-4ffa-8cb0-2829421fb076")
+		)
+		(pin "1"
+			(uuid "d2fd8556-01b0-467d-a6e8-2394b99283dc")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
+					(reference "L202")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:L_Small")
 		(at 110.49 166.37 90)
 		(unit 1)
@@ -4072,7 +4518,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3584f537-60c4-4ac5-afd0-a1651893d59f")
-		(property "Reference" "L207"
+		(property "Reference" "L208"
 			(at 110.49 161.29 90)
 			(effects
 				(font
@@ -4178,7 +4624,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L207")
+					(reference "L208")
 					(unit 1)
 				)
 			)
@@ -4193,7 +4639,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "37a29073-3d33-4cbf-9beb-a7235a24fd3a")
-		(property "Reference" "C208"
+		(property "Reference" "C209"
 			(at 82.804 169.418 0)
 			(effects
 				(font
@@ -4292,7 +4738,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C208")
+					(reference "C209")
 					(unit 1)
 				)
 			)
@@ -4558,24 +5004,24 @@
 	)
 	(symbol
 		(lib_id "Device:L_Small")
-		(at 130.81 107.95 90)
+		(at 128.27 53.34 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "49949245-dc14-408e-bf00-fb1e59363b09")
-		(property "Reference" "L205"
-			(at 130.81 102.87 90)
+		(uuid "46f93de9-9c4d-47f1-81bf-bd4a709581f1")
+		(property "Reference" "L203"
+			(at 128.27 48.26 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "Value" "560nH"
-			(at 130.81 105.41 90)
+		(property "Value" "2.7uH"
+			(at 128.27 50.8 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4583,7 +5029,7 @@
 			)
 		)
 		(property "Footprint" "Inductor_SMD:L_1008_2520Metric"
-			(at 130.81 107.95 0)
+			(at 128.27 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4592,7 +5038,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 130.81 107.95 0)
+			(at 128.27 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4601,34 +5047,7 @@
 			)
 		)
 		(property "Description" "Inductor, small symbol"
-			(at 130.81 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "1008CS-561XJRC"
-			(at 130.81 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "Coilcraft"
-			(at 130.81 107.95 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
-			(at 130.81 107.95 90)
+			(at 128.27 53.34 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4637,7 +5056,7 @@
 			)
 		)
 		(property "MFG" "Coilcraft"
-			(at 130.81 107.95 90)
+			(at 128.27 53.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4645,8 +5064,17 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "994-1008CS-561XJRC"
-			(at 130.81 107.95 90)
+		(property "MPN" "1008LS-272XJRC "
+			(at 128.27 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "994-1008LS-272XJRC "
+			(at 128.27 53.34 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4655,15 +5083,15 @@
 			)
 		)
 		(pin "2"
-			(uuid "f7d6ebc4-ad14-4b91-b930-79a37dff7a15")
+			(uuid "90039ac8-fc2a-4784-bc5a-595f0549e2cc")
 		)
 		(pin "1"
-			(uuid "1e02c274-34e7-43c5-8a98-4818eae9689c")
+			(uuid "84f5118e-362b-4fc7-8683-98f97a0d502d")
 		)
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L205")
+					(reference "L203")
 					(unit 1)
 				)
 			)
@@ -4799,8 +5227,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "5d62cb3e-0cf8-4b20-8de7-2d563d39c811")
-		(property "Reference" "C207"
+		(uuid "64ec52c2-d1a2-4a9f-93db-37d7cfdf561e")
+		(property "Reference" "C208"
 			(at 141.224 110.49 0)
 			(effects
 				(font
@@ -4809,7 +5237,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "150pF NP0 100V"
+		(property "Value" "330pF NP0 50V"
 			(at 141.478 115.316 0)
 			(effects
 				(font
@@ -4827,7 +5255,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H331JA01-01A-EN_PDF_CERAMICCAPACITORSMD"
 			(at 140.97 113.03 0)
 			(effects
 				(font
@@ -4845,15 +5273,6 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C107001"
-			(at 140.97 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(property "MFG" "muRata"
 			(at 140.97 113.03 0)
 			(effects
@@ -4863,7 +5282,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM1885C2A151JA01D"
+		(property "MPN" "GRM1885C1H331JA01D"
 			(at 140.97 113.03 0)
 			(effects
 				(font
@@ -4872,7 +5291,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM1885C2A151JA01 "
+		(property "Mouser_PN" "81-GRM39C331J50 "
 			(at 140.97 113.03 0)
 			(effects
 				(font
@@ -4891,15 +5310,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "fb9824a6-5248-4f06-82bf-0dab64d342e7")
+			(uuid "53c00522-0c64-4d45-bcf9-71f65a59319a")
 		)
 		(pin "2"
-			(uuid "28c42c39-6e79-4a7e-b26d-ca1791d15e88")
+			(uuid "ccdeddb9-54f3-47e4-96a3-dba783dbf29e")
 		)
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C207")
+					(reference "C208")
 					(unit 1)
 				)
 			)
@@ -4990,7 +5409,7 @@
 				)
 			)
 		)
-		(property "Value" "1.2uH"
+		(property "Value" "2.7uH"
 			(at 93.98 50.8 90)
 			(effects
 				(font
@@ -5034,7 +5453,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "1008LS-122XJR"
+		(property "MPN" "1008LS-272XJRC "
 			(at 93.98 53.34 90)
 			(effects
 				(font
@@ -5043,34 +5462,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2044063"
-			(at 93.98 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "Coilcraft"
-			(at 93.98 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "652-CW252016-1R2J"
-			(at 93.98 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "Mouser_PN" "994-1008LS-272XJRC "
 			(at 93.98 53.34 90)
 			(effects
 				(font
@@ -5349,7 +5741,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7718a5a0-f6cf-4873-99b0-f7866faf4350")
-		(property "Reference" "C210"
+		(property "Reference" "C211"
 			(at 120.904 169.418 0)
 			(effects
 				(font
@@ -5448,129 +5840,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C210")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:L_Small")
-		(at 110.49 53.34 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "7e71d84b-98a1-4a89-a601-4bcadfa1d8d7")
-		(property "Reference" "L202"
-			(at 110.49 48.26 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "1.2uH"
-			(at 110.49 50.8 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Inductor_SMD:L_1008_2520Metric"
-			(at 110.49 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 110.49 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Inductor, small symbol"
-			(at 110.49 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "Coilcraft"
-			(at 110.49 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "1008LS-122XJR"
-			(at 110.49 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C2044063"
-			(at 110.49 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "Coilcraft"
-			(at 110.49 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "652-CW252016-1R2J"
-			(at 110.49 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
-			(at 110.49 53.34 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "9c1408a0-95b8-4f58-b7bd-b73ccc10db38")
-		)
-		(pin "1"
-			(uuid "7cc9ab8c-ad31-4eb4-bebd-9f4353da4bf2")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L202")
+					(reference "C211")
 					(unit 1)
 				)
 			)
@@ -5585,7 +5855,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "844bd935-cfe9-414c-aa75-392ad8b40410")
-		(property "Reference" "C205"
+		(property "Reference" "C206"
 			(at 103.124 110.49 0)
 			(effects
 				(font
@@ -5594,7 +5864,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "330pF NP0 100V"
+		(property "Value" "560pF NP0 50V"
 			(at 103.378 115.316 0)
 			(effects
 				(font
@@ -5612,7 +5882,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H561JA01-01A-EN_PDF_CERAMICCAPACITORSMD"
 			(at 102.87 113.03 0)
 			(effects
 				(font
@@ -5630,15 +5900,6 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C106259"
-			(at 102.87 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(property "MFG" "muRata"
 			(at 102.87 113.03 0)
 			(effects
@@ -5648,7 +5909,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM1885C2A331JA01D"
+		(property "MPN" "GRM1885C1H561JA01D"
 			(at 102.87 113.03 0)
 			(effects
 				(font
@@ -5657,16 +5918,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM185C2A331JA01D "
-			(at 102.87 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
+		(property "Mouser_PN" "81-GRM39C561J50 "
 			(at 102.87 113.03 0)
 			(effects
 				(font
@@ -5684,7 +5936,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C205")
+					(reference "C206")
 					(unit 1)
 				)
 			)
@@ -5759,6 +6011,102 @@
 	)
 	(symbol
 		(lib_id "Device:C")
+		(at 121.92 113.03 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "891a4336-cb81-4dbb-8c49-00e01fb0409e")
+		(property "Reference" "C207"
+			(at 122.174 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "560pF NP0 50V"
+			(at 122.428 115.316 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 122.8852 116.84 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H561JA01-01A-EN_PDF_CERAMICCAPACITORSMD"
+			(at 121.92 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 121.92 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "muRata"
+			(at 121.92 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GRM1885C1H561JA01D"
+			(at 121.92 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "81-GRM39C561J50 "
+			(at 121.92 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "2cbdf152-7874-4866-b2d8-43bca34b1009")
+		)
+		(pin "2"
+			(uuid "8aeedfdc-629c-401e-b2fd-248753983e27")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
+					(reference "C207")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
 		(at 139.7 171.45 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -5766,7 +6114,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8adeb64e-4ebb-4653-96e9-b8ea47efb404")
-		(property "Reference" "C211"
+		(property "Reference" "C212"
 			(at 139.954 169.418 0)
 			(effects
 				(font
@@ -5865,7 +6213,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C211")
+					(reference "C212")
 					(unit 1)
 				)
 			)
@@ -6022,7 +6370,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1nF NP0 100V"
+		(property "Value" "1.6nF NP0 100V"
 			(at 101.6 60.706 0)
 			(effects
 				(font
@@ -6067,7 +6415,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Kyocera AVX"
+		(property "MFG" "muRata"
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6076,7 +6424,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15ACG2A102FT"
+		(property "MPN" "GCM1885C1J162JA16D"
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6085,7 +6433,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15ACG2A102FT"
+		(property "Mouser_PN" "81-GCM1885C1J162JA6D "
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6131,6 +6479,138 @@
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
 					(reference "C202")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C")
+		(at 119.38 58.42 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "a12609fe-c558-40ea-a88e-ae05c09d2f72")
+		(property "Reference" "C203"
+			(at 119.634 56.134 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1.6nF NP0 100V"
+			(at 119.38 60.706 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+			(at 120.3452 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Unpolarized capacitor"
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C5182455"
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "muRata"
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "GCM1885C1J162JA16D"
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "81-GCM1885C1J162JA6D "
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "25V"
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "4045f2e1-07e0-465c-a98a-057070066d5a")
+		)
+		(pin "2"
+			(uuid "019167b7-c052-46b2-97fb-26857f9db99a")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
+					(reference "C203")
 					(unit 1)
 				)
 			)
@@ -6399,7 +6879,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bc65c625-fb17-4301-a981-93993351c9ed")
-		(property "Reference" "L208"
+		(property "Reference" "L209"
 			(at 129.54 161.29 90)
 			(effects
 				(font
@@ -6505,7 +6985,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L208")
+					(reference "L209")
 					(unit 1)
 				)
 			)
@@ -6633,7 +7113,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c37118e0-14bb-4d47-bb16-178374a745eb")
-		(property "Reference" "L206"
+		(property "Reference" "L207"
 			(at 92.71 161.29 90)
 			(effects
 				(font
@@ -6739,7 +7219,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L206")
+					(reference "L207")
 					(unit 1)
 				)
 			)
@@ -6754,7 +7234,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c505c7d7-1395-4d64-ab3d-f4fbe5a26ac3")
-		(property "Reference" "C204"
+		(property "Reference" "C205"
 			(at 84.074 110.49 0)
 			(effects
 				(font
@@ -6763,7 +7243,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "150pF NP0 100V"
+		(property "Value" "330pF NP0 50V"
 			(at 84.328 115.316 0)
 			(effects
 				(font
@@ -6781,7 +7261,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/datasheet/3/76/1/GRM1885C2A151JA01-01A.pdf"
+		(property "Datasheet" "https://pim.murata.com/asset/pim4/ceramicCapacitorSMD/GRM1885C1H331JA01-01A-EN_PDF_CERAMICCAPACITORSMD"
 			(at 83.82 113.03 0)
 			(effects
 				(font
@@ -6799,15 +7279,6 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C107001"
-			(at 83.82 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
 		(property "MFG" "muRata"
 			(at 83.82 113.03 0)
 			(effects
@@ -6817,7 +7288,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM1885C2A151JA01D"
+		(property "MPN" "GRM1885C1H331JA01D"
 			(at 83.82 113.03 0)
 			(effects
 				(font
@@ -6826,7 +7297,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM1885C2A151JA01 "
+		(property "Mouser_PN" "81-GRM39C331J50 "
 			(at 83.82 113.03 0)
 			(effects
 				(font
@@ -6853,7 +7324,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C204")
+					(reference "C205")
 					(unit 1)
 				)
 			)
@@ -6974,6 +7445,119 @@
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
 					(reference "Q201")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:L_Small")
+		(at 130.81 107.95 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "cbe8cf9a-554f-4b01-a644-d9bc6b415b85")
+		(property "Reference" "L206"
+			(at 130.81 102.87 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1uH"
+			(at 130.81 105.41 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Inductor_SMD:L_1008_2520Metric"
+			(at 130.81 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 130.81 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Inductor, small symbol"
+			(at 130.81 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "1008CS-102XJRC"
+			(at 130.81 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer_Name" "Coilcraft"
+			(at 130.81 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Field10" ""
+			(at 130.81 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "Coilcraft"
+			(at 130.81 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "994-1008CS-102XJRC "
+			(at 130.81 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "d0426970-e336-48ea-ad40-30b54c2f01a5")
+		)
+		(pin "1"
+			(uuid "58f2681a-6397-42ab-8237-1eeeef91d56c")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
+					(reference "L206")
 					(unit 1)
 				)
 			)
@@ -7105,120 +7689,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 121.92 113.03 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "d77740d0-5006-4cdb-8e52-2125f391f63f")
-		(property "Reference" "C206"
-			(at 122.174 110.49 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "330pF NP0 100V"
-			(at 122.428 115.316 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 122.8852 116.84 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 121.92 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor"
-			(at 121.92 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "LCSC" "C107001"
-			(at 121.92 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MFG" "muRata"
-			(at 121.92 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "GRM1885C2A331JA01D"
-			(at 121.92 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Mouser_PN" "81-GRM185C2A331JA01D "
-			(at 121.92 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Field10" ""
-			(at 121.92 113.03 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "743b8b3f-1c53-46bf-abe8-a7ff9d6d4563")
-		)
-		(pin "2"
-			(uuid "806f0d15-7eb9-4644-a948-da334a773c10")
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C206")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 102.87 26.67 0)
 		(unit 1)
@@ -7294,7 +7764,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e61e011c-decb-4f29-9758-925fc2ee32be")
-		(property "Reference" "C209"
+		(property "Reference" "C210"
 			(at 101.854 169.418 0)
 			(effects
 				(font
@@ -7393,7 +7863,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "C209")
+					(reference "C210")
 					(unit 1)
 				)
 			)
@@ -7588,7 +8058,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f665869a-6dc7-421d-ad7e-a2bf338e1aa3")
-		(property "Reference" "L203"
+		(property "Reference" "L204"
 			(at 93.98 102.87 90)
 			(effects
 				(font
@@ -7596,7 +8066,7 @@
 				)
 			)
 		)
-		(property "Value" "560nH"
+		(property "Value" "1uH"
 			(at 93.98 105.41 90)
 			(effects
 				(font
@@ -7631,7 +8101,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "1008CS-561XJRC"
+		(property "MPN" "1008CS-102XJRC"
 			(at 93.98 107.95 90)
 			(effects
 				(font
@@ -7667,7 +8137,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "994-1008CS-561XJRC"
+		(property "Mouser_PN" "994-1008CS-102XJRC "
 			(at 93.98 107.95 90)
 			(effects
 				(font
@@ -7685,7 +8155,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/ab0ef40e-2ba9-4126-8561-248abf25197d"
-					(reference "L203")
+					(reference "L204")
 					(unit 1)
 				)
 			)
@@ -7709,7 +8179,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "470pF NP0 100V"
+		(property "Value" "910pF NP0 100V"
 			(at 83.82 60.706 0)
 			(effects
 				(font
@@ -7763,7 +8233,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GCM1885C2A471FA6D"
+		(property "MPN" "GCM1885C2A911FA16D"
 			(at 83.82 58.42 0)
 			(effects
 				(font
@@ -7772,7 +8242,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GCM1885C2A471FA6D"
+		(property "Mouser_PN" "81-GCM1885C2A911FA6D"
 			(at 83.82 58.42 0)
 			(effects
 				(font
