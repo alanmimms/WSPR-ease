@@ -219,7 +219,7 @@
 		(uuid "8cb9e92c-f9cf-4f0f-b717-77f9e13a40d8")
 	)
 	(embedded_fonts no)
-	(model "UCC27525DGN.stp"
+	(model "${WSPR_EASE_SYMBOLS}/UCC27525DGN/3D/UCC27525DGN.stp"
 		(offset
 			(xyz 0 0 -0.02999999888)
 		)

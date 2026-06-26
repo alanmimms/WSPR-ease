@@ -8332,7 +8332,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1nF NP0 100V"
+		(property "Value" "1uF X7R 25V"
 			(at 28.448 86.106 0)
 			(effects
 				(font
@@ -8341,7 +8341,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 28.9052 87.63 0)
 			(effects
 				(font
@@ -8386,7 +8386,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15ACG2A102FT"
+		(property "MPN" "04023D105MAT2A"
 			(at 27.94 83.82 0)
 			(effects
 				(font
@@ -8395,7 +8395,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15ACG2A102FT"
+		(property "Mouser_PN" "581-04023D105MAT2A "
 			(at 27.94 83.82 0)
 			(effects
 				(font
@@ -16079,7 +16079,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 178.1048 156.21 0)
 			(effects
 				(font
@@ -16115,7 +16115,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CM105X7R105K25AT"
+		(property "MPN" "04023D105MAT2A"
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -16133,7 +16133,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "346-CM105X7R105K25AT"
+		(property "Mouser_PN" "581-04023D105MAT2A "
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -16142,7 +16142,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" ""
+		(property "cap-type" "X5R"
 			(at 181.864 156.464 0)
 			(effects
 				(font

@@ -2825,6 +2825,12 @@
 		(uuid "723a1e26-2fc4-44da-ae28-b4665f528edf")
 	)
 	(junction
+		(at 146.05 134.62)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "003b78ef-66cc-4912-aec7-717c1c3fb150")
+	)
+	(junction
 		(at 153.67 82.55)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -2903,13 +2909,13 @@
 		(uuid "3032f00a-dd65-4fc9-9b6b-0ccec7aa222f")
 	)
 	(junction
-		(at 99.06 186.69)
+		(at 97.79 194.31)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "34d1f2b1-2e6a-43b8-aef7-1bedd61fac4a")
 	)
 	(junction
-		(at 50.8 176.53)
+		(at 48.26 184.15)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "377fd1b6-d785-4c4b-8553-54e4b237e17a")
@@ -2943,12 +2949,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "44faacbb-cc75-4093-840e-80b87c5c5429")
-	)
-	(junction
-		(at 149.86 134.62)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "4bfe2d95-ce19-4905-99a8-b3e965711c09")
 	)
 	(junction
 		(at 226.06 71.12)
@@ -2999,7 +2999,7 @@
 		(uuid "6927ee57-41c8-434c-b71c-5ea970adf6f6")
 	)
 	(junction
-		(at 99.06 176.53)
+		(at 97.79 184.15)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "6df97cac-72fe-464c-b96f-dd9be7030719")
@@ -3077,7 +3077,7 @@
 		(uuid "ad6f0011-254b-4e72-b4f0-efb3ef3562a0")
 	)
 	(junction
-		(at 50.8 186.69)
+		(at 48.26 194.31)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b4a9c117-3d29-4c92-a285-1072e3d2ba37")
@@ -3216,7 +3216,7 @@
 	)
 	(wire
 		(pts
-			(xy 50.8 186.69) (xy 50.8 187.96)
+			(xy 48.26 194.31) (xy 48.26 195.58)
 		)
 		(stroke
 			(width 0)
@@ -3266,7 +3266,7 @@
 	)
 	(wire
 		(pts
-			(xy 99.06 186.69) (xy 106.68 186.69)
+			(xy 97.79 194.31) (xy 105.41 194.31)
 		)
 		(stroke
 			(width 0)
@@ -3396,7 +3396,7 @@
 	)
 	(wire
 		(pts
-			(xy 58.42 176.53) (xy 50.8 176.53)
+			(xy 55.88 184.15) (xy 48.26 184.15)
 		)
 		(stroke
 			(width 0)
@@ -3436,7 +3436,7 @@
 	)
 	(wire
 		(pts
-			(xy 50.8 175.26) (xy 50.8 176.53)
+			(xy 48.26 182.88) (xy 48.26 184.15)
 		)
 		(stroke
 			(width 0)
@@ -3466,7 +3466,7 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 134.62) (xy 149.86 134.62)
+			(xy 146.05 134.62) (xy 151.13 134.62)
 		)
 		(stroke
 			(width 0)
@@ -3476,7 +3476,7 @@
 	)
 	(wire
 		(pts
-			(xy 58.42 177.8) (xy 58.42 176.53)
+			(xy 55.88 185.42) (xy 55.88 184.15)
 		)
 		(stroke
 			(width 0)
@@ -3516,7 +3516,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 176.53) (xy 99.06 176.53)
+			(xy 105.41 184.15) (xy 97.79 184.15)
 		)
 		(stroke
 			(width 0)
@@ -3586,7 +3586,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 177.8) (xy 106.68 176.53)
+			(xy 105.41 185.42) (xy 105.41 184.15)
 		)
 		(stroke
 			(width 0)
@@ -3896,7 +3896,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 134.62) (xy 149.86 140.97)
+			(xy 146.05 134.62) (xy 146.05 140.97)
 		)
 		(stroke
 			(width 0)
@@ -3936,7 +3936,7 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 140.97) (xy 151.13 140.97)
+			(xy 146.05 140.97) (xy 151.13 140.97)
 		)
 		(stroke
 			(width 0)
@@ -3966,7 +3966,7 @@
 	)
 	(wire
 		(pts
-			(xy 99.06 186.69) (xy 99.06 187.96)
+			(xy 97.79 194.31) (xy 97.79 195.58)
 		)
 		(stroke
 			(width 0)
@@ -4006,7 +4006,7 @@
 	)
 	(wire
 		(pts
-			(xy 58.42 185.42) (xy 58.42 186.69)
+			(xy 55.88 193.04) (xy 55.88 194.31)
 		)
 		(stroke
 			(width 0)
@@ -4026,7 +4026,7 @@
 	)
 	(wire
 		(pts
-			(xy 50.8 176.53) (xy 50.8 177.8)
+			(xy 48.26 184.15) (xy 48.26 185.42)
 		)
 		(stroke
 			(width 0)
@@ -4066,7 +4066,7 @@
 	)
 	(wire
 		(pts
-			(xy 99.06 185.42) (xy 99.06 186.69)
+			(xy 97.79 193.04) (xy 97.79 194.31)
 		)
 		(stroke
 			(width 0)
@@ -4206,7 +4206,7 @@
 	)
 	(wire
 		(pts
-			(xy 106.68 185.42) (xy 106.68 186.69)
+			(xy 105.41 193.04) (xy 105.41 194.31)
 		)
 		(stroke
 			(width 0)
@@ -4286,7 +4286,7 @@
 	)
 	(wire
 		(pts
-			(xy 99.06 175.26) (xy 99.06 176.53)
+			(xy 97.79 182.88) (xy 97.79 184.15)
 		)
 		(stroke
 			(width 0)
@@ -4306,7 +4306,7 @@
 	)
 	(wire
 		(pts
-			(xy 50.8 186.69) (xy 58.42 186.69)
+			(xy 48.26 194.31) (xy 55.88 194.31)
 		)
 		(stroke
 			(width 0)
@@ -4623,16 +4623,6 @@
 			(type default)
 		)
 		(uuid "805cdaf3-b10e-4055-ae28-5ca3f5fe2d0d")
-	)
-	(wire
-		(pts
-			(xy 151.13 133.35) (xy 149.86 133.35)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "80b7a4dc-5625-4546-ab6a-a67b9e11759d")
 	)
 	(wire
 		(pts
@@ -4966,7 +4956,7 @@
 	)
 	(wire
 		(pts
-			(xy 158.75 133.35) (xy 160.02 133.35)
+			(xy 158.75 134.62) (xy 160.02 134.62)
 		)
 		(stroke
 			(width 0)
@@ -5086,7 +5076,7 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 133.35) (xy 160.02 140.97)
+			(xy 160.02 134.62) (xy 160.02 140.97)
 		)
 		(stroke
 			(width 0)
@@ -5136,7 +5126,7 @@
 	)
 	(wire
 		(pts
-			(xy 50.8 185.42) (xy 50.8 186.69)
+			(xy 48.26 193.04) (xy 48.26 194.31)
 		)
 		(stroke
 			(width 0)
@@ -5446,16 +5436,6 @@
 	)
 	(wire
 		(pts
-			(xy 149.86 133.35) (xy 149.86 134.62)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d8cb9344-b6e8-4e79-aa8c-e2089047b8d6")
-	)
-	(wire
-		(pts
 			(xy 153.67 41.91) (xy 153.67 48.26)
 		)
 		(stroke
@@ -5566,7 +5546,7 @@
 	)
 	(wire
 		(pts
-			(xy 99.06 176.53) (xy 99.06 177.8)
+			(xy 97.79 184.15) (xy 97.79 185.42)
 		)
 		(stroke
 			(width 0)
@@ -6132,7 +6112,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "073732b0-4954-4b0e-a5a6-d4743639ffc4")
-		(property "Reference" "#PWR0329"
+		(property "Reference" "#PWR0330"
 			(at 237.49 130.81 0)
 			(effects
 				(font
@@ -6182,7 +6162,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0329")
+					(reference "#PWR0330")
 					(unit 1)
 				)
 			)
@@ -6190,15 +6170,15 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 99.06 175.26 0)
+		(at 97.79 182.88 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "07847f07-44d7-4b46-8ce5-8c0675c34d71")
-		(property "Reference" "#PWR0342"
-			(at 99.06 179.07 0)
+		(property "Reference" "#PWR0344"
+			(at 97.79 186.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6207,7 +6187,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 99.06 170.18 0)
+			(at 97.79 177.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6215,7 +6195,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 99.06 175.26 0)
+			(at 97.79 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6224,7 +6204,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 99.06 175.26 0)
+			(at 97.79 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6233,7 +6213,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 99.06 175.26 0)
+			(at 97.79 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6247,7 +6227,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0342")
+					(reference "#PWR0344")
 					(unit 1)
 				)
 			)
@@ -6496,7 +6476,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 99.06 181.61 0)
+		(at 97.79 189.23 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -6504,7 +6484,7 @@
 		(dnp no)
 		(uuid "0c204e2d-215d-4a15-996b-98d5a75db0fd")
 		(property "Reference" "C325"
-			(at 98.552 179.324 0)
+			(at 97.282 186.944 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6513,7 +6493,7 @@
 			)
 		)
 		(property "Value" "100nF X7R 50V"
-			(at 88.138 183.896 0)
+			(at 86.868 191.516 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6522,7 +6502,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 100.0252 185.42 0)
+			(at 98.7552 193.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6531,7 +6511,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 99.06 181.61 0)
+			(at 97.79 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6540,7 +6520,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 99.06 181.61 0)
+			(at 97.79 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6549,7 +6529,7 @@
 			)
 		)
 		(property "LCSC" "C24452"
-			(at 99.06 181.61 0)
+			(at 97.79 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6558,7 +6538,7 @@
 			)
 		)
 		(property "MFG" "Kyocera AVX"
-			(at 99.06 181.61 90)
+			(at 97.79 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6567,7 +6547,7 @@
 			)
 		)
 		(property "MPN" "KGM15BR71H104KT"
-			(at 99.06 181.61 90)
+			(at 97.79 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6576,7 +6556,7 @@
 			)
 		)
 		(property "Mouser_PN" "581-KGM15BR71H104KT"
-			(at 99.06 181.61 90)
+			(at 97.79 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6585,7 +6565,7 @@
 			)
 		)
 		(property "cap-type" "X7R"
-			(at 99.06 181.61 0)
+			(at 97.79 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6593,7 +6573,7 @@
 			)
 		)
 		(property "Field10" ""
-			(at 99.06 181.61 90)
+			(at 97.79 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6602,7 +6582,7 @@
 			)
 		)
 		(property "working-voltage" "50V"
-			(at 99.06 181.61 90)
+			(at 97.79 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6767,7 +6747,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "105feae7-367b-4f79-a535-aa777f1fcfc3")
-		(property "Reference" "#PWR0344"
+		(property "Reference" "#PWR0346"
 			(at 25.4 194.31 0)
 			(effects
 				(font
@@ -6818,7 +6798,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0344")
+					(reference "#PWR0346")
 					(unit 1)
 				)
 			)
@@ -6834,7 +6814,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "10cb5848-333e-45d9-a14c-297305333bef")
-		(property "Reference" "#PWR0317"
+		(property "Reference" "#PWR0318"
 			(at 22.86 99.06 0)
 			(effects
 				(font
@@ -6884,7 +6864,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0317")
+					(reference "#PWR0318")
 					(unit 1)
 				)
 			)
@@ -6892,7 +6872,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 99.06 187.96 0)
+		(at 97.79 195.58 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -6901,8 +6881,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "130d516d-a01f-4e1c-aa84-c93bc521233c")
-		(property "Reference" "#PWR0347"
-			(at 99.06 194.31 0)
+		(property "Reference" "#PWR0349"
+			(at 97.79 201.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6911,7 +6891,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 99.06 193.04 0)
+			(at 97.79 200.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6920,7 +6900,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 99.06 187.96 0)
+			(at 97.79 195.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6929,7 +6909,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 99.06 187.96 0)
+			(at 97.79 195.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6938,7 +6918,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 99.06 187.96 0)
+			(at 97.79 195.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6952,7 +6932,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0347")
+					(reference "#PWR0349")
 					(unit 1)
 				)
 			)
@@ -6967,7 +6947,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "13369397-3fa7-4522-bbe0-cebc7a4cceac")
-		(property "Reference" "#PWR0319"
+		(property "Reference" "#PWR0320"
 			(at 59.69 106.68 0)
 			(effects
 				(font
@@ -7018,7 +6998,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0319")
+					(reference "#PWR0320")
 					(unit 1)
 				)
 			)
@@ -7448,7 +7428,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1bb5371c-4cb4-4fdd-b487-24215c6330f8")
-		(property "Reference" "#PWR0341"
+		(property "Reference" "#PWR0343"
 			(at 74.93 179.07 0)
 			(effects
 				(font
@@ -7498,7 +7478,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0341")
+					(reference "#PWR0343")
 					(unit 1)
 				)
 			)
@@ -7580,7 +7560,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1ff8dd25-9512-47fc-adfc-d9cc98341eb3")
-		(property "Reference" "#PWR0328"
+		(property "Reference" "#PWR0329"
 			(at 222.25 130.81 0)
 			(effects
 				(font
@@ -7630,7 +7610,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0328")
+					(reference "#PWR0329")
 					(unit 1)
 				)
 			)
@@ -7870,7 +7850,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 50.8 181.61 0)
+		(at 48.26 189.23 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7878,7 +7858,7 @@
 		(dnp no)
 		(uuid "28ce5b3f-4586-46ec-b76a-5473eb082fa4")
 		(property "Reference" "C321"
-			(at 50.292 179.324 0)
+			(at 47.752 186.944 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7887,7 +7867,7 @@
 			)
 		)
 		(property "Value" "100nF X7R 50V"
-			(at 39.878 183.896 0)
+			(at 37.338 191.516 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7896,7 +7876,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
-			(at 51.7652 185.42 0)
+			(at 49.2252 193.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7905,7 +7885,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 50.8 181.61 0)
+			(at 48.26 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7914,7 +7894,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 50.8 181.61 0)
+			(at 48.26 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7923,7 +7903,7 @@
 			)
 		)
 		(property "LCSC" "C24452"
-			(at 50.8 181.61 0)
+			(at 48.26 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7932,7 +7912,7 @@
 			)
 		)
 		(property "MFG" "Kyocera AVX"
-			(at 50.8 181.61 90)
+			(at 48.26 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7941,7 +7921,7 @@
 			)
 		)
 		(property "MPN" "KGM15BR71H104KT"
-			(at 50.8 181.61 90)
+			(at 48.26 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7950,7 +7930,7 @@
 			)
 		)
 		(property "Mouser_PN" "581-KGM15BR71H104KT"
-			(at 50.8 181.61 90)
+			(at 48.26 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7959,7 +7939,7 @@
 			)
 		)
 		(property "cap-type" "X7R"
-			(at 50.8 181.61 0)
+			(at 48.26 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7967,7 +7947,7 @@
 			)
 		)
 		(property "Field10" ""
-			(at 50.8 181.61 90)
+			(at 48.26 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7976,7 +7956,7 @@
 			)
 		)
 		(property "working-voltage" "50V"
-			(at 50.8 181.61 90)
+			(at 48.26 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8008,7 +7988,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "2b5a3d21-c866-40ed-9c01-d421256eeb40")
-		(property "Reference" "#PWR0304"
+		(property "Reference" "#PWR0305"
 			(at 139.7 50.8 0)
 			(effects
 				(font
@@ -8058,7 +8038,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0304")
+					(reference "#PWR0305")
 					(unit 1)
 				)
 			)
@@ -8089,7 +8069,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 42.164 149.606 90)
 			(effects
 				(font
@@ -8134,7 +8114,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MCT06030C1009FP500"
+		(property "MPN" "MCS04020C5101FE000"
 			(at 43.18 149.86 90)
 			(effects
 				(font
@@ -8143,7 +8123,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "594-MCT06030C1009FP5"
+		(property "Mouser_PN" "594-MCS04020C5101FE0"
 			(at 43.18 149.86 90)
 			(effects
 				(font
@@ -8306,7 +8286,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2f1bfc70-3d80-4ca5-9b8c-39f1665cad96")
-		(property "Reference" "#PWR0314"
+		(property "Reference" "#PWR0315"
 			(at 119.38 92.71 0)
 			(effects
 				(font
@@ -8357,7 +8337,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0314")
+					(reference "#PWR0315")
 					(unit 1)
 				)
 			)
@@ -8372,7 +8352,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "308d7a34-4a55-408a-b678-08b91a53fd96")
-		(property "Reference" "#PWR0320"
+		(property "Reference" "#PWR0323"
 			(at 142.24 110.49 0)
 			(effects
 				(font
@@ -8422,7 +8402,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0320")
+					(reference "#PWR0323")
 					(unit 1)
 				)
 			)
@@ -8446,7 +8426,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "1uF X7R 25V"
 			(at 21.844 107.696 0)
 			(effects
 				(font
@@ -8491,7 +8471,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155Z71A105KE1D"
+		(property "MPN" "04023D105MAT2A"
 			(at -7.62 -36.83 0)
 			(effects
 				(font
@@ -8509,7 +8489,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM155Z71A105KE1D"
+		(property "Mouser_PN" "581-04023D105MAT2A "
 			(at -7.62 -36.83 0)
 			(effects
 				(font
@@ -8698,7 +8678,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X7R"
+		(property "cap-type" "X5R"
 			(at 22.86 105.41 0)
 			(effects
 				(font
@@ -8706,7 +8686,7 @@
 				)
 			)
 		)
-		(property "working-voltage" "10V"
+		(property "working-voltage" "25V"
 			(at 22.86 105.41 0)
 			(effects
 				(font
@@ -8742,7 +8722,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" "Kyocera AVX"
 			(at 22.86 105.41 0)
 			(effects
 				(font
@@ -8784,7 +8764,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3226c65b-2fd5-4689-b6c1-c0ffbcc2012c")
-		(property "Reference" "#PWR0339"
+		(property "Reference" "#PWR0341"
 			(at 25.4 179.07 0)
 			(effects
 				(font
@@ -8834,7 +8814,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0339")
+					(reference "#PWR0341")
 					(unit 1)
 				)
 			)
@@ -8966,7 +8946,7 @@
 	)
 	(symbol
 		(lib_id "Diode:1N4148W")
-		(at 154.94 133.35 0)
+		(at 154.94 134.62 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8974,7 +8954,7 @@
 		(dnp no)
 		(uuid "34be5d56-e67b-48fb-9de1-c09838c66b38")
 		(property "Reference" "D304"
-			(at 154.94 128.27 0)
+			(at 154.94 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8982,7 +8962,7 @@
 			)
 		)
 		(property "Value" "1N4148W"
-			(at 154.94 130.81 0)
+			(at 154.94 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8990,7 +8970,7 @@
 			)
 		)
 		(property "Footprint" "Diode_SMD:D_SOD-123"
-			(at 154.94 137.795 0)
+			(at 154.94 139.065 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8999,7 +8979,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
-			(at 154.94 133.35 0)
+			(at 154.94 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9008,7 +8988,7 @@
 			)
 		)
 		(property "Description" "75V 0.15A Fast Switching Diode, SOD-123"
-			(at 154.94 133.35 0)
+			(at 154.94 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9017,7 +8997,7 @@
 			)
 		)
 		(property "Sim.Device" "D"
-			(at 154.94 133.35 0)
+			(at 154.94 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9026,7 +9006,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 154.94 133.35 0)
+			(at 154.94 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9035,7 +9015,7 @@
 			)
 		)
 		(property "Field10" ""
-			(at 154.94 133.35 0)
+			(at 154.94 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9044,7 +9024,7 @@
 			)
 		)
 		(property "MFG" "Diodes Inc"
-			(at 154.94 133.35 0)
+			(at 154.94 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9053,7 +9033,7 @@
 			)
 		)
 		(property "MPN" "1N4148W-7-F "
-			(at 154.94 133.35 0)
+			(at 154.94 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9062,7 +9042,7 @@
 			)
 		)
 		(property "Mouser_PN" "621-1N4148W-F "
-			(at 154.94 133.35 0)
+			(at 154.94 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9102,7 +9082,7 @@
 				)
 			)
 		)
-		(property "Value" "10k"
+		(property "Value" "22.1k"
 			(at 85.852 60.96 90)
 			(effects
 				(font
@@ -9110,7 +9090,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 82.804 60.706 90)
 			(effects
 				(font
@@ -9146,7 +9126,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Vishay"
+		(property "MFG" "Yageo"
 			(at 83.82 60.96 90)
 			(effects
 				(font
@@ -9155,7 +9135,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MCT06030C1009FP500"
+		(property "MPN" "RT0402FRD0722K1L"
 			(at 83.82 60.96 90)
 			(effects
 				(font
@@ -9164,7 +9144,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "594-MCT06030C1009FP5"
+		(property "Mouser_PN" "603-RT0402FRD0722K1L"
 			(at 83.82 60.96 90)
 			(effects
 				(font
@@ -9199,7 +9179,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 58.42 181.61 0)
+		(at 55.88 189.23 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -9208,7 +9188,7 @@
 		(dnp no)
 		(uuid "3c5668bd-949b-4269-9078-6a68b3acfd1a")
 		(property "Reference" "C322"
-			(at 63.5 179.324 0)
+			(at 60.96 186.944 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9216,8 +9196,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF"
-			(at 58.42 183.642 0)
+		(property "Value" "1uF X7R 25V"
+			(at 55.88 191.262 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9226,7 +9206,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 57.4548 185.42 0)
+			(at 54.9148 193.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9235,7 +9215,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9244,7 +9224,7 @@
 			)
 		)
 		(property "Description" "Capacitor, MLCC, X5R, 25V, 10%, 1uF, 0402"
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9253,7 +9233,7 @@
 			)
 		)
 		(property "Manufacturer" "Murata"
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9261,8 +9241,8 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155Z71A105KE1D"
-			(at 88.9 39.37 0)
+		(property "MPN" "04023D105MAT2A"
+			(at 86.36 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9271,7 +9251,7 @@
 			)
 		)
 		(property "LCSC_PN" "C301928"
-			(at 88.9 39.37 0)
+			(at 86.36 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9279,8 +9259,8 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM155Z71A105KE1D"
-			(at 88.9 39.37 0)
+		(property "Mouser_PN" "581-04023D105MAT2A "
+			(at 86.36 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9289,7 +9269,7 @@
 			)
 		)
 		(property "DigiKey_Part_Number" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9298,7 +9278,7 @@
 			)
 		)
 		(property "Display" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9307,7 +9287,7 @@
 			)
 		)
 		(property "Display 2" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9316,7 +9296,7 @@
 			)
 		)
 		(property "Sim.Params" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9325,7 +9305,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9334,7 +9314,7 @@
 			)
 		)
 		(property "Availability" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9343,7 +9323,7 @@
 			)
 		)
 		(property "Check_prices" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9352,7 +9332,7 @@
 			)
 		)
 		(property "Description_1" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9361,7 +9341,7 @@
 			)
 		)
 		(property "MANUFACTURER" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9370,7 +9350,7 @@
 			)
 		)
 		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9379,7 +9359,7 @@
 			)
 		)
 		(property "PARTREV" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9388,7 +9368,7 @@
 			)
 		)
 		(property "Package" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9397,7 +9377,7 @@
 			)
 		)
 		(property "Part Number" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9406,7 +9386,7 @@
 			)
 		)
 		(property "Price" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9415,7 +9395,7 @@
 			)
 		)
 		(property "STANDARD" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9424,7 +9404,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9433,7 +9413,7 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9442,7 +9422,7 @@
 			)
 		)
 		(property "SnapEDA_Link" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9451,7 +9431,7 @@
 			)
 		)
 		(property "Specifications" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9460,7 +9440,7 @@
 			)
 		)
 		(property "Mouser-part-number" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9468,16 +9448,16 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X7R"
-			(at 58.42 181.61 0)
+		(property "cap-type" "X5R"
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "working-voltage" "10V"
-			(at 58.42 181.61 0)
+		(property "working-voltage" "25V"
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9486,7 +9466,7 @@
 			)
 		)
 		(property "Core" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9495,7 +9475,7 @@
 			)
 		)
 		(property "label" ""
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9504,7 +9484,7 @@
 			)
 		)
 		(property "LCSC" "C14445"
-			(at 58.42 181.61 0)
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9512,8 +9492,8 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
-			(at 58.42 181.61 0)
+		(property "MFG" "Kyocera AVX"
+			(at 55.88 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9522,7 +9502,7 @@
 			)
 		)
 		(property "Field10" ""
-			(at 58.42 181.61 90)
+			(at 55.88 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9555,7 +9535,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3eedf312-63f6-49f0-a075-c390421a087a")
-		(property "Reference" "#PWR0331"
+		(property "Reference" "#PWR0333"
 			(at 222.25 143.51 0)
 			(effects
 				(font
@@ -9606,7 +9586,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0331")
+					(reference "#PWR0333")
 					(unit 1)
 				)
 			)
@@ -9753,7 +9733,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "47f729a7-eab8-46c1-9291-612b4c27d1b2")
-		(property "Reference" "C305"
+		(property "Reference" "C306"
 			(at 62.738 50.038 0)
 			(effects
 				(font
@@ -10085,7 +10065,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C305")
+					(reference "C306")
 					(unit 1)
 				)
 			)
@@ -10101,7 +10081,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "48576067-afcc-463d-8376-e6f6861e0838")
-		(property "Reference" "#PWR0333"
+		(property "Reference" "#PWR0313"
 			(at 92.71 78.74 0)
 			(effects
 				(font
@@ -10152,7 +10132,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0333")
+					(reference "#PWR0313")
 					(unit 1)
 				)
 			)
@@ -10169,7 +10149,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "48bd2a5a-3f38-45dd-8eda-500716fecc30")
-		(property "Reference" "#PWR0336"
+		(property "Reference" "#PWR0338"
 			(at 85.09 163.83 0)
 			(effects
 				(font
@@ -10220,7 +10200,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0336")
+					(reference "#PWR0338")
 					(unit 1)
 				)
 			)
@@ -10303,7 +10283,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "53678183-387c-4c36-9b57-64fbc67815a8")
-		(property "Reference" "C314"
+		(property "Reference" "C315"
 			(at 243.078 106.934 0)
 			(effects
 				(font
@@ -10411,7 +10391,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C314")
+					(reference "C315")
 					(unit 1)
 				)
 			)
@@ -10556,7 +10536,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "1uF X7R 25V"
 			(at 33.02 183.642 0)
 			(effects
 				(font
@@ -10601,7 +10581,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155Z71A105KE1D"
+		(property "MPN" "04023D105MAT2A"
 			(at 63.5 39.37 0)
 			(effects
 				(font
@@ -10619,7 +10599,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM155Z71A105KE1D"
+		(property "Mouser_PN" "581-04023D105MAT2A "
 			(at 63.5 39.37 0)
 			(effects
 				(font
@@ -10808,7 +10788,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X7R"
+		(property "cap-type" "X5R"
 			(at 33.02 181.61 0)
 			(effects
 				(font
@@ -10816,7 +10796,7 @@
 				)
 			)
 		)
-		(property "working-voltage" "10V"
+		(property "working-voltage" "25V"
 			(at 33.02 181.61 0)
 			(effects
 				(font
@@ -10852,7 +10832,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" "Kyocera AVX"
 			(at 33.02 181.61 0)
 			(effects
 				(font
@@ -10895,7 +10875,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "55b8fb97-be05-4f1d-8807-07572fcd914a")
-		(property "Reference" "#PWR0332"
+		(property "Reference" "#PWR0334"
 			(at 237.49 143.51 0)
 			(effects
 				(font
@@ -10946,7 +10926,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0332")
+					(reference "#PWR0334")
 					(unit 1)
 				)
 			)
@@ -11210,7 +11190,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6245637c-43bc-4d8c-b764-68224fd863ae")
-		(property "Reference" "C306"
+		(property "Reference" "C305"
 			(at 128.016 46.99 90)
 			(effects
 				(font
@@ -11219,7 +11199,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "1uF X7R 25V"
 			(at 132.842 44.958 90)
 			(effects
 				(font
@@ -11264,7 +11244,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155Z71A105KE1D"
+		(property "MPN" "04023D105MAT2A"
 			(at -7.62 17.78 0)
 			(effects
 				(font
@@ -11282,7 +11262,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM155Z71A105KE1D"
+		(property "Mouser_PN" "581-04023D105MAT2A "
 			(at -7.62 17.78 0)
 			(effects
 				(font
@@ -11471,7 +11451,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X7R"
+		(property "cap-type" "X5R"
 			(at 134.62 48.26 0)
 			(effects
 				(font
@@ -11479,7 +11459,7 @@
 				)
 			)
 		)
-		(property "working-voltage" "10V"
+		(property "working-voltage" "25V"
 			(at 134.62 48.26 0)
 			(effects
 				(font
@@ -11515,7 +11495,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" "Kyocera AVX"
 			(at 134.62 48.26 0)
 			(effects
 				(font
@@ -11542,7 +11522,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C306")
+					(reference "C305")
 					(unit 1)
 				)
 			)
@@ -11557,7 +11537,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "63655a58-c7d8-481c-815d-df4aab2b7b4e")
-		(property "Reference" "C313"
+		(property "Reference" "C314"
 			(at 227.838 106.934 0)
 			(effects
 				(font
@@ -11665,7 +11645,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C313")
+					(reference "C314")
 					(unit 1)
 				)
 			)
@@ -11696,7 +11676,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 155.194 118.364 90)
 			(effects
 				(font
@@ -11732,7 +11712,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Vishay"
+		(property "MFG" "Yageo"
 			(at 154.94 119.38 90)
 			(effects
 				(font
@@ -11741,7 +11721,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MCT06030C1009FP500"
+		(property "MPN" "AC0402FR-0747RL"
 			(at 154.94 119.38 90)
 			(effects
 				(font
@@ -11750,7 +11730,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "594-MCT06030C1009FP5"
+		(property "Mouser_PN" "603-AC0402FR-0747RL "
 			(at 154.94 119.38 90)
 			(effects
 				(font
@@ -11794,7 +11774,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "69201144-e61f-4cd3-90c6-3a5ea84a148a")
-		(property "Reference" "#PWR0338"
+		(property "Reference" "#PWR0340"
 			(at 71.12 168.91 0)
 			(effects
 				(font
@@ -11845,7 +11825,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0338")
+					(reference "#PWR0340")
 					(unit 1)
 				)
 			)
@@ -11926,7 +11906,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6a8598f6-9d91-4376-8803-34339023c3c6")
-		(property "Reference" "#PWR0350"
+		(property "Reference" "#PWR0337"
 			(at 119.38 153.67 0)
 			(effects
 				(font
@@ -11977,7 +11957,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0350")
+					(reference "#PWR0337")
 					(unit 1)
 				)
 			)
@@ -12124,7 +12104,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "71b79a06-4cf4-4ce2-950c-d4b3b1ead795")
-		(property "Reference" "#PWR0313"
+		(property "Reference" "#PWR0314"
 			(at 162.56 83.82 0)
 			(effects
 				(font
@@ -12175,7 +12155,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0313")
+					(reference "#PWR0314")
 					(unit 1)
 				)
 			)
@@ -12206,7 +12186,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 155.194 139.954 90)
 			(effects
 				(font
@@ -12242,7 +12222,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Vishay"
+		(property "MFG" "Yageo"
 			(at 154.94 140.97 90)
 			(effects
 				(font
@@ -12251,7 +12231,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MCT06030C1009FP500"
+		(property "MPN" "AC0402FR-0747RL"
 			(at 154.94 140.97 90)
 			(effects
 				(font
@@ -12260,7 +12240,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "594-MCT06030C1009FP5"
+		(property "Mouser_PN" "603-AC0402FR-0747RL "
 			(at 154.94 140.97 90)
 			(effects
 				(font
@@ -12435,7 +12415,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7beae9ae-5460-498e-a44d-ca555fefd641")
-		(property "Reference" "#PWR0330"
+		(property "Reference" "#PWR0332"
 			(at 63.5 140.97 0)
 			(effects
 				(font
@@ -12485,7 +12465,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0330")
+					(reference "#PWR0332")
 					(unit 1)
 				)
 			)
@@ -12501,7 +12481,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "80a985a7-1e95-4b07-b2ca-c2fc9afefc83")
-		(property "Reference" "C315"
+		(property "Reference" "C313"
 			(at 130.556 106.68 90)
 			(effects
 				(font
@@ -12510,7 +12490,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "1uF X7R 25V"
 			(at 135.382 104.648 90)
 			(effects
 				(font
@@ -12555,7 +12535,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155Z71A105KE1D"
+		(property "MPN" "04023D105MAT2A"
 			(at -5.08 77.47 0)
 			(effects
 				(font
@@ -12573,7 +12553,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM155Z71A105KE1D"
+		(property "Mouser_PN" "581-04023D105MAT2A "
 			(at -5.08 77.47 0)
 			(effects
 				(font
@@ -12762,7 +12742,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X7R"
+		(property "cap-type" "X5R"
 			(at 137.16 107.95 0)
 			(effects
 				(font
@@ -12770,7 +12750,7 @@
 				)
 			)
 		)
-		(property "working-voltage" "10V"
+		(property "working-voltage" "25V"
 			(at 137.16 107.95 0)
 			(effects
 				(font
@@ -12806,7 +12786,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" "Kyocera AVX"
 			(at 137.16 107.95 0)
 			(effects
 				(font
@@ -12833,7 +12813,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C315")
+					(reference "C313")
 					(unit 1)
 				)
 			)
@@ -12850,7 +12830,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "812946ee-4c96-43c9-bc16-3b22efc6de76")
-		(property "Reference" "#PWR0346"
+		(property "Reference" "#PWR0348"
 			(at 74.93 194.31 0)
 			(effects
 				(font
@@ -12901,7 +12881,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0346")
+					(reference "#PWR0348")
 					(unit 1)
 				)
 			)
@@ -12917,7 +12897,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "81a9a426-ead2-467e-aeff-11a2e4151eac")
-		(property "Reference" "#PWR0327"
+		(property "Reference" "#PWR0328"
 			(at 180.34 130.81 0)
 			(effects
 				(font
@@ -12968,7 +12948,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0327")
+					(reference "#PWR0328")
 					(unit 1)
 				)
 			)
@@ -13261,7 +13241,7 @@
 				(hide yes)
 			)
 		)
-		(property "Footprint" "Transformer_THT:BN-43-202_Horizontal"
+		(property "Footprint" "Library:bn-43-202-horizontal"
 			(at 247.65 64.262 0)
 			(effects
 				(font
@@ -13366,7 +13346,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8c0ac681-9fc5-4f97-a9b2-20611bfcb407")
-		(property "Reference" "#PWR0323"
+		(property "Reference" "#PWR0324"
 			(at 29.21 118.11 0)
 			(effects
 				(font
@@ -13417,7 +13397,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0323")
+					(reference "#PWR0324")
 					(unit 1)
 				)
 			)
@@ -13571,7 +13551,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 35.814 149.606 90)
 			(effects
 				(font
@@ -13616,7 +13596,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MCT06030C1009FP500"
+		(property "MPN" "MCS04020C5101FE000"
 			(at 36.83 149.86 90)
 			(effects
 				(font
@@ -13625,7 +13605,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "594-MCT06030C1009FP5"
+		(property "Mouser_PN" "594-MCS04020C5101FE0"
 			(at 36.83 149.86 90)
 			(effects
 				(font
@@ -13677,7 +13657,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "1uF X7R 25V"
 			(at 82.55 183.642 0)
 			(effects
 				(font
@@ -13722,7 +13702,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155Z71A105KE1D"
+		(property "MPN" "04023D105MAT2A"
 			(at 113.03 39.37 0)
 			(effects
 				(font
@@ -13740,7 +13720,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM155Z71A105KE1D"
+		(property "Mouser_PN" "581-04023D105MAT2A "
 			(at 113.03 39.37 0)
 			(effects
 				(font
@@ -13929,7 +13909,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X7R"
+		(property "cap-type" "X5R"
 			(at 82.55 181.61 0)
 			(effects
 				(font
@@ -13937,7 +13917,7 @@
 				)
 			)
 		)
-		(property "working-voltage" "10V"
+		(property "working-voltage" "25V"
 			(at 82.55 181.61 0)
 			(effects
 				(font
@@ -13973,7 +13953,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" "Kyocera AVX"
 			(at 82.55 181.61 0)
 			(effects
 				(font
@@ -14542,7 +14522,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9b581ab2-19ed-4ae2-a776-389fa004149b")
-		(property "Reference" "#PWR0316"
+		(property "Reference" "#PWR0317"
 			(at 238.76 93.98 0)
 			(effects
 				(font
@@ -14593,7 +14573,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0316")
+					(reference "#PWR0317")
 					(unit 1)
 				)
 			)
@@ -14609,7 +14589,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9d0153ae-836c-44e7-a62c-492b70ff7863")
-		(property "Reference" "#PWR0305"
+		(property "Reference" "#PWR0304"
 			(at 69.85 45.72 0)
 			(effects
 				(font
@@ -14659,7 +14639,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0305")
+					(reference "#PWR0304")
 					(unit 1)
 				)
 			)
@@ -14667,7 +14647,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 50.8 187.96 0)
+		(at 48.26 195.58 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -14676,8 +14656,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9d465814-64b3-40ff-8a49-913f22f199b1")
-		(property "Reference" "#PWR0345"
-			(at 50.8 194.31 0)
+		(property "Reference" "#PWR0347"
+			(at 48.26 201.93 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14686,7 +14666,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 50.8 193.04 0)
+			(at 48.26 200.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14695,7 +14675,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 50.8 187.96 0)
+			(at 48.26 195.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14704,7 +14684,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 50.8 187.96 0)
+			(at 48.26 195.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14713,7 +14693,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 50.8 187.96 0)
+			(at 48.26 195.58 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14727,7 +14707,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0345")
+					(reference "#PWR0347")
 					(unit 1)
 				)
 			)
@@ -14863,7 +14843,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a0d41b1c-c80c-41b2-a2f6-8f52d842cff8")
-		(property "Reference" "#PWR0324"
+		(property "Reference" "#PWR0325"
 			(at 222.25 120.65 0)
 			(effects
 				(font
@@ -14914,7 +14894,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0324")
+					(reference "#PWR0325")
 					(unit 1)
 				)
 			)
@@ -15062,7 +15042,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a444f04e-f869-46e5-a87d-84c2845bfd60")
-		(property "Reference" "#PWR0349"
+		(property "Reference" "#PWR0331"
 			(at 92.71 138.43 0)
 			(effects
 				(font
@@ -15113,7 +15093,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0349")
+					(reference "#PWR0331")
 					(unit 1)
 				)
 			)
@@ -15596,7 +15576,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "aea64a99-8f14-4d2e-92f0-4098e2320dd6")
-		(property "Reference" "#PWR0343"
+		(property "Reference" "#PWR0345"
 			(at 124.46 179.07 0)
 			(effects
 				(font
@@ -15646,7 +15626,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0343")
+					(reference "#PWR0345")
 					(unit 1)
 				)
 			)
@@ -15663,7 +15643,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b7c81a17-8787-4fee-8447-22fe0c4ed22d")
-		(property "Reference" "#PWR0337"
+		(property "Reference" "#PWR0339"
 			(at 66.04 168.91 0)
 			(effects
 				(font
@@ -15714,7 +15694,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0337")
+					(reference "#PWR0339")
 					(unit 1)
 				)
 			)
@@ -16047,7 +16027,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "1uF X7R 25V"
 			(at 132.08 183.642 0)
 			(effects
 				(font
@@ -16092,7 +16072,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155Z71A105KE1D"
+		(property "MPN" "04023D105MAT2A"
 			(at 162.56 39.37 0)
 			(effects
 				(font
@@ -16110,7 +16090,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM155Z71A105KE1D"
+		(property "Mouser_PN" "581-04023D105MAT2A "
 			(at 162.56 39.37 0)
 			(effects
 				(font
@@ -16299,7 +16279,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X7R"
+		(property "cap-type" "X5R"
 			(at 132.08 181.61 0)
 			(effects
 				(font
@@ -16307,7 +16287,7 @@
 				)
 			)
 		)
-		(property "working-voltage" "10V"
+		(property "working-voltage" "25V"
 			(at 132.08 181.61 0)
 			(effects
 				(font
@@ -16343,7 +16323,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" "Kyocera AVX"
 			(at 132.08 181.61 0)
 			(effects
 				(font
@@ -16386,7 +16366,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c9cb9fc4-3cd3-4d61-a37a-42501d1551e7")
-		(property "Reference" "#PWR0326"
+		(property "Reference" "#PWR0327"
 			(at 125.73 123.19 0)
 			(effects
 				(font
@@ -16437,7 +16417,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0326")
+					(reference "#PWR0327")
 					(unit 1)
 				)
 			)
@@ -16453,7 +16433,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ca9053a6-1a81-41ce-8220-67e2fa06e2e9")
-		(property "Reference" "#PWR0335"
+		(property "Reference" "#PWR0336"
 			(at 180.34 152.4 0)
 			(effects
 				(font
@@ -16504,7 +16484,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0335")
+					(reference "#PWR0336")
 					(unit 1)
 				)
 			)
@@ -16641,7 +16621,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cb25d8a4-dfcb-4243-b9e1-a562c9568ed8")
-		(property "Reference" "#PWR0318"
+		(property "Reference" "#PWR0319"
 			(at 187.96 105.41 0)
 			(effects
 				(font
@@ -16692,7 +16672,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0318")
+					(reference "#PWR0319")
 					(unit 1)
 				)
 			)
@@ -16767,7 +16747,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 106.68 181.61 0)
+		(at 105.41 189.23 0)
 		(mirror y)
 		(unit 1)
 		(exclude_from_sim no)
@@ -16776,7 +16756,7 @@
 		(dnp no)
 		(uuid "d410dac8-29f9-44b9-86c0-c7314961fed4")
 		(property "Reference" "C326"
-			(at 111.76 179.324 0)
+			(at 110.49 186.944 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16784,8 +16764,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF"
-			(at 106.68 183.642 0)
+		(property "Value" "1uF X7R 25V"
+			(at 105.41 191.262 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16794,7 +16774,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
-			(at 105.7148 185.42 0)
+			(at 104.4448 193.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16803,7 +16783,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16812,7 +16792,7 @@
 			)
 		)
 		(property "Description" "Capacitor, MLCC, X5R, 25V, 10%, 1uF, 0402"
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16821,7 +16801,7 @@
 			)
 		)
 		(property "Manufacturer" "Murata"
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16829,8 +16809,8 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155Z71A105KE1D"
-			(at 137.16 39.37 0)
+		(property "MPN" "04023D105MAT2A"
+			(at 135.89 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16839,7 +16819,7 @@
 			)
 		)
 		(property "LCSC_PN" "C301928"
-			(at 137.16 39.37 0)
+			(at 135.89 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16847,8 +16827,8 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM155Z71A105KE1D"
-			(at 137.16 39.37 0)
+		(property "Mouser_PN" "581-04023D105MAT2A "
+			(at 135.89 46.99 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16857,7 +16837,7 @@
 			)
 		)
 		(property "DigiKey_Part_Number" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16866,7 +16846,7 @@
 			)
 		)
 		(property "Display" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16875,7 +16855,7 @@
 			)
 		)
 		(property "Display 2" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16884,7 +16864,7 @@
 			)
 		)
 		(property "Sim.Params" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16893,7 +16873,7 @@
 			)
 		)
 		(property "Sim.Type" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16902,7 +16882,7 @@
 			)
 		)
 		(property "Availability" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16911,7 +16891,7 @@
 			)
 		)
 		(property "Check_prices" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16920,7 +16900,7 @@
 			)
 		)
 		(property "Description_1" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16929,7 +16909,7 @@
 			)
 		)
 		(property "MANUFACTURER" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16938,7 +16918,7 @@
 			)
 		)
 		(property "MAXIMUM_PACKAGE_HEIGHT" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16947,7 +16927,7 @@
 			)
 		)
 		(property "PARTREV" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16956,7 +16936,7 @@
 			)
 		)
 		(property "Package" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16965,7 +16945,7 @@
 			)
 		)
 		(property "Part Number" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16974,7 +16954,7 @@
 			)
 		)
 		(property "Price" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16983,7 +16963,7 @@
 			)
 		)
 		(property "STANDARD" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16992,7 +16972,7 @@
 			)
 		)
 		(property "Sim.Device" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17001,7 +16981,7 @@
 			)
 		)
 		(property "Sim.Pins" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17010,7 +16990,7 @@
 			)
 		)
 		(property "SnapEDA_Link" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17019,7 +16999,7 @@
 			)
 		)
 		(property "Specifications" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17028,7 +17008,7 @@
 			)
 		)
 		(property "Mouser-part-number" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17036,16 +17016,16 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X7R"
-			(at 106.68 181.61 0)
+		(property "cap-type" "X5R"
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 			)
 		)
-		(property "working-voltage" "10V"
-			(at 106.68 181.61 0)
+		(property "working-voltage" "25V"
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17054,7 +17034,7 @@
 			)
 		)
 		(property "Core" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17063,7 +17043,7 @@
 			)
 		)
 		(property "label" ""
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17072,7 +17052,7 @@
 			)
 		)
 		(property "LCSC" "C14445"
-			(at 106.68 181.61 0)
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17080,8 +17060,8 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
-			(at 106.68 181.61 0)
+		(property "MFG" "Kyocera AVX"
+			(at 105.41 189.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17090,7 +17070,7 @@
 			)
 		)
 		(property "Field10" ""
-			(at 106.68 181.61 90)
+			(at 105.41 189.23 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17115,15 +17095,15 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 50.8 175.26 0)
+		(at 48.26 182.88 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "d58bb67c-7642-4c34-80a4-8936053ab4b4")
-		(property "Reference" "#PWR0340"
-			(at 50.8 179.07 0)
+		(property "Reference" "#PWR0342"
+			(at 48.26 186.69 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17132,7 +17112,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 50.8 170.18 0)
+			(at 48.26 177.8 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17140,7 +17120,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 50.8 175.26 0)
+			(at 48.26 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17149,7 +17129,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 50.8 175.26 0)
+			(at 48.26 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17158,7 +17138,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 50.8 175.26 0)
+			(at 48.26 182.88 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17172,7 +17152,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0340")
+					(reference "#PWR0342")
 					(unit 1)
 				)
 			)
@@ -17570,7 +17550,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "db8cae6a-901b-4143-9979-42b85e12f287")
-		(property "Reference" "#PWR0348"
+		(property "Reference" "#PWR0350"
 			(at 124.46 194.31 0)
 			(effects
 				(font
@@ -17621,7 +17601,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0348")
+					(reference "#PWR0350")
 					(unit 1)
 				)
 			)
@@ -17637,7 +17617,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "dba0c6e5-997c-4691-80f8-afe8749dbba1")
-		(property "Reference" "#PWR0325"
+		(property "Reference" "#PWR0326"
 			(at 237.49 120.65 0)
 			(effects
 				(font
@@ -17688,7 +17668,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0325")
+					(reference "#PWR0326")
 					(unit 1)
 				)
 			)
@@ -18077,7 +18057,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ecf57107-fcb3-4f36-8ee4-6e60b69d8ab7")
-		(property "Reference" "#PWR0315"
+		(property "Reference" "#PWR0316"
 			(at 175.26 93.98 0)
 			(effects
 				(font
@@ -18128,7 +18108,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0315")
+					(reference "#PWR0316")
 					(unit 1)
 				)
 			)
@@ -18144,7 +18124,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f5e97491-a6e8-47df-acfd-c56c3bb2ee92")
-		(property "Reference" "Y302"
+		(property "Reference" "U304"
 			(at 73.2633 161.29 0)
 			(effects
 				(font
@@ -18243,7 +18223,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "Y302")
+					(reference "U304")
 					(unit 1)
 				)
 			)
@@ -18259,7 +18239,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f62e4075-8ee3-40ed-bc2d-0ec4d02366f9")
-		(property "Reference" "#PWR0334"
+		(property "Reference" "#PWR0335"
 			(at 36.83 147.32 0)
 			(effects
 				(font
@@ -18309,7 +18289,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0334")
+					(reference "#PWR0335")
 					(unit 1)
 				)
 			)
@@ -18333,7 +18313,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1uF"
+		(property "Value" "1uF X7R 25V"
 			(at 67.056 42.418 0)
 			(effects
 				(font
@@ -18378,7 +18358,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM155Z71A105KE1D"
+		(property "MPN" "04023D105MAT2A"
 			(at 207.01 12.7 0)
 			(effects
 				(font
@@ -18396,7 +18376,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM155Z71A105KE1D"
+		(property "Mouser_PN" "581-04023D105MAT2A "
 			(at 207.01 12.7 0)
 			(effects
 				(font
@@ -18585,7 +18565,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X7R"
+		(property "cap-type" "X5R"
 			(at 64.77 43.18 0)
 			(effects
 				(font
@@ -18593,7 +18573,7 @@
 				)
 			)
 		)
-		(property "working-voltage" "10V"
+		(property "working-voltage" "25V"
 			(at 64.77 43.18 0)
 			(effects
 				(font
@@ -18629,7 +18609,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" "Kyocera AVX"
 			(at 64.77 43.18 0)
 			(effects
 				(font

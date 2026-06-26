@@ -208,4 +208,15 @@
 		(uuid "8dc3eb3d-5b4d-464e-b795-4d8d9aa99e8f")
 	)
 	(embedded_fonts no)
+	(model "${WSPR_EASE_SYMBOLS}/BN202.step"
+		(offset
+			(xyz 0 -7.25 4)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -90 -90)
+		)
+	)
 )
