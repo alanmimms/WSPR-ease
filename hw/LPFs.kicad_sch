@@ -4065,7 +4065,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 71.12 171.45 0)
 			(effects
 				(font
@@ -4102,6 +4102,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 71.12 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 71.12 171.45 0)
 			(effects
 				(font
@@ -4217,6 +4226,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 111.76 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C6364739"
+			(at 111.76 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "7a376f37-fc30-4384-94b3-529d29eb6fc3")
 		)
@@ -4317,7 +4344,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "910pF NP0 100V"
+		(property "Value" "910pF NP0 50V"
 			(at 137.16 60.706 0)
 			(effects
 				(font
@@ -4353,7 +4380,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C106259"
+		(property "LCSC" "C2941944"
 			(at 137.16 58.42 0)
 			(effects
 				(font
@@ -4390,6 +4417,33 @@
 			)
 		)
 		(property "Field10" ""
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 137.16 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
 			(at 137.16 58.42 0)
 			(effects
 				(font
@@ -4493,6 +4547,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 110.49 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C38121966"
+			(at 110.49 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "b8462ad1-e242-4ffa-8cb0-2829421fb076")
 		)
@@ -4570,7 +4642,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C404430"
+		(property "LCSC" "C48946577"
 			(at 110.49 166.37 90)
 			(effects
 				(font
@@ -4615,6 +4687,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 110.49 166.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "79daf415-b7d3-4993-9e95-68108e470e8b")
 		)
@@ -4648,7 +4729,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "82pF NP0 100V"
+		(property "Value" "82pF NP0 50V"
 			(at 82.804 173.736 0)
 			(effects
 				(font
@@ -4684,7 +4765,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C106200"
+		(property "LCSC" "C314304"
 			(at 82.55 171.45 0)
 			(effects
 				(font
@@ -4721,6 +4802,33 @@
 			)
 		)
 		(property "Field10" ""
+			(at 82.55 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 82.55 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 82.55 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
 			(at 82.55 171.45 0)
 			(effects
 				(font
@@ -4895,6 +5003,24 @@
 			)
 		)
 		(property "Mouser_PN" "653-G6K-2G-DC5"
+			(at 97.79 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 97.79 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1525301"
 			(at 97.79 88.9 0)
 			(effects
 				(font
@@ -5082,6 +5208,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 128.27 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C38121966"
+			(at 128.27 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "90039ac8-fc2a-4784-bc5a-595f0549e2cc")
 		)
@@ -5178,6 +5322,24 @@
 			)
 		)
 		(property "Mouser_PN" "653-G6K-2G-DC5"
+			(at 97.79 35.56 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 97.79 35.56 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1525301"
 			(at 97.79 35.56 90)
 			(effects
 				(font
@@ -5301,6 +5463,42 @@
 			)
 		)
 		(property "Field10" ""
+			(at 140.97 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 140.97 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 140.97 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 140.97 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2176790"
 			(at 140.97 113.03 0)
 			(effects
 				(font
@@ -5471,6 +5669,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 93.98 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C38121966"
+			(at 93.98 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "dc4fb237-e1b7-4692-b958-d052b5bf7ed8")
 		)
@@ -5605,7 +5821,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C83852"
+		(property "LCSC" "C45406502"
 			(at 78.74 87.63 0)
 			(effects
 				(font
@@ -5642,6 +5858,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 78.74 87.63 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 78.74 87.63 0)
 			(effects
 				(font
@@ -5750,7 +5975,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "180pF NP0 100V"
+		(property "Value" "180pF NP0 50V"
 			(at 120.904 173.736 0)
 			(effects
 				(font
@@ -5786,7 +6011,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C106200"
+		(property "LCSC" "C440147"
 			(at 120.65 171.45 0)
 			(effects
 				(font
@@ -5823,6 +6048,33 @@
 			)
 		)
 		(property "Field10" ""
+			(at 120.65 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 120.65 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 120.65 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
 			(at 120.65 171.45 0)
 			(effects
 				(font
@@ -5919,6 +6171,42 @@
 			)
 		)
 		(property "Mouser_PN" "81-GRM39C561J50 "
+			(at 102.87 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 102.87 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 102.87 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 102.87 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C597173"
 			(at 102.87 113.03 0)
 			(effects
 				(font
@@ -6090,6 +6378,42 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 121.92 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 121.92 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 121.92 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C597173"
+			(at 121.92 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "2cbdf152-7874-4866-b2d8-43bca34b1009")
 		)
@@ -6123,7 +6447,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "82pF NP0 100V"
+		(property "Value" "82pF NP0 50V"
 			(at 139.954 173.736 0)
 			(effects
 				(font
@@ -6159,7 +6483,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C106200"
+		(property "LCSC" "C314304"
 			(at 139.7 171.45 0)
 			(effects
 				(font
@@ -6196,6 +6520,33 @@
 			)
 		)
 		(property "Field10" ""
+			(at 139.7 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 139.7 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 139.7 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
 			(at 139.7 171.45 0)
 			(effects
 				(font
@@ -6370,7 +6721,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1.6nF NP0 100V"
+		(property "Value" "1.6nF NP0 50V"
 			(at 101.6 60.706 0)
 			(effects
 				(font
@@ -6406,7 +6757,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C5182455"
+		(property "LCSC" "C7471455"
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6451,7 +6802,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X5R"
+		(property "cap-type" "NP0"
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6460,7 +6811,16 @@
 				(hide yes)
 			)
 		)
-		(property "working-voltage" "25V"
+		(property "working-voltage" "50V"
+			(at 101.6 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6502,7 +6862,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1.6nF NP0 100V"
+		(property "Value" "1.6nF NP0 50V"
 			(at 119.38 60.706 0)
 			(effects
 				(font
@@ -6538,7 +6898,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C5182455"
+		(property "LCSC" "C7471455"
 			(at 119.38 58.42 0)
 			(effects
 				(font
@@ -6583,7 +6943,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" "X5R"
+		(property "cap-type" "NP0"
 			(at 119.38 58.42 0)
 			(effects
 				(font
@@ -6592,7 +6952,16 @@
 				(hide yes)
 			)
 		)
-		(property "working-voltage" "25V"
+		(property "working-voltage" "50V"
+			(at 119.38 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 119.38 58.42 0)
 			(effects
 				(font
@@ -6673,7 +7042,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 72.39 113.03 0)
 			(effects
 				(font
@@ -6710,6 +7079,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 72.39 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 72.39 113.03 0)
 			(effects
 				(font
@@ -6931,7 +7309,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C404430"
+		(property "LCSC" "C48946576"
 			(at 129.54 166.37 90)
 			(effects
 				(font
@@ -6968,6 +7346,15 @@
 			)
 		)
 		(property "MFG" "Coilcraft"
+			(at 129.54 166.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 129.54 166.37 90)
 			(effects
 				(font
@@ -7043,7 +7430,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C83852"
+		(property "LCSC" "C45406502"
 			(at 77.47 144.78 0)
 			(effects
 				(font
@@ -7080,6 +7467,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 77.47 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 77.47 144.78 0)
 			(effects
 				(font
@@ -7165,7 +7561,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C404430"
+		(property "LCSC" "C48946576"
 			(at 92.71 166.37 90)
 			(effects
 				(font
@@ -7202,6 +7598,15 @@
 			)
 		)
 		(property "MFG" "Coilcraft"
+			(at 92.71 166.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 92.71 166.37 90)
 			(effects
 				(font
@@ -7315,6 +7720,42 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 83.82 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 83.82 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 83.82 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2176790"
+			(at 83.82 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ea368838-fa07-4631-b917-b28d79e3d965")
 		)
@@ -7387,7 +7828,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 73.66 58.42 0)
 			(effects
 				(font
@@ -7424,6 +7865,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 73.66 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 73.66 58.42 0)
 			(effects
 				(font
@@ -7548,6 +7998,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 130.81 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C7159440"
+			(at 130.81 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "d0426970-e336-48ea-ad40-30b54c2f01a5")
 		)
@@ -7647,6 +8115,24 @@
 			)
 		)
 		(property "Mouser_PN" "653-G6K-2G-DC5"
+			(at 96.52 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 96.52 146.05 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C1525301"
 			(at 96.52 146.05 0)
 			(effects
 				(font
@@ -7773,7 +8259,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "180pF NP0 100V"
+		(property "Value" "180pF NP0 50V"
 			(at 101.854 173.736 0)
 			(effects
 				(font
@@ -7809,7 +8295,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C107001"
+		(property "LCSC" "C440147"
 			(at 101.6 171.45 0)
 			(effects
 				(font
@@ -7846,6 +8332,33 @@
 			)
 		)
 		(property "Field10" ""
+			(at 101.6 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 101.6 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 101.6 171.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
 			(at 101.6 171.45 0)
 			(effects
 				(font
@@ -7988,7 +8501,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C83852"
+		(property "LCSC" "C45406502"
 			(at 80.01 34.29 0)
 			(effects
 				(font
@@ -8025,6 +8538,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 80.01 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 80.01 34.29 0)
 			(effects
 				(font
@@ -8146,6 +8668,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 93.98 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C7159440"
+			(at 93.98 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "43a9a8cb-da1f-4268-83c9-ca0f66c50b3a")
 		)
@@ -8179,7 +8719,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "910pF NP0 100V"
+		(property "Value" "910pF NP0 50V"
 			(at 83.82 60.706 0)
 			(effects
 				(font
@@ -8215,7 +8755,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C106259"
+		(property "LCSC" "C2941944"
 			(at 83.82 58.42 0)
 			(effects
 				(font
@@ -8252,6 +8792,33 @@
 			)
 		)
 		(property "Field10" ""
+			(at 83.82 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 83.82 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 83.82 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
 			(at 83.82 58.42 0)
 			(effects
 				(font

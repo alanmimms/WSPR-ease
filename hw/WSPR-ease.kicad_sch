@@ -5868,10 +5868,6 @@
 		(uuid "0dcf18c5-8b5c-4716-bff1-1aef42afff5b")
 	)
 	(no_connect
-		(at 58.42 63.5)
-		(uuid "0e4c0c7b-adf2-4c9a-899d-b49ba1c6a9cc")
-	)
-	(no_connect
 		(at 88.9 99.06)
 		(uuid "162ba311-ed07-4a4e-aacd-84316cd4cf5a")
 	)
@@ -5890,6 +5886,10 @@
 	(no_connect
 		(at 39.37 153.67)
 		(uuid "3486ceb9-5286-4407-a3c3-b4b24cb03a1e")
+	)
+	(no_connect
+		(at 58.42 63.5)
+		(uuid "37503644-0b22-4da3-ba83-c79ccad73285")
 	)
 	(no_connect
 		(at 88.9 76.2)
@@ -5926,10 +5926,6 @@
 	(no_connect
 		(at 88.9 60.96)
 		(uuid "a0e72a0f-6dbe-4e00-81a4-72b16ee0aa1d")
-	)
-	(no_connect
-		(at 88.9 91.44)
-		(uuid "c0d80066-631d-4ff6-a5a7-2705f05cae44")
 	)
 	(no_connect
 		(at 58.42 81.28)
@@ -6441,6 +6437,16 @@
 	)
 	(wire
 		(pts
+			(xy 186.69 118.11) (xy 187.96 118.11)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "34480478-60fd-4393-8915-dbfa56b90fd2")
+	)
+	(wire
+		(pts
 			(xy 24.13 77.47) (xy 24.13 78.74)
 		)
 		(stroke
@@ -6901,16 +6907,6 @@
 	)
 	(wire
 		(pts
-			(xy 186.69 118.11) (xy 187.96 118.11)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "65838dc1-1abc-4fd7-be17-99a00c754ab7")
-	)
-	(wire
-		(pts
 			(xy 170.18 148.59) (xy 170.18 146.05)
 		)
 		(stroke
@@ -7341,6 +7337,16 @@
 	)
 	(wire
 		(pts
+			(xy 90.17 91.44) (xy 88.9 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b2740ac7-0ab7-466f-9ded-9a2fa3930d23")
+	)
+	(wire
+		(pts
 			(xy 64.77 147.32) (xy 66.04 147.32)
 		)
 		(stroke
@@ -7548,6 +7554,16 @@
 			(type default)
 		)
 		(uuid "cfcb26a0-8934-4a25-be23-c354d2a92c76")
+	)
+	(wire
+		(pts
+			(xy 186.69 110.49) (xy 187.96 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d07899c0-9342-44b8-a579-20cda37bfc0f")
 	)
 	(wire
 		(pts
@@ -7939,6 +7955,16 @@
 		)
 		(uuid "2f7dcb6f-2b8f-422f-a595-d34b5efdee1a")
 	)
+	(label "ahcEn"
+		(at 186.69 118.11 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "36d06f8b-6a4c-422a-94a0-c14b44dedd8a")
+	)
 	(label "gnssPPS"
 		(at 46.99 99.06 180)
 		(effects
@@ -7960,7 +7986,7 @@
 		(uuid "418f2189-caa8-42ac-8eb1-04799ec543b9")
 	)
 	(label "tcxoDiv2"
-		(at 186.69 118.11 180)
+		(at 186.69 110.49 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8209,6 +8235,16 @@
 		)
 		(uuid "ed125c67-9c1c-4475-a5b8-5bef0c420621")
 	)
+	(label "ahcEn"
+		(at 90.17 91.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f660ba9b-b6a9-43c6-b7be-2838166fb216")
+	)
 	(label "hbRed"
 		(at 90.17 78.74 0)
 		(effects
@@ -8332,7 +8368,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 28.448 86.106 0)
 			(effects
 				(font
@@ -8368,7 +8404,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C5182455"
+		(property "LCSC" "C7393852"
 			(at 27.94 83.82 0)
 			(effects
 				(font
@@ -8423,6 +8459,15 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 27.94 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 27.94 83.82 0)
 			(effects
 				(font
@@ -8592,6 +8637,24 @@
 			)
 		)
 		(property "Mouser_PN" "652-CR0402JW-101GLF"
+			(at 132.08 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 132.08 128.27 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2906860"
 			(at 132.08 128.27 90)
 			(effects
 				(font
@@ -8837,6 +8900,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 119.38 120.65 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2906860"
+			(at 119.38 120.65 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "aec72d21-65b2-4aff-a8f2-d51a1b084247")
 		)
@@ -8907,7 +8988,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C2906859"
 			(at 24.13 73.66 0)
 			(effects
 				(font
@@ -8944,6 +9025,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 24.13 73.66 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 24.13 73.66 0)
 			(effects
 				(font
@@ -9308,6 +9398,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 29.21 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "63ca8f0f-5454-4454-a36b-6892eeea1a56")
 		)
@@ -9374,7 +9473,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 162.56 25.4 0)
 			(effects
 				(font
@@ -9429,6 +9528,15 @@
 			)
 		)
 		(property "working-voltage" "50V"
+			(at 162.56 25.4 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 162.56 25.4 90)
 			(effects
 				(font
@@ -9504,7 +9612,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "muRata"
+		(property "Manufacturer" "APV"
 			(at 226.06 148.59 90)
 			(effects
 				(font
@@ -9513,7 +9621,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "AIML-1008HC-2R2M-T"
+		(property "MPN" "APH252010T2R2M"
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -9522,7 +9630,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C86089"
+		(property "LCSC_PN" ""
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -9531,7 +9639,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "815-AIML-1008HC2R2MT"
+		(property "Mouser_PN" ""
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -9664,7 +9772,7 @@
 				(hide yes)
 			)
 		)
-		(property "Part Number" "LQM21PN2R2NGCD"
+		(property "Part Number" "APH252010T2R2M"
 			(at 226.06 148.59 90)
 			(effects
 				(font
@@ -9754,7 +9862,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C48689537"
+		(property "LCSC" "C5349606"
 			(at 226.06 148.59 90)
 			(effects
 				(font
@@ -9763,7 +9871,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Abracon"
+		(property "MFG" "APV"
 			(at 226.06 148.59 90)
 			(effects
 				(font
@@ -9773,6 +9881,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 226.06 148.59 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 226.06 148.59 90)
 			(effects
 				(font
@@ -9814,7 +9931,7 @@
 				)
 			)
 		)
-		(property "Value" "100pF NP0 100V"
+		(property "Value" "100pF NP0 50V"
 			(at 84.074 147.574 90)
 			(effects
 				(font
@@ -9849,7 +9966,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C106200"
+		(property "LCSC" "C76709"
 			(at 78.74 142.24 90)
 			(effects
 				(font
@@ -9886,6 +10003,33 @@
 			)
 		)
 		(property "Field10" ""
+			(at 78.74 142.24 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 78.74 142.24 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 78.74 142.24 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
 			(at 78.74 142.24 90)
 			(effects
 				(font
@@ -9982,7 +10126,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C5185863"
+		(property "LCSC_PN" ""
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -10169,7 +10313,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C5185863"
+		(property "LCSC" "C5210749"
 			(at 199.39 148.59 0)
 			(effects
 				(font
@@ -10188,6 +10332,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 199.39 148.59 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 199.39 148.59 0)
 			(effects
 				(font
@@ -10279,7 +10432,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C6750449"
+		(property "LCSC" "C5904513"
 			(at 36.83 125.73 90)
 			(effects
 				(font
@@ -10374,6 +10527,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 36.83 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 36.83 125.73 0)
 			(effects
 				(font
@@ -10498,6 +10660,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 121.92 49.53 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "c951138d-bc5b-4acc-8c4e-4ef790bb0448")
 		)
@@ -10598,6 +10769,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 16.51 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "49fe0716-f689-44d6-acdc-c70202bc3493")
 		)
@@ -10684,6 +10864,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 15.24 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
@@ -10755,7 +10944,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C90770"
+		(property "LCSC" "C2970256"
 			(at 52.07 151.13 0)
 			(effects
 				(font
@@ -10783,6 +10972,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 52.07 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 52.07 151.13 0)
 			(effects
 				(font
@@ -10992,7 +11190,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C854378"
+		(property "LCSC_PN" ""
 			(at 330.2 -71.12 0)
 			(effects
 				(font
@@ -11224,7 +11422,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C105872"
+		(property "LCSC" "C2906874"
 			(at 146.05 53.34 0)
 			(effects
 				(font
@@ -11243,6 +11441,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 146.05 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 146.05 53.34 90)
 			(effects
 				(font
@@ -11318,7 +11525,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" ""
+		(property "cap-type" "X5R"
 			(at 243.586 156.972 0)
 			(effects
 				(font
@@ -11615,7 +11822,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 241.3 154.94 0)
 			(effects
 				(font
@@ -11652,6 +11859,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 241.3 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 241.3 154.94 0)
 			(effects
 				(font
@@ -11820,6 +12036,24 @@
 			)
 		)
 		(property "Mouser_PN" "652-CR0402JW-101GLF"
+			(at 132.08 120.65 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 132.08 120.65 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2906860"
 			(at 132.08 120.65 90)
 			(effects
 				(font
@@ -11997,6 +12231,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 132.08 124.46 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2906860"
+			(at 132.08 124.46 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "c3641ddb-dc70-475d-957a-0c95d0c71dc1")
 		)
@@ -12100,6 +12352,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 144.78 120.65 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2906860"
+			(at 144.78 120.65 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "79c8d10a-2cab-44d2-90e8-c7fa5a3b713a")
 		)
@@ -12186,7 +12456,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C24452"
+		(property "LCSC_PN" ""
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -12427,7 +12697,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 214.63 146.05 90)
 			(effects
 				(font
@@ -12446,6 +12716,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 214.63 146.05 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 214.63 146.05 90)
 			(effects
 				(font
@@ -12542,7 +12821,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C284424"
+		(property "LCSC_PN" ""
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -12774,7 +13053,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C82868"
+		(property "LCSC" "C2929993"
 			(at 231.14 162.56 0)
 			(effects
 				(font
@@ -12793,6 +13072,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 231.14 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 231.14 162.56 0)
 			(effects
 				(font
@@ -12886,7 +13174,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C327087"
+		(property "LCSC_PN" ""
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -12904,7 +13192,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" ""
+		(property "cap-type" "X5R"
 			(at 172.72 156.21 0)
 			(effects
 				(font
@@ -13128,7 +13416,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 170.18 152.4 0)
 			(effects
 				(font
@@ -13147,6 +13435,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 170.18 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 170.18 152.4 0)
 			(effects
 				(font
@@ -13276,6 +13573,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 87.63 142.24 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "40ca8bda-383f-4ad5-84af-e038b4974d2e")
 		)
@@ -13345,7 +13651,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 30.48 123.19 90)
 			(effects
 				(font
@@ -13391,6 +13697,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 30.48 123.19 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 30.48 123.19 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 30.48 123.19 90)
 			(effects
 				(font
@@ -13933,7 +14257,7 @@
 				(hide yes)
 			)
 		)
-		(property "cap-type" ""
+		(property "cap-type" "X5R"
 			(at 253.746 156.972 0)
 			(effects
 				(font
@@ -14230,7 +14554,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 251.46 154.94 0)
 			(effects
 				(font
@@ -14267,6 +14591,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 251.46 154.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 251.46 154.94 0)
 			(effects
 				(font
@@ -14658,6 +14991,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 74.93 133.35 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "f98352dd-cf6b-4a32-b99f-e4937d03b108")
 		)
@@ -14730,7 +15072,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 38.1 76.2 0)
 			(effects
 				(font
@@ -14767,6 +15109,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 38.1 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 38.1 76.2 0)
 			(effects
 				(font
@@ -14935,6 +15286,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 36.83 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "795e3fb0-49e5-4ff2-bace-43fc9d50e44f")
 		)
@@ -15086,7 +15446,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C728576"
+		(property "LCSC_PN" ""
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -15302,7 +15662,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C2906859"
 			(at 231.14 152.4 0)
 			(effects
 				(font
@@ -15321,6 +15681,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 231.14 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 231.14 152.4 0)
 			(effects
 				(font
@@ -15398,7 +15767,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2913204"
+		(property "LCSC" "C2913201"
 			(at 73.66 76.2 0)
 			(effects
 				(font
@@ -15453,6 +15822,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 73.66 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 73.66 76.2 0)
 			(effects
 				(font
@@ -15762,7 +16140,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/catalog/specsheets/GCT_6-27-2025_USB4805.pdf"
+		(property "Datasheet" "https://www.mouser.com/datasheet/3/6118/1/uj20_c_h_g_smt_p16_tr.pdf"
 			(at 125.095 86.36 0)
 			(effects
 				(font
@@ -15789,7 +16167,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "UJ20-C-H-G-SMT-2A-P16-TR "
+		(property "MPN" "UJ20-C-H-G-SMT-P16-TR"
 			(at 243.84 -96.52 0)
 			(effects
 				(font
@@ -15798,7 +16176,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "179-CHGSMT2AP16TR"
+		(property "Mouser_PN" "179-UJ20CHGSMTP16TR "
 			(at 243.84 -96.52 0)
 			(effects
 				(font
@@ -16005,6 +16383,33 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 171.45 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "Same Sky"
+			(at 171.45 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C45082769"
+			(at 171.45 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "A7"
 			(uuid "5931124c-56e3-4f8b-b5d8-a418ce6932ea")
 		)
@@ -16071,7 +16476,7 @@
 				)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 181.864 154.432 0)
 			(effects
 				(font
@@ -16124,7 +16529,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -16358,7 +16763,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 179.07 152.4 0)
 			(effects
 				(font
@@ -16377,6 +16782,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 179.07 152.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 179.07 152.4 0)
 			(effects
 				(font
@@ -16474,6 +16888,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 15.24 179.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
@@ -16537,7 +16960,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 162.56 31.75 0)
 			(effects
 				(font
@@ -16583,6 +17006,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 162.56 31.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 162.56 31.75 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 162.56 31.75 90)
 			(effects
 				(font
@@ -16728,7 +17169,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C60491"
+		(property "LCSC" "C2906859"
 			(at 24.13 83.82 0)
 			(effects
 				(font
@@ -16765,6 +17206,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 24.13 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 24.13 83.82 0)
 			(effects
 				(font
@@ -16928,7 +17378,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C854378"
+		(property "LCSC_PN" ""
 			(at 330.2 -52.07 0)
 			(effects
 				(font
@@ -17160,7 +17610,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C105872"
+		(property "LCSC" "C2906874"
 			(at 146.05 55.88 0)
 			(effects
 				(font
@@ -17179,6 +17629,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 146.05 55.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 146.05 55.88 90)
 			(effects
 				(font
@@ -17323,7 +17782,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 80.01 41.91 90)
 			(effects
 				(font
@@ -17369,6 +17828,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 80.01 41.91 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 80.01 41.91 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 80.01 41.91 90)
 			(effects
 				(font
@@ -17446,7 +17923,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 80.01 35.56 90)
 			(effects
 				(font
@@ -17501,6 +17978,15 @@
 			)
 		)
 		(property "working-voltage" "50V"
+			(at 80.01 35.56 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 80.01 35.56 90)
 			(effects
 				(font
@@ -17590,6 +18076,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 15.24 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 15.24 184.15 0)
 			(effects
 				(font
@@ -17731,7 +18226,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 27.94 144.78 0)
 			(effects
 				(font
@@ -17777,6 +18272,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 27.94 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 27.94 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 27.94 144.78 0)
 			(effects
 				(font
@@ -17898,6 +18411,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 238.76 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 238.76 123.19 0)
 			(effects
 				(font
@@ -18201,7 +18723,7 @@
 				(hide yes)
 			)
 		)
-		(property "label" "ESP32HB"
+		(property "label" "Status"
 			(at 156.21 133.35 0)
 			(effects
 				(font
@@ -18210,6 +18732,24 @@
 			)
 		)
 		(property "Field10" ""
+			(at 156.21 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 156.21 124.46 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C5333730"
 			(at 156.21 124.46 0)
 			(effects
 				(font
@@ -18380,6 +18920,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 22.86 196.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "1879b03a-8e04-4e39-8fec-89f3c3e38acf")
 		)
@@ -18419,7 +18968,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_Elec_8x6.2"
+		(property "Footprint" "Capacitor_SMD:C_Elec_6.3x7.7"
 			(at 162.56 39.37 0)
 			(effects
 				(font
@@ -18446,7 +18995,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C1849748"
+		(property "LCSC" "C46528074"
 			(at 162.56 39.37 0)
 			(effects
 				(font
@@ -18455,7 +19004,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Vishay"
+		(property "MFG" "Chemi-Con"
 			(at 162.56 39.37 0)
 			(effects
 				(font
@@ -18464,7 +19013,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MAL214297007E3"
+		(property "MPN" "HHXJ350ARA101MF80G "
 			(at 162.56 39.37 0)
 			(effects
 				(font
@@ -18491,7 +19040,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "71-MAL214297007E3"
+		(property "Mouser_PN" "661-HHXJ350A101MF80G "
 			(at 162.56 39.37 0)
 			(effects
 				(font
@@ -18501,6 +19050,24 @@
 			)
 		)
 		(property "Field10" ""
+			(at 162.56 39.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 162.56 39.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "35V"
 			(at 162.56 39.37 90)
 			(effects
 				(font
@@ -18636,7 +19203,7 @@
 			)
 		)
 		(pin "tcxoDiv2" output
-			(at 187.96 118.11 180)
+			(at 187.96 110.49 180)
 			(uuid "84c4fbe2-9696-47e9-b6a6-7520e5270eab")
 			(effects
 				(font
@@ -18678,6 +19245,16 @@
 		(pin "clkEn" input
 			(at 187.96 113.03 180)
 			(uuid "58879a98-8f69-44e4-9bb8-7bd4b286d543")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ahcEn" input
+			(at 187.96 118.11 180)
+			(uuid "b0130e0b-f691-4bc2-b5f8-43f0b92da39d")
 			(effects
 				(font
 					(size 1.27 1.27)

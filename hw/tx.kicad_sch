@@ -2843,7 +2843,7 @@
 		(uuid "05f8a1e3-3cb9-410d-8c19-edfdb28e5889")
 	)
 	(junction
-		(at 142.24 115.57)
+		(at 143.51 115.57)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "0d69c843-912c-476d-9dbd-473c86ece030")
@@ -3083,7 +3083,7 @@
 		(uuid "b4a9c117-3d29-4c92-a285-1072e3d2ba37")
 	)
 	(junction
-		(at 142.24 107.95)
+		(at 143.51 107.95)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "bd668c17-75ef-40c3-a371-6c81844da5f0")
@@ -3316,16 +3316,6 @@
 	)
 	(wire
 		(pts
-			(xy 140.97 115.57) (xy 142.24 115.57)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "134edff2-6cbf-4b6a-b4d4-5e69c497bd61")
-	)
-	(wire
-		(pts
 			(xy 137.16 63.5) (xy 137.16 64.77)
 		)
 		(stroke
@@ -3423,6 +3413,16 @@
 			(type default)
 		)
 		(uuid "188a769c-a556-48c1-b5fd-47aa5fe6ed23")
+	)
+	(wire
+		(pts
+			(xy 140.97 107.95) (xy 143.51 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "197da6cd-057f-4c48-a883-22abce7b70ce")
 	)
 	(wire
 		(pts
@@ -3696,17 +3696,7 @@
 	)
 	(wire
 		(pts
-			(xy 140.97 107.95) (xy 142.24 107.95)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2fdbed4e-368a-4570-998d-8388a2336b39")
-	)
-	(wire
-		(pts
-			(xy 142.24 130.81) (xy 134.62 130.81)
+			(xy 143.51 130.81) (xy 134.62 130.81)
 		)
 		(stroke
 			(width 0)
@@ -4136,7 +4126,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 107.95) (xy 142.24 115.57)
+			(xy 143.51 107.95) (xy 143.51 115.57)
 		)
 		(stroke
 			(width 0)
@@ -4246,7 +4236,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 115.57) (xy 142.24 130.81)
+			(xy 143.51 115.57) (xy 143.51 130.81)
 		)
 		(stroke
 			(width 0)
@@ -4263,6 +4253,16 @@
 			(type default)
 		)
 		(uuid "5b03a47f-f5f9-4ae0-9ace-ae796fc7043c")
+	)
+	(wire
+		(pts
+			(xy 140.97 115.57) (xy 143.51 115.57)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5bfb882e-d547-475a-982a-e27417abd1be")
 	)
 	(wire
 		(pts
@@ -5466,7 +5466,7 @@
 	)
 	(wire
 		(pts
-			(xy 142.24 106.68) (xy 142.24 107.95)
+			(xy 143.51 106.68) (xy 143.51 107.95)
 		)
 		(stroke
 			(width 0)
@@ -5884,17 +5884,6 @@
 		)
 		(uuid "fde5acaa-0ab1-48f5-ad44-6d9bc048d145")
 	)
-	(hierarchical_label "paEn"
-		(shape input)
-		(at 102.87 124.46 90)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "01d48a07-558d-4320-94cd-5a4e04e0eea3")
-	)
 	(hierarchical_label "clkEn"
 		(shape input)
 		(at 80.01 68.58 0)
@@ -5917,7 +5906,18 @@
 		)
 		(uuid "4054078a-e5e4-426c-9370-d82fd9b97efa")
 	)
-	(hierarchical_label "paEn"
+	(hierarchical_label "ahcEn"
+		(shape input)
+		(at 102.87 124.46 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "7e48dbbe-94aa-4d7e-9933-90f33376c439")
+	)
+	(hierarchical_label "ahcEn"
 		(shape input)
 		(at 135.89 125.73 0)
 		(effects
@@ -6040,7 +6040,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 185.42 93.98 0)
 			(effects
 				(font
@@ -6077,6 +6077,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 185.42 93.98 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 185.42 93.98 0)
 			(effects
 				(font
@@ -6177,7 +6186,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "07847f07-44d7-4b46-8ce5-8c0675c34d71")
-		(property "Reference" "#PWR0344"
+		(property "Reference" "#PWR0345"
 			(at 97.79 186.69 0)
 			(effects
 				(font
@@ -6227,7 +6236,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0344")
+					(reference "#PWR0345")
 					(unit 1)
 				)
 			)
@@ -6339,6 +6348,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 154.94 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C51953478"
+			(at 154.94 113.03 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "51ab58f1-7cda-40cc-9901-bdf44c18ea46")
 		)
@@ -6411,7 +6438,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 160.02 72.39 0)
 			(effects
 				(font
@@ -6456,6 +6483,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 160.02 72.39 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "59ba7cab-2960-41ea-8338-8ed4fd874878")
 		)
@@ -6483,7 +6519,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0c204e2d-215d-4a15-996b-98d5a75db0fd")
-		(property "Reference" "C325"
+		(property "Reference" "C327"
 			(at 97.282 186.944 0)
 			(effects
 				(font
@@ -6528,7 +6564,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 97.79 189.23 0)
 			(effects
 				(font
@@ -6590,6 +6626,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 97.79 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "5165aa95-6372-4398-a5e5-a3952676298d")
 		)
@@ -6599,7 +6644,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C325")
+					(reference "C327")
 					(unit 1)
 				)
 			)
@@ -6614,7 +6659,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "0ec2ee27-9942-4be2-a194-0e7304cf0acc")
-		(property "Reference" "C323"
+		(property "Reference" "C321"
 			(at 74.422 179.324 0)
 			(effects
 				(font
@@ -6659,7 +6704,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 74.93 181.61 0)
 			(effects
 				(font
@@ -6721,6 +6766,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 74.93 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "8827b42e-2ae4-477f-a169-fe828a2eb918")
 		)
@@ -6730,7 +6784,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C323")
+					(reference "C321")
 					(unit 1)
 				)
 			)
@@ -6881,7 +6935,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "130d516d-a01f-4e1c-aa84-c93bc521233c")
-		(property "Reference" "#PWR0349"
+		(property "Reference" "#PWR0350"
 			(at 97.79 201.93 0)
 			(effects
 				(font
@@ -6932,7 +6986,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0349")
+					(reference "#PWR0350")
 					(unit 1)
 				)
 			)
@@ -7144,7 +7198,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C24452"
+		(property "LCSC_PN" ""
 			(at -7.62 -36.83 0)
 			(effects
 				(font
@@ -7377,7 +7431,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 29.21 105.41 0)
 			(effects
 				(font
@@ -7396,6 +7450,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 29.21 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 29.21 105.41 0)
 			(effects
 				(font
@@ -7428,7 +7491,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1bb5371c-4cb4-4fdd-b487-24215c6330f8")
-		(property "Reference" "#PWR0343"
+		(property "Reference" "#PWR0342"
 			(at 74.93 179.07 0)
 			(effects
 				(font
@@ -7478,7 +7541,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0343")
+					(reference "#PWR0342")
 					(unit 1)
 				)
 			)
@@ -7673,7 +7736,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 185.42 53.34 0)
 			(effects
 				(font
@@ -7710,6 +7773,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 185.42 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 185.42 53.34 0)
 			(effects
 				(font
@@ -7788,7 +7860,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2907091"
+		(property "LCSC" "C2784788"
 			(at 147.32 53.34 90)
 			(effects
 				(font
@@ -7833,6 +7905,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 147.32 53.34 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "1cfab7ea-9695-4383-be3a-1b5d34d1c875")
 		)
@@ -7857,7 +7938,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "28ce5b3f-4586-46ec-b76a-5473eb082fa4")
-		(property "Reference" "C321"
+		(property "Reference" "C325"
 			(at 47.752 186.944 0)
 			(effects
 				(font
@@ -7902,7 +7983,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 48.26 189.23 0)
 			(effects
 				(font
@@ -7964,6 +8045,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 48.26 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "3d8c57ce-2c20-4ff0-9e3f-3e4bd68adb73")
 		)
@@ -7973,7 +8063,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C321")
+					(reference "C325")
 					(unit 1)
 				)
 			)
@@ -8096,7 +8186,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2907091"
+		(property "LCSC" "C2906874"
 			(at 43.18 149.86 90)
 			(effects
 				(font
@@ -8133,6 +8223,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 43.18 149.86 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 43.18 149.86 90)
 			(effects
 				(font
@@ -8213,7 +8312,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 177.8 140.97 0)
 			(effects
 				(font
@@ -8250,6 +8349,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 177.8 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 177.8 140.97 0)
 			(effects
 				(font
@@ -8345,7 +8453,7 @@
 	)
 	(symbol
 		(lib_id "power:VBUS")
-		(at 142.24 106.68 0)
+		(at 143.51 106.68 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8353,7 +8461,7 @@
 		(dnp no)
 		(uuid "308d7a34-4a55-408a-b678-08b91a53fd96")
 		(property "Reference" "#PWR0323"
-			(at 142.24 110.49 0)
+			(at 143.51 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8362,7 +8470,7 @@
 			)
 		)
 		(property "Value" "VBUS"
-			(at 142.24 101.6 0)
+			(at 143.51 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8370,7 +8478,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 142.24 106.68 0)
+			(at 143.51 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8379,7 +8487,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 142.24 106.68 0)
+			(at 143.51 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8388,7 +8496,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 142.24 106.68 0)
+			(at 143.51 106.68 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8426,7 +8534,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 21.844 107.696 0)
 			(effects
 				(font
@@ -8480,7 +8588,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at -7.62 -36.83 0)
 			(effects
 				(font
@@ -8713,7 +8821,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 22.86 105.41 0)
 			(effects
 				(font
@@ -8732,6 +8840,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 22.86 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 22.86 105.41 0)
 			(effects
 				(font
@@ -8875,7 +8992,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 231.14 29.21 0)
 			(effects
 				(font
@@ -8921,6 +9038,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 231.14 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 231.14 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 231.14 29.21 0)
 			(effects
 				(font
@@ -9050,6 +9185,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 154.94 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C51953478"
+			(at 154.94 134.62 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "fd68483a-0c39-4475-ba31-9f09071850a5")
 		)
@@ -9117,7 +9270,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2907091"
+		(property "LCSC" "C2929993"
 			(at 83.82 60.96 90)
 			(effects
 				(font
@@ -9162,6 +9315,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 83.82 60.96 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "f5aa529d-621f-4301-8403-57392c500ed0")
 		)
@@ -9187,7 +9349,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3c5668bd-949b-4269-9078-6a68b3acfd1a")
-		(property "Reference" "C322"
+		(property "Reference" "C326"
 			(at 60.96 186.944 0)
 			(effects
 				(font
@@ -9196,7 +9358,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 55.88 191.262 0)
 			(effects
 				(font
@@ -9250,7 +9412,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at 86.36 46.99 0)
 			(effects
 				(font
@@ -9483,7 +9645,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 55.88 189.23 0)
 			(effects
 				(font
@@ -9510,6 +9672,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 55.88 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "7ec398ce-267f-4dc0-837a-0b44bc286b17")
 		)
@@ -9519,7 +9690,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C322")
+					(reference "C326")
 					(unit 1)
 				)
 			)
@@ -9646,7 +9817,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 25.4 181.61 0)
 			(effects
 				(font
@@ -9701,6 +9872,15 @@
 		)
 		(property "working-voltage" "50V"
 			(at 25.4 181.61 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 25.4 181.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9796,7 +9976,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C24452"
+		(property "LCSC_PN" ""
 			(at 207.01 12.7 0)
 			(effects
 				(font
@@ -10029,7 +10209,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 64.77 49.53 0)
 			(effects
 				(font
@@ -10048,6 +10228,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 64.77 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 64.77 49.53 0)
 			(effects
 				(font
@@ -10328,7 +10517,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 237.49 109.22 0)
 			(effects
 				(font
@@ -10374,6 +10563,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 237.49 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 237.49 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 237.49 109.22 0)
 			(effects
 				(font
@@ -10454,7 +10661,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 160.02 31.75 0)
 			(effects
 				(font
@@ -10491,6 +10698,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 160.02 31.75 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 160.02 31.75 0)
 			(effects
 				(font
@@ -10536,7 +10752,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 33.02 183.642 0)
 			(effects
 				(font
@@ -10590,7 +10806,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at 63.5 39.37 0)
 			(effects
 				(font
@@ -10823,7 +11039,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 33.02 181.61 0)
 			(effects
 				(font
@@ -10843,6 +11059,15 @@
 		)
 		(property "Field10" ""
 			(at 33.02 181.61 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 33.02 181.61 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11017,7 +11242,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100pF NP0 100V"
+		(property "Value" "100pF NP0 50V"
 			(at 220.472 74.168 90)
 			(effects
 				(font
@@ -11053,7 +11278,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C106200"
+		(property "LCSC" "C76709"
 			(at 226.06 81.28 0)
 			(effects
 				(font
@@ -11090,6 +11315,33 @@
 			)
 		)
 		(property "Field10" ""
+			(at 226.06 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 226.06 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 226.06 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
 			(at 226.06 81.28 0)
 			(effects
 				(font
@@ -11199,7 +11451,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 132.842 44.958 90)
 			(effects
 				(font
@@ -11253,7 +11505,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at -7.62 17.78 0)
 			(effects
 				(font
@@ -11486,7 +11738,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 134.62 48.26 0)
 			(effects
 				(font
@@ -11505,6 +11757,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 134.62 48.26 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 134.62 48.26 90)
 			(effects
 				(font
@@ -11582,7 +11843,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 222.25 109.22 0)
 			(effects
 				(font
@@ -11628,6 +11889,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 222.25 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 222.25 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 222.25 109.22 0)
 			(effects
 				(font
@@ -11703,7 +11982,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2907091"
+		(property "LCSC" "C2479306"
 			(at 154.94 119.38 90)
 			(effects
 				(font
@@ -11740,6 +12019,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 154.94 119.38 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 154.94 119.38 90)
 			(effects
 				(font
@@ -12017,7 +12305,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 134.62 55.88 0)
 			(effects
 				(font
@@ -12071,6 +12359,15 @@
 			)
 		)
 		(property "working-voltage" "50V"
+			(at 134.62 55.88 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 134.62 55.88 90)
 			(effects
 				(font
@@ -12213,7 +12510,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2907091"
+		(property "LCSC" "C2479306"
 			(at 154.94 140.97 90)
 			(effects
 				(font
@@ -12250,6 +12547,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 154.94 140.97 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 154.94 140.97 90)
 			(effects
 				(font
@@ -12328,7 +12634,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 237.49 29.21 0)
 			(effects
 				(font
@@ -12383,6 +12689,15 @@
 			)
 		)
 		(property "working-voltage" "50V"
+			(at 237.49 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 237.49 29.21 0)
 			(effects
 				(font
@@ -12490,8 +12805,8 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
-			(at 135.382 104.648 90)
+		(property "Value" "1uF X5R 25V"
+			(at 129.54 104.902 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12544,7 +12859,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at -5.08 77.47 0)
 			(effects
 				(font
@@ -12777,7 +13092,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 137.16 107.95 0)
 			(effects
 				(font
@@ -12796,6 +13111,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 137.16 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 137.16 107.95 90)
 			(effects
 				(font
@@ -12830,7 +13154,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "812946ee-4c96-43c9-bc16-3b22efc6de76")
-		(property "Reference" "#PWR0348"
+		(property "Reference" "#PWR0347"
 			(at 74.93 194.31 0)
 			(effects
 				(font
@@ -12881,7 +13205,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0348")
+					(reference "#PWR0347")
 					(unit 1)
 				)
 			)
@@ -13093,7 +13417,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "88b5ea2d-fb6f-498a-ad3f-527b859487c8")
-		(property "Reference" "C327"
+		(property "Reference" "C323"
 			(at 123.952 179.324 0)
 			(effects
 				(font
@@ -13138,7 +13462,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 124.46 181.61 0)
 			(effects
 				(font
@@ -13200,6 +13524,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 124.46 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "3fa49484-37d2-4a20-bcb3-20923200509c")
 		)
@@ -13209,7 +13542,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C327")
+					(reference "C323")
 					(unit 1)
 				)
 			)
@@ -13296,6 +13629,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 247.65 49.53 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 247.65 49.53 0)
 			(effects
 				(font
@@ -13457,7 +13799,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 238.76 81.28 0)
 			(effects
 				(font
@@ -13503,6 +13845,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 238.76 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 238.76 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 238.76 81.28 0)
 			(effects
 				(font
@@ -13578,7 +13938,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2907091"
+		(property "LCSC" "C2906874"
 			(at 36.83 149.86 90)
 			(effects
 				(font
@@ -13623,6 +13983,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 36.83 149.86 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "b97779ac-4df2-42c5-845a-000311cb3914")
 		)
@@ -13648,7 +14017,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "91eee0a4-756f-4dfb-901f-b85955d5de66")
-		(property "Reference" "C324"
+		(property "Reference" "C322"
 			(at 87.63 179.324 0)
 			(effects
 				(font
@@ -13657,7 +14026,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 82.55 183.642 0)
 			(effects
 				(font
@@ -13711,7 +14080,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at 113.03 39.37 0)
 			(effects
 				(font
@@ -13944,7 +14313,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 82.55 181.61 0)
 			(effects
 				(font
@@ -13971,6 +14340,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 82.55 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a1d4c599-1f40-4dad-b595-550f982e1770")
 		)
@@ -13980,7 +14358,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C324")
+					(reference "C322")
 					(unit 1)
 				)
 			)
@@ -14040,7 +14418,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 222.25 132.08 0)
 			(effects
 				(font
@@ -14086,6 +14464,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 222.25 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 222.25 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 222.25 132.08 0)
 			(effects
 				(font
@@ -14182,7 +14578,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C2451471"
+		(property "LCSC_PN" ""
 			(at -7.62 -36.83 0)
 			(effects
 				(font
@@ -14491,6 +14887,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 30.48 96.52 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "ebd01c28-29ba-406d-9729-ec6d6fe87663")
 		)
@@ -14656,7 +15061,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9d465814-64b3-40ff-8a49-913f22f199b1")
-		(property "Reference" "#PWR0347"
+		(property "Reference" "#PWR0349"
 			(at 48.26 201.93 0)
 			(effects
 				(font
@@ -14707,7 +15112,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0347")
+					(reference "#PWR0349")
 					(unit 1)
 				)
 			)
@@ -14770,7 +15175,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 172.72 41.91 0)
 			(effects
 				(font
@@ -14807,6 +15212,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 172.72 41.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 172.72 41.91 0)
 			(effects
 				(font
@@ -14954,7 +15368,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 232.41 81.28 0)
 			(effects
 				(font
@@ -15009,6 +15423,15 @@
 			)
 		)
 		(property "working-voltage" "50V"
+			(at 232.41 81.28 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 232.41 81.28 0)
 			(effects
 				(font
@@ -15240,6 +15663,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 104.14 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2653789"
+			(at 104.14 125.73 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "8"
 			(uuid "2141327a-b2e3-4d7f-a568-4d0c5648d9c5")
 		)
@@ -15416,6 +15857,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 104.14 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C2653789"
+			(at 104.14 64.77 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "8"
 			(uuid "39da85b5-431a-4dd6-aaaa-4eadfbae6dc0")
 		)
@@ -15471,7 +15930,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100pF NP0 100V"
+		(property "Value" "100pF NP0 50V"
 			(at 260.858 27.178 0)
 			(effects
 				(font
@@ -15507,7 +15966,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C106200"
+		(property "LCSC" "C76709"
 			(at 243.84 29.21 0)
 			(effects
 				(font
@@ -15552,6 +16011,33 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 243.84 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "NP0"
+			(at 243.84 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "working-voltage" "50V"
+			(at 243.84 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "0222c188-03bc-4632-8180-0fd400d4f9ee")
 		)
@@ -15576,7 +16062,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "aea64a99-8f14-4d2e-92f0-4098e2320dd6")
-		(property "Reference" "#PWR0345"
+		(property "Reference" "#PWR0343"
 			(at 124.46 179.07 0)
 			(effects
 				(font
@@ -15626,7 +16112,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0345")
+					(reference "#PWR0343")
 					(unit 1)
 				)
 			)
@@ -15754,7 +16240,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C96446"
+		(property "LCSC" "C479655"
 			(at 237.49 132.08 0)
 			(effects
 				(font
@@ -15800,6 +16286,24 @@
 			)
 		)
 		(property "working-voltage" "25V"
+			(at 237.49 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 237.49 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "cap-type" "X5R"
 			(at 237.49 132.08 0)
 			(effects
 				(font
@@ -15945,7 +16449,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 172.72 82.55 0)
 			(effects
 				(font
@@ -15990,6 +16494,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 172.72 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "3"
 			(uuid "c0bd3c33-ad61-4131-ab8c-b54af51b0a0e")
 		)
@@ -16018,7 +16531,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "be4f4544-0237-47d9-b622-cb3818e30602")
-		(property "Reference" "C328"
+		(property "Reference" "C324"
 			(at 137.16 179.324 0)
 			(effects
 				(font
@@ -16027,7 +16540,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 132.08 183.642 0)
 			(effects
 				(font
@@ -16081,7 +16594,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at 162.56 39.37 0)
 			(effects
 				(font
@@ -16314,7 +16827,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 132.08 181.61 0)
 			(effects
 				(font
@@ -16341,6 +16854,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 132.08 181.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "05dda440-4092-4e76-8e01-dd6e144736a1")
 		)
@@ -16350,7 +16872,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C328")
+					(reference "C324")
 					(unit 1)
 				)
 			)
@@ -16596,6 +17118,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 147.32 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C51953478"
+			(at 147.32 48.26 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "04707de5-d3a5-43c6-87bf-ddceb3901c82")
 		)
@@ -16755,7 +17295,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d410dac8-29f9-44b9-86c0-c7314961fed4")
-		(property "Reference" "C326"
+		(property "Reference" "C328"
 			(at 110.49 186.944 0)
 			(effects
 				(font
@@ -16764,7 +17304,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 105.41 191.262 0)
 			(effects
 				(font
@@ -16818,7 +17358,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at 135.89 46.99 0)
 			(effects
 				(font
@@ -17051,7 +17591,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 105.41 189.23 0)
 			(effects
 				(font
@@ -17078,6 +17618,15 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 105.41 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "0c2d2fc8-ff2d-4544-b940-e3da332d89ef")
 		)
@@ -17087,7 +17636,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "C326")
+					(reference "C328")
 					(unit 1)
 				)
 			)
@@ -17102,7 +17651,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d58bb67c-7642-4c34-80a4-8936053ab4b4")
-		(property "Reference" "#PWR0342"
+		(property "Reference" "#PWR0344"
 			(at 48.26 186.69 0)
 			(effects
 				(font
@@ -17152,7 +17701,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0342")
+					(reference "#PWR0344")
 					(unit 1)
 				)
 			)
@@ -17183,7 +17732,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Library:SOP65P400X130-8N"
+		(property "Footprint" "Package_SO:TSSOP-8_3x3mm_P0.65mm"
 			(at 74.93 158.42 0)
 			(effects
 				(font
@@ -17222,7 +17771,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Part Number" "595-SN74LVC1G74DCTR"
+		(property "Mouser_PN" ""
 			(at 74.93 558.42 0)
 			(effects
 				(font
@@ -17232,17 +17781,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Texas-Instruments/SN74LVC1G74DCTR?qs=DS7Z8uEdLNwRYlUtd5z9Zw%3D%3D"
-			(at 74.93 658.42 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer_Name" "Texas Instruments"
+		(property "MFG" ""
 			(at 74.93 758.42 0)
 			(effects
 				(font
@@ -17252,13 +17791,31 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer_Part_Number" "SN74LVC1G74DCTR"
+		(property "MPN" ""
 			(at 74.93 858.42 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify left top)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 50.8 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C52121053"
+			(at 50.8 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 				(hide yes)
 			)
 		)
@@ -17413,7 +17970,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2907091"
+		(property "LCSC" "C2784788"
 			(at 148.59 72.39 90)
 			(effects
 				(font
@@ -17450,6 +18007,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 148.59 72.39 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 148.59 72.39 90)
 			(effects
 				(font
@@ -17550,7 +18116,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "db8cae6a-901b-4143-9979-42b85e12f287")
-		(property "Reference" "#PWR0350"
+		(property "Reference" "#PWR0348"
 			(at 124.46 194.31 0)
 			(effects
 				(font
@@ -17601,7 +18167,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3/23b3e7ef-2325-4c00-b23e-f86801b0fb79"
-					(reference "#PWR0350")
+					(reference "#PWR0348")
 					(unit 1)
 				)
 			)
@@ -17781,6 +18347,24 @@
 				(hide yes)
 			)
 		)
+		(property "MouserPN" ""
+			(at 148.59 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC" "C51953478"
+			(at 148.59 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d3dcd20f-a189-44b7-a8d0-c3e1f32a7767")
 		)
@@ -17853,7 +18437,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C28871"
+		(property "LCSC" "C151058"
 			(at 177.8 119.38 0)
 			(effects
 				(font
@@ -17890,6 +18474,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 177.8 119.38 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 177.8 119.38 0)
 			(effects
 				(font
@@ -17970,7 +18563,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C24452"
+		(property "LCSC" "C14663"
 			(at 137.16 115.57 0)
 			(effects
 				(font
@@ -18024,6 +18617,15 @@
 			)
 		)
 		(property "working-voltage" "50V"
+			(at 137.16 115.57 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 137.16 115.57 90)
 			(effects
 				(font
@@ -18133,7 +18735,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Si5351C-B-GM"
+		(property "Value" "Si5351C-B-GM1"
 			(at 73.2633 163.83 0)
 			(effects
 				(font
@@ -18162,6 +18764,42 @@
 		)
 		(property "Description" "I2C Programmable Any-Frequency CMOS Clock Generator, QFN-16"
 			(at 67.31 187.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "SI5351C-B-GM1 "
+			(at 68.58 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Mouser_PN" "634-SI5351C-B-GM1 "
+			(at 68.58 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MFG" "Skyworks"
+			(at 68.58 151.13 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
+			(at 68.58 151.13 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18313,7 +18951,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "1uF X7R 25V"
+		(property "Value" "1uF X5R 25V"
 			(at 67.056 42.418 0)
 			(effects
 				(font
@@ -18367,7 +19005,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC_PN" "C301928"
+		(property "LCSC_PN" ""
 			(at 207.01 12.7 0)
 			(effects
 				(font
@@ -18600,7 +19238,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14445"
+		(property "LCSC" "C7393852"
 			(at 64.77 43.18 0)
 			(effects
 				(font
@@ -18619,6 +19257,15 @@
 			)
 		)
 		(property "Field10" ""
+			(at 64.77 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MouserPN" ""
 			(at 64.77 43.18 0)
 			(effects
 				(font

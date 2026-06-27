@@ -1076,7 +1076,7 @@
           "group_by": false,
           "label": "LCSC",
           "name": "LCSC",
-          "show": false
+          "show": true
         },
         {
           "group_by": false,
@@ -1286,10 +1286,16 @@
           "group_by": false,
           "label": "LCSC_PN",
           "name": "LCSC_PN",
+          "show": true
+        },
+        {
+          "group_by": false,
+          "label": "MouserPN",
+          "name": "MouserPN",
           "show": false
         }
       ],
-      "filter_string": "r",
+      "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
       "name": "",
