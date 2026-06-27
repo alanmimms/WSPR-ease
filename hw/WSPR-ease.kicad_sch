@@ -9931,7 +9931,7 @@
 				)
 			)
 		)
-		(property "Value" "100pF NP0 50V"
+		(property "Value" "100pF NP0 100V"
 			(at 84.074 147.574 90)
 			(effects
 				(font
@@ -16131,7 +16131,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Library:USB_C_Receptacle_HRO_TYPE-C-31-M-12-bursted"
+		(property "Footprint" "Library:UJ20-C-H-G-SMT-P16-TR"
 			(at 167.64 62.23 0)
 			(effects
 				(font

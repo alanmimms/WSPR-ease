@@ -11242,7 +11242,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100pF NP0 50V"
+		(property "Value" "100pF NP0 100V"
 			(at 220.472 74.168 90)
 			(effects
 				(font
@@ -15930,7 +15930,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "100pF NP0 50V"
+		(property "Value" "100pF NP0 100V"
 			(at 260.858 27.178 0)
 			(effects
 				(font

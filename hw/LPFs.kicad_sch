@@ -4344,7 +4344,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "910pF NP0 50V"
+		(property "Value" "910pF NP0 100V"
 			(at 137.16 60.706 0)
 			(effects
 				(font
@@ -4407,7 +4407,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GCM1885C2A911FA6D"
+		(property "Mouser_PN" "81-GCM1885C2A911FA6D "
 			(at 137.16 58.42 0)
 			(effects
 				(font
@@ -4783,7 +4783,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15ACG2A101FT"
+		(property "MPN" "KGM15ACG1H820FT "
 			(at 82.55 171.45 0)
 			(effects
 				(font
@@ -4792,7 +4792,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15ACG2A101FT"
+		(property "Mouser_PN" "581-KGM15ACG1H820FT "
 			(at 82.55 171.45 0)
 			(effects
 				(font
@@ -6501,7 +6501,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15ACG2A101FT"
+		(property "MPN" "KGM15ACG1H820FT "
 			(at 139.7 171.45 0)
 			(effects
 				(font
@@ -6510,7 +6510,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15ACG2A101FT"
+		(property "Mouser_PN" "581-KGM15ACG1H820FT "
 			(at 139.7 171.45 0)
 			(effects
 				(font
@@ -6721,7 +6721,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1.6nF NP0 50V"
+		(property "Value" "1.6nF NP0 63V"
 			(at 101.6 60.706 0)
 			(effects
 				(font
@@ -6862,7 +6862,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1.6nF NP0 50V"
+		(property "Value" "1.6nF NP0 63V"
 			(at 119.38 60.706 0)
 			(effects
 				(font
@@ -8719,7 +8719,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "910pF NP0 50V"
+		(property "Value" "910pF NP0 100V"
 			(at 83.82 60.706 0)
 			(effects
 				(font
@@ -8782,7 +8782,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GCM1885C2A911FA6D"
+		(property "Mouser_PN" "81-GCM1885C2A911FA6D "
 			(at 83.82 58.42 0)
 			(effects
 				(font

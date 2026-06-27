@@ -1,4 +1,4 @@
-27331013022643684
+27332795617663373
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -71546,6 +71546,13 @@ LED (Multiple)
 0
 4
 4
+Library
+UJ20-C-H-G-SMT-P16-TR
+USB Type-C receptacle for USB 2.0 and PD, http://www.krhro.com/uploads/soft/180320/1-1P320120243.pdf
+usb usb-c 2.0 pd
+0
+16
+13
 Library
 UJ20CHGMSMT4P16TR
 UJ20-C-H-G-MSMT-4-P16-TR-2
