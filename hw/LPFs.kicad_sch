@@ -4344,7 +4344,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "910pF NP0 100V"
+		(property "Value" "910pF NP0 50V"
 			(at 137.16 60.706 0)
 			(effects
 				(font
@@ -4353,7 +4353,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 138.1252 62.23 0)
 			(effects
 				(font
@@ -4380,7 +4380,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2941944"
+		(property "LCSC" ""
 			(at 137.16 58.42 0)
 			(effects
 				(font
@@ -4389,7 +4389,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 137.16 58.42 0)
 			(effects
 				(font
@@ -4398,7 +4398,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GCM1885C2A911FA16D"
+		(property "MPN" ""
 			(at 137.16 58.42 0)
 			(effects
 				(font
@@ -4407,7 +4407,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GCM1885C2A911FA6D "
+		(property "Mouser_PN" ""
 			(at 137.16 58.42 0)
 			(effects
 				(font
@@ -4738,7 +4738,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 83.5152 175.26 0)
 			(effects
 				(font
@@ -4765,7 +4765,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C314304"
+		(property "LCSC" ""
 			(at 82.55 171.45 0)
 			(effects
 				(font
@@ -4774,7 +4774,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Kyocera AVX"
+		(property "MFG" ""
 			(at 82.55 171.45 0)
 			(effects
 				(font
@@ -4783,7 +4783,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15ACG1H820FT "
+		(property "MPN" ""
 			(at 82.55 171.45 0)
 			(effects
 				(font
@@ -4792,7 +4792,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15ACG1H820FT "
+		(property "Mouser_PN" ""
 			(at 82.55 171.45 0)
 			(effects
 				(font
@@ -5408,7 +5408,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 141.9352 116.84 0)
 			(effects
 				(font
@@ -5435,7 +5435,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 140.97 113.03 0)
 			(effects
 				(font
@@ -5444,7 +5444,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM1885C1H331JA01D"
+		(property "MPN" ""
 			(at 140.97 113.03 0)
 			(effects
 				(font
@@ -5453,7 +5453,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM39C331J50 "
+		(property "Mouser_PN" ""
 			(at 140.97 113.03 0)
 			(effects
 				(font
@@ -5498,7 +5498,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2176790"
+		(property "LCSC" ""
 			(at 140.97 113.03 0)
 			(effects
 				(font
@@ -5984,7 +5984,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 121.6152 175.26 0)
 			(effects
 				(font
@@ -6011,7 +6011,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C440147"
+		(property "LCSC" ""
 			(at 120.65 171.45 0)
 			(effects
 				(font
@@ -6020,7 +6020,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 120.65 171.45 0)
 			(effects
 				(font
@@ -6029,7 +6029,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GCM1885C2A181JA16D"
+		(property "MPN" ""
 			(at 120.65 171.45 0)
 			(effects
 				(font
@@ -6038,7 +6038,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GCM1885C2A181JA6D"
+		(property "Mouser_PN" ""
 			(at 120.65 171.45 0)
 			(effects
 				(font
@@ -6125,7 +6125,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 103.8352 116.84 0)
 			(effects
 				(font
@@ -6152,7 +6152,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 102.87 113.03 0)
 			(effects
 				(font
@@ -6161,7 +6161,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM1885C1H561JA01D"
+		(property "MPN" ""
 			(at 102.87 113.03 0)
 			(effects
 				(font
@@ -6170,7 +6170,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM39C561J50 "
+		(property "Mouser_PN" ""
 			(at 102.87 113.03 0)
 			(effects
 				(font
@@ -6206,7 +6206,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C597173"
+		(property "LCSC" ""
 			(at 102.87 113.03 0)
 			(effects
 				(font
@@ -6324,7 +6324,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 122.8852 116.84 0)
 			(effects
 				(font
@@ -6351,7 +6351,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 121.92 113.03 0)
 			(effects
 				(font
@@ -6360,7 +6360,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM1885C1H561JA01D"
+		(property "MPN" ""
 			(at 121.92 113.03 0)
 			(effects
 				(font
@@ -6369,7 +6369,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM39C561J50 "
+		(property "Mouser_PN" ""
 			(at 121.92 113.03 0)
 			(effects
 				(font
@@ -6405,7 +6405,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C597173"
+		(property "LCSC" ""
 			(at 121.92 113.03 0)
 			(effects
 				(font
@@ -6456,7 +6456,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 140.6652 175.26 0)
 			(effects
 				(font
@@ -6483,7 +6483,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C314304"
+		(property "LCSC" ""
 			(at 139.7 171.45 0)
 			(effects
 				(font
@@ -6492,7 +6492,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Kyocera AVX"
+		(property "MFG" ""
 			(at 139.7 171.45 0)
 			(effects
 				(font
@@ -6501,7 +6501,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15ACG1H820FT "
+		(property "MPN" ""
 			(at 139.7 171.45 0)
 			(effects
 				(font
@@ -6510,7 +6510,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15ACG1H820FT "
+		(property "Mouser_PN" ""
 			(at 139.7 171.45 0)
 			(effects
 				(font
@@ -6721,7 +6721,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1.6nF NP0 63V"
+		(property "Value" "1.6nF NP0 25V"
 			(at 101.6 60.706 0)
 			(effects
 				(font
@@ -6730,7 +6730,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 102.5652 62.23 0)
 			(effects
 				(font
@@ -6757,7 +6757,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C7471455"
+		(property "LCSC" ""
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6766,7 +6766,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6775,7 +6775,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GCM1885C1J162JA16D"
+		(property "MPN" ""
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6784,7 +6784,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GCM1885C1J162JA6D "
+		(property "Mouser_PN" ""
 			(at 101.6 58.42 0)
 			(effects
 				(font
@@ -6862,7 +6862,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1.6nF NP0 63V"
+		(property "Value" "1.6nF NP0 25V"
 			(at 119.38 60.706 0)
 			(effects
 				(font
@@ -6871,7 +6871,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 120.3452 62.23 0)
 			(effects
 				(font
@@ -6898,7 +6898,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C7471455"
+		(property "LCSC" ""
 			(at 119.38 58.42 0)
 			(effects
 				(font
@@ -6907,7 +6907,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 119.38 58.42 0)
 			(effects
 				(font
@@ -6916,7 +6916,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GCM1885C1J162JA16D"
+		(property "MPN" ""
 			(at 119.38 58.42 0)
 			(effects
 				(font
@@ -6925,7 +6925,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GCM1885C1J162JA6D "
+		(property "Mouser_PN" ""
 			(at 119.38 58.42 0)
 			(effects
 				(font
@@ -7657,7 +7657,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 84.7852 116.84 0)
 			(effects
 				(font
@@ -7684,7 +7684,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 83.82 113.03 0)
 			(effects
 				(font
@@ -7693,7 +7693,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GRM1885C1H331JA01D"
+		(property "MPN" ""
 			(at 83.82 113.03 0)
 			(effects
 				(font
@@ -7702,7 +7702,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GRM39C331J50 "
+		(property "Mouser_PN" ""
 			(at 83.82 113.03 0)
 			(effects
 				(font
@@ -7747,7 +7747,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2176790"
+		(property "LCSC" ""
 			(at 83.82 113.03 0)
 			(effects
 				(font
@@ -8268,7 +8268,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 102.5652 175.26 0)
 			(effects
 				(font
@@ -8295,7 +8295,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C440147"
+		(property "LCSC" ""
 			(at 101.6 171.45 0)
 			(effects
 				(font
@@ -8304,7 +8304,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 101.6 171.45 0)
 			(effects
 				(font
@@ -8313,7 +8313,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GCM1885C2A181JA16D"
+		(property "MPN" ""
 			(at 101.6 171.45 0)
 			(effects
 				(font
@@ -8322,7 +8322,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GCM1885C2A181JA6D"
+		(property "Mouser_PN" ""
 			(at 101.6 171.45 0)
 			(effects
 				(font
@@ -8719,7 +8719,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "910pF NP0 100V"
+		(property "Value" "910pF NP0 50V"
 			(at 83.82 60.706 0)
 			(effects
 				(font
@@ -8728,7 +8728,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 84.7852 62.23 0)
 			(effects
 				(font
@@ -8755,7 +8755,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2941944"
+		(property "LCSC" ""
 			(at 83.82 58.42 0)
 			(effects
 				(font
@@ -8764,7 +8764,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "muRata"
+		(property "MFG" ""
 			(at 83.82 58.42 0)
 			(effects
 				(font
@@ -8773,7 +8773,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "GCM1885C2A911FA16D"
+		(property "MPN" ""
 			(at 83.82 58.42 0)
 			(effects
 				(font
@@ -8782,7 +8782,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "81-GCM1885C2A911FA6D "
+		(property "Mouser_PN" ""
 			(at 83.82 58.42 0)
 			(effects
 				(font

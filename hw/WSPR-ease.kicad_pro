@@ -686,6 +686,12 @@
       "Net-(D301-K)": "rgb(0, 194, 0)"
     },
     "netclass_assignments": {
+      "+1.1V": [
+        "power"
+      ],
+      "+VDDA": [
+        "power"
+      ],
       "/D+": [
         "diff90"
       ],
@@ -1354,6 +1360,10 @@
     [
       "23b3e7ef-2325-4c00-b23e-f86801b0fb79",
       "Transmitter"
+    ],
+    [
+      "d47135a8-cf5d-47fa-bead-b97fcec44f77",
+      "DDS"
     ]
   ],
   "text_variables": {}

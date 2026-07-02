@@ -14,6 +14,6 @@ REMOTE_VENV_LIB="/homealan/zephyr-projects/.venv/lib/python3.12/site-packages"
 ssh ${TARGET_IP} "PYTHONPATH=${REMOTE_VENV_LIB} python3 -m \
   esptool --chip esp32s3 \
   --baud 921600 \
-  --port /dev/ttyACM0 \
+  --port ${TARGET_PORT} \
   --baud 921600 \
   write-flash 0x0 ${TARGET_BIN}"

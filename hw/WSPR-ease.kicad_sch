@@ -5868,40 +5868,16 @@
 		(uuid "0dcf18c5-8b5c-4716-bff1-1aef42afff5b")
 	)
 	(no_connect
-		(at 88.9 99.06)
-		(uuid "162ba311-ed07-4a4e-aacd-84316cd4cf5a")
-	)
-	(no_connect
-		(at 58.42 66.04)
-		(uuid "2c18825b-9ae0-4fe3-8262-7b7b995ce3f5")
-	)
-	(no_connect
-		(at 88.9 96.52)
-		(uuid "2d13fe68-aee0-4d7d-b3f3-d034f91d67aa")
-	)
-	(no_connect
-		(at 58.42 93.98)
-		(uuid "33d47785-9411-4243-9413-8e8ae96fea90")
-	)
-	(no_connect
 		(at 39.37 153.67)
 		(uuid "3486ceb9-5286-4407-a3c3-b4b24cb03a1e")
-	)
-	(no_connect
-		(at 58.42 63.5)
-		(uuid "37503644-0b22-4da3-ba83-c79ccad73285")
 	)
 	(no_connect
 		(at 88.9 76.2)
 		(uuid "39fbca37-73e3-4b72-9e2b-1a1ca2a62ec9")
 	)
 	(no_connect
-		(at 88.9 68.58)
-		(uuid "67625ecb-4aff-44af-a7e8-37da23fec9f0")
-	)
-	(no_connect
-		(at 58.42 58.42)
-		(uuid "6961297a-de88-4c6d-8fcf-aae2f129d4ec")
+		(at 58.42 83.82)
+		(uuid "5cd82c09-cb16-4588-b3f4-5e8f950a03f9")
 	)
 	(no_connect
 		(at 39.37 163.83)
@@ -6054,16 +6030,6 @@
 			(type default)
 		)
 		(uuid "0d89fd23-33e0-4db4-be54-1133cb1dda55")
-	)
-	(wire
-		(pts
-			(xy 186.69 113.03) (xy 187.96 113.03)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0df17b1f-9233-4b62-afc3-80be13f252c5")
 	)
 	(wire
 		(pts
@@ -6227,6 +6193,16 @@
 	)
 	(wire
 		(pts
+			(xy 74.93 182.88) (xy 76.2 182.88)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1c8031a1-fa61-4268-af7b-55b498118b16")
+	)
+	(wire
+		(pts
 			(xy 219.71 146.05) (xy 219.71 148.59)
 		)
 		(stroke
@@ -6267,7 +6243,7 @@
 	)
 	(wire
 		(pts
-			(xy 58.42 96.52) (xy 46.99 96.52)
+			(xy 58.42 96.52) (xy 57.15 96.52)
 		)
 		(stroke
 			(width 0)
@@ -6314,6 +6290,16 @@
 			(type default)
 		)
 		(uuid "247cb1f6-ee42-41c0-846f-745fe559ef83")
+	)
+	(bus
+		(pts
+			(xy 186.69 97.79) (xy 187.96 97.79)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2556b88c-0742-46d0-8bf0-13be27f8e4f6")
 	)
 	(wire
 		(pts
@@ -6437,7 +6423,7 @@
 	)
 	(wire
 		(pts
-			(xy 186.69 118.11) (xy 187.96 118.11)
+			(xy 186.69 121.92) (xy 187.96 121.92)
 		)
 		(stroke
 			(width 0)
@@ -6507,7 +6493,7 @@
 	)
 	(wire
 		(pts
-			(xy 186.69 115.57) (xy 187.96 115.57)
+			(xy 186.69 119.38) (xy 187.96 119.38)
 		)
 		(stroke
 			(width 0)
@@ -7147,6 +7133,16 @@
 	)
 	(wire
 		(pts
+			(xy 186.69 102.87) (xy 187.96 102.87)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8ee45a68-8692-4a3c-b3e2-cc6756c6a10b")
+	)
+	(wire
+		(pts
 			(xy 134.62 49.53) (xy 135.89 49.53)
 		)
 		(stroke
@@ -7184,6 +7180,16 @@
 			(type default)
 		)
 		(uuid "94f89fd3-f030-45c1-b65c-33b8f974ae97")
+	)
+	(wire
+		(pts
+			(xy 57.15 93.98) (xy 58.42 93.98)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "96016804-8144-4014-b25b-ea4bee491ffc")
 	)
 	(wire
 		(pts
@@ -7237,6 +7243,16 @@
 	)
 	(wire
 		(pts
+			(xy 57.15 63.5) (xy 58.42 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9deb3037-25f1-4ea5-bd83-c112de23a413")
+	)
+	(wire
+		(pts
 			(xy 27.94 78.74) (xy 24.13 78.74)
 		)
 		(stroke
@@ -7254,6 +7270,16 @@
 			(type default)
 		)
 		(uuid "a002de74-7e2f-4433-9294-a11ddd4763c7")
+	)
+	(wire
+		(pts
+			(xy 76.2 182.88) (xy 76.2 184.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a037c381-1c7a-4ab2-ae2f-51a2a8eef074")
 	)
 	(wire
 		(pts
@@ -7297,17 +7323,17 @@
 	)
 	(wire
 		(pts
-			(xy 57.15 83.82) (xy 58.42 83.82)
+			(xy 57.15 58.42) (xy 58.42 58.42)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "a7270a82-fb87-4181-bd71-e3d0953c40e8")
+		(uuid "a81f38ec-287c-49be-a4f2-f41530dc3a37")
 	)
 	(wire
 		(pts
-			(xy 186.69 104.14) (xy 187.96 104.14)
+			(xy 186.69 107.95) (xy 187.96 107.95)
 		)
 		(stroke
 			(width 0)
@@ -7407,7 +7433,7 @@
 	)
 	(wire
 		(pts
-			(xy 58.42 99.06) (xy 46.99 99.06)
+			(xy 58.42 99.06) (xy 57.15 99.06)
 		)
 		(stroke
 			(width 0)
@@ -7417,7 +7443,7 @@
 	)
 	(wire
 		(pts
-			(xy 186.69 106.68) (xy 187.96 106.68)
+			(xy 186.69 110.49) (xy 187.96 110.49)
 		)
 		(stroke
 			(width 0)
@@ -7557,13 +7583,23 @@
 	)
 	(wire
 		(pts
-			(xy 186.69 110.49) (xy 187.96 110.49)
+			(xy 186.69 114.3) (xy 187.96 114.3)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "d07899c0-9342-44b8-a579-20cda37bfc0f")
+	)
+	(wire
+		(pts
+			(xy 88.9 99.06) (xy 90.17 99.06)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d33b4d98-b937-4170-964a-351718b7703e")
 	)
 	(wire
 		(pts
@@ -7727,6 +7763,16 @@
 	)
 	(wire
 		(pts
+			(xy 57.15 66.04) (xy 58.42 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e6ca4441-b5bb-4ab2-9cd3-7350a4406889")
+	)
+	(wire
+		(pts
 			(xy 73.66 41.91) (xy 73.66 48.26)
 		)
 		(stroke
@@ -7837,6 +7883,26 @@
 	)
 	(wire
 		(pts
+			(xy 88.9 96.52) (xy 90.17 96.52)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f61cfd3d-8424-4d60-ad31-69522c39a90f")
+	)
+	(wire
+		(pts
+			(xy 88.9 68.58) (xy 90.17 68.58)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f6891523-75c2-498a-a0c6-a8cfb9c0cb89")
+	)
+	(wire
+		(pts
 			(xy 87.63 35.56) (xy 87.63 41.91)
 		)
 		(stroke
@@ -7935,6 +8001,26 @@
 		)
 		(uuid "12e3adf0-5187-46aa-876e-01cba72cd7a5")
 	)
+	(label "ddsRUN"
+		(at 186.69 102.87 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "1c3f10e1-1545-4043-b1ac-ff1402f32642")
+	)
+	(label "ddsSPI.D0"
+		(at 90.17 96.52 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "238685ef-d719-4da8-a6ff-760a461d395a")
+	)
 	(label "hbBlu"
 		(at 111.76 128.27 180)
 		(effects
@@ -7956,7 +8042,7 @@
 		(uuid "2f7dcb6f-2b8f-422f-a595-d34b5efdee1a")
 	)
 	(label "ahcEn"
-		(at 186.69 118.11 180)
+		(at 186.69 121.92 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7966,7 +8052,7 @@
 		(uuid "36d06f8b-6a4c-422a-94a0-c14b44dedd8a")
 	)
 	(label "gnssPPS"
-		(at 46.99 99.06 180)
+		(at 57.15 99.06 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7975,18 +8061,8 @@
 		)
 		(uuid "38afbfe7-bcce-4a0b-88f3-22eb113ad3b1")
 	)
-	(label "txCLKen"
-		(at 186.69 113.03 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "418f2189-caa8-42ac-8eb1-04799ec543b9")
-	)
-	(label "tcxoDiv2"
-		(at 186.69 110.49 180)
+	(label "ddsClk"
+		(at 186.69 114.3 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8016,7 +8092,7 @@
 		(uuid "51d3ead9-9c92-4244-a467-83b566fd49e1")
 	)
 	(label "txSDA"
-		(at 186.69 106.68 180)
+		(at 186.69 110.49 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8096,7 +8172,7 @@
 		(uuid "7b16ab9b-f39c-4e25-a7b7-65e92ef3bc45")
 	)
 	(label "gnssNRESET"
-		(at 46.99 96.52 180)
+		(at 57.15 96.52 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8104,6 +8180,16 @@
 			(justify right bottom)
 		)
 		(uuid "81f8ddc9-edd7-4d84-8f4a-83789268001e")
+	)
+	(label "ddsSPI.SCK"
+		(at 90.17 68.58 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "88302d2f-752e-4f00-8432-8a9027dc22e0")
 	)
 	(label "txSDA"
 		(at 57.15 88.9 180)
@@ -8116,7 +8202,7 @@
 		(uuid "96bbb336-07cb-4b5f-b0c8-73218728ad5e")
 	)
 	(label "txPAen"
-		(at 186.69 115.57 180)
+		(at 186.69 119.38 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8155,6 +8241,26 @@
 		)
 		(uuid "a1cf0f2b-3bf3-4437-b5b1-3792049a5fdc")
 	)
+	(label "ddsSPI.SS"
+		(at 57.15 58.42 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "a2851350-d113-408b-b36c-c62e94797fdd")
+	)
+	(label "ddsSPI.D1"
+		(at 90.17 91.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a5956200-fc8a-4783-b004-5aa843a9ae5f")
+	)
 	(label "blu"
 		(at 149.86 129.54 270)
 		(effects
@@ -8164,6 +8270,16 @@
 			(justify right bottom)
 		)
 		(uuid "a97d5ec6-2d6a-4999-b7a2-337b2ead8e53")
+	)
+	(label "ddsSPI{ddsSPI}"
+		(at 186.69 97.79 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "acaf6955-5105-415c-aa74-503e00e66492")
 	)
 	(label "hbRed"
 		(at 111.76 120.65 180)
@@ -8175,7 +8291,17 @@
 		)
 		(uuid "b3e85c46-71eb-4b94-9857-70d3c5bd8e3e")
 	)
-	(label "tcxoDiv2"
+	(label "ddsSPI.D3"
+		(at 57.15 93.98 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "c136e9ab-a305-465f-880a-33164ea1adf4")
+	)
+	(label "ddsClk"
 		(at 57.15 86.36 180)
 		(effects
 			(font
@@ -8184,16 +8310,6 @@
 			(justify right bottom)
 		)
 		(uuid "d0be3da7-48eb-4ee4-bede-af0721fe2293")
-	)
-	(label "txCLKen"
-		(at 57.15 83.82 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "d8525739-ee80-4a7a-8c31-6697604af961")
 	)
 	(label "hiON"
 		(at 55.88 76.2 180)
@@ -8226,7 +8342,7 @@
 		(uuid "e3ddb33e-5d3f-47b0-8e45-d912557aa338")
 	)
 	(label "txSCL"
-		(at 186.69 104.14 180)
+		(at 186.69 107.95 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8235,13 +8351,23 @@
 		)
 		(uuid "ed125c67-9c1c-4475-a5b8-5bef0c420621")
 	)
-	(label "ahcEn"
-		(at 90.17 91.44 0)
+	(label "ddsRUN"
+		(at 57.15 66.04 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
+		)
+		(uuid "ede0384e-88f4-4bdc-9664-3cc52abf8df8")
+	)
+	(label "ahcEn"
+		(at 57.15 63.5 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
 		)
 		(uuid "f660ba9b-b6a9-43c6-b7be-2838166fb216")
 	)
@@ -8254,6 +8380,16 @@
 			(justify left bottom)
 		)
 		(uuid "f8142cfb-feb6-4c6f-89e0-4042b3cb18e7")
+	)
+	(label "ddsSPI.D2"
+		(at 90.17 99.06 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ff7a2e45-8b4d-4605-8534-aa5976153e6e")
 	)
 	(netclass_flag ""
 		(length 2.54)
@@ -8618,7 +8754,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Bourns"
+		(property "MFG" "Yageo"
 			(at 132.08 128.27 90)
 			(effects
 				(font
@@ -8627,7 +8763,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CR0402-JW-101GLF"
+		(property "MPN" "RT0402FRD0722K1L"
 			(at 132.08 128.27 90)
 			(effects
 				(font
@@ -8636,7 +8772,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "652-CR0402JW-101GLF"
+		(property "Mouser_PN" "603-RT0402FRD0722K1L"
 			(at 132.08 128.27 90)
 			(effects
 				(font
@@ -8654,7 +8790,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2906860"
+		(property "LCSC" ""
 			(at 132.08 128.27 90)
 			(effects
 				(font
@@ -8873,7 +9009,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Bourns"
+		(property "MFG" "Yageo"
 			(at 119.38 120.65 90)
 			(effects
 				(font
@@ -8882,7 +9018,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CR0402-JW-101GLF"
+		(property "MPN" "RT0402FRD0722K1L"
 			(at 119.38 120.65 90)
 			(effects
 				(font
@@ -8891,7 +9027,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "652-CR0402JW-101GLF"
+		(property "Mouser_PN" "603-RT0402FRD0722K1L"
 			(at 119.38 120.65 90)
 			(effects
 				(font
@@ -8909,7 +9045,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2906860"
+		(property "LCSC" ""
 			(at 119.38 120.65 90)
 			(effects
 				(font
@@ -8988,7 +9124,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2906859"
+		(property "LCSC" "C2479306"
 			(at 24.13 73.66 0)
 			(effects
 				(font
@@ -8997,7 +9133,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Bourns"
+		(property "MFG" "Yageo"
 			(at 24.13 73.66 0)
 			(effects
 				(font
@@ -9006,7 +9142,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CRT0402-FZ-1003GLF"
+		(property "MPN" "AC0402FR-0747RL"
 			(at 24.13 73.66 0)
 			(effects
 				(font
@@ -9015,7 +9151,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "652-CRT0402FZ1003GLF"
+		(property "Mouser_PN" "603-AC0402FR-0747RL "
 			(at 24.13 73.66 0)
 			(effects
 				(font
@@ -9326,6 +9462,73 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 76.2 184.15 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2861849a-d7b8-4966-a837-9ea697cdcf4c")
+		(property "Reference" "#PWR0128"
+			(at 76.2 190.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 76.2 189.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" ""
+			(at 76.2 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 76.2 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 76.2 184.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "eaa5fc21-4b92-41b3-bad4-b882c00abb9d")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
+					(reference "#PWR0128")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Mechanical:MountingHole_Pad")
 		(at 29.21 196.85 0)
 		(unit 1)
@@ -9446,7 +9649,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 166.37 24.4348 0)
 			(effects
 				(font
@@ -9473,7 +9676,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" ""
 			(at 162.56 25.4 0)
 			(effects
 				(font
@@ -9491,7 +9694,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15BR71H104KT"
+		(property "MPN" "KAM05FR71H104KH"
 			(at 162.56 25.4 0)
 			(effects
 				(font
@@ -9500,7 +9703,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15BR71H104KT"
+		(property "Mouser_PN" ""
 			(at 162.56 25.4 0)
 			(effects
 				(font
@@ -9931,7 +10134,7 @@
 				)
 			)
 		)
-		(property "Value" "100pF NP0 100V"
+		(property "Value" "100pF NP0 50V"
 			(at 84.074 147.574 90)
 			(effects
 				(font
@@ -9939,7 +10142,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 82.55 143.2052 0)
 			(effects
 				(font
@@ -9966,7 +10169,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C76709"
+		(property "LCSC" ""
 			(at 78.74 142.24 90)
 			(effects
 				(font
@@ -9975,7 +10178,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Kyocera AVX"
+		(property "MFG" ""
 			(at 78.74 142.24 90)
 			(effects
 				(font
@@ -9984,7 +10187,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15ACG2A101FT"
+		(property "MPN" ""
 			(at 78.74 142.24 90)
 			(effects
 				(font
@@ -9993,7 +10196,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15ACG2A101FT"
+		(property "Mouser_PN" ""
 			(at 78.74 142.24 90)
 			(effects
 				(font
@@ -12017,7 +12220,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Bourns"
+		(property "MFG" "Yageo"
 			(at 132.08 120.65 90)
 			(effects
 				(font
@@ -12026,7 +12229,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CR0402-JW-101GLF"
+		(property "MPN" "RT0402FRD0722K1L"
 			(at 132.08 120.65 90)
 			(effects
 				(font
@@ -12035,7 +12238,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "652-CR0402JW-101GLF"
+		(property "Mouser_PN" "603-RT0402FRD0722K1L"
 			(at 132.08 120.65 90)
 			(effects
 				(font
@@ -12053,7 +12256,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2906860"
+		(property "LCSC" ""
 			(at 132.08 120.65 90)
 			(effects
 				(font
@@ -12204,7 +12407,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Bourns"
+		(property "MFG" "Yageo"
 			(at 132.08 124.46 90)
 			(effects
 				(font
@@ -12213,7 +12416,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CR0402-JW-101GLF"
+		(property "MPN" "RT0402FRD0722K1L"
 			(at 132.08 124.46 90)
 			(effects
 				(font
@@ -12222,7 +12425,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "652-CR0402JW-101GLF"
+		(property "Mouser_PN" "603-RT0402FRD0722K1L"
 			(at 132.08 124.46 90)
 			(effects
 				(font
@@ -12240,7 +12443,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2906860"
+		(property "LCSC" ""
 			(at 132.08 124.46 90)
 			(effects
 				(font
@@ -12325,7 +12528,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Bourns"
+		(property "MFG" "Yageo"
 			(at 144.78 120.65 90)
 			(effects
 				(font
@@ -12334,7 +12537,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CR0402-JW-101GLF"
+		(property "MPN" "RT0402FRD0722K1L"
 			(at 144.78 120.65 90)
 			(effects
 				(font
@@ -12343,7 +12546,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "652-CR0402JW-101GLF"
+		(property "Mouser_PN" "603-RT0402FRD0722K1L"
 			(at 144.78 120.65 90)
 			(effects
 				(font
@@ -12361,7 +12564,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2906860"
+		(property "LCSC" ""
 			(at 144.78 120.65 90)
 			(effects
 				(font
@@ -12411,7 +12614,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 218.44 147.0152 0)
 			(effects
 				(font
@@ -12447,7 +12650,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15BR71H104KT"
+		(property "MPN" "KAM05FR71H104KH"
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -12465,7 +12668,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15BR71H104KT"
+		(property "Mouser_PN" ""
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -12697,7 +12900,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" ""
 			(at 214.63 146.05 90)
 			(effects
 				(font
@@ -13881,7 +14084,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7820ce9c-56f3-435f-95b5-6ba49b67419a")
-		(property "Reference" "#PWR0129"
+		(property "Reference" "#PWR0130"
 			(at 22.86 207.01 0)
 			(effects
 				(font
@@ -13932,7 +14135,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "#PWR0129")
+					(reference "#PWR0130")
 					(unit 1)
 				)
 			)
@@ -14082,7 +14285,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "7df0d029-2f64-4026-94dd-4a30025ad19a")
-		(property "Reference" "#PWR0130"
+		(property "Reference" "#PWR0131"
 			(at 29.21 207.01 0)
 			(effects
 				(font
@@ -14133,7 +14336,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "#PWR0130")
+					(reference "#PWR0131")
 					(unit 1)
 				)
 			)
@@ -15145,6 +15348,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 74.93 182.88 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "944abafe-2e52-4b59-92d8-567a61e28117")
+		(property "Reference" "#FLG0104"
+			(at 73.025 182.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 68.834 180.848 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 74.93 182.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 74.93 182.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 74.93 182.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fa8484b2-7964-4935-8304-a3371cf219a2")
+		)
+		(instances
+			(project "WSPR-ease"
+				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
+					(reference "#FLG0104")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 231.14 167.64 0)
 		(mirror y)
@@ -15437,7 +15705,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CRT0402-FZ-1003GLF"
+		(property "MPN" "AC0402FR-0747RL"
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -15455,7 +15723,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "652-CRT0402FZ1003GLF"
+		(property "Mouser_PN" "603-AC0402FR-0747RL "
 			(at 124.46 115.57 0)
 			(effects
 				(font
@@ -15662,7 +15930,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2906859"
+		(property "LCSC" "C2479306"
 			(at 231.14 152.4 0)
 			(effects
 				(font
@@ -15671,7 +15939,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Bourns"
+		(property "MFG" "Yageo"
 			(at 231.14 152.4 0)
 			(effects
 				(font
@@ -17057,7 +17325,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c8428195-148f-4c47-bdd1-f9b3e09dfde1")
-		(property "Reference" "#PWR0128"
+		(property "Reference" "#PWR0129"
 			(at 16.51 207.01 0)
 			(effects
 				(font
@@ -17108,7 +17376,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "#PWR0128")
+					(reference "#PWR0129")
 					(unit 1)
 				)
 			)
@@ -17169,7 +17437,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C2906859"
+		(property "LCSC" "C2479306"
 			(at 24.13 83.82 0)
 			(effects
 				(font
@@ -17178,7 +17446,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Bourns"
+		(property "MFG" "Yageo"
 			(at 24.13 83.82 0)
 			(effects
 				(font
@@ -17187,7 +17455,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "CRT0402-FZ-1003GLF"
+		(property "MPN" "AC0402FR-0747RL"
 			(at 24.13 83.82 0)
 			(effects
 				(font
@@ -17196,7 +17464,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "652-CRT0402FZ1003GLF"
+		(property "Mouser_PN" "603-AC0402FR-0747RL "
 			(at 24.13 83.82 0)
 			(effects
 				(font
@@ -17671,7 +17939,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "db71f121-ec7c-4b37-aebc-231779a1a874")
-		(property "Reference" "#PWR0131"
+		(property "Reference" "#PWR0132"
 			(at 36.83 207.01 0)
 			(effects
 				(font
@@ -17722,7 +17990,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "#PWR0131")
+					(reference "#PWR0132")
 					(unit 1)
 				)
 			)
@@ -17896,7 +18164,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 83.82 34.5948 0)
 			(effects
 				(font
@@ -17923,7 +18191,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C14663"
+		(property "LCSC" ""
 			(at 80.01 35.56 90)
 			(effects
 				(font
@@ -17941,7 +18209,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "KGM15BR71H104KT"
+		(property "MPN" "KAM05FR71H104KH"
 			(at 80.01 35.56 90)
 			(effects
 				(font
@@ -17950,7 +18218,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "581-KGM15BR71H104KT"
+		(property "Mouser_PN" ""
 			(at 80.01 35.56 90)
 			(effects
 				(font
@@ -19158,8 +19426,8 @@
 		)
 	)
 	(sheet
-		(at 187.96 100.33)
-		(size 20.32 24.13)
+		(at 187.96 93.98)
+		(size 20.32 30.48)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -19174,7 +19442,7 @@
 		)
 		(uuid "23b3e7ef-2325-4c00-b23e-f86801b0fb79")
 		(property "Sheetname" "Transmitter"
-			(at 187.96 99.6184 0)
+			(at 187.96 93.2684 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19202,8 +19470,8 @@
 				(justify right)
 			)
 		)
-		(pin "tcxoDiv2" output
-			(at 187.96 110.49 180)
+		(pin "ddsClk" output
+			(at 187.96 114.3 180)
 			(uuid "84c4fbe2-9696-47e9-b6a6-7520e5270eab")
 			(effects
 				(font
@@ -19213,7 +19481,7 @@
 			)
 		)
 		(pin "txSCL" input
-			(at 187.96 104.14 180)
+			(at 187.96 107.95 180)
 			(uuid "92ecd4cb-aa94-4a28-8c0d-ce973033c6bd")
 			(effects
 				(font
@@ -19223,7 +19491,7 @@
 			)
 		)
 		(pin "txSDA" input
-			(at 187.96 106.68 180)
+			(at 187.96 110.49 180)
 			(uuid "16257299-68e3-46ce-8e91-d597d5b5ba6d")
 			(effects
 				(font
@@ -19233,7 +19501,7 @@
 			)
 		)
 		(pin "paEn" input
-			(at 187.96 115.57 180)
+			(at 187.96 119.38 180)
 			(uuid "e0b25182-2a9c-4001-8547-c8ac05596977")
 			(effects
 				(font
@@ -19242,9 +19510,9 @@
 				(justify left)
 			)
 		)
-		(pin "clkEn" input
-			(at 187.96 113.03 180)
-			(uuid "58879a98-8f69-44e4-9bb8-7bd4b286d543")
+		(pin "ahcEn" input
+			(at 187.96 121.92 180)
+			(uuid "b0130e0b-f691-4bc2-b5f8-43f0b92da39d")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19252,9 +19520,19 @@
 				(justify left)
 			)
 		)
-		(pin "ahcEn" input
-			(at 187.96 118.11 180)
-			(uuid "b0130e0b-f691-4bc2-b5f8-43f0b92da39d")
+		(pin "ddsRUN" input
+			(at 187.96 102.87 180)
+			(uuid "01efe67d-5c4f-43c8-b6bc-9898e5da72f4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "ddsSPI{ddsSPI}" input
+			(at 187.96 97.79 180)
+			(uuid "efc40b0c-d39a-4c29-8b4f-a3540c3d27c0")
 			(effects
 				(font
 					(size 1.27 1.27)
