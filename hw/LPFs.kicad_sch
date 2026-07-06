@@ -5,8 +5,8 @@
 	(uuid "97c07ff8-d45a-466d-83af-9a83891eab94")
 	(paper "USLetter")
 	(title_block
-		(title "Low Pass Filters")
-		(date "2025-11-24")
+		(title "Transmitter")
+		(date "2026-07-04")
 		(company "WB7NAB")
 	)
 	(lib_symbols
@@ -4026,7 +4026,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MMBF170"
+		(property "Value" "IRLML2060"
 			(at 62.738 175.514 0)
 			(effects
 				(font
@@ -4065,7 +4065,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C151058"
+		(property "LCSC" ""
 			(at 71.12 171.45 0)
 			(effects
 				(font
@@ -4074,7 +4074,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Diodes inc"
+		(property "MFG" "Infineon"
 			(at 71.12 171.45 0)
 			(effects
 				(font
@@ -4083,7 +4083,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MMBF170Q-13-F"
+		(property "MPN" "IRLML2060TRPBF"
 			(at 71.12 171.45 0)
 			(effects
 				(font
@@ -4092,7 +4092,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "621-MMBF170Q-13-F"
+		(property "Mouser_PN" "942-IRLML2060TRPBF"
 			(at 71.12 171.45 0)
 			(effects
 				(font
@@ -7003,7 +7003,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MMBF170"
+		(property "Value" "IRLML2060"
 			(at 64.008 117.094 0)
 			(effects
 				(font
@@ -7042,7 +7042,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C151058"
+		(property "LCSC" ""
 			(at 72.39 113.03 0)
 			(effects
 				(font
@@ -7051,7 +7051,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Diodes inc"
+		(property "MFG" "Infineon"
 			(at 72.39 113.03 0)
 			(effects
 				(font
@@ -7060,7 +7060,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MMBF170Q-13-F"
+		(property "MPN" "IRLML2060TRPBF"
 			(at 72.39 113.03 0)
 			(effects
 				(font
@@ -7069,7 +7069,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "621-MMBF170Q-13-F"
+		(property "Mouser_PN" "942-IRLML2060TRPBF"
 			(at 72.39 113.03 0)
 			(effects
 				(font
@@ -7789,7 +7789,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MMBF170"
+		(property "Value" "IRLML2060"
 			(at 65.278 62.484 0)
 			(effects
 				(font
@@ -7828,7 +7828,7 @@
 				(hide yes)
 			)
 		)
-		(property "LCSC" "C151058"
+		(property "LCSC" ""
 			(at 73.66 58.42 0)
 			(effects
 				(font
@@ -7837,7 +7837,7 @@
 				(hide yes)
 			)
 		)
-		(property "MFG" "Diodes inc"
+		(property "MFG" "Infineon"
 			(at 73.66 58.42 0)
 			(effects
 				(font
@@ -7846,7 +7846,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MMBF170Q-13-F"
+		(property "MPN" "IRLML2060TRPBF"
 			(at 73.66 58.42 0)
 			(effects
 				(font
@@ -7855,7 +7855,7 @@
 				(hide yes)
 			)
 		)
-		(property "Mouser_PN" "621-MMBF170Q-13-F"
+		(property "Mouser_PN" "942-IRLML2060TRPBF"
 			(at 73.66 58.42 0)
 			(effects
 				(font

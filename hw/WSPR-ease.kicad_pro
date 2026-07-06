@@ -48,7 +48,7 @@
         "silk_text_thickness": 0.1,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.25
+          "min_clearance": 0.35
         }
       },
       "diff_pair_dimensions": [
@@ -1362,8 +1362,8 @@
       "Transmitter"
     ],
     [
-      "d47135a8-cf5d-47fa-bead-b97fcec44f77",
-      "DDS"
+      "10a6ec4a-4f2d-4331-ac36-70356e3107ad",
+      "exciter"
     ]
   ],
   "text_variables": {}

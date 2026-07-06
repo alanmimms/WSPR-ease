@@ -1,4 +1,4 @@
-27336361319478616
+27338144511296411
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -71448,6 +71448,13 @@ USB-C USB 2.0 16-pin HRO
 0
 32
 20
+Library
+NC7SZ74L8X
+UQFN8 1.6X1.6, 0.5P CASE 523AY ISSUE O
+Integrated Circuit
+0
+8
+8
 Library
 Oscillator_SMD_AbraconATX-H12-4Pin_2.5x2.0mm
 Miniature Crystal Clock Oscillator Abracon ASDMB series, 2.5x2.0mm package, http://www.abracon.com/Oscillators/ASDMB.pdf
