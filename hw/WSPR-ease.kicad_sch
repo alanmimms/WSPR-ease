@@ -5,7 +5,7 @@
 	(uuid "31075357-d7d2-474d-bd47-511c83e129b3")
 	(paper "USLetter")
 	(title_block
-		(title "Transmitter")
+		(title "WSPR-Ease")
 		(date "2026-07-04")
 		(company "WB7NAB")
 	)
@@ -6056,16 +6056,6 @@
 	)
 	(wire
 		(pts
-			(xy 173.99 120.65) (xy 187.96 120.65)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0208f4b4-ad4a-431e-bdad-74e6d0422a61")
-	)
-	(wire
-		(pts
 			(xy 231.14 148.59) (xy 238.76 148.59)
 		)
 		(stroke
@@ -6206,7 +6196,7 @@
 	)
 	(wire
 		(pts
-			(xy 242.57 123.19) (xy 242.57 124.46)
+			(xy 172.72 128.27) (xy 172.72 129.54)
 		)
 		(stroke
 			(width 0)
@@ -6246,7 +6236,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 109.22) (xy 153.67 109.22)
+			(xy 116.84 113.03) (xy 118.11 113.03)
 		)
 		(stroke
 			(width 0)
@@ -6373,16 +6363,6 @@
 			(type default)
 		)
 		(uuid "2094e6f7-e090-4dea-bd19-5155d45ecba7")
-	)
-	(wire
-		(pts
-			(xy 173.99 123.19) (xy 187.96 123.19)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "21896be9-50ca-4d06-8a93-2851c0be83e0")
 	)
 	(wire
 		(pts
@@ -6676,7 +6656,7 @@
 	)
 	(wire
 		(pts
-			(xy 186.69 110.49) (xy 187.96 110.49)
+			(xy 116.84 128.27) (xy 118.11 128.27)
 		)
 		(stroke
 			(width 0)
@@ -6746,7 +6726,7 @@
 	)
 	(wire
 		(pts
-			(xy 241.3 123.19) (xy 242.57 123.19)
+			(xy 171.45 128.27) (xy 172.72 128.27)
 		)
 		(stroke
 			(width 0)
@@ -6836,7 +6816,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 101.6) (xy 153.67 101.6)
+			(xy 116.84 105.41) (xy 118.11 105.41)
 		)
 		(stroke
 			(width 0)
@@ -7106,16 +7086,6 @@
 	)
 	(wire
 		(pts
-			(xy 173.99 118.11) (xy 187.96 118.11)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6cb11946-6b22-4d4a-b043-1f8bf60ff03d")
-	)
-	(wire
-		(pts
 			(xy 77.47 133.35) (xy 83.82 133.35)
 		)
 		(stroke
@@ -7276,7 +7246,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 115.57) (xy 153.67 115.57)
+			(xy 116.84 119.38) (xy 118.11 119.38)
 		)
 		(stroke
 			(width 0)
@@ -7303,16 +7273,6 @@
 			(type default)
 		)
 		(uuid "851de8ec-4e75-4c14-ab7f-a24341520f4e")
-	)
-	(wire
-		(pts
-			(xy 173.99 115.57) (xy 187.96 115.57)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "862d5523-fa3d-40ce-89cd-69c68270fa74")
 	)
 	(wire
 		(pts
@@ -7366,7 +7326,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 95.25) (xy 153.67 95.25)
+			(xy 116.84 99.06) (xy 118.11 99.06)
 		)
 		(stroke
 			(width 0)
@@ -7476,7 +7436,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 97.79) (xy 153.67 97.79)
+			(xy 116.84 101.6) (xy 118.11 101.6)
 		)
 		(stroke
 			(width 0)
@@ -7516,7 +7476,7 @@
 	)
 	(wire
 		(pts
-			(xy 217.17 114.3) (xy 218.44 114.3)
+			(xy 147.32 119.38) (xy 148.59 119.38)
 		)
 		(stroke
 			(width 0)
@@ -7626,7 +7586,7 @@
 	)
 	(wire
 		(pts
-			(xy 217.17 111.76) (xy 218.44 111.76)
+			(xy 147.32 116.84) (xy 148.59 116.84)
 		)
 		(stroke
 			(width 0)
@@ -7696,7 +7656,7 @@
 	)
 	(wire
 		(pts
-			(xy 233.68 123.19) (xy 236.22 123.19)
+			(xy 163.83 128.27) (xy 166.37 128.27)
 		)
 		(stroke
 			(width 0)
@@ -7746,7 +7706,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 106.68) (xy 153.67 106.68)
+			(xy 116.84 110.49) (xy 118.11 110.49)
 		)
 		(stroke
 			(width 0)
@@ -7886,7 +7846,7 @@
 	)
 	(wire
 		(pts
-			(xy 208.28 123.19) (xy 218.44 123.19)
+			(xy 138.43 128.27) (xy 148.59 128.27)
 		)
 		(stroke
 			(width 0)
@@ -7926,7 +7886,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 104.14) (xy 153.67 104.14)
+			(xy 116.84 107.95) (xy 118.11 107.95)
 		)
 		(stroke
 			(width 0)
@@ -8046,7 +8006,7 @@
 	)
 	(wire
 		(pts
-			(xy 217.17 109.22) (xy 218.44 109.22)
+			(xy 147.32 114.3) (xy 148.59 114.3)
 		)
 		(stroke
 			(width 0)
@@ -8146,7 +8106,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 113.03) (xy 153.67 113.03)
+			(xy 116.84 116.84) (xy 118.11 116.84)
 		)
 		(stroke
 			(width 0)
@@ -8166,7 +8126,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 119.38) (xy 153.67 119.38)
+			(xy 116.84 123.19) (xy 118.11 123.19)
 		)
 		(stroke
 			(width 0)
@@ -8175,7 +8135,7 @@
 		(uuid "ff54a869-dbf5-4cd8-8367-2325268aaa13")
 	)
 	(label "cpldNCS"
-		(at 152.4 104.14 180)
+		(at 116.84 107.95 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8225,7 +8185,7 @@
 		(uuid "1031ee8a-25cc-434b-9333-1721b59ea0db")
 	)
 	(label "hiON"
-		(at 217.17 114.3 180)
+		(at 147.32 119.38 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8235,7 +8195,7 @@
 		(uuid "11e3e863-dd4c-44f9-bd9f-3d0281b341ec")
 	)
 	(label "loON"
-		(at 217.17 109.22 180)
+		(at 147.32 114.3 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8295,7 +8255,7 @@
 		(uuid "38afbfe7-bcce-4a0b-88f3-22eb113ad3b1")
 	)
 	(label "tcxo"
-		(at 152.4 119.38 180)
+		(at 116.84 123.19 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8305,7 +8265,7 @@
 		(uuid "3ae6d086-a9c4-412e-b177-3daa2e547185")
 	)
 	(label "cpldPROG"
-		(at 152.4 95.25 180)
+		(at 116.84 99.06 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8325,7 +8285,7 @@
 		(uuid "4db75a8c-f56f-494b-891f-77ce952aa077")
 	)
 	(label "txSDA"
-		(at 152.4 113.03 180)
+		(at 116.84 116.84 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8395,7 +8355,7 @@
 		(uuid "77654f4a-c086-46c8-b855-348fde06481e")
 	)
 	(label "midON"
-		(at 217.17 111.76 180)
+		(at 147.32 116.84 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8495,7 +8455,7 @@
 		(uuid "a97d5ec6-2d6a-4999-b7a2-337b2ead8e53")
 	)
 	(label "cpldMISO"
-		(at 152.4 109.22 180)
+		(at 116.84 113.03 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8525,7 +8485,7 @@
 		(uuid "c76636f5-5c13-4dcb-81c7-55060bf6e494")
 	)
 	(label "cpldDONE"
-		(at 152.4 97.79 180)
+		(at 116.84 101.6 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8575,7 +8535,7 @@
 		(uuid "e3ddb33e-5d3f-47b0-8e45-d912557aa338")
 	)
 	(label "paEn"
-		(at 186.69 110.49 180)
+		(at 116.84 128.27 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8585,7 +8545,7 @@
 		(uuid "e5525a9a-3f29-4177-92ea-c31799411fe1")
 	)
 	(label "cpldMOSI"
-		(at 152.4 106.68 180)
+		(at 116.84 110.49 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8595,7 +8555,7 @@
 		(uuid "e7a2e606-d4cc-48da-8aa9-97153e0a9758")
 	)
 	(label "txSCL"
-		(at 152.4 115.57 180)
+		(at 116.84 119.38 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -8605,7 +8565,7 @@
 		(uuid "f28b4dfa-a7d0-4552-9eb9-a82b3d900502")
 	)
 	(label "cpldSCK"
-		(at 152.4 101.6 180)
+		(at 116.84 105.41 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -15197,7 +15157,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 242.57 124.46 0)
+		(at 172.72 129.54 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -15205,8 +15165,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "889f613d-9354-4a32-87ec-c1f7a531a58a")
-		(property "Reference" "#PWR0115"
-			(at 242.57 130.81 0)
+		(property "Reference" "#PWR0116"
+			(at 172.72 135.89 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15215,7 +15175,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 242.57 129.54 0)
+			(at 172.72 134.62 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15224,7 +15184,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 242.57 124.46 0)
+			(at 172.72 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15233,7 +15193,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 242.57 124.46 0)
+			(at 172.72 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15242,7 +15202,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 242.57 124.46 0)
+			(at 172.72 129.54 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15256,7 +15216,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "#PWR0115")
+					(reference "#PWR0116")
 					(unit 1)
 				)
 			)
@@ -19024,7 +18984,7 @@
 	)
 	(symbol
 		(lib_id "Connector:Conn_Coaxial_Small")
-		(at 238.76 123.19 0)
+		(at 168.91 128.27 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -19032,7 +18992,7 @@
 		(dnp no)
 		(uuid "e48c33be-971c-4e58-8d72-2f688487e35a")
 		(property "Reference" "J102"
-			(at 243.078 119.634 0)
+			(at 173.228 124.714 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19040,7 +19000,7 @@
 			)
 		)
 		(property "Value" "SMA"
-			(at 243.84 121.666 0)
+			(at 173.99 126.746 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19048,7 +19008,7 @@
 			)
 		)
 		(property "Footprint" "Library:SMA_Amphenol_901-143_Horizontal"
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19057,7 +19017,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.lcsc.com/datasheet/C496551.pdf"
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19066,7 +19026,7 @@
 			)
 		)
 		(property "Description" "1 Inner Bore SMA Board Side Elbow 50Ω 5.3mm Through Hole Coaxial Connector (RF) Assemblies RoHS"
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19075,7 +19035,7 @@
 			)
 		)
 		(property "LCSC" "C496551"
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19084,7 +19044,7 @@
 			)
 		)
 		(property "label" "TX Ant"
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19093,7 +19053,7 @@
 			)
 		)
 		(property "MFG" "Samtec"
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19102,7 +19062,7 @@
 			)
 		)
 		(property "MPN" "SMA-J-P-H-RA-TH1"
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19111,7 +19071,7 @@
 			)
 		)
 		(property "Mouser_PN" "200-SMAJPHRATH1"
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19120,7 +19080,7 @@
 			)
 		)
 		(property "Field10" ""
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19129,7 +19089,7 @@
 			)
 		)
 		(property "MouserPN" ""
-			(at 238.76 123.19 0)
+			(at 168.91 128.27 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19228,7 +19188,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f3e4602c-12dc-4e4f-a7b3-7ff84bbd830b")
-		(property "Reference" "#PWR0116"
+		(property "Reference" "#PWR0115"
 			(at 60.96 133.35 0)
 			(effects
 				(font
@@ -19279,7 +19239,7 @@
 		(instances
 			(project "WSPR-ease"
 				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(reference "#PWR0116")
+					(reference "#PWR0115")
 					(unit 1)
 				)
 			)
@@ -19867,181 +19827,8 @@
 		)
 	)
 	(sheet
-		(at 153.67 93.98)
-		(size 20.32 30.48)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "10a6ec4a-4f2d-4331-ac36-70356e3107ad")
-		(property "Sheetname" "exciter"
-			(at 153.67 93.2684 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "exciter.kicad_sch"
-			(at 153.67 125.0446 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-				(hide yes)
-			)
-		)
-		(pin "nPullBase" output
-			(at 173.99 115.57 0)
-			(uuid "a6c22a87-581e-42c9-8152-346b38699914")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "nPullPeak" output
-			(at 173.99 118.11 0)
-			(uuid "b70da93d-e3cc-4a73-abab-2b0d0f0fb5c5")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "nPushBase" output
-			(at 173.99 120.65 0)
-			(uuid "53f6fb9b-cf4b-48de-8ad2-ba8087cfbc07")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "nPushPeak" output
-			(at 173.99 123.19 0)
-			(uuid "96e1a270-0631-4c9f-a198-5b537292e65c")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(pin "txco" output
-			(at 153.67 119.38 180)
-			(uuid "0c8da407-6c8d-48de-924f-bfed052feb4a")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "txSCL" input
-			(at 153.67 115.57 180)
-			(uuid "4c3bdb14-7620-49ab-baa7-59083a5cae71")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "txSDA" input
-			(at 153.67 113.03 180)
-			(uuid "039918ee-8652-4c4c-b70c-5feefb851b22")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "cpldDONE" output
-			(at 153.67 97.79 180)
-			(uuid "cd773fd7-2c4a-4cc6-baee-ea5783b40780")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "cpldMISO" output
-			(at 153.67 109.22 180)
-			(uuid "fc93e549-b284-4aaf-9f5f-6ca101ec4d6e")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "cpldMOSI" input
-			(at 153.67 106.68 180)
-			(uuid "2e7a3a71-8e58-4bbf-b2b0-b6a134ce58a7")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "cpldNCS" input
-			(at 153.67 104.14 180)
-			(uuid "86142d6c-89cf-4cec-93ec-4f552f32d365")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "cpldPROG" input
-			(at 153.67 95.25 180)
-			(uuid "58004c06-6469-4220-a22c-a468309ea008")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "cpldSCK" input
-			(at 153.67 101.6 180)
-			(uuid "a0aa304c-3796-4b9a-bfdd-91f031f0b016")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(instances
-			(project "WSPR-ease"
-				(path "/31075357-d7d2-474d-bd47-511c83e129b3"
-					(page "4")
-				)
-			)
-		)
-	)
-	(sheet
-		(at 187.96 106.68)
-		(size 20.32 17.78)
+		(at 118.11 96.52)
+		(size 20.32 33.02)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -20056,7 +19843,7 @@
 		)
 		(uuid "23b3e7ef-2325-4c00-b23e-f86801b0fb79")
 		(property "Sheetname" "Transmitter"
-			(at 187.96 105.9684 0)
+			(at 118.11 95.8084 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20065,7 +19852,7 @@
 			)
 		)
 		(property "Sheetfile" "tx.kicad_sch"
-			(at 187.96 125.0446 0)
+			(at 118.11 130.1246 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20075,7 +19862,7 @@
 			)
 		)
 		(pin "txOut" output
-			(at 208.28 123.19 0)
+			(at 138.43 128.27 0)
 			(uuid "1d6369c3-ea8b-4a20-9c51-53721642e707")
 			(effects
 				(font
@@ -20085,7 +19872,7 @@
 			)
 		)
 		(pin "paEn" input
-			(at 187.96 110.49 180)
+			(at 118.11 128.27 180)
 			(uuid "0e88cba4-5704-4173-b772-6c39615f41c3")
 			(effects
 				(font
@@ -20094,9 +19881,9 @@
 				(justify left)
 			)
 		)
-		(pin "nPullBase" input
-			(at 187.96 115.57 180)
-			(uuid "ec5104ac-452e-4b81-9adb-f27c3ed97c6d")
+		(pin "cpldDONE" output
+			(at 118.11 101.6 180)
+			(uuid "91686837-c147-4cb6-b34c-0e16ce67521e")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20104,9 +19891,9 @@
 				(justify left)
 			)
 		)
-		(pin "nPullPeak" input
-			(at 187.96 118.11 180)
-			(uuid "08bf9361-adc6-4053-882e-6d41241b4679")
+		(pin "cpldMISO" output
+			(at 118.11 113.03 180)
+			(uuid "56bfd013-d579-4a3b-871f-e4510dd6403d")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20114,9 +19901,9 @@
 				(justify left)
 			)
 		)
-		(pin "nPushBase" input
-			(at 187.96 120.65 180)
-			(uuid "0e90c8cf-5d19-4f59-845e-2539f9dd7738")
+		(pin "cpldMOSI" input
+			(at 118.11 110.49 180)
+			(uuid "8414a066-e328-4809-b3d3-2f956cc33b8b")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20124,9 +19911,59 @@
 				(justify left)
 			)
 		)
-		(pin "nPushPeak" input
-			(at 187.96 123.19 180)
-			(uuid "1e206ca2-96be-4975-bb43-cbeafc01d756")
+		(pin "cpldNCS" input
+			(at 118.11 107.95 180)
+			(uuid "1dfbabab-f6a9-4efb-89d2-dd8228f38040")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "cpldPROG" input
+			(at 118.11 99.06 180)
+			(uuid "bf586cec-b576-41ee-8929-6b7370f74d4a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "cpldSCK" input
+			(at 118.11 105.41 180)
+			(uuid "c5ecf931-11b1-4f49-8768-46421cf2bba6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "txco" output
+			(at 118.11 123.19 180)
+			(uuid "48a34237-0e90-47b4-a106-6cb60d15c736")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "txSCL" input
+			(at 118.11 119.38 180)
+			(uuid "8bed78ef-7839-4a6f-8a78-b7689ebfcf3c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "txSDA" input
+			(at 118.11 116.84 180)
+			(uuid "d00ee90d-d174-42b0-b8f9-9c8b2e8b2022")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20143,7 +19980,7 @@
 		)
 	)
 	(sheet
-		(at 218.44 106.68)
+		(at 148.59 111.76)
 		(size 15.24 19.05)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -20159,7 +19996,7 @@
 		)
 		(uuid "ab0ef40e-2ba9-4126-8561-248abf25197d")
 		(property "Sheetname" "Low Pass Filters"
-			(at 218.44 105.9684 0)
+			(at 148.59 111.0484 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20168,7 +20005,7 @@
 			)
 		)
 		(property "Sheetfile" "LPFs.kicad_sch"
-			(at 218.44 126.3146 0)
+			(at 148.59 131.3946 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -20178,7 +20015,7 @@
 			)
 		)
 		(pin "RFin" input
-			(at 218.44 123.19 180)
+			(at 148.59 128.27 180)
 			(uuid "4cc973ee-29c6-4642-bad5-06ce110f366f")
 			(effects
 				(font
@@ -20188,7 +20025,7 @@
 			)
 		)
 		(pin "RFout" output
-			(at 233.68 123.19 0)
+			(at 163.83 128.27 0)
 			(uuid "46988924-53c0-42fa-b894-a9748a4e5147")
 			(effects
 				(font
@@ -20198,7 +20035,7 @@
 			)
 		)
 		(pin "hiON" input
-			(at 218.44 114.3 180)
+			(at 148.59 119.38 180)
 			(uuid "93b0d098-1f11-48a2-a76f-4b7d98042b5b")
 			(effects
 				(font
@@ -20208,7 +20045,7 @@
 			)
 		)
 		(pin "loON" input
-			(at 218.44 109.22 180)
+			(at 148.59 114.3 180)
 			(uuid "bf17060f-898c-4a6c-baf5-a8f54a029c74")
 			(effects
 				(font
@@ -20218,7 +20055,7 @@
 			)
 		)
 		(pin "midON" input
-			(at 218.44 111.76 180)
+			(at 148.59 116.84 180)
 			(uuid "595158f6-50f3-4cfa-b20a-54527be25fe3")
 			(effects
 				(font
