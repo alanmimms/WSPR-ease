@@ -761,6 +761,15 @@
       "Net-(C212-Pad1)": [
         "RF"
       ],
+      "Net-(C213-Pad1)": [
+        "RF"
+      ],
+      "Net-(C214-Pad1)": [
+        "RF"
+      ],
+      "Net-(C215-Pad1)": [
+        "RF"
+      ],
       "Net-(J1-In)": [
         "RF"
       ],
@@ -948,6 +957,10 @@
       {
         "netclass": "RF-power",
         "pattern": "/Transmitter/*T"
+      },
+      {
+        "netclass": "power",
+        "pattern": "+VDDA"
       }
     ]
   },

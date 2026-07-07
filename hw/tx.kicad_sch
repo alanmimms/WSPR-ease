@@ -1661,7 +1661,7 @@
 		(uuid "8e72e8b1-9303-4721-b39c-d4dba4d810ee")
 	)
 	(junction
-		(at 165.1 114.3)
+		(at 165.1 113.03)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "a1550683-5696-48cb-9d84-e203d42908a3")
@@ -1715,7 +1715,7 @@
 		(uuid "bd668c17-75ef-40c3-a371-6c81844da5f0")
 	)
 	(junction
-		(at 152.4 114.3)
+		(at 152.4 113.03)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ca123878-d9eb-423a-bdfc-91f6ebdac50d")
@@ -1818,16 +1818,6 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 113.03) (xy 152.4 114.3)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "123d1d55-4cb3-4fb6-8740-6f7ac41edcd4")
-	)
-	(wire
-		(pts
 			(xy 229.87 86.36) (xy 229.87 92.71)
 		)
 		(stroke
@@ -1898,7 +1888,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 114.3) (xy 156.21 114.3)
+			(xy 152.4 113.03) (xy 156.21 113.03)
 		)
 		(stroke
 			(width 0)
@@ -2078,7 +2068,7 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 114.3) (xy 152.4 120.65)
+			(xy 152.4 113.03) (xy 152.4 119.38)
 		)
 		(stroke
 			(width 0)
@@ -2098,23 +2088,13 @@
 	)
 	(wire
 		(pts
-			(xy 152.4 120.65) (xy 156.21 120.65)
+			(xy 152.4 119.38) (xy 156.21 119.38)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
 		(uuid "440cf2bd-766b-46f5-82d3-12304335d007")
-	)
-	(wire
-		(pts
-			(xy 176.53 107.95) (xy 176.53 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "48073bac-cb9c-4f51-b83b-a67e9e850c95")
 	)
 	(wire
 		(pts
@@ -2418,7 +2398,7 @@
 	)
 	(wire
 		(pts
-			(xy 165.1 114.3) (xy 168.91 114.3)
+			(xy 165.1 113.03) (xy 168.91 113.03)
 		)
 		(stroke
 			(width 0)
@@ -2478,7 +2458,7 @@
 	)
 	(wire
 		(pts
-			(xy 165.1 114.3) (xy 165.1 120.65)
+			(xy 165.1 113.03) (xy 165.1 119.38)
 		)
 		(stroke
 			(width 0)
@@ -2538,13 +2518,13 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 113.03) (xy 152.4 113.03)
+			(xy 176.53 106.68) (xy 176.53 107.95)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "9cb116e2-d97f-41ec-9fc3-5f4aa71a3dfc")
+		(uuid "9b39c47f-45af-439c-b363-811c461b1bc1")
 	)
 	(wire
 		(pts
@@ -2568,7 +2548,7 @@
 	)
 	(wire
 		(pts
-			(xy 163.83 114.3) (xy 165.1 114.3)
+			(xy 163.83 113.03) (xy 165.1 113.03)
 		)
 		(stroke
 			(width 0)
@@ -2678,7 +2658,7 @@
 	)
 	(wire
 		(pts
-			(xy 176.53 107.95) (xy 191.77 107.95)
+			(xy 176.53 106.68) (xy 191.77 106.68)
 		)
 		(stroke
 			(width 0)
@@ -2688,7 +2668,7 @@
 	)
 	(wire
 		(pts
-			(xy 163.83 120.65) (xy 165.1 120.65)
+			(xy 163.83 119.38) (xy 165.1 119.38)
 		)
 		(stroke
 			(width 0)
@@ -2748,7 +2728,7 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 73.66) (xy 191.77 107.95)
+			(xy 191.77 73.66) (xy 191.77 106.68)
 		)
 		(stroke
 			(width 0)
@@ -2975,6 +2955,16 @@
 			(type default)
 		)
 		(uuid "eec75e11-450e-463d-a65f-028f49448a2d")
+	)
+	(wire
+		(pts
+			(xy 146.05 113.03) (xy 152.4 113.03)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f1675957-c96b-4d96-9d7d-3234ef0ed075")
 	)
 	(wire
 		(pts
@@ -3336,7 +3326,7 @@
 	)
 	(symbol
 		(lib_id "Transistor_FET:BS170F")
-		(at 173.99 114.3 0)
+		(at 173.99 113.03 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3344,7 +3334,7 @@
 		(dnp no)
 		(uuid "1a3e795c-5505-4a7f-afb8-81c5755f1c98")
 		(property "Reference" "Q304"
-			(at 167.64 110.744 0)
+			(at 167.64 109.474 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3353,7 +3343,7 @@
 			)
 		)
 		(property "Value" "IRLML2060"
-			(at 177.546 117.602 0)
+			(at 177.546 116.332 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3362,7 +3352,7 @@
 			)
 		)
 		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
-			(at 179.07 116.205 0)
+			(at 179.07 114.935 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3373,7 +3363,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 179.07 118.11 0)
+			(at 179.07 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3383,7 +3373,7 @@
 			)
 		)
 		(property "Description" "MOSFETs MOSFT 60V 1.2A 480mOhm 0.7nC Qg"
-			(at 173.99 114.3 0)
+			(at 173.99 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3392,7 +3382,7 @@
 			)
 		)
 		(property "LCSC" ""
-			(at 173.99 114.3 0)
+			(at 173.99 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3401,7 +3391,7 @@
 			)
 		)
 		(property "MFG" "Infineon"
-			(at 173.99 114.3 0)
+			(at 173.99 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3410,7 +3400,7 @@
 			)
 		)
 		(property "MPN" "IRLML2060TRPBF"
-			(at 173.99 114.3 0)
+			(at 173.99 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3419,7 +3409,7 @@
 			)
 		)
 		(property "Mouser_PN" "942-IRLML2060TRPBF"
-			(at 173.99 114.3 0)
+			(at 173.99 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3428,7 +3418,7 @@
 			)
 		)
 		(property "Field10" ""
-			(at 173.99 114.3 0)
+			(at 173.99 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3437,7 +3427,7 @@
 			)
 		)
 		(property "MouserPN" ""
-			(at 173.99 114.3 0)
+			(at 173.99 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3850,7 +3840,7 @@
 	)
 	(symbol
 		(lib_id "Diode:1N4148W")
-		(at 160.02 114.3 0)
+		(at 160.02 113.03 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -3858,7 +3848,7 @@
 		(dnp no)
 		(uuid "34be5d56-e67b-48fb-9de1-c09838c66b38")
 		(property "Reference" "D304"
-			(at 160.02 109.22 0)
+			(at 160.02 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3866,7 +3856,7 @@
 			)
 		)
 		(property "Value" "BAT54FILM"
-			(at 160.02 111.76 0)
+			(at 160.02 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3874,7 +3864,7 @@
 			)
 		)
 		(property "Footprint" "Diode_SMD:D_SOD-123"
-			(at 160.02 118.745 0)
+			(at 160.02 117.475 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3883,7 +3873,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.vishay.com/docs/85748/1n4148w.pdf"
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3892,7 +3882,7 @@
 			)
 		)
 		(property "Description" "75V 0.15A Fast Switching Diode, SOD-123"
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3901,7 +3891,7 @@
 			)
 		)
 		(property "Sim.Device" "D"
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3910,7 +3900,7 @@
 			)
 		)
 		(property "Sim.Pins" "1=K 2=A"
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3919,7 +3909,7 @@
 			)
 		)
 		(property "Field10" ""
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3928,7 +3918,7 @@
 			)
 		)
 		(property "MFG" "ST"
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3937,7 +3927,7 @@
 			)
 		)
 		(property "MPN" "BAT54ZFILM"
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3946,7 +3936,7 @@
 			)
 		)
 		(property "Mouser_PN" "511-BAT54FILM"
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3955,7 +3945,7 @@
 			)
 		)
 		(property "MouserPN" ""
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3964,7 +3954,7 @@
 			)
 		)
 		(property "LCSC" ""
-			(at 160.02 114.3 0)
+			(at 160.02 113.03 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5551,7 +5541,7 @@
 	)
 	(symbol
 		(lib_id "Device:R_US")
-		(at 160.02 120.65 90)
+		(at 160.02 119.38 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -5559,7 +5549,7 @@
 		(dnp no)
 		(uuid "72ae8c51-ce6e-4c0b-a62d-ce04e084c7c2")
 		(property "Reference" "R304"
-			(at 159.766 118.872 90)
+			(at 159.766 117.602 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5567,7 +5557,7 @@
 			)
 		)
 		(property "Value" "27"
-			(at 160.02 122.682 90)
+			(at 160.02 121.412 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5575,7 +5565,7 @@
 			)
 		)
 		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 160.274 119.634 90)
+			(at 160.274 118.364 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5584,7 +5574,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 160.02 120.65 0)
+			(at 160.02 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5593,7 +5583,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 160.02 120.65 0)
+			(at 160.02 119.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5602,7 +5592,7 @@
 			)
 		)
 		(property "LCSC" ""
-			(at 160.02 120.65 90)
+			(at 160.02 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5611,7 +5601,7 @@
 			)
 		)
 		(property "MFG" ""
-			(at 160.02 120.65 90)
+			(at 160.02 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5620,7 +5610,7 @@
 			)
 		)
 		(property "MPN" ""
-			(at 160.02 120.65 90)
+			(at 160.02 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5629,7 +5619,7 @@
 			)
 		)
 		(property "Mouser_PN" ""
-			(at 160.02 120.65 90)
+			(at 160.02 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5638,7 +5628,7 @@
 			)
 		)
 		(property "Field10" ""
-			(at 160.02 120.65 90)
+			(at 160.02 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5647,7 +5637,7 @@
 			)
 		)
 		(property "MouserPN" ""
-			(at 160.02 120.65 90)
+			(at 160.02 119.38 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7452,7 +7442,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 176.53 119.38 0)
+		(at 176.53 118.11 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7461,15 +7451,6 @@
 		(fields_autoplaced yes)
 		(uuid "ca9053a6-1a81-41ce-8220-67e2fa06e2e9")
 		(property "Reference" "#PWR0313"
-			(at 176.53 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
 			(at 176.53 124.46 0)
 			(effects
 				(font
@@ -7478,8 +7459,17 @@
 				(hide yes)
 			)
 		)
+		(property "Value" "GND"
+			(at 176.53 123.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(property "Footprint" ""
-			(at 176.53 119.38 0)
+			(at 176.53 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7488,7 +7478,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 176.53 119.38 0)
+			(at 176.53 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7497,7 +7487,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 176.53 119.38 0)
+			(at 176.53 118.11 0)
 			(effects
 				(font
 					(size 1.27 1.27)
