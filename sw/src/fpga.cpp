@@ -1,13 +1,11 @@
 /*
- * FPGA Control Module Implementation for WSPR-ease
- * Handles iCE40 bitstream loading and SPI register access.
- * Strictly follows Lattice iCE40 SPI Peripheral Mode (Slave SPI) timing.
+ * CPLD Control Module Implementation for WSPR-ease
+ * Handles Lattice MachXO2 CPLD initialization, Si5351 clocks setup, LPF band selection, and SPI registers.
  */
 
 #include "fpga.hpp"
 #include "FPGACommon.hpp"
 #include "buildNumber.hpp"
-
 #include "regs.hpp"
 
 #include "filesystem.hpp"
@@ -28,21 +26,22 @@ LOG_MODULE_REGISTER(fpga, LOG_LEVEL_INF);
 namespace wspr {
 
   // Register subsystem with LogManager
-  static Logger& logger = LogManager::instance().registerSubsystem("fpga",
-								   {"spi", "pps", "config", "bitstream"});
+  static Logger& logger = LogManager::instance().registerSubsystem("cpld",
+								   {"spi", "config", "si5351"});
 
-  // GPIO specs from devicetree (All configured as GPIO_ACTIVE_HIGH in overlay)
-  static const struct gpio_dt_spec fpgaCRESET = GPIO_DT_SPEC_GET(DT_NODELABEL(fpga_creset), gpios);
-  static const struct gpio_dt_spec fpgaDONE = GPIO_DT_SPEC_GET(DT_NODELABEL(fpga_done), gpios);
-  static const struct gpio_dt_spec fpgaNCS = GPIO_DT_SPEC_GET(DT_NODELABEL(fpga_ncs), gpios);
+  // GPIO specs from devicetree
+  static const struct gpio_dt_spec cpldPROG = GPIO_DT_SPEC_GET(DT_NODELABEL(cpld_prog), gpios);
+  static const struct gpio_dt_spec cpldDONE = GPIO_DT_SPEC_GET(DT_NODELABEL(cpld_done), gpios);
+  static const struct gpio_dt_spec cpldNCS = GPIO_DT_SPEC_GET(DT_NODELABEL(cpld_ncs), gpios);
 
-  static const struct gpio_dt_spec fpgaNRESET = GPIO_DT_SPEC_GET(DT_NODELABEL(fpga_nreset), gpios);
+  static const struct gpio_dt_spec paEN = GPIO_DT_SPEC_GET(DT_NODELABEL(pa_en), gpios);
 
-  static const struct gpio_dt_spec pgFPGACORE = GPIO_DT_SPEC_GET(DT_NODELABEL(pg_fpgacore), gpios);
-  static const struct gpio_dt_spec enFPGAIO = GPIO_DT_SPEC_GET(DT_NODELABEL(en_fpgaio), gpios);
+  static const struct gpio_dt_spec lpfLO = GPIO_DT_SPEC_GET(DT_NODELABEL(lpf_lo), gpios);
+  static const struct gpio_dt_spec lpfMID = GPIO_DT_SPEC_GET(DT_NODELABEL(lpf_mid), gpios);
+  static const struct gpio_dt_spec lpfHI = GPIO_DT_SPEC_GET(DT_NODELABEL(lpf_hi), gpios);
 
-  // iCE40 Slave SPI: Mode 0 (CPOL=0, CPHA=0), MSB First.
-  static const struct spi_dt_spec fpgaSPI = SPI_DT_SPEC_GET(DT_NODELABEL(fpga_dev),
+  // SPI Master: CPOL=0, CPHA=0 (Mode 0), MSB First.
+  static const struct spi_dt_spec cpldSPI = SPI_DT_SPEC_GET(DT_NODELABEL(fpga_dev),
 							    SPI_OP_MODE_MASTER | SPI_WORD_SET(8) | SPI_TRANSFER_MSB);
 
   FPGA& FPGA::instance() {
@@ -51,275 +50,226 @@ namespace wspr {
   }
 
   int FPGA::init() {
-    logger.inf("Initializing FPGA module");
+    logger.inf("Initializing CPLD and Si5351 system");
 
-    if (!device_is_ready(fpgaCRESET.port) ||
-	!device_is_ready(fpgaCRESET.port) ||
-	!device_is_ready(fpgaDONE.port) ||
-        !device_is_ready(fpgaNCS.port) ||
-	!device_is_ready(pgFPGACORE.port) ||
-        !device_is_ready(enFPGAIO.port))
+    if (!device_is_ready(cpldPROG.port) ||
+	!device_is_ready(cpldDONE.port) ||
+        !device_is_ready(cpldNCS.port) ||
+	!device_is_ready(paEN.port) ||
+        !device_is_ready(lpfLO.port) ||
+        !device_is_ready(lpfMID.port) ||
+        !device_is_ready(lpfHI.port))
     {
-      logger.err("FPGA GPIO devices not ready");
+      logger.err("CPLD/PA/LPF GPIO devices not ready");
       return -ENODEV;
     }
 
-    if (!spi_is_ready_dt(&fpgaSPI)) {
-      logger.err("FPGA SPI device not ready");
+    if (!spi_is_ready_dt(&cpldSPI)) {
+      logger.err("CPLD SPI device not ready");
       return -ENODEV;
     }
 
-    // MANDATE: Explicitly start with enFPGAIO DEASSERTED (Physical Low).
-    // The hardware has a 10k pulldown, but we ensure it in software too.
-    gpio_pin_configure_dt(&enFPGAIO, GPIO_OUTPUT_LOW);
+    // Configure GPIO directions and default values
+    gpio_pin_configure_dt(&cpldPROG, GPIO_OUTPUT_HIGH);
+    gpio_pin_configure_dt(&cpldNCS, GPIO_OUTPUT_HIGH);
+    gpio_pin_configure_dt(&cpldDONE, GPIO_INPUT | GPIO_PULL_UP);
 
-    // Hold FPGA in config reset and set CS LOW for SPI slave mode
-    gpio_pin_configure_dt(&fpgaNRESET, GPIO_OUTPUT_LOW);
-    gpio_pin_configure_dt(&fpgaCRESET, GPIO_OUTPUT_LOW);
-    gpio_pin_configure_dt(&fpgaNCS, GPIO_OUTPUT_LOW);
-    gpio_pin_configure_dt(&pgFPGACORE, GPIO_INPUT);
-    gpio_pin_configure_dt(&fpgaDONE, GPIO_INPUT | GPIO_PULL_UP);
+    gpio_pin_configure_dt(&paEN, GPIO_OUTPUT_LOW);
+    gpio_pin_configure_dt(&lpfLO, GPIO_OUTPUT_LOW);
+    gpio_pin_configure_dt(&lpfMID, GPIO_OUTPUT_LOW);
+    gpio_pin_configure_dt(&lpfHI, GPIO_OUTPUT_LOW);
 
-    logger.inf("enFPGAIO deasserted. Waiting for FPGA Core power good (pgFPGACORE)...");
+    // 1. Initialize Si5351 first so that CPLD gets clock inputs before starting/exiting reset
+    static const struct i2c_dt_spec si5351_i2c = I2C_DT_SPEC_GET(DT_NODELABEL(si5351a));
+    if (!si5351.init(&si5351_i2c, tcxoFreqHz)) {
+      logger.err("Failed to initialize Si5351 driver");
+      return -EIO;
+    }
 
-    // Power Sequencing: Wait for Core Power Good
-    uint32_t startTime = k_uptime_get_32();
-    bool pgOK = false;
+    // Configure default carrier frequency (CLK0 at 6x 14.0956 MHz, CLK2 at 40 MHz)
+    currentFreq = static_cast<uint32_t>(WSPRBand::Band20m);
+    si5351.setCarrierFreq(currentFreq);
+    si5351.setClockOutputsEnabled(true);
+    k_msleep(20); // Let clocks stabilize
 
-    while (!pgOK && k_uptime_get_32() - startTime < 1000) {
+    // 2. Perform a physical reconfig/refresh on the MachXO2 CPLD
+    logger.inf("Toggling CPLD PROG to clear configuration and trigger flash load...");
+    gpio_pin_set_dt(&cpldPROG, 0); // Assert refresh/program mode
+    k_msleep(5);
+    gpio_pin_set_dt(&cpldPROG, 1); // Release to let CPLD load from internal Flash
+    k_msleep(20); // Wait for configuration sequence to complete
 
-      if (gpio_pin_get_dt(&pgFPGACORE) > 0) {
-	pgOK = true;
-	logger.inf("pgFPGACORE asserted after %u ms", k_uptime_get_32() - startTime);
+    if (gpio_pin_get_dt(&cpldDONE) == 0) {
+      logger.wrn("CPLD DONE pin remains LOW after configuration boot. Checking register response anyway...");
+    } else {
+      logger.inf("CPLD DONE asserted HIGH");
+    }
+
+    // 3. Verify CPLD communication over SPI via Hardware Signature register
+    uint32_t sig = 0;
+    if (spiReadReg(aFPGASig, &sig) == 0) {
+      if (sig == 0x52505357) {
+        logger.inf("CPLD SPI signature verified: 0x%08X", sig);
+      } else {
+        logger.err("CPLD SPI signature mismatch! Expected 0x52505357, got 0x%08X", sig);
+        return -EIO;
       }
-      k_msleep(5);
+    } else {
+      logger.err("Failed to read CPLD SPI signature register!");
+      return -EIO;
     }
 
-    if (!pgOK) {
-      logger.wrn("Timeout waiting for pgFPGACORE! Proceeding anyway (Bypass)...");
+    // Read and verify CPLD build number
+    uint32_t buildNum = 0;
+    if (spiReadReg(aFPGABuildNo, &buildNum) == 0) {
+      logger.inf("CPLD Build Number: %u (expected: %u)", buildNum, fpgaBuildNumber);
+    } else {
+      logger.err("Failed to read CPLD build number register!");
     }
 
-    // Enable FPGA IO Power
-    logger.inf("Enabling FPGA IO power (enFPGAIO)...");
-    gpio_pin_set_dt(&enFPGAIO, 1); // Physical High
-    k_msleep(100); // Stabilization delay
-
-    // Proceed with configuration
-    char bitstreamPath[256];
-    snprintf(bitstreamPath, sizeof(bitstreamPath), "%s/fpga.img",
-             FileSystem::instance().getMountPoint());
-
-    int ret = loadBitstream(bitstreamPath);
-    if (ret < 0) {
-      initialized = false;
-      return ret;
-    }
+    // Set default low pass filter band
+    setLPFBand(WSPRBand::Band20m);
 
     initialized = true;
-
-    // Verify FPGA hardware signature
-    uint32_t sig = 0;
-    if (spiReadReg(WSPRRegs::aFPGASig, &sig) == 0) {
-      if (sig == 0x52505357) {
-        logger.inf("SPI signature verified successfully: 0x%08X", sig);
-      } else {
-        logger.err("SPI signature mismatch! Expected 0x52505357, got 0x%08X", sig);
-      }
-    } else {
-      logger.err("Failed to read SPI signature register!");
-    }
-
-    // Read and verify FPGA build number
-    uint32_t buildNum = 0;
-    if (spiReadReg(WSPRRegs::aFPGABuildNo, &buildNum) == 0) {
-      logger.inf("FPGA Build Number: %u", buildNum);
-      if (buildNum == fpgaBuildNumber) {
-        logger.inf("FPGA Build Number matches expected: %u", fpgaBuildNumber);
-      } else {
-        logger.err("FPGA Build Number mismatch! Expected %u, got %u", fpgaBuildNumber, buildNum);
-      }
-    } else {
-      logger.err("Failed to read FPGA build number register!");
-    }
-
-    logger.inf("FPGA initialized and running");
+    logger.inf("CPLD and RF clocks fully initialized");
     return 0;
   }
 
   int FPGA::reset() {
-    gpio_pin_set_dt(&fpgaNRESET, 0);	// Assert software reset
-    gpio_pin_set_dt(&fpgaNCS, 0);	// SPI slave mode indicator
-    gpio_pin_set_dt(&fpgaCRESET, 0);	// Assert FPGA config reset
-    k_msleep(1);
-    gpio_pin_set_dt(&fpgaCRESET, 1);	// Release FPGA config reset
+    if (!initialized) return -ENODEV;
+    
+    // Soft reset CPLD
+    triggerSoftReset(true);
     k_msleep(2);
-    gpio_pin_set_dt(&fpgaNCS, 1);	// Return SPI NCS to deasserted idle state
+    triggerSoftReset(false);
 
-    if (gpio_pin_get_dt(&fpgaDONE) > 0) {
-      logger.err("FPGA Error: CDONE is HIGH immediately after reset pulse!");
-      return -EIO;
-    }
-
-    // Release software reset when chip is fully operational.
-    k_msleep(1);
-    gpio_pin_set_dt(&fpgaNRESET, 1);
+    // Reset Si5351 PLLs
+    si5351.writeRegister(177, 0xA0);
     return 0;
   }
 
   int FPGA::loadBitstream(const char* path) {
-    struct fs_file_t file;
-    fs_file_t_init(&file);
+    // MachXO2 is flash-based; SRAM dynamic programming is bypassed in typical runs.
+    logger.inf("SRAM bitstream programming not required for MachXO2. Configuration booted from Flash.");
+    return 0;
+  }
 
-    int ret = fs_open(&file, path, FS_O_READ);
-    if (ret < 0) {
-      logger.err("bitstream", "Could not open %s: %s", path, strerror(-ret));
-      return ret;
-    }
+  int FPGA::setFrequency(uint32_t freqHz) {
+    if (!initialized) return -ENODEV;
+    currentFreq = freqHz;
 
-    struct fs_dirent stat;
-    fs_stat(path, &stat);
-    logger.inf("bitstream", "Bitstream %s opened (%zu bytes)", path, (size_t)stat.size);
+    logger.inf("config", "Updating carrier frequency to %u Hz (CLK0 output is %u Hz)", freqHz, freqHz * 6);
 
-    const size_t chunk_size = 2048;
-    uint8_t* buffer = (uint8_t*)k_malloc(chunk_size);
-    if (!buffer) {
-      logger.err("bitstream", "Failed to allocate bitstream buffer");
-      fs_close(&file);
-      return -ENOMEM;
-    }
-
-    if (reset() != 0) {
-      k_free(buffer);
-      fs_close(&file);
+    // Set Si5351 CLK0 carrier frequency (6x RF base)
+    if (!si5351.setCarrierFreq(freqHz)) {
       return -EIO;
     }
 
-    gpio_pin_set_dt(&fpgaNCS, 0);
-    uint8_t dummy = 0x00;
-    struct spi_buf sDummy = { .buf = &dummy, .len = 1 };
-    struct spi_buf_set sDummies = { .buffers = &sDummy, .count = 1 };
-    spi_write_dt(&fpgaSPI, &sDummies);
-    gpio_pin_set_dt(&fpgaNCS, 1);
-
-    logger.inf("bitstream", "Transmitting bitstream...");
-
-    ssize_t bytesRead;
-    size_t totalBytes = 0;
-    struct spi_buf sBuf = { .buf = buffer, .len = chunk_size };
-    struct spi_buf_set sBufs = { .buffers = &sBuf, .count = 1 };
-
-    while ((bytesRead = fs_read(&file, buffer, chunk_size)) > 0) {
-      sBuf.len = bytesRead;
-      ret = spi_write_dt(&fpgaSPI, &sBufs);
-      if (ret < 0) {
-	logger.err("bitstream", "SPI write error at %zu: %d", totalBytes, ret);
-	k_free(buffer);
-	fs_close(&file);
-	gpio_pin_set_dt(&fpgaNCS, 1);
-	return ret;
-      }
-      totalBytes += bytesRead;
-    }
-
-    fs_close(&file);
-    logger.inf("bitstream", "Transmitted %zu bytes", totalBytes);
-
-    gpio_pin_set_dt(&fpgaNCS, 1);
-
-    bool success = false;
-    for (int i = 0; i < 100; i++) {
-
-      if (gpio_pin_get_dt(&fpgaDONE) > 0) {
-	success = true;
-	break;
-      }
-      spi_write_dt(&fpgaSPI, &sDummies);
-    }
-
-    if (success) {
-      logger.inf("bitstream", "FPGA SUCCESS: CDONE is HIGH");
-      memset(buffer, 0x00, 8);
-      sBuf.len = 8;
-      spi_write_dt(&fpgaSPI, &sBufs);
-      ret = 0;
-    } else {
-      logger.err("bitstream", "FPGA FAILURE: CDONE remains LOW");
-      ret = -EAGAIN;
-    }
-
-    k_free(buffer);
-    return ret;
-  }
-
-
-
-  int FPGA::setFrequency(uint32_t freqHz) {
-    currentFreq = freqHz;
-    if (!initialized) return -ENODEV;
-
-    uint64_t tuningWord = calculateNCOTuningWord((uint64_t) freqHz, ncoHz);
-
-    logger.inf("config", "Setting 48-bit tuning word to 0x%012llX", tuningWord);
-
-    // Update Mode based on frequency: < 10MHz use 1-2-1, >= 10MHz use Square
+    // Write Mode configuration to CPLD Control register based on RF band
     FPGAControl ctrl;
-    spiReadReg(aFPGAControl, &ctrl.u);
-    ctrl.modeSquare = (freqHz >= MHZ(10)) ? 1 : 0;
-    spiWriteReg(aFPGAControl, ctrl.u);
-
-    // Write 48-bit tuning word across two registers
-    int ret = spiWriteReg(aFPGATuningLow, (uint32_t)tuningWord);
-    if (ret < 0) return ret;
-    return spiWriteReg(aFPGATuningHigh, (uint32_t)(tuningWord >> 32));
+    int ret = spiReadReg(aFPGAControl, &ctrl.u);
+    if (ret == 0) {
+      // 10 MHz or above uses standard Square wave; below 10 MHz uses 1-2-1 modulated wave
+      ctrl.modeSquare = (freqHz >= 10000000) ? 1 : 0;
+      ret = spiWriteReg(aFPGAControl, ctrl.u);
+    }
+    return ret;
   }
 
   int FPGA::startTX() {
     if (!initialized) return -ENODEV;
     if (transmitting) return -EALREADY;
-    logger.inf("config", "Starting transmission at %u Hz (Mode: %s)", 
-               currentFreq, (currentFreq >= 10000000) ? "Square" : "1-2-1");
+
+    logger.inf("config", "Starting RF transmission at %u Hz", currentFreq);
     transmitting = true;
 
+    // Enable power amplifier gate bias/drain power
+    gpio_pin_set_dt(&paEN, 1);
+
+    // Assert txEnable bit in CPLD
     FPGAControl ctrl;
-    spiReadReg(aFPGAControl, &ctrl.u);
-    ctrl.txEnable = 1;
-    ctrl.modeSquare = (currentFreq >= 10000000) ? 1 : 0;
-    return spiWriteReg(aFPGAControl, ctrl.u);
+    int ret = spiReadReg(aFPGAControl, &ctrl.u);
+    if (ret == 0) {
+      ctrl.txEnable = 1;
+      ctrl.modeSquare = (currentFreq >= 10000000) ? 1 : 0;
+      ret = spiWriteReg(aFPGAControl, ctrl.u);
+    }
+    return ret;
   }
 
   int FPGA::stopTX() {
     if (!initialized) return -ENODEV;
     if (!transmitting) return 0;
-    logger.inf("config", "Stopping transmission");
+
+    logger.inf("config", "Stopping RF transmission");
     transmitting = false;
 
+    // Deassert power amplifier enable
+    gpio_pin_set_dt(&paEN, 0);
+
+    // Clear txEnable bit in CPLD
     FPGAControl ctrl;
-    spiReadReg(aFPGAControl, &ctrl.u);
-    ctrl.txEnable = 0;
-    return spiWriteReg(aFPGAControl, ctrl.u);
+    int ret = spiReadReg(aFPGAControl, &ctrl.u);
+    if (ret == 0) {
+      ctrl.txEnable = 0;
+      ret = spiWriteReg(aFPGAControl, ctrl.u);
+    }
+    return ret;
   }
 
   int FPGA::sendSymbol(uint8_t symbol) {
     if (!initialized) return -ENODEV;
 
-    // WSPR tone spacing is 1.46484375 Hz (12000 / 8192)
-    // All frequency shifts are now handled here.
+    // tone spacing is 1.46484375 Hz
     double toneFreq = (double)currentFreq + (double)symbol * 1.46484375;
-    return setFrequency((uint32_t)toneFreq);
+    
+    // Calculate difference relative to baseline freq in milliHertz
+    int32_t milliHzOffset = static_cast<int32_t>((toneFreq - static_cast<double>(currentFreq)) * 1000.0);
+    
+    // Continuously modulate PLLA multiplier glitchlessly
+    si5351.tuneCarrierOffset(milliHzOffset);
+    return 0;
   }
 
   int FPGA::setLPFBand(WSPRBand band) {
-    logger.inf("config", "NOTE: FPGA setLPFBand not yet implemented");
+    uint32_t freq = static_cast<uint32_t>(band);
+    logger.inf("config", "LPF band switched for frequency: %u Hz", freq);
+
+    // Disable all LPF paths first to avoid cross-conduction/spikes
+    gpio_pin_set_dt(&lpfLO, 0);
+    gpio_pin_set_dt(&lpfMID, 0);
+    gpio_pin_set_dt(&lpfHI, 0);
+
+    // Select filter segment
+    if (freq <= 4000000) {
+      gpio_pin_set_dt(&lpfLO, 1);     // Low filter (<= 4MHz)
+    } else if (freq <= 11500000) {
+      gpio_pin_set_dt(&lpfMID, 1);    // Mid filter (4 - 11.5MHz)
+    } else {
+      gpio_pin_set_dt(&lpfHI, 1);     // High filter (11.5 - 32MHz)
+    }
+
     currentBand = band;
     return 0;
   }
 
-  uint32_t FPGA::getCounter() {
-    if (!initialized) return 0;
+  int FPGA::updatePolarMod(uint16_t amplitude, uint16_t phase) {
+    if (!initialized) return -ENODEV;
 
-    FPGAPPS val;
-    spiReadReg(aFPGAPPS, &val.u);
-    return val.u;
+    FPGAPolarMod reg;
+    reg.amp = amplitude;
+    reg.phase = phase;
+    return spiWriteReg(aFPGAPolarMod, reg.u);
+  }
+
+  int FPGA::triggerSoftReset(bool assertReset) {
+    FPGAControl ctrl;
+    int ret = spiReadReg(aFPGAControl, &ctrl.u);
+    if (ret == 0) {
+      ctrl.softReset = assertReset ? 1 : 0;
+      ret = spiWriteReg(aFPGAControl, ctrl.u);
+    }
+    return ret;
   }
 
   int FPGA::spiWriteReg(uint8_t reg, uint32_t value) {
@@ -330,11 +280,11 @@ namespace wspr {
     txBuf[3] = (value >> 8) & 0xFF;
     txBuf[4] = value & 0xFF;
 
-    gpio_pin_set_dt(&fpgaNCS, 0);
+    gpio_pin_set_dt(&cpldNCS, 0);
     struct spi_buf sBuf = { .buf = txBuf, .len = sizeof(txBuf) };
     struct spi_buf_set sBufs = { .buffers = &sBuf, .count = 1 };
-    int ret = spi_write_dt(&fpgaSPI, &sBufs);
-    gpio_pin_set_dt(&fpgaNCS, 1);
+    int ret = spi_write_dt(&cpldSPI, &sBufs);
+    gpio_pin_set_dt(&cpldNCS, 1);
     return ret;
   }
 
@@ -342,16 +292,15 @@ namespace wspr {
     uint8_t txBuf[5] = { (uint8_t)(reg & 0x7F), 0, 0, 0, 0 };
     uint8_t rxBuf[5] = { 0 };
 
-    gpio_pin_set_dt(&fpgaNCS, 0);
+    gpio_pin_set_dt(&cpldNCS, 0);
     struct spi_buf sTX = { .buf = txBuf, .len = 5 };
     struct spi_buf_set sTXs = { .buffers = &sTX, .count = 1 };
     struct spi_buf sRX = { .buf = rxBuf, .len = 5 };
     struct spi_buf_set sRXs = { .buffers = &sRX, .count = 1 };
-    int ret = spi_transceive_dt(&fpgaSPI, &sTXs, &sRXs);
-    gpio_pin_set_dt(&fpgaNCS, 1);
+    int ret = spi_transceive_dt(&cpldSPI, &sTXs, &sRXs);
+    gpio_pin_set_dt(&cpldNCS, 1);
 
     if (ret == 0) {
-      // Data is in rxBuf[1..4] because Byte 0 was the address/command
       *value = ((uint32_t)rxBuf[1] << 24) |
 	((uint32_t)rxBuf[2] << 16) |
 	((uint32_t)rxBuf[3] << 8) |

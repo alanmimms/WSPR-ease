@@ -1,15 +1,15 @@
 /*
- * FPGA Control Module for WSPR-ease
- * Handles iCE40 FPGA communication via SPI
+ * CPLD/FPGA Control Module for WSPR-ease
+ * Handles CPLD interaction, Si5351 clock initialization, and SPI register updates.
  */
 
 #pragma once
 
 #include <cstdint>
+#include "Si5351.hpp"
 
 namespace wspr {
 
-  // WSPR band definitions (dial frequencies in Hz)
   enum class WSPRBand : uint32_t {
     Band160m = 1836600,
     Band80m  = 3568600,
@@ -28,14 +28,13 @@ namespace wspr {
   public:
     static FPGA& instance();
 
-    static const unsigned tcxoFreqHz = 40 * 1000 * 1000;
-    static const uint64_t ncoHz = 90ull * 1000ull * 1000ull;
+    static const unsigned tcxoFreqHz = 20 * 1000 * 1000; // 20 MHz TCXO reference for Si5351
 
     int init();
     int reset();
     int loadBitstream(const char* path);
 
-    // Frequency control
+    // Frequency control (CLK0 outputs 6x this frequency)
     int setFrequency(uint32_t freq_hz);
     uint32_t frequency() const { return currentFreq; }
 
@@ -47,17 +46,24 @@ namespace wspr {
     // Send WSPR symbol (0-3) - 4-FSK modulation
     int sendSymbol(uint8_t symbol);
 
-    // LPF band switching
+    // LPF band switching (controlled by loON, midON, hiON GPIOs)
     int setLPFBand(WSPRBand band);
     WSPRBand getBand() const { return currentBand; }
 
-    uint32_t getCounter();
-    uint32_t getLiveCounter();
+    // Atomic Polar Modulation update for AM, SSB, and CW envelope
+    int updatePolarMod(uint16_t amplitude, uint16_t phase);
+
+    // Soft reset trigger for internal CPLD state machines
+    int triggerSoftReset(bool assertReset);
 
     // Raw register access for diagnostics
     int readRegister(uint8_t reg, uint32_t* value) { return spiReadReg(reg, value); }
+    int writeRegister(uint8_t reg, uint32_t value) { return spiWriteReg(reg, value); }
 
     bool isInitialized() const { return initialized; }
+
+    // Reference to Si5351 instance
+    Si5351& getSi5351() { return si5351; }
 
   private:
     FPGA() = default;
@@ -69,6 +75,8 @@ namespace wspr {
     bool transmitting = false;
     uint32_t currentFreq = 0;
     WSPRBand currentBand = WSPRBand::Band20m;
+
+    Si5351 si5351;
   };
 
 } // namespace wspr

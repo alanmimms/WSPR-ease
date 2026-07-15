@@ -1,61 +1,57 @@
 #pragma once
 #include <cstdint>
+#include <cstddef>
+#include <zephyr/drivers/i2c.h>
 
 class Si5351 {
 public:
   Si5351();
   ~Si5351();
 
-  // Initializes reference parameters, sets the fixed master PLL-A, 
-  // and configures CLK0/CLK1 (1x TX differential pair) and 
-  // CLK2/CLK3 (3x AHC differential pair).
-  bool init(uint32_t tcxoFreqHz, uint32_t baseFreqHz);
+  // Initializes the reference TCXO frequency, sets up PLL A (modulated) and PLL B (fixed 800MHz),
+  // and configures CLK0 (6x carrier clock from PLL A) and CLK2 (fixed 40MHz PWM rate clock from PLL B).
+  bool init(const struct i2c_dt_spec *spec, uint32_t tcxoFreqHz);
 
-  // Handles band switching by shifting the operating base
-  // frequencies. Disables outputs glitchlessly, updates MultiSynth
-  // dividers, and restores clock state.
-  bool setFreq(uint32_t baseFreqHz);
+  // Sets the carrier base frequency. CLK0 will output exactly 6x this frequency.
+  bool setCarrierFreq(uint32_t rfFreqHz);
 
-  // Shifts both the 1x TX and 3x AHC numerators concurrently using
-  // millihertz metrics. Modulates frequency relative to the
-  // established base parameters.
-  void tuneWSPROffset(int32_t milliHzOffset);
+  // Dynamically tunes CLK0 frequency offset via fractional PLLA modulation
+  void tuneCarrierOffset(int32_t milliHzOffset);
 
-  // Establishes a static phase offset for the 3x AHC clock during
-  // testing. Increments represent 1/4 of a VCO cycle (~278 ps at 900
-  // MHz VCO).
-  void setAHCPhaseOffset(uint8_t phaseUnits);
-
-private:
-  void writeRegister(uint8_t reg, uint8_t data);
-  void updateMultiSynthDividers();
+  // Enable/disable the clock outputs (CLK0 and CLK2)
   void setClockOutputsEnabled(bool enabled);
 
-  // Encapsulated explicit internal register maps
+  // Raw registers
+  void writeRegister(uint8_t reg, uint8_t data);
+  uint8_t readRegister(uint8_t reg);
+
+private:
+  void updateMultiSynthDividers(uint8_t clk);
+  void setupPLLA(uint32_t targetPLLFreqHz, uint32_t refFreqHz);
+  void setupPLLB(uint32_t targetPLLFreqHz, uint32_t refFreqHz);
+  void writeSynthParams(uint8_t baseReg, uint32_t multOrDiv, uint32_t num, uint32_t denom, bool divBy4 = false);
+
   static constexpr uint8_t regOutputControl = 3;
-  static constexpr uint8_t regClk0Control = 16;
-  static constexpr uint8_t regClk1Control = 17;
-  static constexpr uint8_t regClk2Control = 18;
-  static constexpr uint8_t regClk3Control = 19;
-  static constexpr uint8_t regMultiSynth0Base = 42;
-  static constexpr uint8_t regMultiSynth1Base = 50;
-  static constexpr uint8_t regMs1PhaseOffset = 166;
-  static constexpr uint8_t regPllReset = 177;
+  static constexpr uint8_t regCLKControlBase = 16;
+  static constexpr uint8_t regPLLABase = 26;
+  static constexpr uint8_t regPLLBBase = 34;
+  static constexpr uint8_t regMultiSynthBase = 42;
+  static constexpr uint8_t regPhaseOffsetBase = 165;
+  static constexpr uint8_t regPLLReset = 177;
+  static constexpr uint8_t regCrystalLoad = 183;
   static constexpr uint32_t max20BitValue = 1048575;
 
-  uint32_t tcxoFreqHz;
-  uint32_t currentBaseFreqHz;
-  uint32_t pllFreqHz;
-  int32_t currentOffsetMilliHz;
-  uint8_t staticAHCPhaseOffset;
+  const struct i2c_dt_spec *i2cSpec = nullptr;
+  bool initialized = false;
 
-  // Encapsulated configuration fields for the 1x TX MultiSynth (MS0)
-  uint32_t ms0Integer;
-  uint32_t ms0Numerator;
-  uint32_t ms0Denominator;
+  uint32_t tcxoFreqHz = 0;
+  uint32_t pllaFreqHz = 0;
+  uint32_t pllbFreqHz = 800000000; // Fixed 800 MHz PLL B for PWM clock
 
-  // Encapsulated configuration fields for the 3x AHC MultiSynth (MS1)
-  uint32_t ms1Integer;
-  uint32_t ms1Numerator;
-  uint32_t ms1Denominator;
+  uint32_t rfBaseFreqHz = 0;
+  int32_t rfOffsetMilliHz = 0;
+
+  uint32_t msInteger[8] = {0};
+  uint32_t msNumerator[8] = {0};
+  uint32_t msDenominator[8] = {0};
 };

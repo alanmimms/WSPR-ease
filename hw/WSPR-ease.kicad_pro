@@ -916,6 +916,12 @@
       "Net-(U105-IO4)": [
         "diff90"
       ],
+      "Net-(U105-SW)": [
+        "power"
+      ],
+      "Net-(U106-RF_IN)": [
+        "RF"
+      ],
       "Net-(U106-SW)": [
         "power"
       ],
@@ -997,11 +1003,19 @@
       },
       {
         "netclass": "RF-power",
-        "pattern": "/Transmitter/*T"
+        "pattern": "/Transmitter/*BaseT"
       },
       {
         "netclass": "power",
         "pattern": "+VDDA"
+      },
+      {
+        "netclass": "power",
+        "pattern": "VPA"
+      },
+      {
+        "netclass": "RF-power",
+        "pattern": "/Transmitter/*PeakT"
       }
     ]
   },
@@ -1414,6 +1428,10 @@
     [
       "23b3e7ef-2325-4c00-b23e-f86801b0fb79",
       "Transmitter"
+    ],
+    [
+      "bb28c9fe-72b6-4320-92be-0952b6cdb9e6",
+      "Exciter"
     ]
   ],
   "text_variables": {}

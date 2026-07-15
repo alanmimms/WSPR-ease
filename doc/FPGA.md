@@ -1,190 +1,202 @@
 # WSPR-ease FPGA Technical Reference
 
-This document describes the internal architecture, evolution, and SPI
-register interface of the iCE40UP5K FPGA used in the WSPR-ease
-project.
+This document outlines the "Path B" digital RF architecture for the
+WSPR-ease transmitter. It completely eliminates the traditional 32-bit
+Numerically Controlled Oscillator (NCO) phase accumulator inside the
+FPGA.
 
-> [!IMPORTANT]
-> **This is an Amaranth HDL-based design.** All source logic is written in Python using Amaranth HDL (see [gateware.py](file:///home/alan/ham/WSPR-ease/FPGA/gateware.py)). The SystemVerilog code is not written directly; it is generated as an intermediate build artifact (under the `gen-hw` and `gen-sim` directories) during the build process. Do not modify the SystemVerilog files directly; edits should always be made in [gateware.py](file:///home/alan/ham/WSPR-ease/FPGA/gateware.py).
+By delegating frequency synthesis entirely to the Si5351 and utilizing
+the FPGA strictly as a **Phase-Interpolated Ring Counter**, we
+achieve:
 
-## Architecture Overview
+1. **Zero "Pulse-Swallowing" Jitter:** The carrier edges are
+   mathematically perfect and tied directly to the Si5351's analog
+   PLL.
+2. **Infinite SSB Phase Resolution:** We retain 16-bit phase
+   modulation capability for Polar/SSB transmission.
+3. **Flawless Timing Closure:** The 32-bit carry chains are
+   eliminated. The FPGA logic tops out at fast 16-bit additions,
+   easily closing timing at 150+ MHz.
 
-The FPGA performs real-time RF synthesis and timing measurement. To
-support high-purity transmission up to the 10m amateur band (~28 MHz),
-the FPGA operates at a **90 MHz** internal clock rate. Utilizing DDR
-(Double Data Rate) outputs, the system achieves an effective sample
-rate of **180 Msps**.
+> [!IMPORTANT] **This is an Amaranth HDL-based design.** All source
+> logic is written in Python using Amaranth HDL (see
+> [gateware.py](file:///home/alan/ham/WSPR-ease/FPGA/gateware.py)).
+> The SystemVerilog code is not written directly; it is generated as
+> an intermediate build artifact (under the `gen-hw` and `gen-sim`
+> directories) during the build process. Do not modify the
+> SystemVerilog files directly; edits should always be made in
+> [gateware.py](file:///home/alan/ham/WSPR-ease/FPGA/gateware.py).
 
-The gateware is implemented in **Amaranth HDL**, a Python-based hardware description language. This move enables better
-abstraction for complex pipelining and automated register map
-generation, which are crucial for meeting the strict 11.1 ns timing
-requirement.
 
-### Key Specifications
-*   **System Clock:** 90 MHz (11.1 ns period), synthesized from a 40
-    MHz TCXO via PLL.
-*   **Effective Sample Rate:** 180 Msps (via `SB_IO` DDR).
-*   **Modulation:** 1-2-1 stepped amplitude synthesis (6 samples per
-    RF cycle).
-*   **NCO Resolution:** 48-bit frequency control for sub-millihertz
-    accuracy.
-*   **Timing Margin:** ~6% (Achieved 95.45 MHz Fmax).
-*   **3rd Harmonic Suppression:** ~55 dBc (practically eliminating the
-    need for aggressive analog filtering).
+## 2. System Division of Labor
 
----
+To understand the architecture, the developer must strictly separate
+*Frequency* from *Phase*.
 
-## Evolution: The Road to 90 MHz
+* **The Si5351 (Frequency Generator):** The microcontroller
+  (ESP32/RP2040) drives the Si5351 via I2C. The Si5351 outputs a
+  high-speed clock that is a direct, static multiple of the target
+  transmit frequency ($F_{tx}$). All sub-Hz WSPR FSK frequency
+  shifting is handled by the Si5351's internal glitchless shadow
+  registers.
+* **The iCE40UP5K FPGA (Phase Modulator):** The FPGA receives this
+  high-speed clock. It divides the clock down to generate the RF
+  waveform states (1-2-1 or Square Wave), while simultaneously
+  injecting Delta-Sigma dither and SPI-driven Phase Modulation (PM).
 
-Achieving 90 MHz with robust margin on the iCE40 architecture required
-moving away from general-purpose fabric logic for arithmetic and
-adopting a highly pipelined design.
+## 3. The Mathematical Foundation: Clock Multipliers
 
-### 2.1 The Fabric Bottleneck
-Initial RTL designs relied on fabric-based 32-bit adders and
-multipliers. These failed timing catastrophically (maxing out at ~70
-MHz) due to long carry chains and routing delays.
+To perform clean Delta-Sigma phase dithering, the FPGA needs "temporal
+headroom." Mathematically, it requires exactly **2.5 clock ticks per
+output state** to dither edges without collapsing the waveform.
 
-### 2.2 The Breakthrough: Amaranth and Pipelining
-The move to Amaranth allowed us to implement a **Pipelined NCO**. By
-splitting the 48-bit phase addition into 6 stages of 8-bit chunks, we
-reduced the carry chain length, allowing the logic to close timing at
-90 MHz with significant margin.
+To satisfy this physics constraint across all HF bands while staying
+under the FPGA's ~120 MHz comfortable routing limit, the system uses
+two discrete modes based on a **10 MHz crossover rule**:
 
-Furthermore, we utilize the eight `SB_MAC16` DSP blocks for all
-multiplication and phase-to-state mapping. These hard macros operate
-at >200 MHz, providing production-grade timing margin.
+| Mode | Freq Range | Waveform | States / Cycle | Si5351 Clock Mult | Ticks / State | Max FPGA Clock |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Low Bands** | < 10 MHz | 1-2-1 Emission | 6 | **15x** | 2.5 | 109.5 MHz (40m) |
+| **High Bands** | $\ge$ 10 MHz | Square Wave | 2 | **5x** | 2.5 | 148.5 MHz (10m) |
 
----
-
-## RF Synthesis Chain (The Exciter)
-
-The exciter uses a **"1-2-1" stepped modulation scheme** to generate
-high-purity RF. By driving a push-pull transformer with specific
-stepped amplitude states (`+1, +2, +1, -1, -2, -1`), the 3rd harmonic
-is theoretically eliminated (measured at **-54.9 dBc**).
-
-### 3.1 DSP-Hardened Pipeline
-The synthesis path is implemented as a pipeline across several
-`SB_MAC16` blocks:
-
-1.  **Pipelined NCO:** A 48-bit phase accumulator split into 6 stages.
-2.  **Phase to State Multipliers:** Performs $State = \lfloor
-    \frac{Phase[47:32] \times 6}{2^{16}} \rfloor$ using `SB_MAC16`
-    hard macros.
-3.  **PRNG Generator:** A Linear Congruential Generator (LCG)
-    implemented in a DSP block to produce pseudo-random noise for
-    phase dithering.
-
-### 3.2 Phase Dithering
-To eliminate "phase truncation breathing" (limit cycles), we inject
-pseudo-random noise into the fractional remainder of the state mapping.
-This turns low-frequency phase drift into high-frequency broadband noise
-that is easily filtered by the RF bandpass filters.
+*Note: For the 10m band at 28.0 MHz, $5 \times 28.0 = 140 \text{
+MHz}$. At 140 MHz, the iCE40 DSP blocks and simple 16-bit adders can
+still pass timing closure, whereas a 32-bit accumulator would fail.*
 
 ---
 
-## Pipeline Tick Pseudocode
+## 4. The 4-Stage FPGA Datapath
+
+This is the core pipeline to be implemented in Amaranth HDL. It must
+be heavily pipelined (one register stage per step) to guarantee timing
+closure at $>140\text{ MHz}$.
+
+### Stage 1: The Rigid Ring Counter
+
+Instead of an accumulator adding a tuning word, we use a simple
+integer counter that wraps based on the multiplier $N$.
+
+* **If $N=15$ (Low Bands):** Counter increments by 1 every clock tick.
+  Wraps to 0 after 14.
+* **If $N=5$ (High Bands):** Counter increments by 1 every clock tick.
+  Wraps to 0 after 4.
+
+**Developer Note:** Because this counter rigidly divides the Si5351
+clock without any fractional skipping, the base carrier has absolutely
+zero digital jitter.
+
+### Stage 2: The Fractional Angle LUT
+
+To apply phase modulation, we must convert the integer counter state
+back into a 16-bit fractional phase space ($0$ to $65535$,
+representing $0^\circ$ to $360^\circ$).
+
+This is done via a hardcoded Lookup Table (LUT). The LUT value
+represents the base phase of the carrier at that exact clock tick.
+
+* **Math:** `Step_Size = 65536 / N`
+* **For 15F:** Step Size is `4369`. (LUT: `0, 4369, 8738, 13107...
+  61166`)
+* **For 5F:** Step Size is `13107`. (LUT: `0, 13107, 26214, 39321,
+  52428`)
+
+**Developer Note:** In Amaranth, use an `Array` or a `Case` statement.
+This synthesizes to a fast block of combinatorial logic (LUT4s) that
+resolves in a single gate delay.
+
+### Stage 3: The Phase Modulation & Dither Adder
+
+Here we inject the sub-degree phase control from the microcontroller
+and the dithering noise to smooth the quantization steps.
 
 ```python
-	def exciterPipelineTick(ncoPhase, prngNoise):
-		# =======================================================
-		# TICK 0: The Initial State
-		# =======================================================
-		ncoPhase = ncoPhase				# phaseR(Tick0)
-		prngNoise = prngNoise			# noise(Tick0)
-		ddrOffset = (tw >> 1)			# 0.5 cycle offset
+# 16-bit addition (allow it to naturally overflow/wrap)
+Total_Phase_16b = Base_Phase_LUT + SPI_Phase_Offset_16b + LFSR_Dither_16b
 
-		# =======================================================
-		# TICK 1: First Stage Math (Multiplier & Offset)
-		# =======================================================
-
-		# 1. Rising Edge Math (mr DSP)
-		# The multiplier takes 1 clock cycle. 
-		mulRT1 = ncoPhase * 6 + prngNoise
-
-		# 2. Noise Delay Registration
-		# Invert the noise and hold it for the falling edge math
-		noiseD1invT1 = ~prngNoise
-
-		# 3. Falling Edge Offset (offs DSP)
-		phaseFT1 = ncoPhase * 1 + ddrOffset 
-
-		# =======================================================
-		# TICK 2: Falling Edge Math & Rising Edge Wait State
-		# =======================================================
-
-		# 1. Falling Edge Math (mf DSP)
-		# Now that phaseFT1 and noiseD1invT1 are ready, compute the falling edge.
-		mulFT2 = phaseFT1 * 6 + noiseD1invT1
-		stateFraw = mulFT2[16:19]  # 3-bit state extracted
-
-		# 2. Rising Edge Wait State 1
-		# Because the Falling Edge took an extra clock cycle to compute the offset,
-		# the Rising Edge must be delayed to wait for it.
-		stateRraw = mulRT1[16:19]
-		stateRD1T2 = stateRraw     # Latch it into stateRD1
-
-		# =======================================================
-		# TICK 3: Final Alignment to DDR Pins
-		# =======================================================
-
-		# Rising edge state finishes waiting
-		stateRfinal = stateRD1T2
-
-		# Falling edge state arrives
-		stateFfinal = stateFraw
-
-		# RESULT: Both states map to the DDR pins on the exact same 90MHz clock tick!
-		return (stateRfinal, stateFfinal)
 ```
 
-## SPI Interface Protocol
+* **SPI Phase Offset:** Received from the ESP32. Allows for SSB
+  transmission (Polar Modulation).
+* **LFSR Dither:** A 16-bit Pseudo-Random Number Generator.
+* **Zero-Mean Dither Rule:** Ensure the noise is treated as a *signed*
+  offset (or shifted accordingly) so it dithers symmetrically around
+  the targeted phase edge, rather than constantly pushing the phase
+  forward. Scale the volume of the noise (e.g., right-shift by 4) so
+  it only chatters the edge, rather than jumping entire states.
 
-The SPI control plane is implemented using oversampling on the 90 MHz
-system clock, ensuring robust operation without complex Clock Domain
-Crossing (CDC) constraints.
+### Stage 4: The DSP State Mapper (SB_MAC16)
 
-### 4.1 Frame Format (40-bit)
-| Bits | Field | Description |
-| :--- | :--- | :--- |
-| 39 | **W/nR** | 1 = Write Operation, 0 = Read Operation |
-| 38:32 | **Address** | 7-bit Register Address |
-| 31:0 | **Data** | 32-bit Data (Payload) |
+We now take the 16-bit `Total_Phase` and map it to the physical
+transformer pin states. Because multiplying by 6 is expensive in
+fabric, we route this directly into the iCE40's hard `SB_MAC16` DSP
+blocks.
 
-### 4.2 Register Map
-| Address | Name | Type | Description |
-| :--- | :--- | :--- | :--- |
-| 0x00 | **CONTROL** | R/W | `[31:3]` Reserved<br>`[2]` PLL Locked (RO)<br>`[1]` Square Wave Mode<br>`[0]` TX Enable |
-| 0x01 | **TUNING_LOW**| R/W | Lower 32 bits of 48-bit NCO Tuning Word. |
-| 0x02 | **TUNING_HIGH**| R/W | Upper 16 bits of 48-bit NCO Tuning Word. |
-| 0x03 | **PPS** | RO | `[31:5]` 27-bit Counter latched at PPS rising edge.<br>`[4:0]` PPS generation counter. |
-| 0x0F | **SIGNATURE**| RO | Fixed value `0x52505357` ("WSPR"). |
+* **For 1-2-1 Emission (15F Mode):**
+* We need to divide the 16-bit space into 6 states ($0$ through $5$).
+* Math: `(Total_Phase_16b * 6) >> 16`
+* The DSP multiplies the phase by 6. We extract the top 3 bits of the
+  32-bit DSP output to get states `000` to `101`.
+
+
+* **For Square Wave (5F Mode):**
+* We need to divide the space into 2 states ($0$ and $1$).
+* Math: `(Total_Phase_16b * 2) >> 16`
+* The DSP multiplies by 2. We extract the top 1 bit to get state `0`
+  or `1`.
+
+
+
+**Output Decoding:** Finally, standard combinatorial logic maps the
+resulting state (0-5 or 0-1) to the 4 physical DDR output pins
+(`PushBase`, `PushPeak`, `PullBase`, `PullPeak`).
 
 ---
 
-## Frequency Calibration (FreqCounter)
+## 5. Implementation & Synthesis Guidelines
 
-To ensure sub-Hz accuracy, the FPGA includes a high-speed frequency
-counter synchronized to the GNSS PPS signal.
+### Eliminating the `SB_MAC16` C/D Port Trap
 
-*   **Pipelined Counter:** A 28-bit counter implemented in 7-bit
-    pipelined stages to meet 90 MHz timing.
-*   **PPS Latching:** The rising edge of the GNSS PPS signal latches
-    the counter value.
-*   **MCU Integration:** The ESP32 reads the `PPS` register to
-    calculate TCXO drift and corrects the `TUNING` word.
+When configuring the `SB_MAC16` instance in Amaranth:
 
----
+* Do NOT pass your `SPI_Phase_Offset` or `LFSR_Dither` directly into
+  the `C` or `D` accumulation ports of the DSP block.
+* Perform the 16-bit addition (Stage 3) entirely in the standard FPGA
+  logic fabric.
+* Only pass the finalized `Total_Phase_16b` into the `A` port, and the
+  constant `6` or `2` into the `B` port of the DSP. This avoids the
+  simulation mismatches and pipeline latency bugs documented in the
+  project logs.
 
-## Timing Closure & Constraints
+### Pipeline Register Strategy
 
-1.  **DSP Priority:** All 16-bit and 32-bit arithmetic must remain in
-    `SB_MAC16` macros.
-2.  **CDC Handling:** `nextpnr-ice40` lacks `set_false_path`. To
-    prevent false timing failures on Clock Domain Crossing (CDC) from
-    the 12 MHz SPI clock, we "fake" the SPI clock frequency to 0.1 MHz
-    in constraints, forcing the router to prioritize the 90 MHz
-    internal logic.
-3.  **IO Packing:** Always use `SB_IO` internal registers for RF
-    signals.
+To achieve the 148.5 MHz timing required for the 10m band, you must
+insert an `m.d.sync` register between *every* stage of this datapath:
+
+1. `Tick_Counter` (Reg)
+2. `Base_Phase_LUT` (Reg)
+3. `Total_Phase_16b` (Reg)
+4. `DSP_Multiplier_Output` (Use internal `SB_MAC16` output registers)
+
+Total pipeline latency from clock tick to pin state will be 4 clock
+cycles, which is completely irrelevant to the RF transmission, but
+guarantees flawless routing.
+
+### Double Data Rate (DDR) Output
+
+Because the Si5351 clock is running at $N \times F_{tx}$, you DO NOT
+need to calculate a "lookahead" phase for the falling edge of the
+clock (as was required in the old 90 MHz asynchronous architecture).
+
+* Use the rising edge to output the calculated state.
+* The physical output pins will update exactly at the $15F$ or $5F$
+  intervals.
+
+## 6. Conclusion
+
+By adopting the Phase-Interpolated Ring Counter, the WSPR-ease project
+resolves the fundamental paradox of digital RF synthesis. It leverages
+the Si5351 for what it does best (glitchless, jitter-free frequency
+generation) and leverages the iCE40 FPGA for what it does best
+(high-speed parallel phase manipulation and state mapping). The result
+is a mathematically pure, harmonic-canceling transmitter that scales
+effortlessly from 80m to 10m.

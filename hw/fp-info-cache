@@ -1,4 +1,4 @@
-27338144511296411
+27348848247466757
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -71386,6 +71386,13 @@ Yellow 5381 Series LED
 2
 2
 Library
+35RASMT2BHWNTRX
+35RASMT2BHWNTRX-1
+Connector
+0
+3
+3
+Library
 614150291
 6-1415029-1-1
 Relay or Contactor
@@ -71463,6 +71470,13 @@ SMD SMT crystal oscillator
 4
 4
 Library
+PFL4514-inductor
+Neosid, Power Inductor, SMS-ME3015, Fixed inductor, SMD, magnetically shielded, https://neosid.de/import-data/product-pdf/neoFestind_SMSME3015.pdf
+Neosid Power Inductor SMS-ME3015 Fixed inductor SMD magnetically shielded
+0
+2
+2
+Library
 QFN50P300X300X60-20N-D
 UFQFPN203*3
 Integrated Circuit
@@ -71490,6 +71504,13 @@ Connector
 0
 3
 3
+Library
+SJ13514SMTTR
+SJ1-3514-SMT-TR-1
+Connector
+0
+5
+5
 Library
 SMA_Amphenol_901-143_Horizontal
 Amphenol RF 901-143 https://www.amphenolrf.com/library/download/link/link_id/593645/parent/901-143/
@@ -71547,6 +71568,13 @@ Switch
 6
 6
 Library
+SOT95P280X110-6N
+DAC081S101CIMK/NOPB
+Integrated Circuit
+0
+6
+6
+Library
 SOT95P280X145-6N
 DBV0006A
 Integrated Circuit
@@ -71554,12 +71582,26 @@ Integrated Circuit
 6
 6
 Library
+SOT95P285X140-5N
+SOT25_2024-1
+Integrated Circuit
+0
+5
+5
+Library
 SOTFL50P160X60-5N
 DRL (R-PDS0-N5)
 Integrated Circuit
 0
 5
 5
+Library
+TAA5242IRGER
+TAA5242IRGER-8
+Integrated Circuit
+0
+29
+29
 Library
 UHD111AFKAC3K23E1L3VG5ZB3Z3
 0404 (1010)

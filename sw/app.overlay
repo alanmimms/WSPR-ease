@@ -80,66 +80,52 @@
 
 	/* * Custom Node: Transceiver IO
 	 * Groups all discrete control signals.
-	 * Note: Prop names must be snake-case by Zephyr rules, 
-	 * but we access them via clean struct names in C.
 	 */
 	transceiver_io: transceiver-io {
 		compatible = "gpio-keys"; 
 		
-		/* FPGA Control */
-		fpga_creset: fpga-creset {
-			gpios = <&gpio0 9 GPIO_ACTIVE_HIGH>;
-			label = "FPGA Config Reset";
+		/* CPLD Control */
+		cpld_prog: cpld-prog {
+			gpios = <&gpio1 16 GPIO_ACTIVE_HIGH>; /* GPIO 48 */
+			label = "CPLD PROG";
 		};
-		fpga_done: fpga-done {
-			gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>;
-			label = "FPGA Done";
+		cpld_done: cpld-done {
+			gpios = <&gpio1 13 GPIO_ACTIVE_HIGH>; /* GPIO 45 */
+			label = "CPLD DONE";
 		};
-		fpga_ncs: fpga-ncs {
-			gpios = <&gpio0 14 GPIO_ACTIVE_HIGH>;
-			label = "FPGA NCS";
+		cpld_ncs: cpld-ncs {
+			gpios = <&gpio1 15 GPIO_ACTIVE_HIGH>; /* GPIO 47 */
+			label = "CPLD NCS";
 		};
-		fpga_nreset: fpga-nreset {
-			gpios = <&gpio0 17 GPIO_ACTIVE_HIGH>;
-			label = "FPGA Non-config Reset";
-		};
-
 
 		/* GNSS Timing and Control */
 		pps_in: pps-in {
-			gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>; /* GPIO 16 */
 			label = "GNSS PPS";
 		};
 		gnss_reset: gnss-reset {
-			gpios = <&gpio0 15 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio0 15 GPIO_ACTIVE_HIGH>; /* GPIO 15 */
 			label = "GNSS Reset";
 		};
-		/* Power Control */
-		pg_fpgacore: pg_fpgacore {
-			gpios = <&gpio1 9 GPIO_ACTIVE_HIGH>; /* IO 41 */
-			label = "FPGA Core Power Good";
-		};
-		en_fpgaio: en_fpgaio {
-			gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>; /* IO 42 */
-			label = "FPGA IO Power Enable";
+
+		/* Power / PA Enable */
+		pa_en: pa-en {
+			gpios = <&gpio0 0 GPIO_ACTIVE_HIGH>; /* GPIO 0 */
+			label = "PA Enable";
 		};
 
 		/* Low Pass Filter Switching */
-		lpf_high: lpf-high {
-			gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
+		lpf_lo: lpf-lo {
+			gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>; /* GPIO 5 */
+			label = "LPF Low Band";
+		};
+		lpf_mid: lpf-mid {
+			gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>; /* GPIO 6 */
+			label = "LPF Mid Band";
+		};
+		lpf_hi: lpf-hi {
+			gpios = <&gpio0 7 GPIO_ACTIVE_HIGH>; /* GPIO 7 */
 			label = "LPF High Band";
-		};
-		lpf_low_master: lpf-low-master {
-			gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
-			label = "LPF Low Master";
-		};
-		lpf_low1: lpf-low1 {
-			gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
-			label = "LPF Low 1";
-		};
-		lpf_low2: lpf-low2 {
-			gpios = <&gpio0 7 GPIO_ACTIVE_HIGH>;
-			label = "LPF Low 2";
 		};
 	};
 };
@@ -147,12 +133,23 @@
 /* Pin Control Definitions */
 
 &pinctrl {
-	/* SPI2 (FSPI) for FPGA Tuning */
+	/* SPI2 (FSPI) for CPLD Control */
 	spi2_default: spi2_default {
 		group1 {
-			pinmux = <SPIM2_MISO_GPIO13>,
-			         <SPIM2_MOSI_GPIO11>,
-			         <SPIM2_SCLK_GPIO12>;
+			pinmux = <SPIM2_MISO_GPIO21>,
+			         <SPIM2_MOSI_GPIO13>,
+			         <SPIM2_SCLK_GPIO14>;
+		};
+	};
+
+	/* I2C0 for SI5351 control */
+	i2c0_default: i2c0_default {
+		group1 {
+			pinmux = <I2C0_SCL_GPIO11>,
+			         <I2C0_SDA_GPIO10>;
+			bias-pull-up;
+			drive-open-drain;
+			output-high;
 		};
 	};
 
@@ -173,14 +170,23 @@
 	pinctrl-0 = <&spi2_default>;
 	pinctrl-names = "default";
 
-	/* FPGA is the only device on this bus. NCS is managed
-	manually during config so that SPI slave mode can be made to
-	sense NCS LOW when /CRESET is released. */
-
 	fpga_dev: fpga@0 {
 		compatible = "vnd,spi-device";
 		reg = <0>;
-		spi-max-frequency = <1000000>; /* 1MHz for maximum reliability during Slave SPI config */
+		spi-max-frequency = <10000000>; /* 10MHz for CPLD SPI */
+	};
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <I2C_BITRATE_STANDARD>;
+	pinctrl-0 = <&i2c0_default>;
+	pinctrl-names = "default";
+
+	si5351a: si5351a@60 {
+		compatible = "skyworks,si5351a";
+		reg = <0x60>;
+		status = "okay";
 	};
 };
 

@@ -16,29 +16,20 @@ regs = RegisterSet("FPGA")
 @regs.register(0x00, "Main control and status")
 class Control:
   txEnable:     Bit(0, "Enable RF output")
-  modeSquare:   Bit(0, "Enable Pure Square Wave mode")
-  pllLocked:    Bit(0, "PLL is locked to 180 MHz (Read Only)")
-  reserved:     UInt(0, 29, "Reserved")
+  modeSquare:   Bit(1, "Enable Pure Square Wave mode")
+  softReset:    Bit(2, "Soft reset for internal state machines")
+  reserved:     UInt(3, 29, "Reserved")
 
-@regs.register(0x01, "Low 32 bits of 48-bit NCO tuning word")
-class TuningLow:
-  word:         UInt(0, 32, "NCO frequency control word (Low)")
+@regs.register(0x04, "Atomic Amplitude and Phase Modulation register")
+class PolarMod:
+  amp:          UInt(0, 16, "16-bit Amplitude (Envelope) control value for PDM/PWM")
+  phase:        UInt(16, 16, "16-bit Phase control value")
 
-@regs.register(0x02, "High 16 bits of 48-bit NCO tuning word")
-class TuningHigh:
-  word:         UInt(0, 16, "NCO frequency control word (High)")
-  reserved:     UInt(16, 16, "Reserved")
-
-@regs.register(0x03, "PPS and GNSS edge tracking")
-class PPS:
-  gen:          UInt(0, 6, "Generation incremented at each PPS falling edge")
-  count:        UInt(0, 26, "FPGA clock count at last PPS falling edge")
-
-@regs.register(0x0E, "FPGA Build Number")
+@regs.register(0x0E, "CPLD Build Number")
 class BuildNo:
-  val:          UInt(0, 32, "FPGA 32-bit build number")
+  val:          UInt(0, 32, "CPLD 32-bit build number")
 
-@regs.register(0x0F, "FPGA Hardware Signature")
+@regs.register(0x0F, "CPLD Hardware Signature")
 class Sig:
   val:          Enum(0x52505357, 32, [("", 0x52505357)], "Fixed value ASCII 'WSPR'")
 
