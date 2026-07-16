@@ -18,3 +18,4 @@ regs_gen.py
 gen-hw/
 gen-sim/
 nextpnr.txt
+scratch/

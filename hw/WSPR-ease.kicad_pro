@@ -951,11 +951,11 @@
       },
       {
         "netclass": "diff90",
-        "pattern": "/D+"
+        "pattern": "/USBD+"
       },
       {
         "netclass": "diff90",
-        "pattern": "/D-"
+        "pattern": "/USBD-"
       },
       {
         "netclass": "power",

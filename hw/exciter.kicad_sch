@@ -3519,10 +3519,6 @@
 		(uuid "0ea82383-e61d-47a4-a9ed-5ceb57a060cc")
 	)
 	(no_connect
-		(at 88.9 106.68)
-		(uuid "1e4f134e-8475-4756-9709-b9100831e6a7")
-	)
-	(no_connect
 		(at 69.85 40.64)
 		(uuid "1f3984e1-4fae-4bac-a729-b1ed9fc80b82")
 	)
@@ -3533,10 +3529,6 @@
 	(no_connect
 		(at 69.85 76.2)
 		(uuid "5e4fe765-17fd-43a2-b8d5-233a71f68c55")
-	)
-	(no_connect
-		(at 88.9 104.14)
-		(uuid "61a18218-1578-4aa6-815b-6c41bc366ff5")
 	)
 	(no_connect
 		(at 69.85 38.1)
@@ -3589,10 +3581,6 @@
 	(no_connect
 		(at 227.33 160.02)
 		(uuid "aa6a6a41-a1fd-4a7b-9995-519c8e2a6618")
-	)
-	(no_connect
-		(at 88.9 109.22)
-		(uuid "c8019cb3-ef2e-42c9-a2f7-5edcfb017284")
 	)
 	(no_connect
 		(at 88.9 127)
@@ -3723,6 +3711,16 @@
 			(type default)
 		)
 		(uuid "0ce23809-8032-4287-8ea3-f6852cc345a2")
+	)
+	(wire
+		(pts
+			(xy 88.9 109.22) (xy 90.17 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0cfa72e2-b25b-4220-89a5-18606b9f501b")
 	)
 	(wire
 		(pts
@@ -4843,6 +4841,16 @@
 			(type default)
 		)
 		(uuid "826cbb05-5150-4f8d-b02a-0c70b0806666")
+	)
+	(wire
+		(pts
+			(xy 88.9 106.68) (xy 90.17 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "865a788d-d3e1-4389-b677-acdd008e109d")
 	)
 	(wire
 		(pts
@@ -5996,6 +6004,16 @@
 	)
 	(wire
 		(pts
+			(xy 88.9 104.14) (xy 90.17 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f6f0205e-743c-453c-9321-342ed21ab524")
+	)
+	(wire
+		(pts
 			(xy 63.5 90.17) (xy 64.77 90.17)
 		)
 		(stroke
@@ -6145,6 +6163,17 @@
 		)
 		(uuid "041b1fd7-344a-41ba-98e0-1994d380c96c")
 	)
+	(hierarchical_label "txBCLK"
+		(shape input)
+		(at 90.17 109.22 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "1be39a0b-7fdc-4ea0-a05c-9dc26a7238ef")
+	)
 	(hierarchical_label "fpgaDONE"
 		(shape output)
 		(at 62.23 96.52 180)
@@ -6166,6 +6195,17 @@
 			(justify left)
 		)
 		(uuid "2a7d3161-2fe0-4637-beb2-1e072d6f58f9")
+	)
+	(hierarchical_label "txI2Sdata"
+		(shape input)
+		(at 90.17 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5006558c-107c-4562-9c78-957754a1afdd")
 	)
 	(hierarchical_label "nPullBase"
 		(shape input)
@@ -6200,7 +6240,7 @@
 		)
 		(uuid "83aaad1e-15b7-4693-b521-d1f9ccc04969")
 	)
-	(hierarchical_label "micBCLK"
+	(hierarchical_label "txBCLK"
 		(shape input)
 		(at 254 73.66 0)
 		(effects
@@ -6321,6 +6361,17 @@
 		)
 		(uuid "c67be07a-43bc-487d-bc0a-048e1826a780")
 	)
+	(hierarchical_label "txSYNC"
+		(shape input)
+		(at 90.17 106.68 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "c9d2e55a-8a7f-44af-89f1-b5bd920862a5")
+	)
 	(hierarchical_label "txSCL"
 		(shape input)
 		(at 87.63 198.12 180)
@@ -6354,7 +6405,7 @@
 		)
 		(uuid "e6f51c68-f7fa-4c17-ac6d-534e7a94726a")
 	)
-	(hierarchical_label "micSYNC"
+	(hierarchical_label "txSYNC"
 		(shape input)
 		(at 254 71.12 0)
 		(effects
