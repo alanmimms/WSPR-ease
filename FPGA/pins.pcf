@@ -1,7 +1,7 @@
 # Clock Inputs
 set_io fpgaSCLKpin 15
 set_io FPGACLK 35
-set_io txco 44
+set_io tcxo 44
 set_io gnssPPS 25
 
 # SPI Interface

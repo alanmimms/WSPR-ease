@@ -3,10 +3,6 @@
 
 from amaranth import *
 from amaranth.lib import enum, data, cdc
-from amaranth.back import verilog
-import os
-
-# Import address map from generated definitions
 from regs_gen import FPGAAddr
 
 class SPIRegisters(Elaboratable):
@@ -23,15 +19,18 @@ class SPIRegisters(Elaboratable):
         self.pps_latched = Signal(32)
         
         # Decoded outputs to other clock domains
-        self.txEn = Signal()
-        self.modeSq = Signal()
-        self.softReset = Signal()
-        self.modMode = Signal(2)
-        self.amp = Signal(16)
-        self.phase = Signal(16)
-        self.baseDelay = Signal(8)
-        self.delayCoeff = Signal(8)
-        self.paEnThreshold = Signal(16)
+        self.txEn = Signal(reset_less=True)
+        self.modeSq = Signal(reset_less=True)
+        self.softReset = Signal(reset_less=True)
+        self.modMode = Signal(2, reset_less=True)
+        self.amp = Signal(16, reset_less=True)
+        self.phase = Signal(16, reset_less=True)
+        self.baseDelay = Signal(8, reset_less=True)
+        self.delayCoeff = Signal(8, reset_less=True)
+        self.paEnThreshold = Signal(16, reset_less=True)
+        
+        # The crucial IOB-packed MISO output register
+        self.oMISOR = Signal(attrs={"iob": "true"}, reset_less=True)
 
     def elaborate(self, platform):
         m = Module()
@@ -47,183 +46,130 @@ class SPIRegisters(Elaboratable):
             cdc.FFSynchronizer(self.iNCS, ncsSync)
         ]
 
-        # Double buffer synchronized inputs to detect edges
-        sclk = Signal(reset_less=True)
-        mosi = Signal(reset_less=True)
-        ncs = Signal(reset_less=True)
-        m.d.sync += [
-            sclk.eq(sclkSync),
-            mosi.eq(mosiSync),
-            ncs.eq(ncsSync)
+        # Edge detection for SCLK
+        sclk_prev = Signal()
+        m.d.sync += sclk_prev.eq(sclkSync)
+        
+        sclk_rise = Signal()
+        sclk_fall = Signal()
+        m.d.comb += [
+            sclk_rise.eq(~sclk_prev & sclkSync),
+            sclk_fall.eq(sclk_prev & ~sclkSync)
         ]
 
-        lastSclk = Signal(reset_less=True)
-        m.d.sync += lastSclk.eq(sclk)
+        # SPI State
+        mosi_shift = Signal(39, reset_less=True) # We only need to buffer the last 39 bits
+        miso_shift = Signal(32, reset_less=True)
+        bit_counter = Signal(6)
+        
+        # Pipelined Read registers
+        internal_read_mux = Signal(32)
+        pipelined_read_data = Signal(32, reset_less=True)
+        
+        # Control Signals
+        addr_latched = Signal(7, reset_less=True)
+        is_write_latched = Signal(reset_less=True)
 
-        # SPI Clock edge detection
-        sclkR = Signal(reset_less=True)
-        sclkF = Signal(reset_less=True)
-        m.d.sync += [
-            sclkR.eq(sclk & ~lastSclk),
-            sclkF.eq(~sclk & lastSclk)
-        ]
-        
-        # 40-bit shift registers for 8-bit command + 32-bit data
-        bitCount = Signal(6, reset_less=True)
-        mosiSR = Signal(40, reset_less=True)
-        misoSR = Signal(32, reset_less=True)
-        misoReg = Signal(reset_less=True)
-        
-        m.d.comb += self.oMISO.eq(misoReg)
-        
-        # SPI transaction state machine
-        isBit7R = Signal(reset_less=True)
-        isBit7F = Signal(reset_less=True)
-        isBit39R = Signal(reset_less=True)
-
-        with m.If(ncs):
+        # Handle NCS reset asynchronously to SPI transaction, but synchronous to 40MHz
+        with m.If(ncsSync):
             m.d.sync += [
-                bitCount.eq(0),
-                isBit7R.eq(0),
-                isBit7F.eq(0),
-                isBit39R.eq(0),
-                misoReg.eq(0)
+                bit_counter.eq(0),
+                self.oMISOR.eq(0)
             ]
         with m.Else():
-            with m.If(sclkR):
+            
+            # ----------------------------------------------------
+            # 1. RISING EDGE: Sample Data and Latch Commands
+            # ----------------------------------------------------
+            with m.If(sclk_rise):
                 m.d.sync += [
-                    bitCount.eq(bitCount + 1),
-                    isBit7R.eq(bitCount == 6),
-                    isBit39R.eq(bitCount == 38),
-                    mosiSR.eq((mosiSR << 1) | mosi)
+                    mosi_shift.eq(Cat(mosiSync, mosi_shift[0:38])), # Shift Left
+                    bit_counter.eq(bit_counter + 1)
                 ]
-            with m.If(sclkF):
-                m.d.sync += [
-                    isBit7F.eq(bitCount == 7),
-                    misoReg.eq(misoSR[31]),
-                    misoSR.eq(misoSR << 1)
-                ]
-        
-        # Latch address and write mode at bit 7
-        isWriteLatch = Signal(reset_less=True)
-        addrLatch = Signal(7, reset_less=True)
-        
-        with m.If(sclkR & isBit7R):
-            a = Cat(mosi, mosiSR[0:6])
-            m.d.sync += [
-                isWriteLatch.eq(mosiSR[6]),
-                addrLatch.eq(a)
-            ]
-        
-        # Address decoding
-        isCtrl = Signal(reset_less=True)
-        isPolarMod = Signal(reset_less=True)
-        isPhaseDelayCtrl = Signal(reset_less=True)
-        isPpsLatch = Signal(reset_less=True)
-        isBuildNo = Signal(reset_less=True)
-        isSig = Signal(reset_less=True)
-        
-        m.d.sync += [
-            isCtrl.eq(addrLatch == FPGAAddr.Control),
-            isPolarMod.eq(addrLatch == FPGAAddr.PolarMod),
-            isPhaseDelayCtrl.eq(addrLatch == FPGAAddr.PhaseDelayCtrl),
-            isPpsLatch.eq(addrLatch == FPGAAddr.PpsLatch),
-            isBuildNo.eq(addrLatch == FPGAAddr.BuildNo),
-            isSig.eq(addrLatch == FPGAAddr.Sig)
-        ]
-        
-        # Registers
-        ctrl_txEnable = Signal()
-        ctrl_modeSquare = Signal()
-        ctrl_softReset = Signal()
-        ctrl_modMode = Signal(2)
-        
-        ampReg = Signal(16)
-        phaseReg = Signal(16)
-        
-        baseDelayReg = Signal(8)
-        delayCoeffReg = Signal(8)
-        paEnThresholdReg = Signal(16, reset=1024) # Default to ~1.5% of full-scale
-        
-        # Read Mux
-        vCtrl = Signal(32)
-        vPolarMod = Signal(32)
-        vPhaseDelayCtrl = Signal(32)
-        vPpsLatch = Signal(32)
-        vBuildNo = Signal(32)
-        vSig = Signal(32)
-        
-        m.d.comb += [
-            vCtrl.eq(Mux(isCtrl, Cat(ctrl_txEnable, ctrl_modeSquare, ctrl_softReset, ctrl_modMode, Const(0, 27)), 0)),
-            vPolarMod.eq(Mux(isPolarMod, Cat(ampReg, phaseReg), 0)),
-            vPhaseDelayCtrl.eq(Mux(isPhaseDelayCtrl, Cat(baseDelayReg, delayCoeffReg, paEnThresholdReg), 0)),
-            vPpsLatch.eq(Mux(isPpsLatch, self.pps_latched, 0)),
-            vBuildNo.eq(Mux(isBuildNo, Const(self.buildNum, 32), 0)),
-            vSig.eq(Mux(isSig, 0x52505357, 0))
-        ]
-        
-        # Pipeline read value back to MISO
-        readValPipe = Signal(32, reset_less=True)
-        vStage0 = Signal(32, reset_less=True)
-        vStage1 = Signal(32, reset_less=True)
-        vStage2 = Signal(32, reset_less=True)
-        
-        m.d.sync += [
-            vStage0.eq(vCtrl | vPolarMod),
-            vStage1.eq(vPhaseDelayCtrl | vPpsLatch),
-            vStage2.eq(vBuildNo | vSig),
-            readValPipe.eq(vStage0 | vStage1 | vStage2)
-        ]
-        
-        loadMisoEn = Signal(reset_less=True)
-        m.d.sync += loadMisoEn.eq(isBit7F & ~isWriteLatch)
 
-        with m.If(sclkF & loadMisoEn):
-            m.d.sync += [
-                misoSR.eq(readValPipe << 1),
-                misoReg.eq(readValPipe[31])
-            ]
-        
-        # Write operations
-        doWriteAny = sclkR & isBit39R & isWriteLatch
-        dWrite = Signal(32, reset_less=True)
-        m.d.sync += dWrite.eq(Cat(mosi, mosiSR[0:31]))
+                # --- The Read Pipeline Trigger (End of Address Byte) ---
+                with m.If(bit_counter == 7):
+                    m.d.sync += [
+                        addr_latched.eq(Cat(mosiSync, mosi_shift[0:6])),
+                        is_write_latched.eq(mosi_shift[6])
+                    ]
 
-        with m.If(doWriteAny):
-            with m.If(isCtrl):
-                m.d.sync += [
-                    ctrl_txEnable.eq(dWrite[0]),
-                    ctrl_modeSquare.eq(dWrite[1]),
-                    ctrl_softReset.eq(dWrite[2]),
-                    ctrl_modMode.eq(dWrite[3:5])
-                ]
-            with m.If(isPolarMod):
-                m.d.sync += [
-                    ampReg.eq(dWrite[0:16]),
-                    phaseReg.eq(dWrite[16:32])
-                ]
-            with m.If(isPhaseDelayCtrl):
-                m.d.sync += [
-                    baseDelayReg.eq(dWrite[0:8]),
-                    delayCoeffReg.eq(dWrite[8:16]),
-                    paEnThresholdReg.eq(dWrite[16:32])
-                ]
+                # --- The Write Trigger (End of Data Bytes) ---
+                with m.If(bit_counter == 39):
+                    with m.If(is_write_latched):
+                        # Extract the 32 LSBs holding our payload
+                        write_data = Cat(mosiSync, mosi_shift[0:31])
+                        
+                        # Direct dictionary-style mapping for writes
+                        with m.Switch(addr_latched):
+                            with m.Case(FPGAAddr.Control):
+                                m.d.sync += [
+                                    self.txEn.eq(write_data[0]),
+                                    self.modeSq.eq(write_data[1]),
+                                    self.softReset.eq(write_data[2]),
+                                    self.modMode.eq(write_data[3:5])
+                                ]
+                            with m.Case(FPGAAddr.PolarMod):
+                                m.d.sync += [
+                                    self.amp.eq(write_data[0:16]),
+                                    self.phase.eq(write_data[16:32])
+                                ]
+                            with m.Case(FPGAAddr.PhaseDelayCtrl):
+                                m.d.sync += [
+                                    self.baseDelay.eq(write_data[0:8]),
+                                    self.delayCoeff.eq(write_data[8:16]),
+                                    self.paEnThreshold.eq(write_data[16:32])
+                                ]
+
+            # ----------------------------------------------------
+            # 2. FALLING EDGE: Shift Out MISO Data
+            # ----------------------------------------------------
+            with m.If(sclk_fall):
+                with m.If(bit_counter == 8):
+                    # 8th falling edge: Load the pipeline and output the first bit immediately
+                    m.d.sync += miso_shift.eq(pipelined_read_data << 1)
+                    m.d.sync += self.oMISOR.eq(pipelined_read_data[31])
+                with m.Elif(bit_counter > 8):
+                    # Shift out remaining bits
+                    m.d.sync += miso_shift.eq(miso_shift << 1)
+                    m.d.sync += self.oMISOR.eq(miso_shift[31])
+
+
+# ----------------------------------------------------
+        # 3. THE PIPELINE: Breaking the 38ns Read Bottleneck
+        # ----------------------------------------------------
         
-        # Wire external outputs
-        m.d.comb += [
-            self.txEn.eq(ctrl_txEnable),
-            self.modeSq.eq(ctrl_modeSquare),
-            self.softReset.eq(ctrl_softReset),
-            self.modMode.eq(ctrl_modMode),
-            self.amp.eq(ampReg),
-            self.phase.eq(phaseReg),
-            self.baseDelay.eq(baseDelayReg),
-            self.delayCoeff.eq(delayCoeffReg),
-            self.paEnThreshold.eq(paEnThresholdReg)
-        ]
+        # Step A: Isolate cross-chip routing from the MUX logic.
+        # This flip-flop catches the GNSS counter value as soon as it arrives at the SPI module,
+        # spending our 25ns budget entirely on the vertical cross-chip wire journey.
+        pps_local = Signal(32, reset_less=True)
+        m.d.sync += pps_local.eq(self.pps_latched)
+
+        # Step B: The Local MUX
+        # Now the MUX only evaluates signals that are physically co-located.
+        with m.Switch(addr_latched):
+            with m.Case(FPGAAddr.Control): 
+                m.d.comb += internal_read_mux.eq(Cat(self.txEn, self.modeSq, self.softReset, self.modMode, C(0, 27)))
+            with m.Case(FPGAAddr.PolarMod):
+                m.d.comb += internal_read_mux.eq(Cat(self.amp, self.phase))
+            with m.Case(FPGAAddr.PhaseDelayCtrl):
+                m.d.comb += internal_read_mux.eq(Cat(self.baseDelay, self.delayCoeff, self.paEnThreshold))
+            with m.Case(FPGAAddr.PpsLatch):
+                m.d.comb += internal_read_mux.eq(pps_local) # <-- USE THE LOCAL REGISTER HERE
+            with m.Case(FPGAAddr.BuildNo):
+                m.d.comb += internal_read_mux.eq(self.buildNum)
+            with m.Case(FPGAAddr.Sig):
+                m.d.comb += internal_read_mux.eq(0x57535052) # "WSPR" Signature
+            with m.Default():
+                m.d.comb += internal_read_mux.eq(0)
+
+        # Step C: The timing firewall (already in your code)
+        m.d.sync += pipelined_read_data.eq(internal_read_mux)
+
+        # Map combinatorial pin
+        m.d.comb += self.oMISO.eq(self.oMISOR)
 
         return m
-
 
 class Top(Elaboratable):
     def __init__(self, sim=False, buildNum=0):
@@ -233,7 +179,7 @@ class Top(Elaboratable):
         # Clock Inputs
         self.fpgaSCLKpin = Signal()     # Pin 15
         self.FPGACLK = Signal()         # Pin 35 (from Si5351 CLK0, modulated carrier clock)
-        self.txco = Signal()            # Pin 44 (from Si5351 CLK1, 40MHz TCXO clock)
+        self.tcxo = Signal()            # Pin 44 (from Si5351 CLK1, 40MHz TCXO clock)
         self.gnssPPS = Signal()         # Pin 25 (GNSS 1PPS calibration pulse)
         
         # SPI Bus Pins
@@ -265,7 +211,7 @@ class Top(Elaboratable):
         return [
             self.fpgaSCLKpin,
             self.FPGACLK,
-            self.txco,
+            self.tcxo,
             self.gnssPPS,
             self.fpgaMOSI,
             self.fpgaMISO,
@@ -294,18 +240,18 @@ class Top(Elaboratable):
         ]
 
         # ========================================================
-        # 1. Housekeeping Clock: 40 MHz TCXO (txco) -> sync Domain
+        # 1. Housekeeping Clock: 40 MHz TCXO (tcxo) -> sync Domain
         # ========================================================
         # Route 40 MHz TCXO through a global buffer block for low-skew sync clock domain
-        txco_gb = Signal()
-        m.submodules.txco_gb_buf = Instance(
+        tcxo_gb = Signal()
+        m.submodules.tcxo_gb_buf = Instance(
             "SB_GB",
-            i_USER_SIGNAL_TO_GLOBAL_BUFFER=self.txco,
-            o_GLOBAL_BUFFER_OUTPUT=txco_gb
+            i_USER_SIGNAL_TO_GLOBAL_BUFFER=self.tcxo,
+            o_GLOBAL_BUFFER_OUTPUT=tcxo_gb
         )
         
         m.domains.sync = ClockDomain("sync")
-        m.d.comb += ClockSignal("sync").eq(txco_gb)
+        m.d.comb += ClockSignal("sync").eq(tcxo_gb)
 
         # ========================================================
         # 2. Variable Exciter Clock: Si5351 CLK0 -> fpgaclk Domain
@@ -330,7 +276,7 @@ class Top(Elaboratable):
         m.d.comb += [
             spi.iSCLK.eq(self.fpgaSCLKpin),
             spi.iMOSI.eq(self.fpgaMOSI),
-            self.fpgaMISO.eq(spi.oMISO),
+            self.fpgaMISO.eq(spi.oMISOR),
             spi.iNCS.eq(self.fpgaNCS)
         ]
 
@@ -496,10 +442,14 @@ class Top(Elaboratable):
         m.d.comb += pdm_out.eq(accum[16])
         
         # Drive amPWM output
-        m.d.comb += self.amPWM.eq(Mux(spi.txEn, pdm_out, 0))
+        amPWMR = Signal(attrs={"iob": "true"})
+        m.d.comb += amPWMR.eq(Mux(spi.txEn, pdm_out, 0))
+        m.d.sync += self.amPWM.eq(amPWMR)
         
         # Drive paEn output (active high, dropped when amplitude falls below threshold)
-        m.d.comb += self.paEn.eq(spi.txEn & (amp_sel >= spi.paEnThreshold))
+        paEnR = Signal(attrs={"iob": "true"})
+        m.d.comb += paEnR.eq(spi.txEn & (amp_sel >= spi.paEnThreshold))
+        m.d.sync += self.paEn.eq(paEnR)
 
         # ========================================================
         # 9. Pipelined RF Sequencer (Runs in fpgaclk domain)

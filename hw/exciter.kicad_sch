@@ -3543,6 +3543,10 @@
 		(uuid "711a3326-9e78-4b3b-89e3-c636d06863eb")
 	)
 	(no_connect
+		(at 88.9 106.68)
+		(uuid "7261ad93-c807-4972-91c4-c8522b3be712")
+	)
+	(no_connect
 		(at 69.85 43.18)
 		(uuid "76f4b981-2fa9-4e83-b78d-d77e98ebb343")
 	)
@@ -3553,10 +3557,6 @@
 	(no_connect
 		(at 69.85 53.34)
 		(uuid "952d46dc-c534-49a2-be26-316ce264cc44")
-	)
-	(no_connect
-		(at 88.9 124.46)
-		(uuid "971d9247-e90c-407c-a5ad-8d27bbc8177c")
 	)
 	(no_connect
 		(at 88.9 119.38)
@@ -3571,6 +3571,10 @@
 		(uuid "a0c58b73-9c03-4ae8-b14f-21395de20f15")
 	)
 	(no_connect
+		(at 88.9 109.22)
+		(uuid "a139f3b2-f010-4743-a987-da1d5509ba4d")
+	)
+	(no_connect
 		(at 88.9 116.84)
 		(uuid "a1f80479-caa8-4fad-8540-e1a0835f44de")
 	)
@@ -3581,10 +3585,6 @@
 	(no_connect
 		(at 227.33 160.02)
 		(uuid "aa6a6a41-a1fd-4a7b-9995-519c8e2a6618")
-	)
-	(no_connect
-		(at 88.9 127)
-		(uuid "cd8096e1-451b-4ce2-af22-54e63a8b4047")
 	)
 	(no_connect
 		(at 252.73 64.77)
@@ -3711,16 +3711,6 @@
 			(type default)
 		)
 		(uuid "0ce23809-8032-4287-8ea3-f6852cc345a2")
-	)
-	(wire
-		(pts
-			(xy 88.9 109.22) (xy 90.17 109.22)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0cfa72e2-b25b-4220-89a5-18606b9f501b")
 	)
 	(wire
 		(pts
@@ -4304,6 +4294,16 @@
 	)
 	(wire
 		(pts
+			(xy 88.9 127) (xy 90.17 127)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4534fb53-b4e4-428c-9475-4056b5eb8749")
+	)
+	(wire
+		(pts
 			(xy 208.28 63.5) (xy 208.28 64.77)
 		)
 		(stroke
@@ -4841,16 +4841,6 @@
 			(type default)
 		)
 		(uuid "826cbb05-5150-4f8d-b02a-0c70b0806666")
-	)
-	(wire
-		(pts
-			(xy 88.9 106.68) (xy 90.17 106.68)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "865a788d-d3e1-4389-b677-acdd008e109d")
 	)
 	(wire
 		(pts
@@ -5544,6 +5534,16 @@
 	)
 	(wire
 		(pts
+			(xy 88.9 124.46) (xy 90.17 124.46)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c267302a-3fd4-4ad0-b084-8b63c5c756c4")
+	)
+	(wire
+		(pts
 			(xy 137.16 106.68) (xy 137.16 107.95)
 		)
 		(stroke
@@ -6092,7 +6092,7 @@
 		)
 		(uuid "30586176-314e-438a-933c-bee24bca65ff")
 	)
-	(label "txco"
+	(label "tcxo"
 		(at 142.24 179.07 0)
 		(effects
 			(font
@@ -6132,7 +6132,7 @@
 		)
 		(uuid "aa12c641-a143-4708-a979-2f9c06778b58")
 	)
-	(label "txco"
+	(label "tcxo"
 		(at 228.6 152.4 0)
 		(effects
 			(font
@@ -6165,7 +6165,7 @@
 	)
 	(hierarchical_label "txBCLK"
 		(shape input)
-		(at 90.17 109.22 0)
+		(at 90.17 127 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -6363,7 +6363,7 @@
 	)
 	(hierarchical_label "txSYNC"
 		(shape input)
-		(at 90.17 106.68 0)
+		(at 90.17 124.46 0)
 		(effects
 			(font
 				(size 1.27 1.27)

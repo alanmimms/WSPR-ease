@@ -4,7 +4,7 @@
 ctx.addClock("FPGACLK", 148.5)
 
 # TCXO clock (Si5351 CLK1) is 40.0 MHz
-ctx.addClock("txco", 40.0)
+ctx.addClock("tcxo", 40.0)
 
 # SPI SCLK clock is 5.0 MHz
 ctx.addClock("fpgaSCLKpin", 5.0)
