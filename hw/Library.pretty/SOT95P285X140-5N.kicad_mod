@@ -235,7 +235,7 @@
 		(uuid "11f88e2f-ece8-4d71-bcb4-3bca78a80f96")
 	)
 	(embedded_fonts no)
-	(model "AP2112K-3.3TRG1.stp"
+	(model "${WSPR_EASE_SYMBOLS}/AP2112K-3.3TRG1/3D/AP2112K-3.3TRG1.stp"
 		(offset
 			(xyz 0 0 0)
 		)

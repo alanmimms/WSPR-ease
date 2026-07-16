@@ -1,12 +1,11 @@
 {
   "board": {
-    "active_layer": 2,
+    "active_layer": 5,
     "active_layer_preset": "",
     "auto_track_width": false,
     "hidden_netclasses": [],
     "hidden_nets": [
-      "GND",
-      "+VDDA"
+      "GND"
     ],
     "high_contrast_mode": 0,
     "net_color_mode": 1,

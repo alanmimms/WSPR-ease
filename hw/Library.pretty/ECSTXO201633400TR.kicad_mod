@@ -6,9 +6,9 @@
 	(descr "ECS-TXO-2016-33-400-TR-2")
 	(tags "Crystal or Oscillator")
 	(property "Reference" "Y**"
-		(at 0 -3.1 0)
+		(at 0 -2.7 0)
 		(layer "F.SilkS")
-		(uuid "347e37ec-94b5-45f9-8d6f-61b069a0cd36")
+		(uuid "6aa6dead-69f8-4673-8499-54ea8c9dd37a")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -20,7 +20,7 @@
 		(at -0.375 0 0)
 		(layer "F.SilkS")
 		(hide yes)
-		(uuid "0e565645-b724-4120-acec-c41da700bb27")
+		(uuid "76e8d320-de3b-4591-8412-f6a0325d12e9")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -32,7 +32,7 @@
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "5c0e4e06-1fa6-45c2-908b-657c0746ce8d")
+		(uuid "4e2170ed-b850-46c3-ac6c-4dee201c517b")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -44,7 +44,7 @@
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "3891f5e0-9553-45f8-9205-4977074bb3d6")
+		(uuid "35610490-ec67-46fd-8208-7c5be3cbf48d")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -61,7 +61,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "54aef007-f558-448e-96f2-3dcc640e7c8a")
+		(uuid "639cd30d-f7b8-49d1-afb8-739ced0de90e")
 	)
 	(fp_line
 		(start -1.7 0.5)
@@ -71,7 +71,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "9e1e508a-b576-43f8-b146-3cf782e8a07b")
+		(uuid "dd70a010-9767-4794-9abb-89bc1ddf913c")
 	)
 	(fp_arc
 		(start -1.7 0.3)
@@ -82,7 +82,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "9a7f888b-2f35-498a-809a-21ee841ef782")
+		(uuid "3438e7f1-32c5-413c-9709-0d5238fa0ec2")
 	)
 	(fp_arc
 		(start -1.7 0.5)
@@ -93,7 +93,7 @@
 			(type solid)
 		)
 		(layer "F.SilkS")
-		(uuid "bb8ec6dc-8df9-4de9-9dfd-00342c73d5bb")
+		(uuid "8cc51b02-f0f2-46dc-b20c-508606ccb741")
 	)
 	(fp_line
 		(start -2.8 -1.85)
@@ -103,7 +103,7 @@
 			(type solid)
 		)
 		(layer "F.CrtYd")
-		(uuid "f3818561-3ed2-4f42-9d38-261c2949f77e")
+		(uuid "819f62ae-d8f0-447f-bac5-46e4e0e782c6")
 	)
 	(fp_line
 		(start -2.8 1.85)
@@ -113,7 +113,7 @@
 			(type solid)
 		)
 		(layer "F.CrtYd")
-		(uuid "9b427803-0cd9-49aa-80f8-1e3d4379c823")
+		(uuid "d7f5b87a-4955-45a4-89b2-d688f8de9f20")
 	)
 	(fp_line
 		(start 2.05 -1.85)
@@ -123,7 +123,7 @@
 			(type solid)
 		)
 		(layer "F.CrtYd")
-		(uuid "00025762-f32e-4aca-a440-633c76458e18")
+		(uuid "58863367-38be-4f9f-8077-b5a1aece8fb3")
 	)
 	(fp_line
 		(start 2.05 1.85)
@@ -133,7 +133,7 @@
 			(type solid)
 		)
 		(layer "F.CrtYd")
-		(uuid "8d9b092a-75a5-4b14-bb16-413da391083b")
+		(uuid "32dccc6c-2ebb-4cf1-a5a5-16442e4f5471")
 	)
 	(fp_line
 		(start -1 -0.8)
@@ -143,7 +143,7 @@
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "42040d11-3a76-4c72-82be-2cedd1b9a968")
+		(uuid "1148ff12-61c0-43e9-a47b-74ef9c6d7aae")
 	)
 	(fp_line
 		(start -1 0.8)
@@ -153,7 +153,7 @@
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "07c11663-064b-45f3-b736-199ccc3b6e64")
+		(uuid "c1962bc9-94c3-4d4a-bf92-b256bb01aac9")
 	)
 	(fp_line
 		(start 1 -0.8)
@@ -163,7 +163,7 @@
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "a1990dfe-58aa-4e3f-980d-17890905d04f")
+		(uuid "5ce27ea3-2454-4b98-a31c-4877c5e6b19a")
 	)
 	(fp_line
 		(start 1 0.8)
@@ -173,12 +173,12 @@
 			(type solid)
 		)
 		(layer "F.Fab")
-		(uuid "d14e08f0-3e66-4499-9a38-edec2c52f165")
+		(uuid "bea765ff-104d-4871-a860-87c06cdabea5")
 	)
 	(fp_text user "${REFERENCE}"
 		(at -0.375 0 0)
 		(layer "F.Fab")
-		(uuid "94d091cb-e23a-49d9-84e0-87fc68fd4c8f")
+		(uuid "e0e48b00-7060-4368-9805-3033b51f81e7")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -190,28 +190,28 @@
 		(at -0.65 0.5 90)
 		(size 0.7 0.8)
 		(layers "F.Cu" "F.Mask" "F.Paste")
-		(uuid "14aeae86-f29a-429b-a339-cb2beaf05063")
+		(uuid "9b2b0368-c60d-4252-9263-1c8004c08448")
 	)
 	(pad "2" smd rect
 		(at 0.65 0.5 90)
 		(size 0.7 0.8)
 		(layers "F.Cu" "F.Mask" "F.Paste")
-		(uuid "994fe293-51ed-48fc-8035-c7b1691cef3e")
+		(uuid "4cd81f33-126e-487c-a5ba-19696ef4db6b")
 	)
 	(pad "3" smd rect
 		(at 0.65 -0.5 90)
 		(size 0.7 0.8)
 		(layers "F.Cu" "F.Mask" "F.Paste")
-		(uuid "849e4e1d-2fbf-4067-a2d1-88c491ac3046")
+		(uuid "689def5a-38eb-4148-9607-64820d2d4398")
 	)
 	(pad "4" smd rect
 		(at -0.65 -0.5 90)
 		(size 0.7 0.8)
 		(layers "F.Cu" "F.Mask" "F.Paste")
-		(uuid "9a340c78-3744-49eb-890e-f66a8c484d6e")
+		(uuid "924c4603-da8f-4af6-8f18-5c64e61f97ec")
 	)
 	(embedded_fonts no)
-	(model "${WSPR_EASE_SYMBOLS}/ECS-TXO-2016-33-400-TR.stp"
+	(model "ECS-TXO-2016-33-400-TR.stp"
 		(offset
 			(xyz 0 0 0)
 		)

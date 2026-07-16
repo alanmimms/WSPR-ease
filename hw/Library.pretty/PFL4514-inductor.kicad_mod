@@ -161,7 +161,7 @@
 		(uuid "587643a2-0a00-4d59-8f31-ae967f505312")
 	)
 	(embedded_fonts no)
-	(model "${KICAD9_3DMODEL_DIR}/Inductor_SMD.3dshapes/L_Neosid_SMS-ME3015.step"
+	(model "${WSPR_EASE_SYMBOLS}/PL4514-series.step"
 		(offset
 			(xyz 0 0 0)
 		)
