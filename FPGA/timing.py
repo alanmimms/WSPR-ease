@@ -1,24 +1,10 @@
-ctx.addClock("clk90GB", 90.0)
+# nextpnr-ice40 timing constraints
 
-# Mock SPI clock with low frequency to ignore CDC timing
-# Amaranth generates a net named something like 'fpgaSCLKpin'
+# Carrier clock (Si5351 CLK0) max frequency is 148.5 MHz (for 10m band)
+ctx.addClock("FPGACLK", 148.5)
+
+# TCXO clock (Si5351 CLK1) is 40.0 MHz
+ctx.addClock("txco", 40.0)
+
+# SPI SCLK clock is 5.0 MHz
 ctx.addClock("fpgaSCLKpin", 5.0)
-
-# This removes the "posedge fpgaSCLK -> posedge clk90" constraint.
-#ctx.setClockAsync("clk90", "fpgaSCLK")
-#ctx.addAsyncClockGroup(["clk90", "fpgaSCLK"])
-
-# This tells the tool NOT to optimize the timing for these crossings
-#ctx.setFalsePathFromTo("clk90", "fpgaSCLK")
-#ctx.setFalsePathFromTo("fpgaSCLK", "clk90")
-
-# To ignore timing for specific async IO pins (like resets) use
-# setFalsePathTo or setFalsePathFrom on specific nets.
-#
-# Example:
-# ctx.setFalsePathFrom("fpgaNRESET")
-
-try:
-    pass
-except:
-    pass

@@ -67,10 +67,10 @@ hw $(FPGATARGET):	$(RTL_SOURCES) $(PCF) timing.py
 	@echo "--- Building FPGA Bitstream ---"
 	@mkdir -p $(GENHWDIR) build
 	@echo "  YOSYS (Synthesis)..."
-	yosys -q -p "read_verilog "$(RTL_SOURCES)"; synth_ice40 -dsp -top Top -json $(PROJECT).json"
+	yosys -q -p "read_verilog "$(RTL_SOURCES)"; synth_ice40 -dsp -nocarry -top Top -json $(PROJECT).json"
 	@echo "  NEXTPNR (Place & Route)..."
-	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 90 --opt-timing --no-promote-globals \
-		--pre-pack timing.py --placer heap --seed 40 \
+	nextpnr-ice40 --$(DEVICE) --package $(PACKAGE) --freq 150 --opt-timing --no-promote-globals \
+		--pre-pack timing.py --placer sa --seed 3 \
 		--json $(PROJECT).json --pcf $(PCF) \
 		--log build/nextpnr.log -q \
 		--asc $(PROJECT).asc

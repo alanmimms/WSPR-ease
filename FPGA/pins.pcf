@@ -1,19 +1,30 @@
 # Clock Inputs
 set_io fpgaSCLKpin 15
-set_io clk40 35
-set_io gnssPPS 6
+set_io FPGACLK 35
+set_io txco 44
+set_io gnssPPS 25
 
-# SPI Interface (Standard 4mA is fine for these)
+# SPI Interface
 set_io fpgaMOSI 17
 set_io fpgaNCS 16
 set_io fpgaMISO 14
 
-# RF Exciter Outputs (DDR Capable, 12mA High Drive)
-set_io rfPushBase 42
+# I2S Audio Bus Inputs (from ESP32)
+set_io txBCLK 10
+set_io txSYNC 9
+set_io txI2Sdata 6
+
+# RF Exciter & Control Outputs
 set_io rfPushPeak 37
-set_io rfPullBase 45
+set_io rfPushBase 42
 set_io rfPullPeak 48
-set_io driverEN 44
+set_io rfPullBase 45
+set_io paEn 47
+set_io amPWM 46
+
+# Debug Pads
+set_io padA 4
+set_io padB 3
 
 # Reset without reconfiguration
 set_io fpgaNRESET 36
