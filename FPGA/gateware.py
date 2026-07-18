@@ -142,6 +142,17 @@ class SPIRegisters(wiring.Component):
             sckFall.eq(sckPrev & ~sckS)
         ]
 
+        # Strategy:
+        # On sckRise we shift in and save each MOSI bit in our mosiShift register
+        # until we have a read transaction and 7 more bits of address, or write
+        # transaction and 7 more bits of address and 32 bits of data.
+        #
+        # For a read transaction, the next sckFall after the
+        # read/Nwrite + seven bits of addr have been consumed, we have
+        # enough to read the request register data and present the
+        # bits sequentially on MISO.
+
+
         # SPI State
         # We only need to buffer the last 39 bits, but that is a
         # stupid optimization that makes debugging and visualization
