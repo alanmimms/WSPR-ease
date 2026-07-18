@@ -1,18 +1,18 @@
 # Clock Inputs
-set_io fpgaSCLKpin 15
-set_io FPGACLK 35
+set_io txCLK 35
 set_io tcxo 44
 set_io gnssPPS 25
 
 # SPI Interface
-set_io fpgaMOSI 17
-set_io fpgaNCS 16
 set_io fpgaMISO 14
+set_io fpgaSCK 15
+set_io fpgaNCS 16
+set_io fpgaMOSI 17
 
-# I2S Audio Bus Inputs (from ESP32)
-set_io txBCLK 10
-set_io txSYNC 9
-set_io txI2Sdata 6
+# I2S Audio Bus Inputs (from ESP32, BCLK/SYNC shared with mic ADC)
+set_io modTxData 6
+set_io modBCLK 18
+set_io modSYNC 19
 
 # RF Exciter & Control Outputs
 set_io rfPushPeak 37

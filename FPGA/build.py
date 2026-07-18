@@ -38,17 +38,16 @@ def main():
         f.write(f"constexpr uint32_t fpgaBuildNumber = {buildNum};\n")
     print(f"Generated {genDir}/buildNumber.hpp")
 
-    # 1. Generate Registers
-    print("Generating register definitions...")
-    subprocess.run([sys.executable, "regs.py", genDir], env=os.environ.copy(), check=True)
+    from gateware import Top, exportRegs
+    from amaranth.back import verilog
 
-    # 2. Generate Amaranth Gateware (Verilog output)
+    # Generate register definitions for C++ code.
+    exportRegs(f"{genDir}/regs.hpp")
+
+    # Generate Amaranth Gateware (Verilog output)
     print("Elaborating Amaranth gateware...")
     # We need to make sure the 'gen' directory is in the path so we can import .regs_gen
     sys.path.append(os.path.join(os.getcwd(), genDir))
-    
-    from gateware import Top
-    from amaranth.back import verilog
     
     top = Top(isSim, buildNum)
     ports = top.getPorts()
@@ -61,7 +60,7 @@ def main():
     
     print(f"Generated {outF} (Verilog-2005)")
 
-    # 3. Copy firmware headers to the correct location if needed
+    # Copy firmware headers to the correct location if needed
     cppHeader = f"{genDir}/regs.hpp"
     cppBuildNumHeader = f"{genDir}/buildNumber.hpp"
     targDir = "../sw/hal/"

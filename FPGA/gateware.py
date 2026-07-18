@@ -2,137 +2,229 @@
 # Designed for Lattice iCE40UP5K-SG48.
 
 from amaranth import *
-from amaranth.lib import enum, data, cdc
-from regs_gen import FPGAAddr
+from amaranth.lib import enum, data, cdc, wiring
+from amaranth.lib.wiring import In, Out
+from amaranth.lib.data import StructLayout
+from dataclasses import dataclass
+from functools import partial
+from types import SimpleNamespace
 
-class SPIRegisters(Elaboratable):
-    def __init__(self, buildNum=0):
-        self.buildNum = buildNum
-        
-        # SPI Bus Pins
-        self.iSCLK = Signal()
-        self.iMOSI = Signal()
-        self.oMISO = Signal()
-        self.iNCS = Signal()
-        
-        # PPS latched counter value (from Top)
-        self.pps_latched = Signal(32)
-        
-        # Decoded outputs to other clock domains
-        self.txEn = Signal(reset_less=True)
-        self.modeSq = Signal(reset_less=True)
-        self.softReset = Signal(reset_less=True)
-        self.modMode = Signal(2, reset_less=True)
-        self.amp = Signal(16, reset_less=True)
-        self.phase = Signal(16, reset_less=True)
-        self.baseDelay = Signal(8, reset_less=True)
-        self.delayCoeff = Signal(8, reset_less=True)
-        self.paEnThreshold = Signal(16, reset_less=True)
-        
-        # The crucial IOB-packed MISO output register
-        self.oMISOR = Signal(attrs={"iob": "true"}, reset_less=True)
+# Alias for Signal that defaults to reset_less=True
+SignalR = partial(Signal, reset_less=True)
+
+
+# I hate Python's sequence syntax and Amaranth's stupid wrong-ordered Cat().
+def VCat(*signals):
+    """
+    Verilog-style Concatenation: {MSB, ..., LSB}
+    Takes arguments from MSB down to LSB and packs them correctly.
+    """
+    # Amaranth's Cat() wants LSB to MSB, so we just reverse your inputs.
+    return Cat(*reversed(signals))
+
+def VSlice(signal, msb, lsb):
+    """
+    Verilog-style Slicing: signal[msb : lsb]
+    Uses inclusive boundaries, ordered from MSB down to LSB.
+    """
+    # Amaranth wants [start:stop] where start is LSB, stop is exclusive MSB.
+    return signal[lsb : msb + 1]
+
+
+@dataclass
+class SPIRegister:
+    address: int
+    name: str
+    layout: StructLayout
+    # You can easily add read_only: bool, default_val: int, etc.
+
+# Define our SPI register set
+R = SimpleNamespace()
+R.Control = SPIRegister(
+    address = 0x00,
+    name = "Control",
+    layout = StructLayout({
+        "txEnable":  1,         # Enable RF output
+        "modeSquare": 1,        # Enable pure square wave mode
+        "softReset": 1          # Soft reset for internal state machines
+    })
+)
+
+R.PhaseDelay = SPIRegister(
+    address = 0x01,
+    name = "PhaseDelay",
+    layout = StructLayout({
+        "baseDelay": 8,         # Base delay in I2S sample periods
+        "delayCoeff": 8,        # Dynamic delay coefficient
+        "paEnThreshold": 16     # Threshold for paEn output
+    })
+)
+
+R.PPSCounter = SPIRegister(
+    address = 0x02,
+    name = "PPSCounter",
+    layout = StructLayout({
+        "val": 32
+    })
+)
+
+# These are always at these addresses
+R.Build = SPIRegister(
+    address = 0x7E,
+    name = "Build",
+    layout = StructLayout({
+        "val": 32
+    })
+)
+
+R.Signature = SPIRegister(
+    address = 0x7F,
+    name = "Signature",
+    layout = StructLayout({
+        "val": 32
+    })
+)
+
+
+# This exports the defined registers in R to the specified file as a
+# C++ packed struct and defines the addresses as well.
+def exportRegs(filename: str):
+
+    with open(filename, "w") as f:
+        f.write("#pragma once\n")
+
+        for name, item in vars(R).items():
+            address = item.address
+            layout = item.layout
+            f.write(f"struct __attribute__((packed)) {name} {{\n")
+            f.write(f"  static constexpr unsigned ADDRESS = 0x{address:02X};\n")
+
+            for fieldName, shape in layout.members.items():
+                f.write(f"  unsigned {fieldName}: {shape};\n")
+            
+            f.write("};\n\n")
+
+
+exportRegs("foo.hpp")
+
+
+class SPIRegisters(wiring.Component):
+    # SPI Bus Pins
+    iSCK: In(1)
+    iMOSI: In(1)
+    oMISO: Out(1)
+    iNCS: In(1)
+
+    # Decoded outputs to other clock domains
+    txEn: Out()
+    modeSq: Out()
+    softReset: Out()
+    modMode: Out(2)
+    baseDelay: Out(8)
+    delayCoeff: Out(8)
+    paEnThreshold: Out(16)
 
     def elaborate(self, platform):
         m = Module()
         
-        # Synchronize SPI inputs to sync clock domain (40MHz TCXO)
-        sclkSync = Signal()
-        mosiSync = Signal()
-        ncsSync = Signal()
+        # Synchronize SPI inputs to tcxo clock domain
+        sckS = Signal()
+        mosiS = Signal()
+        csS = Signal()
 
         m.submodules += [
-            cdc.FFSynchronizer(self.iSCLK, sclkSync),
-            cdc.FFSynchronizer(self.iMOSI, mosiSync),
-            cdc.FFSynchronizer(self.iNCS, ncsSync)
+            cdc.FFSynchronizer(self.iSCK, sckS),
+            cdc.FFSynchronizer(self.iMOSI, mosiS),
+            cdc.FFSynchronizer(~self.iNCS, csS)
         ]
 
-        # Edge detection for SCLK
-        sclk_prev = Signal()
-        m.d.sync += sclk_prev.eq(sclkSync)
-        
-        sclk_rise = Signal()
-        sclk_fall = Signal()
+        # Edge detection for SCK
+        sckPrev = Signal()
+        m.d.sync += sckPrev.eq(sckS)
+        sckRise = Signal()
+        sckFall = Signal()
         m.d.comb += [
-            sclk_rise.eq(~sclk_prev & sclkSync),
-            sclk_fall.eq(sclk_prev & ~sclkSync)
+            sckRise.eq(~sckPrev & sckS),
+            sckFall.eq(sckPrev & ~sckS)
         ]
 
         # SPI State
-        mosi_shift = Signal(39, reset_less=True) # We only need to buffer the last 39 bits
-        miso_shift = Signal(32, reset_less=True)
-        bit_counter = Signal(6)
-        
-        # Pipelined Read registers
-        internal_read_mux = Signal(32)
-        pipelined_read_data = Signal(32, reset_less=True)
-        
-        # Control Signals
-        addr_latched = Signal(7, reset_less=True)
-        is_write_latched = Signal(reset_less=True)
+        # We only need to buffer the last 39 bits, but that is a
+        # stupid optimization that makes debugging and visualization
+        # difficult so we always fill up all 40 bits.
+        mosiShift = SignalR(40)
+        misoShift = SignalR(32)
+        bitCnt = Signal(6)
 
-        # Handle NCS reset asynchronously to SPI transaction, but synchronous to 40MHz
-        with m.If(ncsSync):
+        addr = SignalR(7)
+        isWrite = SignalR()
+        
+        # Handle CS reset asynchronously to SPI transaction, but synchronous to 40MHz
+        with m.If(csS):
+
             m.d.sync += [
-                bit_counter.eq(0),
+                bitCnt.eq(0),
                 self.oMISOR.eq(0)
             ]
+
         with m.Else():
             
             # ----------------------------------------------------
             # 1. RISING EDGE: Sample Data and Latch Commands
             # ----------------------------------------------------
-            with m.If(sclk_rise):
+            with m.If(sckRise):
+
+                # Serialize in the command in MSb first order
                 m.d.sync += [
-                    mosi_shift.eq(Cat(mosiSync, mosi_shift[0:38])), # Shift Left
-                    bit_counter.eq(bit_counter + 1)
+                    mosiShift.eq((mosiShift << 1) | mosiS),
+                    bitCnt.eq(bitCnt + 1)
                 ]
 
                 # --- The Read Pipeline Trigger (End of Address Byte) ---
-                with m.If(bit_counter == 7):
+                with m.If(bitCnt == 7):
                     m.d.sync += [
-                        addr_latched.eq(Cat(mosiSync, mosi_shift[0:6])),
-                        is_write_latched.eq(mosi_shift[6])
+                        addr.eq(Cat(mosiS, mosiShift[0:6])),
+                        isWrite.eq(mosiShift[6])
                     ]
 
                 # --- The Write Trigger (End of Data Bytes) ---
-                with m.If(bit_counter == 39):
-                    with m.If(is_write_latched):
+                with m.If(bitCnt == 39):
+                    with m.If(isWrite):
                         # Extract the 32 LSBs holding our payload
-                        write_data = Cat(mosiSync, mosi_shift[0:31])
+                        writeData = VCat(VSlice(mosiShift, 31, 0), mosiS)
                         
                         # Direct dictionary-style mapping for writes
-                        with m.Switch(addr_latched):
+                        with m.Switch(addrR):
+
                             with m.Case(FPGAAddr.Control):
+
                                 m.d.sync += [
-                                    self.txEn.eq(write_data[0]),
-                                    self.modeSq.eq(write_data[1]),
-                                    self.softReset.eq(write_data[2]),
-                                    self.modMode.eq(write_data[3:5])
+                                    self.txEn.eq(writeData[0]),
+                                    self.modeSq.eq(writeData[1]),
+                                    self.softReset.eq(writeData[2]),
+                                    self.modMode.eq(VSlice(writeData, 4, 3))
                                 ]
-                            with m.Case(FPGAAddr.PolarMod):
-                                m.d.sync += [
-                                    self.amp.eq(write_data[0:16]),
-                                    self.phase.eq(write_data[16:32])
-                                ]
+
                             with m.Case(FPGAAddr.PhaseDelayCtrl):
+
                                 m.d.sync += [
-                                    self.baseDelay.eq(write_data[0:8]),
-                                    self.delayCoeff.eq(write_data[8:16]),
-                                    self.paEnThreshold.eq(write_data[16:32])
+                                    self.baseDelay.eq(VSlice(writeData, 7, 0)),
+                                    self.delayCoeff.eq(VSlice(writeData, 15, 8)),
+                                    self.paEnThreshold.eq(VSlice(writeData, 31, 16))
                                 ]
 
             # ----------------------------------------------------
             # 2. FALLING EDGE: Shift Out MISO Data
             # ----------------------------------------------------
-            with m.If(sclk_fall):
-                with m.If(bit_counter == 8):
+            with m.If(sckFall):
+                with m.If(bitCnt == 8):
                     # 8th falling edge: Load the pipeline and output the first bit immediately
-                    m.d.sync += miso_shift.eq(pipelined_read_data << 1)
+                    m.d.sync += misoShift.eq(pipelined_read_data << 1)
                     m.d.sync += self.oMISOR.eq(pipelined_read_data[31])
-                with m.Elif(bit_counter > 8):
+                with m.Elif(bitCnt > 8):
                     # Shift out remaining bits
-                    m.d.sync += miso_shift.eq(miso_shift << 1)
-                    m.d.sync += self.oMISOR.eq(miso_shift[31])
+                    m.d.sync += misoShift.eq(misoShift << 1)
+                    m.d.sync += self.oMISOR.eq(misoShift[31])
 
 
 # ----------------------------------------------------
@@ -142,22 +234,20 @@ class SPIRegisters(Elaboratable):
         # Step A: Isolate cross-chip routing from the MUX logic.
         # This flip-flop catches the GNSS counter value as soon as it arrives at the SPI module,
         # spending our 25ns budget entirely on the vertical cross-chip wire journey.
-        pps_local = Signal(32, reset_less=True)
-        m.d.sync += pps_local.eq(self.pps_latched)
+        ppsLocal = SignalR(32)
+        m.d.sync += ppsLocal.eq(self.ppsR)
 
         # Step B: The Local MUX
         # Now the MUX only evaluates signals that are physically co-located.
-        with m.Switch(addr_latched):
+        with m.Switch(addr):
             with m.Case(FPGAAddr.Control): 
                 m.d.comb += internal_read_mux.eq(Cat(self.txEn, self.modeSq, self.softReset, self.modMode, C(0, 27)))
-            with m.Case(FPGAAddr.PolarMod):
-                m.d.comb += internal_read_mux.eq(Cat(self.amp, self.phase))
             with m.Case(FPGAAddr.PhaseDelayCtrl):
                 m.d.comb += internal_read_mux.eq(Cat(self.baseDelay, self.delayCoeff, self.paEnThreshold))
             with m.Case(FPGAAddr.PpsLatch):
-                m.d.comb += internal_read_mux.eq(pps_local) # <-- USE THE LOCAL REGISTER HERE
+                m.d.comb += internal_read_mux.eq(ppsLocal) # <-- USE THE LOCAL REGISTER HERE
             with m.Case(FPGAAddr.BuildNo):
-                m.d.comb += internal_read_mux.eq(self.buildNum)
+                m.d.comb += internal_read_mux.eq(buildNum)
             with m.Case(FPGAAddr.Sig):
                 m.d.comb += internal_read_mux.eq(0x57535052) # "WSPR" Signature
             with m.Default():
@@ -172,13 +262,17 @@ class SPIRegisters(Elaboratable):
         return m
 
 class Top(Elaboratable):
+    fpgaSCK: In(1)
+    txCLK: In(1)
+    tcxo: In(1)
+    gnssPPS: In(1)
+
     def __init__(self, sim=False, buildNum=0):
         self.sim = sim
-        self.buildNum = buildNum
         
         # Clock Inputs
-        self.fpgaSCLKpin = Signal()     # Pin 15
-        self.FPGACLK = Signal()         # Pin 35 (from Si5351 CLK0, modulated carrier clock)
+        self.fpgaSCK = Signal()     # Pin 15
+        self.txCLK = Signal()         # Pin 35 (from Si5351 CLK0, modulated carrier clock)
         self.tcxo = Signal()            # Pin 44 (from Si5351 CLK1, 40MHz TCXO clock)
         self.gnssPPS = Signal()         # Pin 25 (GNSS 1PPS calibration pulse)
         
@@ -209,8 +303,8 @@ class Top(Elaboratable):
 
     def getPorts(self):
         return [
-            self.fpgaSCLKpin,
-            self.FPGACLK,
+            self.fpgaSCK,
+            self.txCLK,
             self.tcxo,
             self.gnssPPS,
             self.fpgaMOSI,
@@ -243,141 +337,141 @@ class Top(Elaboratable):
         # 1. Housekeeping Clock: 40 MHz TCXO (tcxo) -> sync Domain
         # ========================================================
         # Route 40 MHz TCXO through a global buffer block for low-skew sync clock domain
-        tcxo_gb = Signal()
-        m.submodules.tcxo_gb_buf = Instance(
+        tcxoGB = Signal()
+        m.submodules.tcxoGBbuf = Instance(
             "SB_GB",
             i_USER_SIGNAL_TO_GLOBAL_BUFFER=self.tcxo,
-            o_GLOBAL_BUFFER_OUTPUT=tcxo_gb
+            o_GLOBAL_BUFFER_OUTPUT=tcxoGB
         )
         
         m.domains.sync = ClockDomain("sync")
-        m.d.comb += ClockSignal("sync").eq(tcxo_gb)
+        m.d.comb += ClockSignal("sync").eq(tcxoGB)
 
         # ========================================================
-        # 2. Variable Exciter Clock: Si5351 CLK0 -> fpgaclk Domain
+        # 2. Variable Exciter Clock: Si5351 CLK0 -> txClk Domain
         # ========================================================
         # Route Si5351 CLK0 through a global buffer block for the high-frequency RF domain
-        fpgaclk_gb = Signal()
-        m.submodules.fpgaclk_gb_buf = Instance(
+        txClkGB = Signal()
+        m.submodules.txClkGBbuf = Instance(
             "SB_GB",
-            i_USER_SIGNAL_TO_GLOBAL_BUFFER=self.FPGACLK,
-            o_GLOBAL_BUFFER_OUTPUT=fpgaclk_gb
+            i_USER_SIGNAL_TO_GLOBAL_BUFFER=self.txCLK,
+            o_GLOBAL_BUFFER_OUTPUT=txClkGB
         )
         
-        m.domains.fpgaclk = ClockDomain("fpgaclk", reset_less=True)
-        m.d.comb += ClockSignal("fpgaclk").eq(fpgaclk_gb)
+        m.domains.txClk = ClockDomain("txClk", reset_less=True)
+        m.d.comb += ClockSignal("txClk").eq(txClkGB)
 
         # ========================================================
         # 3. SPI Registers (Runs in 40MHz sync domain)
         # ========================================================
-        spi = SPIRegisters(buildNum=self.buildNum)
+        spi = SPIRegisters(buildNum=buildNum)
         m.submodules.spi = spi
-        
+
         m.d.comb += [
-            spi.iSCLK.eq(self.fpgaSCLKpin),
+            spi.iSCK.eq(self.fpgaSCK),
             spi.iMOSI.eq(self.fpgaMOSI),
-            self.fpgaMISO.eq(spi.oMISOR),
+            self.fpgaMOSI.eq(spi.oMISOR),
             spi.iNCS.eq(self.fpgaNCS)
         ]
 
         # SPI Soft Reset + Hardware /fpgaNRESET input synchronisation
-        nreset_sync = Signal()
-        m.submodules.sync_nreset = cdc.FFSynchronizer(self.fpgaNRESET, nreset_sync)
+        nresetSync = Signal()
+        m.submodules.nresetSyncMod = cdc.FFSynchronizer(self.fpgaNRESET, nresetSync)
         
-        softReset_comb = Signal()
-        m.d.comb += softReset_comb.eq(spi.softReset | ~nreset_sync)
+        softResetComb = Signal()
+        m.d.comb += softResetComb.eq(spi.softReset | ~nresetSync)
         
         softReset = Signal()
-        m.d.sync += softReset.eq(softReset_comb)
+        m.d.sync += softReset.eq(softResetComb)
 
         # ========================================================
         # 4. PPS Calibration Counter (Runs in 40MHz sync domain)
         # ========================================================
-        pps_counter = Signal(32)
-        pps_latched_reg = Signal(32)
+        ppsCount = Signal(32)
+        ppsRR = Signal(32)
         
         # Synchronise GNSS 1PPS to 40MHz
-        pps_sync = Signal()
-        m.submodules.sync_pps = cdc.FFSynchronizer(self.gnssPPS, pps_sync)
+        ppsSync = Signal()
+        m.submodules.ppsSyncMod = cdc.FFSynchronizer(self.gnssPPS, ppsSync)
         
-        last_pps = Signal()
-        m.d.sync += last_pps.eq(pps_sync)
+        lastPPS = Signal()
+        m.d.sync += lastPPS.eq(ppsSync)
         
-        pps_rising = Signal()
-        m.d.comb += pps_rising.eq(pps_sync & ~last_pps)
+        ppsRising = Signal()
+        m.d.comb += ppsRising.eq(ppsSync & ~lastPPS)
         
-        m.d.sync += pps_counter.eq(pps_counter + 1)
-        with m.If(pps_rising):
-            m.d.sync += pps_latched_reg.eq(pps_counter)
+        m.d.sync += ppsCount.eq(ppsCount + 1)
+        with m.If(ppsRising):
+            m.d.sync += ppsRR.eq(ppsCount)
             
-        m.d.comb += spi.pps_latched.eq(pps_latched_reg)
+        m.d.comb += spi.ppsR.eq(ppsRR)
 
         # ========================================================
         # 5. I2S Receiver (Oversampled in 40MHz sync domain)
         # ========================================================
-        bclk_sync = Signal()
-        sync_sync = Signal()
-        data_sync = Signal()
+        bclkSync = Signal()
+        syncSync = Signal()
+        dataSync = Signal()
         
         m.submodules += [
-            cdc.FFSynchronizer(self.txBCLK, bclk_sync),
-            cdc.FFSynchronizer(self.txSYNC, sync_sync),
-            cdc.FFSynchronizer(self.txI2Sdata, data_sync)
+            cdc.FFSynchronizer(self.txBCLK, bclkSync),
+            cdc.FFSynchronizer(self.txSYNC, syncSync),
+            cdc.FFSynchronizer(self.txI2Sdata, dataSync)
         ]
         
-        last_bclk = Signal()
-        last_sync = Signal()
+        bclkPrev = Signal()
+        lastSync = Signal()
         m.d.sync += [
-            last_bclk.eq(bclk_sync),
-            last_sync.eq(sync_sync)
+            bclkPrev.eq(bclkSync),
+            lastSync.eq(syncSync)
         ]
         
-        bclk_rising = Signal()
-        m.d.comb += bclk_rising.eq(bclk_sync & ~last_bclk)
+        bclkRising = Signal()
+        m.d.comb += bclkRising.eq(bclkSync & ~bclkPrev)
         
-        sync_transition = Signal()
-        m.d.comb += sync_transition.eq(sync_sync ^ last_sync)
+        syncChanged = Signal()
+        m.d.comb += syncChanged.eq(syncSync ^ lastSync)
         
-        bit_count = Signal(6)
-        shift_reg = Signal(16)
-        am_val = Signal(16)
-        phase_val = Signal(16)
+        bitCount = Signal(6)
+        shifterR = Signal(16)
+        amVal = Signal(16)
+        phaseVal = Signal(16)
         
-        phase_updated_toggle = Signal()
+        phaseUpdated = Signal()
         
-        with m.If(sync_transition):
-            m.d.sync += bit_count.eq(0)
+        with m.If(syncChanged):
+            m.d.sync += bitCount.eq(0)
         with m.Else():
-            with m.If(bclk_rising):
-                m.d.sync += bit_count.eq(bit_count + 1)
-                with m.If((bit_count >= 1) & (bit_count <= 16)):
-                    m.d.sync += shift_reg.eq((shift_reg << 1) | data_sync)
-                with m.If(bit_count == 16):
+            with m.If(bclkRising):
+                m.d.sync += bitCount.eq(bitCount + 1)
+                with m.If((bitCount >= 1) & (bitCount <= 16)):
+                    m.d.sync += shifterR.eq((shifterR << 1) | dataSync)
+                with m.If(bitCount == 16):
                     # Copy out shifted word. Sync low is Left (AM), High is Right (Phase)
-                    with m.If(~last_sync):
-                        m.d.sync += am_val.eq((shift_reg << 1) | data_sync)
+                    with m.If(~lastSync):
+                        m.d.sync += amVal.eq((shifterR << 1) | dataSync)
                     with m.Else():
                         m.d.sync += [
-                            phase_val.eq((shift_reg << 1) | data_sync),
-                            phase_updated_toggle.eq(~phase_updated_toggle)
+                            phaseVal.eq((shifterR << 1) | dataSync),
+                            phaseUpdated.eq(~phaseUpdated)
                         ]
 
         # ========================================================
         # 6. Dynamic Phase Delay Line (Runs in 40MHz sync domain)
         # ========================================================
         phase_history = [Signal(16, name=f"phase_history_{i}") for i in range(16)]
-        last_toggle = Signal()
-        m.d.sync += last_toggle.eq(phase_updated_toggle)
+        phaseUpdatedPrev = Signal()
+        m.d.sync += phaseUpdatedPrev.eq(phaseUpdated)
         
         # Shift on Right channel I2S frame updates
-        with m.If(phase_updated_toggle ^ last_toggle):
-            m.d.sync += phase_history[0].eq(phase_val)
+        with m.If(phaseUpdated ^ phaseUpdatedPrev):
+            m.d.sync += phase_history[0].eq(phaseVal)
             for i in range(15):
                 m.d.sync += phase_history[i+1].eq(phase_history[i])
                 
         # Stage A: Pipelined multiplication (Runs in sync domain)
         mult_temp = Signal(24)
-        m.d.sync += mult_temp.eq(am_val * spi.delayCoeff)
+        m.d.sync += mult_temp.eq(amVal * spi.delayCoeff)
         
         # Stage B: Pipelined tap index calculation (Runs in sync domain)
         raw_tap = Signal(16)
@@ -397,30 +491,30 @@ class Top(Elaboratable):
                     m.d.sync += delayed_phase_reg.eq(phase_history[i])
 
         # ========================================================
-        # 7. CDC: Phase Latch (sync -> fpgaclk Handshake)
+        # 7. CDC: Phase Latch (sync -> txClk Handshake)
         # ========================================================
         # Safe Clock Domain Crossing for the I2S phase data to the variable RF clock
         phase_to_rf_toggle = Signal()
-        with m.If(phase_updated_toggle ^ last_toggle):
+        with m.If(phaseUpdated ^ phaseUpdatedPrev):
             m.d.sync += phase_to_rf_toggle.eq(~phase_to_rf_toggle)
             
         phase_to_rf_toggle_rf = Signal()
         m.submodules.sync_phase_toggle = cdc.FFSynchronizer(
             phase_to_rf_toggle,
             phase_to_rf_toggle_rf,
-            o_domain="fpgaclk"
+            o_domain="txClk"
         )
         
         last_phase_toggle_rf = Signal()
-        m.d.fpgaclk += last_phase_toggle_rf.eq(phase_to_rf_toggle_rf)
+        m.d.txClk += last_phase_toggle_rf.eq(phase_to_rf_toggle_rf)
         
         # Pipelined load enable to resolve clock enable fanout timing bottleneck
         phase_load_en = Signal()
-        m.d.fpgaclk += phase_load_en.eq(phase_to_rf_toggle_rf ^ last_phase_toggle_rf)
+        m.d.txClk += phase_load_en.eq(phase_to_rf_toggle_rf ^ last_phase_toggle_rf)
         
         phase_rf = Signal(16)
         with m.If(phase_load_en):
-            m.d.fpgaclk += phase_rf.eq(delayed_phase_reg)
+            m.d.txClk += phase_rf.eq(delayed_phase_reg)
 
         # ========================================================
         # 8. Amplitude Tracking PWM/PDM (Runs in 40MHz sync domain)
@@ -429,7 +523,7 @@ class Top(Elaboratable):
         with m.If(spi.modMode == 0):
             m.d.comb += amp_sel.eq(spi.amp)
         with m.Else():
-            m.d.comb += amp_sel.eq(am_val)
+            m.d.comb += amp_sel.eq(amVal)
             
         # Delta-Sigma PDM Modulator for tracking buck converter control voltage
         accum = Signal(17)
@@ -452,22 +546,22 @@ class Top(Elaboratable):
         m.d.sync += self.paEn.eq(paEnR)
 
         # ========================================================
-        # 9. Pipelined RF Sequencer (Runs in fpgaclk domain)
+        # 9. Pipelined RF Sequencer (Runs in txClk domain)
         # ========================================================
-        # Synchronise Control registers to fpgaclk domain
+        # Synchronise Control registers to txClk domain
         txEnable_rf = Signal()
         softReset_rf = Signal()
         modeSquare_rf = Signal()
         modMode_rf = Signal(2)
         staticPhase_rf = Signal(16)
         
-        m.submodules.sync_txEn_rf = cdc.FFSynchronizer(spi.txEn, txEnable_rf, o_domain="fpgaclk")
-        m.submodules.sync_softRst_rf = cdc.FFSynchronizer(softReset, softReset_rf, o_domain="fpgaclk")
-        m.submodules.sync_modeSq_rf = cdc.FFSynchronizer(spi.modeSq, modeSquare_rf, o_domain="fpgaclk")
+        m.submodules.sync_txEn_rf = cdc.FFSynchronizer(spi.txEn, txEnable_rf, o_domain="txClk")
+        m.submodules.sync_softRst_rf = cdc.FFSynchronizer(softReset, softReset_rf, o_domain="txClk")
+        m.submodules.sync_modeSq_rf = cdc.FFSynchronizer(spi.modeSq, modeSquare_rf, o_domain="txClk")
         
         modMode_rf_temp = Signal(2)
         staticPhase_rf_temp = Signal(16)
-        m.d.fpgaclk += [
+        m.d.txClk += [
             modMode_rf_temp.eq(spi.modMode),
             modMode_rf.eq(modMode_rf_temp),
             staticPhase_rf_temp.eq(spi.phase),
@@ -476,18 +570,18 @@ class Top(Elaboratable):
         
         # Select target Phase (Registered to Stage 2)
         phase_target_stage2 = Signal(16, attrs={"nosdff": "1"})
-        m.d.fpgaclk += phase_target_stage2.eq(Mux(modMode_rf == 2, phase_rf, staticPhase_rf))
+        m.d.txClk += phase_target_stage2.eq(Mux(modMode_rf == 2, phase_rf, staticPhase_rf))
         
         # Pipeline register to Stage 3
         phase_target_stage3 = Signal(16, attrs={"nosdff": "1"})
-        m.d.fpgaclk += phase_target_stage3.eq(phase_target_stage2)
+        m.d.txClk += phase_target_stage3.eq(phase_target_stage2)
 
         # Combined reset register to offload reset logic to the DFF's dedicated SR pin
         seq_reset_rf = Signal(attrs={"keep": "1"})
         modeSquare_seq_rf = Signal(attrs={"keep": "1"})
         modeSquare_dsp_rf = Signal(attrs={"keep": "1"})
         
-        m.d.fpgaclk += [
+        m.d.txClk += [
             seq_reset_rf.eq(softReset_rf | ~txEnable_rf),
             modeSquare_seq_rf.eq(modeSquare_rf),
             modeSquare_dsp_rf.eq(modeSquare_rf)
@@ -497,15 +591,11 @@ class Top(Elaboratable):
         next_sq = Array([0 if i >= 4 else i + 1 for i in range(16)])
         next_15 = Array([0 if i >= 14 else i + 1 for i in range(16)])
         
-        # Stage 1: Dual counters with locked placement close to the DSP block (column 1)
-        next_sq = Array([0 if i >= 4 else i + 1 for i in range(16)])
-        next_15 = Array([0 if i >= 14 else i + 1 for i in range(16)])
-        
         counter_sq = Signal(4)
         counter_15 = Signal(4)
         
-        counter_sq_bits = [Signal(attrs={"bel": f"X1/Y10/lc{i}", "keep": "1"}) for i in range(4)]
-        counter_15_bits = [Signal(attrs={"bel": f"X1/Y11/lc{i}", "keep": "1"}) for i in range(4)]
+        counter_sq_bits = [Signal() for i in range(4)]
+        counter_15_bits = [Signal() for i in range(4)]
         
         m.d.comb += [
             counter_sq.eq(Cat(counter_sq_bits)),
@@ -522,13 +612,13 @@ class Top(Elaboratable):
         
         for i in range(4):
             m.submodules[f"dff_sq_{i}"] = Instance("SB_DFFSR",
-                i_C=ClockSignal("fpgaclk"),
+                i_C=ClockSignal("txClk"),
                 i_R=seq_reset_rf,
                 i_D=next_sq_val[i],
                 o_Q=counter_sq_bits[i]
             )
             m.submodules[f"dff_15_{i}"] = Instance("SB_DFFSR",
-                i_C=ClockSignal("fpgaclk"),
+                i_C=ClockSignal("txClk"),
                 i_R=seq_reset_rf,
                 i_D=next_15_val[i],
                 o_Q=counter_15_bits[i]
@@ -545,32 +635,32 @@ class Top(Elaboratable):
         lut_product_sq_19 = Signal(19, reset=0x7ffff, attrs={"nosdff": "1"})
         lut_product_15_19 = Signal(19, reset=0x7ffff, attrs={"nosdff": "1"})
         
-        lut_product_sq_comb = Signal(19, attrs={"keep": "1"})
-        lut_product_15_comb = Signal(19, attrs={"keep": "1"})
+        lut_product_sqComb = Signal(19, attrs={"keep": "1"})
+        lut_product_15Comb = Signal(19, attrs={"keep": "1"})
         
         m.d.comb += [
-            lut_product_sq_comb.eq(lut_vals[counter_sq]),
-            lut_product_15_comb.eq(lut_vals[counter_15])
+            lut_product_sqComb.eq(lut_vals[counter_sq]),
+            lut_product_15Comb.eq(lut_vals[counter_15])
         ]
         
-        m.d.fpgaclk += [
-            lut_product_sq_19.eq(lut_product_sq_comb),
-            lut_product_15_19.eq(lut_product_15_comb)
+        m.d.txClk += [
+            lut_product_sq_19.eq(lut_product_sqComb),
+            lut_product_15_19.eq(lut_product_15Comb)
         ]
         
         # Stage 2b: Pipelined Multiplier Coefficient (coeff_rf_stage2)
         coeff_rf_stage2 = Signal(16, attrs={"nosdff": "1"})
-        m.d.fpgaclk += coeff_rf_stage2.eq(Mux(modeSquare_dsp_rf, 2, 6))
+        m.d.txClk += coeff_rf_stage2.eq(Mux(modeSquare_dsp_rf, 2, 6))
 
         # Stage 3: Combine and register LUT Product and Coefficient (1 LUT delay only)
         lut_product_stage2 = Signal(19)
         m.d.comb += lut_product_stage2.eq(Mux(modeSquare_seq_rf, lut_product_sq_19, lut_product_15_19))
         
         lut_product_stage3 = Signal(32, attrs={"nosdff": "1"})
-        m.d.fpgaclk += lut_product_stage3.eq(lut_product_stage2)
+        m.d.txClk += lut_product_stage3.eq(lut_product_stage2)
 
         coeff_rf_stage3 = Signal(16, attrs={"nosdff": "1"})
-        m.d.fpgaclk += coeff_rf_stage3.eq(coeff_rf_stage2)
+        m.d.txClk += coeff_rf_stage3.eq(coeff_rf_stage2)
 
         # Stage 3 & 4: DSP State Mapper (Multiply-Accumulate in SB_MAC16)
         dsp_out = Signal(32)
@@ -591,7 +681,7 @@ class Top(Elaboratable):
             p_BOTOUTPUT_SELECT=0, # select registered adder output
             
             # Port Connections
-            i_CLK=ClockSignal("fpgaclk"),
+            i_CLK=ClockSignal("txClk"),
             i_CE=1,
             i_IRSTTOP=0,
             i_IRSTBOT=0,
@@ -650,8 +740,8 @@ class Top(Elaboratable):
         lp_next = Signal()
         m.d.comb += lp_next.eq(Mux(modeSquare_rf, 1, Mux(is_state_4, 0, 1)))
         
-        # Register the outputs in fpgaclk domain
-        m.d.fpgaclk += [
+        # Register the outputs in txClk domain
+        m.d.txClk += [
             pb_reg.eq(pb_next),
             pp_reg.eq(pp_next),
             lb_reg.eq(lb_next),
