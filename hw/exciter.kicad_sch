@@ -6102,7 +6102,7 @@
 		)
 		(uuid "4c771caf-b2a5-4d67-bb6d-f41e8a0624c4")
 	)
-	(label "FPGACLK"
+	(label "txCLK"
 		(at 142.24 173.99 0)
 		(effects
 			(font
@@ -6142,7 +6142,7 @@
 		)
 		(uuid "ed4bf7ab-1b8a-4871-8ec1-138c81716f96")
 	)
-	(label "FPGACLK"
+	(label "txCLK"
 		(at 71.12 58.42 0)
 		(effects
 			(font
@@ -6163,7 +6163,7 @@
 		)
 		(uuid "041b1fd7-344a-41ba-98e0-1994d380c96c")
 	)
-	(hierarchical_label "txBCLK"
+	(hierarchical_label "modBCLK"
 		(shape input)
 		(at 90.17 127 0)
 		(effects
@@ -6196,7 +6196,7 @@
 		)
 		(uuid "2a7d3161-2fe0-4637-beb2-1e072d6f58f9")
 	)
-	(hierarchical_label "txI2Sdata"
+	(hierarchical_label "modTxData"
 		(shape input)
 		(at 90.17 104.14 0)
 		(effects
@@ -6218,7 +6218,7 @@
 		)
 		(uuid "544634bd-6618-42af-b234-7c1818660b60")
 	)
-	(hierarchical_label "fpgaSCLK"
+	(hierarchical_label "fpgaSCK"
 		(shape input)
 		(at 90.17 134.62 0)
 		(effects
@@ -6240,7 +6240,7 @@
 		)
 		(uuid "83aaad1e-15b7-4693-b521-d1f9ccc04969")
 	)
-	(hierarchical_label "txBCLK"
+	(hierarchical_label "modBCLK"
 		(shape input)
 		(at 254 73.66 0)
 		(effects
@@ -6361,7 +6361,7 @@
 		)
 		(uuid "c67be07a-43bc-487d-bc0a-048e1826a780")
 	)
-	(hierarchical_label "txSYNC"
+	(hierarchical_label "modSYNC"
 		(shape input)
 		(at 90.17 124.46 0)
 		(effects
@@ -6405,7 +6405,7 @@
 		)
 		(uuid "e6f51c68-f7fa-4c17-ac6d-534e7a94726a")
 	)
-	(hierarchical_label "txSYNC"
+	(hierarchical_label "modSYNC"
 		(shape input)
 		(at 254 71.12 0)
 		(effects

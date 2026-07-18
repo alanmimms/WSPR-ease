@@ -880,6 +880,9 @@
       "Net-(U105-IO4)": [
         "diff90"
       ],
+      "Net-(U105-RF_IN)": [
+        "RF"
+      ],
       "Net-(U105-SW)": [
         "power"
       ],
@@ -887,6 +890,9 @@
         "RF"
       ],
       "Net-(U106-SW)": [
+        "power"
+      ],
+      "Net-(U107-SW)": [
         "power"
       ],
       "Net-(U1201-SW)": [
