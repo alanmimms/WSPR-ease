@@ -19,7 +19,7 @@ def VCat(*signals):
     Verilog-style Concatenation: {MSB, ..., LSB}
     Takes arguments from MSB down to LSB and packs them correctly.
     """
-    # Amaranth's Cat() wants LSB to MSB, so we just reverse your inputs.
+    # Amaranth's Cat() collects LSB to MSB, so we just reverse.
     return Cat(*reversed(signals))
 
 def VSlice(signal, msb, lsb):
@@ -27,82 +27,76 @@ def VSlice(signal, msb, lsb):
     Verilog-style Slicing: signal[msb : lsb]
     Uses inclusive boundaries, ordered from MSB down to LSB.
     """
-    # Amaranth wants [start:stop] where start is LSB, stop is exclusive MSB.
+    # Amaranth uses [start:stop] where start is LSb, stop is exclusive
+    # of MSb.
     return signal[lsb : msb + 1]
 
 
 @dataclass
 class SPIRegister:
-    address: int
-    name: str
-    layout: StructLayout
-    # You can easily add read_only: bool, default_val: int, etc.
+
+    def __init__(self, address, name, layout):
+        self.address = address
+        self.name = name
+        self.layout = layout
+
 
 # Define our SPI register set
 R = SimpleNamespace()
-R.Control = SPIRegister(
-    address = 0x00,
-    name = "Control",
-    layout = StructLayout({
-        "txEnable":  1,         # Enable RF output
-        "modeSquare": 1,        # Enable pure square wave mode
-        "softReset": 1          # Soft reset for internal state machines
-    })
-)
+R.Control = SPIRegister(0x00, "Control", StructLayout({
+    "txEnable":  1,         # Enable RF output
+    "modeSquare": 1,        # Enable pure square wave mode
+    "softReset": 1          # Soft reset for internal state machines
+}))
 
-R.PhaseDelay = SPIRegister(
-    address = 0x01,
-    name = "PhaseDelay",
-    layout = StructLayout({
-        "baseDelay": 8,         # Base delay in I2S sample periods
-        "delayCoeff": 8,        # Dynamic delay coefficient
-        "paEnThreshold": 16     # Threshold for paEn output
-    })
-)
+R.PhaseDelay = SPIRegister(0x01, "PhaseDelay", StructLayout({
+    "baseDelay": 8,         # Base delay in I2S sample periods
+    "delayCoeff": 8,        # Dynamic delay coefficient
+    "paEnThreshold": 16     # Threshold for paEn output
+}))
 
-R.PPSCounter = SPIRegister(
-    address = 0x02,
-    name = "PPSCounter",
-    layout = StructLayout({
-        "val": 32
-    })
-)
+R.PPSCounter = SPIRegister(0x02, "PPSCounter", StructLayout({
+    "val": 32
+}))
 
-# These are always at these addresses
-R.Build = SPIRegister(
-    address = 0x7E,
-    name = "Build",
-    layout = StructLayout({
-        "val": 32
-    })
-)
+# These two are always at these addresses.
+R.Build = SPIRegister(0x7E, "Build", StructLayout({
+    "val": 32
+}))
 
-R.Signature = SPIRegister(
-    address = 0x7F,
-    name = "Signature",
-    layout = StructLayout({
-        "val": 32
-    })
-)
+R.Signature = SPIRegister(0x7F, "Signature", StructLayout({
+    "val": 32
+}))
 
 
-# This exports the defined registers in R to the specified file as a
+# This exports the registers defined in R to the specified file as a
 # C++ packed struct and defines the addresses as well.
 def exportRegs(filename: str):
 
     with open(filename, "w") as f:
         f.write("#pragma once\n")
+        f.write("#include <stdint.h>\n")
 
         for name, item in vars(R).items():
             address = item.address
             layout = item.layout
-            f.write(f"struct __attribute__((packed)) {name} {{\n")
-            f.write(f"  static constexpr unsigned ADDRESS = 0x{address:02X};\n")
+            f.write(f"""
+struct __attribute__((packed)) {name} {{
+  static constexpr unsigned ADDRESS = 0x{address:02X};
+
+  union {{
+    uint32_t: 32;
+
+    struct __attribute__((packed)) {{""")
 
             for fieldName, shape in layout.members.items():
-                f.write(f"  unsigned {fieldName}: {shape};\n")
+                f.write(f"\n      unsigned {fieldName}: {shape};")
             
-            f.write("};\n\n")
+            f.write(f"""
+    }};
+  }};
+}};
+""")
 
 
 exportRegs("foo.hpp")
@@ -116,9 +110,9 @@ class SPIRegisters(wiring.Component):
     iNCS: In(1)
 
     # Decoded outputs to other clock domains
-    txEn: Out()
-    modeSq: Out()
-    softReset: Out()
+    txEn: Out(1)
+    modeSq: Out(1)
+    softReset: Out(1)
     modMode: Out(2)
     baseDelay: Out(8)
     delayCoeff: Out(8)
